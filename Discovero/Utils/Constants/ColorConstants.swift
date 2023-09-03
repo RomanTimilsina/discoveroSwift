@@ -9,5 +9,6 @@ import UIKit
 
 enum Color {
     static let primary = UIColor(named: "primary")
+    static let appBlack = UIColor(named: "appBlack")
 }
 

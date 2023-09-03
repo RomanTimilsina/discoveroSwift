@@ -17,7 +17,7 @@ protocol FontFamily {
     var value: String { get }
 }
 
-enum Mulish: FontFamily {
+enum OpenSans: FontFamily {
     case regular
     case bold
     case semiBold
@@ -25,10 +25,10 @@ enum Mulish: FontFamily {
     
     var value: String {
         switch self {
-            case .regular: return "Mulish-Regular"
-            case .bold: return "Mulish-Bold"
-            case .semiBold: return "Mulish-SemiBold"
-            case .black: return "Mulish-Black"
+            case .regular: return "OpenSans-Regular"
+            case .bold: return "OpenSans-Bold"
+            case .semiBold: return "OpenSans-SemiBold"
+            case .black: return "OpenSans-Black"
         }
     }
 }
