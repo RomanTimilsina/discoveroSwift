@@ -25,11 +25,11 @@ struct OnBoardingCollectionManager {
         data.append(onBoardingCollectionModel(image: UIImage(named: "onBoardingPageImage2"), icons: UIImage(named: "icon2"), title: "Explore Jobs", description: """
                                               A incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation.
                                               """))
-        data.append(onBoardingCollectionModel(image: UIImage(named: "onBoardingPageImage3"), icons: UIImage(named: "icon2"), title: "Buy and sell", description: """
+        data.append(onBoardingCollectionModel(image: UIImage(named: "onBoardingPageImage3"), icons: UIImage(named: "icon3"), title: "Buy and sell", description: """
                                               
                                               A incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation.
                                               """ ))
-        data.append(onBoardingCollectionModel(image: UIImage(named: "onBoardingPageImage4"), icons: UIImage(named: "icon2") , title: "Announcement", description: """
+        data.append(onBoardingCollectionModel(image: UIImage(named: "onBoardingPageImage4"), icons: UIImage(named: "icon4") , title: "Announcement", description: """
                                               A incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation.
                                               """))
     }

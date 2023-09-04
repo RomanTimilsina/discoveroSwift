@@ -30,10 +30,10 @@ class DIPageController: UIPageControl {
     }
     
     private func defaultConfigurationForiOS14AndAbove() {
-        for index in 0..<numberOfPages {
-            let image = index == currentPage ? currentPageImage : otherPagesImage
-            setIndicatorImage(image, forPage: index)
-        }
+//        for index in 0..<numberOfPages {
+//            let image = index == currentPage ? currentPageImage : otherPagesImage
+//            setIndicatorImage(image, forPage: index)
+//        }
         
         pageIndicatorTintColor = #colorLiteral(red: 0.8797428608, green: 0.8797428012, blue: 0.8797428608, alpha: 1)
         currentPageIndicatorTintColor = Color.primary
