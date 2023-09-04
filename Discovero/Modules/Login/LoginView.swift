@@ -9,8 +9,8 @@ import UIKit
 
 class LoginView: UIView {
     
-    let loginNav = DINavControl(title: "Login", isBack: false)
-
+    let headerView = DIHeaderView(title: "Verify your number", isBack: false)
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLogin()
@@ -21,8 +21,8 @@ class LoginView: UIView {
     }
     
     func setupLogin() {
-        addSubview(loginNav)
-        loginNav.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
+        addSubview(headerView)
+        headerView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
     }
-
+    
 }

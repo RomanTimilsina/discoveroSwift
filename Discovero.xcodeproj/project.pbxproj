@@ -12,7 +12,7 @@
 		04996CC12AA489F600DB618F /* OnBoardingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04996CC02AA489F600DB618F /* OnBoardingPageView.swift */; };
 		04996CC42AA4A10200DB618F /* OnBoardingCollectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04996CC32AA4A10200DB618F /* OnBoardingCollectionModel.swift */; };
 		049BEF602AA593EA00ED2B58 /* DIPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049BEF5F2AA593EA00ED2B58 /* DIPageViewController.swift */; };
-		049BEF642AA5AD4E00ED2B58 /* DINavControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049BEF632AA5AD4E00ED2B58 /* DINavControl.swift */; };
+		049BEF642AA5AD4E00ED2B58 /* DIHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049BEF632AA5AD4E00ED2B58 /* DIHeaderView.swift */; };
 		049BEF672AA5B0B000ED2B58 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049BEF662AA5B0B000ED2B58 /* LoginVC.swift */; };
 		049BEF692AA5B0C800ED2B58 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049BEF682AA5B0C800ED2B58 /* LoginView.swift */; };
 		04CA49052AA43FEB00C69767 /* DiscoveroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA49042AA43FEB00C69767 /* DiscoveroView.swift */; };
@@ -70,7 +70,7 @@
 		04996CC02AA489F600DB618F /* OnBoardingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingPageView.swift; sourceTree = "<group>"; };
 		04996CC32AA4A10200DB618F /* OnBoardingCollectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingCollectionModel.swift; sourceTree = "<group>"; };
 		049BEF5F2AA593EA00ED2B58 /* DIPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIPageViewController.swift; sourceTree = "<group>"; };
-		049BEF632AA5AD4E00ED2B58 /* DINavControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DINavControl.swift; sourceTree = "<group>"; };
+		049BEF632AA5AD4E00ED2B58 /* DIHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIHeaderView.swift; sourceTree = "<group>"; };
 		049BEF662AA5B0B000ED2B58 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		049BEF682AA5B0C800ED2B58 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		04CA49042AA43FEB00C69767 /* DiscoveroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveroView.swift; sourceTree = "<group>"; };
@@ -149,6 +149,8 @@
 			children = (
 				04996CBE2AA4725300DB618F /* DIButton.swift */,
 				049BEF5F2AA593EA00ED2B58 /* DIPageViewController.swift */,
+				049BEF632AA5AD4E00ED2B58 /* DIHeaderView.swift */,
+				04CA49042AA43FEB00C69767 /* DiscoveroView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -215,8 +217,6 @@
 				E0FE05E32AA43CCC001DBDF5 /* Resources */,
 				E0FE05E22AA43CB7001DBDF5 /* SupportingFiles */,
 				E0FE05D02AA439C2001DBDF5 /* Info.plist */,
-				049BEF632AA5AD4E00ED2B58 /* DINavControl.swift */,
-				04CA49042AA43FEB00C69767 /* DiscoveroView.swift */,
 			);
 			path = Discovero;
 			sourceTree = "<group>";
@@ -442,7 +442,7 @@
 				E0FE06332AA43D1B001DBDF5 /* UIAnchor+Ext.swift in Sources */,
 				E0FE06322AA43D1B001DBDF5 /* Collection+Ext.swift in Sources */,
 				E0FE06312AA43D1B001DBDF5 /* UITapGestureRecognizer+Ext.swift in Sources */,
-				049BEF642AA5AD4E00ED2B58 /* DINavControl.swift in Sources */,
+				049BEF642AA5AD4E00ED2B58 /* DIHeaderView.swift in Sources */,
 				E0FE062F2AA43D1B001DBDF5 /* UIButton+Ext.swift in Sources */,
 				E0FE062B2AA43D1B001DBDF5 /* Double+Ext.swift in Sources */,
 				04996CC42AA4A10200DB618F /* OnBoardingCollectionModel.swift in Sources */,

@@ -8,7 +8,7 @@
 import UIKit
 
 class OnBoardingPageView: UIView {
-
+    
     let onBoardingCollection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -48,9 +48,9 @@ class OnBoardingPageView: UIView {
         indicator.centerXInSuperview()
         
         addSubview(onBoardingCollection)
-        onBoardingCollection.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: indicator.topAnchor, trailing: safeAreaLayoutGuide.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 80, right: 0))
+        onBoardingCollection.anchor(top: safeAreaLayoutGuide.topAnchor, leading: safeAreaLayoutGuide.leadingAnchor, bottom: indicator.topAnchor, trailing: safeAreaLayoutGuide.trailingAnchor, padding: .init(top: 0, left: 20, bottom: 60, right: 20))
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

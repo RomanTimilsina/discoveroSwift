@@ -7,8 +7,7 @@
 
 import UIKit
 
-class DiscoveroView: UIView {
-    
+class DITextField: UIView {
     
     let titleLabel : UILabel = {
         let title = UILabel()
