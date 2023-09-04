@@ -11,6 +11,7 @@
 		04996CBF2AA4725300DB618F /* DIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04996CBE2AA4725300DB618F /* DIButton.swift */; };
 		04996CC12AA489F600DB618F /* OnBoardingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04996CC02AA489F600DB618F /* OnBoardingPageView.swift */; };
 		04996CC42AA4A10200DB618F /* OnBoardingCollectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04996CC32AA4A10200DB618F /* OnBoardingCollectionModel.swift */; };
+		049BEF602AA593EA00ED2B58 /* DIPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049BEF5F2AA593EA00ED2B58 /* DIPageViewController.swift */; };
 		04CA49052AA43FEB00C69767 /* DiscoveroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA49042AA43FEB00C69767 /* DiscoveroView.swift */; };
 		04CA490D2AA44D3400C69767 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04CA490C2AA44D2D00C69767 /* OpenSans-Regular.ttf */; };
 		04CA490E2AA44D3600C69767 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04CA490B2AA44D2D00C69767 /* OpenSans-SemiBold.ttf */; };
@@ -65,6 +66,7 @@
 		04996CBE2AA4725300DB618F /* DIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIButton.swift; sourceTree = "<group>"; };
 		04996CC02AA489F600DB618F /* OnBoardingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingPageView.swift; sourceTree = "<group>"; };
 		04996CC32AA4A10200DB618F /* OnBoardingCollectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingCollectionModel.swift; sourceTree = "<group>"; };
+		049BEF5F2AA593EA00ED2B58 /* DIPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIPageViewController.swift; sourceTree = "<group>"; };
 		04CA49042AA43FEB00C69767 /* DiscoveroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveroView.swift; sourceTree = "<group>"; };
 		04CA490B2AA44D2D00C69767 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		04CA490C2AA44D2D00C69767 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				04996CBE2AA4725300DB618F /* DIButton.swift */,
+				049BEF5F2AA593EA00ED2B58 /* DIPageViewController.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -430,6 +433,7 @@
 				E0FE06232AA43D1B001DBDF5 /* BaseViewController.swift in Sources */,
 				E0FE06262AA43D1B001DBDF5 /* UILabel+Ext.swift in Sources */,
 				E0FE05C32AA439C1001DBDF5 /* AppDelegate.swift in Sources */,
+				049BEF602AA593EA00ED2B58 /* DIPageViewController.swift in Sources */,
 				E0FE063F2AA43D1B001DBDF5 /* TimeFormatter.swift in Sources */,
 				E0FE05C52AA439C1001DBDF5 /* SceneDelegate.swift in Sources */,
 				E0FE06242AA43D1B001DBDF5 /* HorizontalStackView.swift in Sources */,

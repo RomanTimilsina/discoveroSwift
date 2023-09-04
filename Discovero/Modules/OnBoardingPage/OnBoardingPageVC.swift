@@ -10,22 +10,21 @@ import UIKit
 class OnBoardingPageVC: UIViewController {
     
     let currentView = OnBoardingPageView()
-    let onBoarding = OnBoardingPageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        onBoarding.backgroundColor = Color.appBlack
+        currentView.backgroundColor = Color.appBlack
         setupCollectionView()
     }
     
     func setupCollectionView() {
-        onBoarding.onBoardingCollection.register(OnBoardingPageViewCell.self, forCellWithReuseIdentifier: "cell")
-        onBoarding.onBoardingCollection.delegate = self
-        onBoarding.onBoardingCollection.dataSource = self
+        currentView.onBoardingCollection.register(OnBoardingPageViewCell.self, forCellWithReuseIdentifier: "cell")
+        currentView.onBoardingCollection.delegate = self
+        currentView.onBoardingCollection.dataSource = self
     }
     
     override func  loadView() {
-        view = onBoarding
+        view = currentView
     }
 }
 
@@ -42,7 +41,7 @@ extension OnBoardingPageVC: UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.size.width, height:  view.frame.height*0.728)
+        return CGSize(width: collectionView.frame.size.width, height:  view.frame.height * 0.728)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -53,5 +52,12 @@ extension OnBoardingPageVC: UICollectionViewDelegate, UICollectionViewDataSource
         return 0
     }
     
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let visibleRect = CGRect(origin: currentView.onBoardingCollection.contentOffset, size: currentView.onBoardingCollection.bounds.size)
+        let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+        if let visibleIndexPath = currentView.onBoardingCollection.indexPathForItem(at: visiblePoint){
+            currentView.indicator.currentPage = visibleIndexPath.row
+        }
+    }
 }
 
