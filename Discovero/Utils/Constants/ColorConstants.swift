@@ -13,7 +13,8 @@ enum Color {
     static let gray500 = UIColor(named: "gray500")
     static let appWhite = UIColor.white
     static let gray700 = UIColor(named: "gray700")
+    static let gray900 = UIColor(named: "gray900")
+    static let placeholderGray = UIColor(named: "placeholderGray")
 
-    
 }
 

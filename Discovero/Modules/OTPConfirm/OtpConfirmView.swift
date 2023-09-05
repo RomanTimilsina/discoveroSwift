@@ -1,19 +1,19 @@
 //
-//  LoginView.swift
+//  otpConfirm.swift
 //  Discovero
 //
-//  Created by Mac on 04/09/2023.
+//  Created by Mac on 05/09/2023.
 //
 
 import UIKit
 
-class LoginView: UIView {
+class OTPConfirmView: UIView {
     
-    let headerView = DIHeaderView(title: "Verify your number", isBack: false)
+    let headerView = DIHeaderView(title: "Confirm your number", isBack: false)
     
-    let getStartedLabel = UILabel(text: "Let's get started", font: OpenSans.regular, size: 14)
+    let getStartedLabel = UILabel(text: "Confirm your number", font: OpenSans.regular, size: 14)
     
-    let loginTextField = DITextField(title: "What’s your phone number?", placholder: "0000 000 000", isPrimaryColor: true, typePad: .numberPad)
+    let loginTextField = DITextField(title: "Ener the 6 digit code", placholder: "0000 000 000", isPrimaryColor: true, typePad: .numberPad)
     
     let dataRateLabel = UILabel(text: "We’ll call or text to confirm your number. Standard message and data rates apply.",color: Color.appWhite, font: OpenSans.regular, size: 12, numberOfLines: 0, alignment: .left)
     
@@ -44,4 +44,11 @@ class LoginView: UIView {
         dataRateLabel.constraintWidth(constant: UIScreen.main.bounds.width)
     }
 }
+
+
+
+
+
+
+
 

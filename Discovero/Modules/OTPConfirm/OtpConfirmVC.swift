@@ -1,19 +1,19 @@
 //
-//  LoginVCViewController.swift
+//  otpConfirmVC.swift
 //  Discovero
 //
-//  Created by Mac on 04/09/2023.
+//  Created by Mac on 05/09/2023.
 //
 
 import UIKit
 
-class LoginVC: UIViewController {
+class OTPConfirmVC: UIViewController {
     
-    let login = LoginView()
+    let otpConfirm = OTPConfirmView()
     
-    override func loadView() { 
+    override func loadView() {
         super.loadView()
-        view = login
+        view = otpConfirm
     }
     
     override func viewDidLoad() {
@@ -24,7 +24,7 @@ class LoginVC: UIViewController {
     }
     
     func loginEvents() {
-        login.headerView.onClose = {[weak self] in
+        otpConfirm.headerView.onClose = {[weak self] in
             guard let self = self else {return}
             navigationController?.popViewController(animated: true)
             
