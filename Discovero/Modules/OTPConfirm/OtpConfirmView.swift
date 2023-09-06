@@ -11,16 +11,15 @@ class OTPConfirmView: UIView {
     
     let headerView = DIHeaderView(title: "Confirm your number", isBack: false)
     
-    let getStartedLabel = UILabel(text: "Confirm your number", font: OpenSans.regular, size: 14)
+    let getStartedLabel = UILabel(text: "Confirm your number", font: OpenSans.semiBold, size: 14)
     
-    let loginTextField = DITextField(title: "Ener the 6 digit code", placholder: "0000 000 000", isPrimaryColor: true, typePad: .numberPad)
+    let loginTextField = DITextField(title: "Ener the 6 digit code", placholder: "0000 000 000", isPrimaryColor: true, typePad: .numberPad, isOtpTextField: false, contentHeight: 90)
     
     let dataRateLabel = UILabel(text: "We’ll call or text to confirm your number. Standard message and data rates apply.",color: Color.appWhite, font: OpenSans.regular, size: 12, numberOfLines: 0, alignment: .left)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLogin()
-//        loginTextField.otpTextfield.configure(with: 6)
     }
     
     required init?(coder: NSCoder) {
@@ -36,12 +35,11 @@ class OTPConfirmView: UIView {
         getStartedLabel.anchor(top: headerView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 78, left: 12, bottom: 0, right: 0))
         
         addSubview(loginTextField)
-        loginTextField.anchor(top: getStartedLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 12, left: 12, bottom: -100, right: 0))
-        loginTextField.constraintHeight(constant: 60)
+        loginTextField.anchor(top: getStartedLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 12, left: 12, bottom: 0, right: 0))
         
         addSubview(dataRateLabel)
-        dataRateLabel.anchor(top: loginTextField.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 24, left: 12, bottom: 1, right: 1))
-        dataRateLabel.constraintWidth(constant: UIScreen.main.bounds.width)
+        dataRateLabel.anchor(top: loginTextField.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 17, left: 12, bottom: 0, right: 18))
+
     }
 }
 

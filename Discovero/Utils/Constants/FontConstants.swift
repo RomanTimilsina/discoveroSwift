@@ -25,10 +25,10 @@ enum OpenSans: FontFamily {
     
     var value: String {
         switch self {
-            case .regular: return "OpenSans-Regular"
-            case .bold: return "OpenSans-Bold"
-            case .semiBold: return "OpenSans-SemiBold"
-            case .black: return "OpenSans-Black"
+        case .regular: return "OpenSans-Regular"
+        case .semiBold: return "OpenSans-SemiBold"
+        case .bold: return "OpenSans-Bold"
+        case .black: return "OpenSans-Black"
         }
     }
 }

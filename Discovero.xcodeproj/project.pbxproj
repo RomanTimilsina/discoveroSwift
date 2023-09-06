@@ -21,6 +21,7 @@
 		04CA490D2AA44D3400C69767 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04CA490C2AA44D2D00C69767 /* OpenSans-Regular.ttf */; };
 		04CA490E2AA44D3600C69767 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04CA490B2AA44D2D00C69767 /* OpenSans-SemiBold.ttf */; };
 		04CA49102AA4530F00C69767 /* OnBoardingPageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA490F2AA4530F00C69767 /* OnBoardingPageViewCell.swift */; };
+		B77F53432AA72B1E00F8BDB7 /* DIOTPField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77F53422AA72B1E00F8BDB7 /* DIOTPField.swift */; };
 		E0FE05C32AA439C1001DBDF5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FE05C22AA439C1001DBDF5 /* AppDelegate.swift */; };
 		E0FE05C52AA439C1001DBDF5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FE05C42AA439C1001DBDF5 /* SceneDelegate.swift */; };
 		E0FE05C72AA439C1001DBDF5 /* OnBoardingPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FE05C62AA439C1001DBDF5 /* OnBoardingPageVC.swift */; };
@@ -81,6 +82,7 @@
 		04CA490B2AA44D2D00C69767 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		04CA490C2AA44D2D00C69767 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		04CA490F2AA4530F00C69767 /* OnBoardingPageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingPageViewCell.swift; sourceTree = "<group>"; };
+		B77F53422AA72B1E00F8BDB7 /* DIOTPField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DIOTPField.swift; path = ../../../../../../../Downloads/DIOTPField.swift; sourceTree = "<group>"; };
 		E0FE05BF2AA439C1001DBDF5 /* Discovero.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Discovero.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0FE05C22AA439C1001DBDF5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E0FE05C42AA439C1001DBDF5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				04996CBE2AA4725300DB618F /* DIButton.swift */,
 				049BEF5F2AA593EA00ED2B58 /* DIPageViewController.swift */,
 				049BEF632AA5AD4E00ED2B58 /* DIHeaderView.swift */,
+				B77F53422AA72B1E00F8BDB7 /* DIOTPField.swift */,
 				04CA49042AA43FEB00C69767 /* DITextField.swift */,
 			);
 			path = CustomViews;
@@ -476,6 +479,7 @@
 				E0FE06452AA43D1B001DBDF5 /* CameraHandler.swift in Sources */,
 				E0FE062D2AA43D1B001DBDF5 /* Bundle+Ext.swift in Sources */,
 				E0FE061F2AA43D1B001DBDF5 /* Constants.swift in Sources */,
+				B77F53432AA72B1E00F8BDB7 /* DIOTPField.swift in Sources */,
 				E0FE06282AA43D1B001DBDF5 /* UIControl+Ext.swift in Sources */,
 				E0FE06342AA43D1B001DBDF5 /* UIViewController+Ext.swift in Sources */,
 			);

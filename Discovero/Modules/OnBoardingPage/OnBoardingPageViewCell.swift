@@ -46,8 +46,7 @@ class OnBoardingPageViewCell: UICollectionViewCell {
         
         currentContentView.addSubview(onBoardingViewStack)
         onBoardingViewStack.anchor(top: currentContentView.topAnchor , leading: currentContentView.leadingAnchor, bottom: currentContentView.bottomAnchor, trailing:trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-        
-        currentContentView.constraintWidth(constant: UIScreen.main.bounds.width * 0.9)
+        currentContentView.constraintWidth(constant: UIScreen.main.bounds.width * 0.95)
     }
     
     func configureCellData(data: onBoardingCollectionModel){

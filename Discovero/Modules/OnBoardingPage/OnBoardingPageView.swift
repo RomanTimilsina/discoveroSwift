@@ -41,14 +41,14 @@ class OnBoardingPageView: UIView {
         logInStack.centerXInSuperview()
         
         addSubview(registerButton)
-        registerButton.anchor(top: nil, leading: leadingAnchor, bottom: logInStack.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 10, bottom: 19, right: 10))
+        registerButton.anchor(top: nil, leading: leadingAnchor, bottom: logInStack.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 19, right: 12))
         
         addSubview(indicator)
-        indicator.anchor(top: registerButton.topAnchor, leading: nil, bottom: registerButton.topAnchor, trailing: nil, padding: .init(top: -20, left: 10, bottom: 20, right: 10))
+        indicator.anchor(top: registerButton.topAnchor, leading: leadingAnchor, bottom: registerButton.topAnchor, trailing: trailingAnchor, padding: .init(top: -33, left: 12, bottom: 20, right: 12))
         indicator.centerXInSuperview()
         
         addSubview(onBoardingCollection)
-        onBoardingCollection.anchor(top: safeAreaLayoutGuide.topAnchor, leading: safeAreaLayoutGuide.leadingAnchor, bottom: indicator.topAnchor, trailing: safeAreaLayoutGuide.trailingAnchor, padding: .init(top: 0, left: 20, bottom: 60, right: 20))
+        onBoardingCollection.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: indicator.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 60, right: 12))
     }
     
     required init?(coder: NSCoder) {

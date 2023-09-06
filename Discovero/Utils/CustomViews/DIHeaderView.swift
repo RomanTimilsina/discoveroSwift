@@ -11,7 +11,7 @@ class DIHeaderView: UIView {
     
     var onClose: (() -> Void)?
     
-    let textLabel = UILabel(text: "", font: OpenSans.bold, size: 16, alignment: .center)
+    let textLabel = UILabel(text: "", font: OpenSans.semiBold, size: 16, alignment: .center)
     
     let backLabel = UIButton(title: "Back", titleColor: Color.appWhite, font: OpenSans.regular, fontSize: 12)
     let backImage = UIImageView(image: UIImage(named: "backButtonIcon"), contentMode: .scaleAspectFit)

@@ -20,6 +20,7 @@ class OTPConfirmVC: UIViewController {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = true
         view.backgroundColor = Color.gray900
+        otpConfirm.loginTextField.otpTextfield.configure()
         loginEvents()
     }
     

@@ -11,7 +11,7 @@ class LoginView: UIView {
     
     let headerView = DIHeaderView(title: "Verify your number", isBack: false)
     
-    let getStartedLabel = UILabel(text: "Let's get started", font: OpenSans.regular, size: 14)
+    let getStartedLabel = UILabel(text: "Let's get started", font: OpenSans.semiBold, size: 14)
     
     let loginTextField = DITextField(title: "What’s your phone number?", placholder: "0000 000 000", isPrimaryColor: true, typePad: .numberPad)
     
@@ -20,7 +20,6 @@ class LoginView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLogin()
-//        loginTextField.otpTextfield.configure(with: 6)
     }
     
     required init?(coder: NSCoder) {
@@ -36,12 +35,10 @@ class LoginView: UIView {
         getStartedLabel.anchor(top: headerView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 78, left: 12, bottom: 0, right: 0))
         
         addSubview(loginTextField)
-        loginTextField.anchor(top: getStartedLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 12, left: 12, bottom: -100, right: 0))
-        loginTextField.constraintHeight(constant: 60)
+        loginTextField.anchor(top: getStartedLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 12, left: 12, bottom: 0, right: 0))
         
         addSubview(dataRateLabel)
-        dataRateLabel.anchor(top: loginTextField.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 24, left: 12, bottom: 1, right: 1))
-        dataRateLabel.constraintWidth(constant: UIScreen.main.bounds.width)
+        dataRateLabel.anchor(top: loginTextField.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 24, left: 12, bottom: 0, right: 18))
     }
 }
 
