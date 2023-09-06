@@ -39,7 +39,6 @@ class OTPConfirmView: UIView {
         
         addSubview(dataRateLabel)
         dataRateLabel.anchor(top: loginTextField.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 17, left: 12, bottom: 0, right: 18))
-
     }
 }
 

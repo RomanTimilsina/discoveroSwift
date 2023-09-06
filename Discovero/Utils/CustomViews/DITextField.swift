@@ -27,19 +27,19 @@ class DITextField: UIView {
     }()
     let otpTextfield = DIOTPField()
     
-    init(title: String, placholder: String, isPrimaryColor: Bool, typePad: UIKeyboardType, isOtpTextField: Bool = true, contentHeight: CGFloat = 74) {
+    init(title: String, placholder: String, isPrimaryColor: Bool, typePad: UIKeyboardType, isOtpTextField: Bool = true, contentHeight: CGFloat = 74, placeholderHeight: CGFloat = 32) {
         titleLabel.text = title
         titleLabel.textColor = Color.appWhite
         textField.placeholder = placholder
         textField.textColor = isPrimaryColor ? Color.primary : Color.appWhite
-       
         textField.tintColor = Color.appWhite
         textField.keyboardType = typePad
+        textField.font = UIFont.font(with: 24, family: OpenSans.regular)
         otpTextfield.isHidden = isOtpTextField
         textField.isHidden = !isOtpTextField
         contentVeiw.constraintHeight(constant: contentHeight)
         super.init(frame: .zero)
-        textFieldAttribute(placeholderText: placholder)
+        textFieldAttribute(placeholderText: placholder, placeholderHeight: placeholderHeight)
         setConstraint()
     }
     
@@ -64,10 +64,10 @@ class DITextField: UIView {
     }
     
     //MARK: Placeholder attribute set
-    func textFieldAttribute(placeholderText: String) {
+    func textFieldAttribute(placeholderText: String, placeholderHeight: CGFloat) {
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: Color.placeholderGray ?? .gray,
-            .font: UIFont.font(with: 32, family: OpenSans.regular)
+            .font: UIFont.font(with: placeholderHeight, family: OpenSans.regular)
         ]
 
         let attributedPlaceholder = NSAttributedString(

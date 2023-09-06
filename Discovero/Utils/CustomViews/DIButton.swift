@@ -9,16 +9,16 @@ import UIKit
 
 class DIButton : UIButton {
     
-    init(buttonTitle: String, height: CGFloat = 44) {
+    init(buttonTitle: String, height: CGFloat = 44, textSize: CGFloat = 16) {
         super.init(frame: .zero)
-        setupUI(buttonTitle: buttonTitle)
+        setupUI(buttonTitle: buttonTitle, textSize: textSize)
         constraintHeight(constant: height)
     }
     
-    func setupUI(buttonTitle: String) {
+    func setupUI(buttonTitle: String, textSize: CGFloat) {
         setTitle(buttonTitle, for: .normal)
         setTitleColor(Color.appBlack, for: .normal)
-        titleLabel?.font = UIFont(name: "OpenSans-SemiBold", size: 16)
+        titleLabel?.font = UIFont(name: "OpenSans-SemiBold", size: textSize)
         layer.cornerRadius = 5
         backgroundColor = Color.primary
     }
