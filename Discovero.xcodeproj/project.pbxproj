@@ -15,6 +15,7 @@
 		049BEF642AA5AD4E00ED2B58 /* DIHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049BEF632AA5AD4E00ED2B58 /* DIHeaderView.swift */; };
 		049BEF672AA5B0B000ED2B58 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049BEF662AA5B0B000ED2B58 /* LoginVC.swift */; };
 		049BEF692AA5B0C800ED2B58 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049BEF682AA5B0C800ED2B58 /* LoginView.swift */; };
+		049CF12C2AA9AA4B00FF2F1B /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CF12B2AA9AA4B00FF2F1B /* CustomSearchBar.swift */; };
 		04A168A22AA835380065F607 /* DIOTPField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A168A12AA835380065F607 /* DIOTPField.swift */; };
 		04A168A52AA839600065F607 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A168A42AA839600065F607 /* WelcomeView.swift */; };
 		04A168A82AA83B6C0065F607 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A168A72AA83B6C0065F607 /* WelcomeVC.swift */; };
@@ -86,6 +87,7 @@
 		049BEF632AA5AD4E00ED2B58 /* DIHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIHeaderView.swift; sourceTree = "<group>"; };
 		049BEF662AA5B0B000ED2B58 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		049BEF682AA5B0C800ED2B58 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		049CF12B2AA9AA4B00FF2F1B /* CustomSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
 		04A168A12AA835380065F607 /* DIOTPField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIOTPField.swift; sourceTree = "<group>"; };
 		04A168A42AA839600065F607 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		04A168A62AA839EB0065F607 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				049BEF632AA5AD4E00ED2B58 /* DIHeaderView.swift */,
 				04A168A12AA835380065F607 /* DIOTPField.swift */,
 				04CA49042AA43FEB00C69767 /* DITextField.swift */,
+				049CF12B2AA9AA4B00FF2F1B /* CustomSearchBar.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 			files = (
 				E0FE06432AA43D1B001DBDF5 /* UserDefaultsHelper.swift in Sources */,
 				E0FE061D2AA43D1B001DBDF5 /* Validator.swift in Sources */,
+				049CF12C2AA9AA4B00FF2F1B /* CustomSearchBar.swift in Sources */,
 				E0FE06252AA43D1B001DBDF5 /* VerticalStackView.swift in Sources */,
 				04CA49052AA43FEB00C69767 /* DITextField.swift in Sources */,
 				049BEF692AA5B0C800ED2B58 /* LoginView.swift in Sources */,

@@ -38,6 +38,7 @@ class DIPickerView: UIView {
     }
     
     func setupConstraint() {
+        
         addSubview(pickerHeaderView)
         pickerHeaderView.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 12, left: 12, bottom: 0, right: 14))
        

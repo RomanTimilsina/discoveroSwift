@@ -11,17 +11,26 @@ class DIPickerVC: UIViewController {
     
     let pickerView = DIPickerView()
     var getModel = DIPickerManager()
-
+    var closePicker: (() -> Void)?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupTable()
+        observeEvents()
     }
     
     override func loadView() {
         super.loadView()
         
         view = pickerView
+    }
+    
+    func observeEvents() {
+        pickerView.onClose = {[weak self] in
+            guard let self = self else {return}
+            closePicker?()
+        }
     }
     
     func setupTable() {
