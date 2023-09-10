@@ -8,12 +8,11 @@
 import UIKit
 
 class NoConnectionView: UIView {
-
+    
     let imageLabel = UIImageView(image: UIImage(named: "no-internet"),contentMode: .scaleAspectFit, clipsToBounds: true)
     let noConnectinLabel = UILabel(text: "No Connection", font: OpenSans.bold, size: 24)
     let errMessage = UILabel(text: "Oops! The internet connection apperars to be offline. Please try again.", font: OpenSans.regular, size: 14,
                              numberOfLines: 0, alignment: .center)
-    
     let tryAgainButton = DIButton(buttonTitle: "Try Again", textSize: 14)
     
     override init(frame: CGRect) {

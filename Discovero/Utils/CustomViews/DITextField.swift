@@ -69,7 +69,7 @@ class DITextField: UIView {
             .foregroundColor: Color.placeholderGray ?? .gray,
             .font: UIFont.font(with: placeholderHeight, family: OpenSans.regular)
         ]
-
+        
         let attributedPlaceholder = NSAttributedString(
             string: placeholderText,
             attributes: attributes

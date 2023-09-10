@@ -8,9 +8,10 @@
 import UIKit
 
 class WelcomeView: UIView {
-    
+
     let welcomeLabel = UILabel(text: "Welcome Ankit!", font: OpenSans.semiBold, size: 24)
     let profileReadyLabel = UILabel(text: "Your profile is almost ready", font: OpenSans.regular, size: 14)
+    let search = CustomSearchBar()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,6 +23,9 @@ class WelcomeView: UIView {
     }
     
     func setupConstraint() {
+        addSubview(search)
+        search.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 60, left: 0, bottom: 10, right: 0))
+        
         addSubview(welcomeLabel)
         welcomeLabel.centerInSuperview()
         

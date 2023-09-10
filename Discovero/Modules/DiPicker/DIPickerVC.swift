@@ -15,14 +15,12 @@ class DIPickerVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupTable()
         observeEvents()
     }
     
     override func loadView() {
         super.loadView()
-        
         view = pickerView
     }
     

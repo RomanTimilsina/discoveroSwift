@@ -40,7 +40,3 @@ class DIPickerCell: UITableViewCell {
         countryName.text = data.countryName
     }
 }
-
-
-
-
