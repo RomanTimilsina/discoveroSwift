@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		04956D292AB01D8A00540F44 /* CustomAdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04956D282AB01D8A00540F44 /* CustomAdView.swift */; };
+		04956D2E2AB06F4900540F44 /* EmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04956D2D2AB06F4900540F44 /* EmailVC.swift */; };
+		04956D302AB06F6A00540F44 /* EmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04956D2F2AB06F6A00540F44 /* EmailView.swift */; };
 		049698542AAEFD6200CDD456 /* logModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049698532AAEFD6200CDD456 /* logModel.swift */; };
 		04996CBA2AA46F8500DB618F /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04996CB92AA46F8500DB618F /* Color.xcassets */; };
 		04996CBF2AA4725300DB618F /* DIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04996CBE2AA4725300DB618F /* DIButton.swift */; };
@@ -90,6 +92,8 @@
 
 /* Begin PBXFileReference section */
 		04956D282AB01D8A00540F44 /* CustomAdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAdView.swift; sourceTree = "<group>"; };
+		04956D2D2AB06F4900540F44 /* EmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVC.swift; sourceTree = "<group>"; };
+		04956D2F2AB06F6A00540F44 /* EmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailView.swift; sourceTree = "<group>"; };
 		049698532AAEFD6200CDD456 /* logModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = logModel.swift; sourceTree = "<group>"; };
 		04996CB92AA46F8500DB618F /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 		04996CBE2AA4725300DB618F /* DIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIButton.swift; sourceTree = "<group>"; };
@@ -184,9 +188,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04956D2C2AB06F2000540F44 /* updateEmail */ = {
+			isa = PBXGroup;
+			children = (
+				04956D2D2AB06F4900540F44 /* EmailVC.swift */,
+				04956D2F2AB06F6A00540F44 /* EmailView.swift */,
+			);
+			path = updateEmail;
+			sourceTree = "<group>";
+		};
 		04996CB82AA46E5E00DB618F /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				04956D2C2AB06F2000540F44 /* updateEmail */,
 				049D3A902AAD8BFD004864E9 /* MyProfile */,
 				049CF1322AA9DC3D00FF2F1B /* MainTabBar */,
 				049CF12D2AA9D46900FF2F1B /* DICreateAd */,
@@ -583,6 +597,7 @@
 				04A168B92AA854870065F607 /* DIPickerCell.swift in Sources */,
 				E0FE06302AA43D1B001DBDF5 /* String+Ext.swift in Sources */,
 				049D3A982AADA382004864E9 /* MyProfileModel.swift in Sources */,
+				04956D302AB06F6A00540F44 /* EmailView.swift in Sources */,
 				04A168BB2AA8549C0065F607 /* DIPickerModel.swift in Sources */,
 				E0FE06272AA43D1B001DBDF5 /* UIImageView+Ext.swift in Sources */,
 				E0FE062E2AA43D1B001DBDF5 /* UINavigationController+Ext.swift in Sources */,
@@ -607,6 +622,7 @@
 				E0FE062C2AA43D1B001DBDF5 /* UITextField+Ext.swift in Sources */,
 				04A168A82AA83B6C0065F607 /* WelcomeVC.swift in Sources */,
 				04CA49102AA4530F00C69767 /* OnBoardingPageViewCell.swift in Sources */,
+				04956D2E2AB06F4900540F44 /* EmailVC.swift in Sources */,
 				E0FE06232AA43D1B001DBDF5 /* BaseViewController.swift in Sources */,
 				049D3A962AAD9EE0004864E9 /* MyProfileCell.swift in Sources */,
 				E0FE06262AA43D1B001DBDF5 /* UILabel+Ext.swift in Sources */,

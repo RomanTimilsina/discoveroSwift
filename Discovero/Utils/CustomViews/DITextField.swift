@@ -27,7 +27,7 @@ class DITextField: UIView {
     }()
     let otpTextfield = DIOTPField()
     
-    init(title: String, placholder: String, isPrimaryColor: Bool, typePad: UIKeyboardType, isOtpTextField: Bool = true, contentHeight: CGFloat = 74, placeholderHeight: CGFloat = 32) {
+    init(title: String, placholder: String, isPrimaryColor: Bool = false, typePad: UIKeyboardType, isOtpTextField: Bool = true, contentHeight: CGFloat = 74, placeholderHeight: CGFloat = 32, textHeight: CGFloat = 24) {
         titleLabel.text = title
         titleLabel.textColor = Color.appWhite
         textField.placeholder = placholder
@@ -35,6 +35,7 @@ class DITextField: UIView {
         textField.tintColor = Color.appWhite
         textField.keyboardType = typePad
         textField.font = UIFont.font(with: 24, family: OpenSans.regular)
+        titleLabel.font = UIFont.font(with: textHeight, family: OpenSans.regular)
         otpTextfield.isHidden = isOtpTextField
         textField.isHidden = !isOtpTextField
         contentVeiw.constraintHeight(constant: contentHeight)
