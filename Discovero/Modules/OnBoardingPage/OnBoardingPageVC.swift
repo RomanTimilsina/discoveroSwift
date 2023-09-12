@@ -10,11 +10,14 @@ import UIKit
 class OnBoardingPageVC: UIViewController {
     
     let currentView = OnBoardingPageView()
-    
+    let login = LoginVC()
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         currentView.backgroundColor = Color.appBlack
         setupCollectionView()
+        
+        registerAndLogin()
     }
     
     func setupCollectionView() {
@@ -25,6 +28,14 @@ class OnBoardingPageVC: UIViewController {
     
     override func  loadView() {
         view = currentView
+    }
+    
+    func registerAndLogin() {
+        currentView.handleRegister = {[weak self] log in
+            guard let self = self else {return}
+            login.isLogin = log
+            navigationController?.pushViewController(login, animated: true)
+        }
     }
 }
 
@@ -60,4 +71,3 @@ extension OnBoardingPageVC: UICollectionViewDelegate, UICollectionViewDataSource
         }
     }
 }
-

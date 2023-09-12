@@ -9,6 +9,9 @@ import UIKit
 
 class OnBoardingPageView: UIView {
     
+    var handleRegister: ((Bool) -> Void)?
+    
+    var log: Bool = true
     let onBoardingCollection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -40,8 +43,11 @@ class OnBoardingPageView: UIView {
         logInStack.anchor(top: nil, leading: nil, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 40, right: 0))
         logInStack.centerXInSuperview()
         
+        logInButton.addTarget(self, action: #selector(login), for: .touchUpInside)
+        
         addSubview(registerButton)
         registerButton.anchor(top: nil, leading: leadingAnchor, bottom: logInStack.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 19, right: 12))
+        registerButton.addTarget(self, action: #selector(register), for: .touchUpInside)
         
         addSubview(indicator)
         indicator.anchor(top: registerButton.topAnchor, leading: leadingAnchor, bottom: registerButton.topAnchor, trailing: trailingAnchor, padding: .init(top: -33, left: 12, bottom: 20, right: 12))
@@ -49,6 +55,14 @@ class OnBoardingPageView: UIView {
         
         addSubview(onBoardingCollection)
         onBoardingCollection.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: indicator.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 60, right: 12))
+    }
+    
+    @objc func register() {
+        handleRegister?(!log)
+    }
+    
+    @objc func login() {
+        handleRegister?(log)
     }
     
     required init?(coder: NSCoder) {

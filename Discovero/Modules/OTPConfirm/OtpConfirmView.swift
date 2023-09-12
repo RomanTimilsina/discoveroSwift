@@ -9,7 +9,7 @@ import UIKit
 
 class OTPConfirmView: UIView {
     
-    let headerView = DIHeaderView(title: "Confirm your number", isBack: false)
+    let headerView = DIHeaderView(title: "Confirm your number", hasBack: false)
     
     let getStartedLabel = UILabel(text: "Confirm your number", font: OpenSans.semiBold, size: 14)
     
@@ -28,8 +28,7 @@ class OTPConfirmView: UIView {
     
     func setupLogin() {
         addSubview(headerView)
-        headerView.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 45, left: 0, bottom: 0, right: 0))
-        headerView.constraintHeight(constant: 40)
+        headerView.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         
         addSubview(getStartedLabel)
         getStartedLabel.anchor(top: headerView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 78, left: 12, bottom: 0, right: 0))
@@ -41,11 +40,3 @@ class OTPConfirmView: UIView {
         dataRateLabel.anchor(top: loginTextField.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 17, left: 12, bottom: 0, right: 18))
     }
 }
-
-
-
-
-
-
-
-

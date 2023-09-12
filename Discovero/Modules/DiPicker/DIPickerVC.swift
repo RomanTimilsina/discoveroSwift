@@ -12,6 +12,7 @@ class DIPickerVC: UIViewController {
     let pickerView = DIPickerView()
     var getModel = DIPickerManager()
     var closePicker: (() -> Void)?
+    let registration = RegistrationVC()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,5 +54,11 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 44
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let data = getModel.getData()[indexPath.row]
+//        registration.country = data
+        dismiss(animated: true)
     }
 }

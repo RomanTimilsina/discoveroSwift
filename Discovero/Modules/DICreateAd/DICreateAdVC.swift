@@ -14,6 +14,7 @@ class DICreateAdVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
+        view.backgroundColor = Color.appBlack
     }
     
     override func loadView() {

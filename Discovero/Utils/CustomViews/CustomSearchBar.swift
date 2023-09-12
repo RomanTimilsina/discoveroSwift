@@ -25,7 +25,7 @@ class CustomSearchBar: UIView {
         textField.clearButtonMode = .whileEditing
         textField.layer.cornerRadius = 22
         textField.textColor = Color.appWhite
-        textField.backgroundColor = Color.gray800
+        textField.backgroundColor = Color.gray700
         textField.layer.borderWidth = 1
         textField.layer.borderColor = Color.gray600?.cgColor
         return textField

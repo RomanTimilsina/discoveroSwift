@@ -8,13 +8,16 @@
 import UIKit
 
 class WelcomeView: UIView {
-
-    let welcomeLabel = UILabel(text: "Welcome Ankit!", font: OpenSans.semiBold, size: 24)
+    
+    
+    let welcomeLabel = UILabel(text: "", font: OpenSans.semiBold, size: 24)
     let profileReadyLabel = UILabel(text: "Your profile is almost ready", font: OpenSans.regular, size: 14)
     let search = CustomSearchBar()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        backgroundColor = Color.gray900
         setupConstraint()
     }
     

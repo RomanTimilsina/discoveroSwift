@@ -11,6 +11,9 @@ enum Color {
     static let primary = UIColor(named: "primary")
     static let appBlack = UIColor(named: "appBlack")
     static let appWhite = UIColor.white
+    static let appBlue = UIColor(named: "Blue")
+
+    static let gray400 = UIColor(named: "gray400")
     static let gray500 = UIColor(named: "gray500")
     static let gray600 = UIColor(named: "gray600")
     static let gray700 = UIColor(named: "gray700")

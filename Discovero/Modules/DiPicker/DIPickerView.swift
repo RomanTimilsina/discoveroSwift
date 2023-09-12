@@ -8,6 +8,7 @@
 import UIKit
 
 class DIPickerView: UIView {
+    
     var onClose: (() -> Void)?
     
     let table: UITableView = {
@@ -15,9 +16,7 @@ class DIPickerView: UIView {
         table.backgroundColor = Color.gray900
         return table
     }()
-    
     let pickerHeaderView = UIView()
-    
     let crossIcon = UIImageView(image: UIImage(named: "crossIcon"),contentMode: .scaleAspectFit, clipsToBounds: true)
     let chooseNationalityLabel = UILabel(text: "Choose your nationality", font: OpenSans.semiBold, size: 16)
     let nextButton = UIButton(title: "Next", titleColor: Color.appWhite, font: OpenSans.bold, fontSize: 14)
@@ -53,7 +52,6 @@ class DIPickerView: UIView {
         pickerHeaderView.addSubview(chooseNationalityLabel)
         chooseNationalityLabel.anchor(top: nil, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         chooseNationalityLabel.centerInSuperview()
-        
         
         pickerHeaderView.addSubview(nextButton)
         nextButton.anchor(top: pickerHeaderView.topAnchor, leading: nil, bottom: pickerHeaderView.bottomAnchor, trailing: pickerHeaderView.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))

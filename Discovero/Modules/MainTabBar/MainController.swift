@@ -18,7 +18,7 @@ class MainController: UITabBarController {
         let Sales = UINavigationController(rootViewController: DICreateAdVC())
         let Announcements = UINavigationController(rootViewController: DICreateAdVC())
         let Matches = UINavigationController(rootViewController: DICreateAdVC())
-        let Profile = UINavigationController(rootViewController: DICreateAdVC())
+        let Profile = UINavigationController(rootViewController: MyProfileVC())
 
         Room.tabBarItem.image = UIImage(named: "roomImage")
         Jobs.tabBarItem.image = UIImage(named: "jobsImage")
@@ -34,11 +34,10 @@ class MainController: UITabBarController {
         Matches.title = "Matches"
         Profile.title = "Profile"
 
-        tabBar.backgroundColor = Color.gray700
+        tabBar.backgroundColor = Color.gray800
         tabBar.tintColor = Color.appWhite
         tabBar.barTintColor = UIColor.red
 
         setViewControllers([Room, Jobs, Sales, Announcements, Profile], animated: true)
-        
     }
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NoConnectionViewController: UIViewController {
+class NoConnectionVC: UIViewController {
     
     let noConnectionView = NoConnectionView()
     

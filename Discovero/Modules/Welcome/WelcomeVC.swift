@@ -10,9 +10,14 @@ import UIKit
 class WelcomeVC: UIViewController {
 
     let welcome = WelcomeView()
+    var name:  String?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let name = name {
+            self.welcome.welcomeLabel.text = "Welcome \(name)"
+        }
     }
     
     override func loadView() {

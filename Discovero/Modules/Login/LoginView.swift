@@ -9,7 +9,9 @@ import UIKit
 
 class LoginView: UIView {
     
-    let headerView = DIHeaderView(title: "Verify your number", isBack: false)
+    var confirmOTP: (() -> Void)?
+    
+    let headerView = DIHeaderView(title: "Verify your number", hasBack: false)
     
     let getStartedLabel = UILabel(text: "Let's get started", font: OpenSans.semiBold, size: 14)
     
@@ -28,17 +30,25 @@ class LoginView: UIView {
     
     func setupLogin() {
         addSubview(headerView)
-        headerView.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 45, left: 0, bottom: 0, right: 0))
-        headerView.constraintHeight(constant: 40)
+        headerView.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         
         addSubview(getStartedLabel)
         getStartedLabel.anchor(top: headerView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 78, left: 12, bottom: 0, right: 0))
         
         addSubview(loginTextField)
         loginTextField.anchor(top: getStartedLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 12, left: 12, bottom: 0, right: 0))
+        loginTextField.textField.addTarget(self, action: #selector(textChanged(_:)), for: .editingChanged)
         
         addSubview(dataRateLabel)
         dataRateLabel.anchor(top: loginTextField.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 24, left: 12, bottom: 0, right: 18))
+    }
+    
+    @objc func textChanged(_ textfield: UITextField) {
+        if let enteredText = textfield.text {
+            if enteredText.count > 9 {
+                confirmOTP?()
+            }
+        }
     }
 }
 

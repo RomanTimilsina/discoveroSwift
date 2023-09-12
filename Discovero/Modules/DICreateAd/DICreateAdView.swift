@@ -19,6 +19,11 @@ class DICreateAdView: UIView {
     
     let createAdButton = DIButton(buttonTitle: "Create your first ad",textSize: 14)
     
+    let ad = CustomAdView("Jasper's market", "Check out our best quality", UIImage(named: "rightAdImage"), UIImage(named: "leftAdImage"))
+    
+    let line = UIView()
+
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupConstraint()
@@ -46,5 +51,13 @@ class DICreateAdView: UIView {
         addSubview(createAdButton)
         createAdButton.anchor(top: AdDescriptionLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 33, left: 12, bottom: 0, right: 12))
         
+        addSubview(ad)
+        ad.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 84, right: 0))
+        ad.constraintHeight(constant: 70)
+        
+        addSubview(line)
+        line.anchor(top: ad.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        line.constraintHeight(constant: 1)
+        line.backgroundColor = Color.gray700
     }
 }
