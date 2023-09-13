@@ -7,24 +7,25 @@
 
 import UIKit
 
-class EmailVC: UIViewController {
+class ProfileItemVC: UIViewController {
     
     var onTitle: String?
     var onPlaceholder: String?
-
-    let email = EmailView(title: "", placeholder: "")
     
-     func viewWillAppear() {
+    let email = ProfileItemView(title: "", placeholder: "")
+    
+    func viewWillAppear() {
         
-       
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
-            super.viewWillAppear(animated)
-            
+        super.viewWillAppear(animated)
+        
         email.Field.titleLabel.text = "What's your \(onTitle ?? "")"
         email.Field.textField.placeholder = onPlaceholder ?? ""
-        }
+        email.Field.textField.text = ""
+    }
     
     
     override func viewDidLoad() {

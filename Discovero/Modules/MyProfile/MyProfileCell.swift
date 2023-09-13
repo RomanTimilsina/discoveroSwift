@@ -8,7 +8,7 @@
 import UIKit
 
 class MyProfileCell: UITableViewCell {
-
+    
     static let identifier = "TableViewCell"
     
     let titleLabel = UILabel(text: "FullName", font: OpenSans.semiBold, size: 14, alignment: .left)

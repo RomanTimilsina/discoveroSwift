@@ -17,15 +17,15 @@ class MyProfileView: UIView {
     let nameView = DICustomProfileView(titleText: "Full Name", text: "Ankit Chaudhary", show: true)
     
     let emailView = DICustomProfileView(titleText: "Email Address", text: "Tap here to add email", show: true, isGrey: true)
-   
+    
     let phoneView = DICustomProfileView(titleText: "Phone Number", text: "+677-9851442275")
     
     let addressView = DICustomProfileView(titleText: "Address", text: "Frederick St,Broome", show: true)
     
     let nationalityView = DICustomProfileView(titleText: "Nationality", text: "Nepali", nation: UIImage(named: "nepal"), show: true)
-                                              
+    
     let genderView = DICustomProfileView(titleText: "Gender", text: "Male", show: true)
-          
+    
     let adsView = DICustomProfileView(titleText: "My Ads", text: "", show: true)
     let favouritesView = DICustomProfileView(titleText: "My Favourites", text: "", show: true)
     let termsView = DICustomProfileView(titleText: "Terms and condition", text: "", show: true)
@@ -39,7 +39,7 @@ class MyProfileView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .black
-
+        
         setupConstraint()
         profileArrayFunction()
     }
@@ -62,15 +62,15 @@ class MyProfileView: UIView {
         formStack.anchor(top: noAvatarImage.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 24, left: 12, bottom: 100, right: 12))
         
         line.constraintHeight(constant: 1)
-   }
+    }
     
     func profileArrayFunction() {
         profileArray.append(nameView)
         profileArray.append(emailView)
         profileArray.append(phoneView)
         profileArray.append(addressView)
-        profileArray.append(genderView)
         profileArray.append(nationalityView)
+        profileArray.append(genderView)
         profileArray.append(adsView)
         profileArray.append(favouritesView)
         profileArray.append(termsView)
