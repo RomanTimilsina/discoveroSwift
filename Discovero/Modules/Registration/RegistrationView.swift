@@ -12,17 +12,17 @@ class RegistrationView: UIView {
     var openPicker: (() -> Void)?
     var handleSignUp: ((String?) -> Void)?
     
-    var viewTap: ((UITapGestureRecognizer) -> Void)?
+    var overlayViewTap: ((UITapGestureRecognizer) -> Void)?
     let headerView = DIHeaderView(title: "Registration", hasBack: false)
     let smallLabel = UILabel(text: "Few more things", font: OpenSans.regular, size: 14)
     let personalInfoTextField = DITextField(title: "What's your name?", placholder: "Name goes here", isPrimaryColor: false, typePad: .default, contentHeight: 68, placeholderHeight: 24)
     let pickerTextField = DITextField(title: "Select language you know", placholder: "Tap here to chose", isPrimaryColor: false, typePad: .default, contentHeight: 76, placeholderHeight: 24)
+    let picker = DICustomProfileView(titleText: "Select language you know", text: "")
     let headerLabel = UILabel(text: "Choose your nationality", font: OpenSans.bold, size: 20)
     let termsAndPolicyLabel = UILabel(text: "By signing up you agree to discovero’s",color: Color.appWhite, font: OpenSans.regular, size: 14, numberOfLines: 0, alignment: .center)
     let text =  "Terms of Use and Privacy Policy"
     let termsAndPolicyLabel2 = UILabel(text: "", font: OpenSans.regular, size: 14, alignment: .center)
     let signUpButton = DIButton(buttonTitle: "Sign Up")
-    
     lazy var verticalStack = VerticalStackView(arrangedSubViews: [termsAndPolicyLabel, termsAndPolicyLabel2, signUpButton], spacing: 8)
     let pickerHeaderView: UIView = {
         let view = UIView()
@@ -52,31 +52,30 @@ class RegistrationView: UIView {
     func setupLogin() {
         addSubview(overlayView)
         overlayView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-        let viewTap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        overlayView.addGestureRecognizer(viewTap)
+        let overlayViewTap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        overlayView.addGestureRecognizer(overlayViewTap)
         
         addSubview(headerView)
-        headerView.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        headerView.anchor(top:  safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
         
         addSubview(smallLabel)
         smallLabel.anchor(top: headerView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 78, left: 12, bottom: 0, right: 0))
         
         addSubview(personalInfoTextField)
-        personalInfoTextField.anchor(top: smallLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 12, left: 12, bottom: -100, right: 0))
+        personalInfoTextField.anchor(top: smallLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 12, left: 12, bottom: 0, right: 0))
         
         addSubview(pickerTextField)
         pickerTextField.anchor(top: personalInfoTextField.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 32, left: 12, bottom: 0, right: 12))
         pickerTextField.constraintHeight(constant: 100)
         
         addSubview(verticalStack)
-        verticalStackSetup()
-////
+        verticalStack.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor,  padding: .init(top: 0, left: 12, bottom: 40, right: 12))
+        
         let colorsAndSubstrings: [(UIColor?, String)] = [
             (Color.primary, "Terms of Use"),
             (Color.appWhite, "and"),
             (Color.primary, "Privacy Policy")
         ]
-        
         applyColorsAndBold(toLabel: termsAndPolicyLabel2, text: text, colorsAndSubstrings: colorsAndSubstrings)
     }
     
@@ -101,7 +100,6 @@ class RegistrationView: UIView {
                 attributedText.addAttribute(.font, value: boldFont, range: range)
             }
         }
-        
         label.attributedText = attributedText
     }
 }
@@ -113,7 +111,7 @@ extension RegistrationView {
     }
     
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
-        viewTap?(gesture)
+        overlayViewTap?(gesture)
     }
     
     @objc func signUp() {
@@ -124,11 +122,4 @@ extension RegistrationView {
     @objc func dismissKeyboard() {
         personalInfoTextField.textField.resignFirstResponder()
     }
-    
-    func verticalStackSetup(){
-        verticalStack.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor,  padding: .init(top: 0, left: 12, bottom: 40, right: 12))
-    }
 }
-
-
-

@@ -7,9 +7,9 @@
 
 import UIKit
 
-class DICreateAdVC: UIViewController {
+class RoomVC: UIViewController {
     
-    let createAd = DICreateAdView()
+    let room = RoomView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +18,6 @@ class DICreateAdVC: UIViewController {
     }
     
     override func loadView() {
-        view = createAd
+        view = room
     }
 }

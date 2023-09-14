@@ -17,7 +17,7 @@ struct DIPickerManager {
     var data = [DIPickerModel]()
     
     init(){
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
+        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Nepalese"))
         data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
         data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
         data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))

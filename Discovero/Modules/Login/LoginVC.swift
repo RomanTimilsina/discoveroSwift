@@ -9,34 +9,32 @@ import UIKit
 
 class LoginVC: UIViewController {
     
-    let login = LoginView()
-    let otpConfirm = OTPConfirmVC()
-    var isLogin: Bool?
+    let currentView = LoginView()
+    let otpConfirmVC = OTPConfirmVC()
+    var isFromLogin: Bool?
     
-    override func loadView() { 
+    override func loadView() {
         super.loadView()
-        view = login
+        view = currentView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = true
-        view.backgroundColor = Color.gray900
-        
-        loginEvents()
+        observeViewEvents()
     }
     
-    func loginEvents() {
-        login.headerView.onClose = {[weak self] in
+    func observeViewEvents() {
+        currentView.headerView.onClose = {[weak self] in
             guard let self = self else {return}
             navigationController?.popViewController(animated: true)
         }
         
-        login.confirmOTP = {[weak self] in
-            guard let self = self, let isLogin = isLogin else {return}
-            otpConfirm.logged = isLogin
-                navigationController?.pushViewController(otpConfirm, animated: true)
-            }
+        currentView.handleConfirmOTP = {[weak self] in
+            guard let self = self, let isFromLogin = isFromLogin else {return}
+            otpConfirmVC.isFromLogin = isFromLogin
+            navigationController?.pushViewController(otpConfirmVC, animated: true)
         }
     }
+}
 

@@ -12,11 +12,11 @@ class MainController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let Room = UINavigationController(rootViewController: DICreateAdVC())
-        let Jobs = UINavigationController(rootViewController: DICreateAdVC())
-        let Sales = UINavigationController(rootViewController: DICreateAdVC())
-        let Announcements = UINavigationController(rootViewController: DICreateAdVC())
-        let Matches = UINavigationController(rootViewController: DICreateAdVC())
+        let Room = UINavigationController(rootViewController: RoomVC())
+        let Jobs = UINavigationController(rootViewController: RoomVC())
+        let Sales = UINavigationController(rootViewController: RoomVC())
+        let Announcements = UINavigationController(rootViewController: RoomVC())
+        let Matches = UINavigationController(rootViewController: RoomVC())
         let Profile = UINavigationController(rootViewController: MyProfileVC())
         
         Room.tabBarItem.image = UIImage(named: "roomImage")

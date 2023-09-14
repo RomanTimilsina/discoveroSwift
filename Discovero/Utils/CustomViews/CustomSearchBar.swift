@@ -9,7 +9,7 @@ import UIKit
 
 class CustomSearchBar: UIView {
     
-    let searchBarContainer = UIView(color: Color.gray800)
+    let searchBarContainer = UIView(color: Color.gray900)
     
     let magnifyingGlassView: UIImageView = {
         let view = UIImageView()
@@ -54,7 +54,7 @@ class CustomSearchBar: UIView {
         
         addSubview(searchBarContainer)
         searchBarContainer.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-        searchBarContainer.constraintHeight(constant: 111)
+        searchBarContainer.constraintHeight(constant: 64)
         
         searchField.leftViewMode = .always
         searchField.leftView = magnifyingGlassView
@@ -69,7 +69,7 @@ class CustomSearchBar: UIView {
         searchField.rightView = searchBarRightIconContainer
         
         searchBarContainer.addSubview(searchField)
-        searchField.anchor(top: searchBarContainer.topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 55, left: 12, bottom: 0, right: 12 ))
+        searchField.anchor(top: searchBarContainer.topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 0, right: 12 ))
         searchField.constraintHeight(constant: 44)
     }
     

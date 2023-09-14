@@ -12,6 +12,7 @@ class DIPickerVC: UIViewController {
     let pickerView = DIPickerView()
     var getModel = DIPickerManager()
     var closePicker: (() -> Void)?
+    var onPicked: ((DIPickerModel) -> Void)?
     let registration = RegistrationVC()
     
     override func viewDidLoad() {
@@ -58,7 +59,8 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = getModel.getData()[indexPath.row]
-//        registration.country = data
+        onPicked?(data)
+        registration.isSelected = true
         dismiss(animated: true)
     }
 }

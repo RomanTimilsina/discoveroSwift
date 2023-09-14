@@ -17,10 +17,14 @@ class MyProfileVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationController?.navigationBar.isHidden = true
         for (index, profile) in profileView.profileArray.enumerated() {
             profile.profileTap = {[weak self] text in
                 guard let self = self else {return}
-                if index < 6 {
+//                if i {return}
+                if index < 6 && index != 2{
+                    
                     profileItem.onTitle = value1[index]
                     profileItem.onPlaceholder = value2[index]
                     navigationController?.pushViewController(profileItem, animated: true)

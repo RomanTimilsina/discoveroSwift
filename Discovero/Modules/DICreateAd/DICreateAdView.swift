@@ -7,9 +7,11 @@
 
 import UIKit
 
-class DICreateAdView: UIView {
+class RoomView: UIView {
     
     let searchBar = CustomSearchBar()
+    let view = UIView()
+
     let homeImg = UIImageView(image: UIImage(named: "homeImg"),contentMode: .scaleAspectFit, clipsToBounds: true)
     let createAdLabel = UILabel(text: "Create your first ad", font: OpenSans.semiBold, size: 16, alignment: .center)
     let AdDescriptionLabel = UILabel(text: "There seems to be no room available at the moment in your location. ", font: OpenSans.regular, size: 14,numberOfLines: 0, alignment: .center)
@@ -29,10 +31,15 @@ class DICreateAdView: UIView {
     func setupConstraint() {
         
         addSubview(searchBar)
-        searchBar.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 10, right: 0))
+        searchBar.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 10, right: 0))
         
         addSubview(createAdLabel)
         createAdLabel.centerInSuperview()
+        
+        addSubview(view)
+        view.anchor(top: topAnchor, leading: leadingAnchor, bottom: searchBar.topAnchor, trailing: trailingAnchor)
+        view.backgroundColor = Color.gray900
+        
         
         addSubview(homeImg)
         homeImg.anchor(top: nil, leading: nil, bottom: createAdLabel.topAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 40, right: 0))
@@ -45,7 +52,7 @@ class DICreateAdView: UIView {
         createAdButton.anchor(top: AdDescriptionLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 33, left: 12, bottom: 0, right: 12))
         
         addSubview(ad)
-        ad.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 84, right: 0))
+        ad.anchor(top: nil, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 1, right: 0))
         ad.constraintHeight(constant: 70)
         
         addSubview(line)

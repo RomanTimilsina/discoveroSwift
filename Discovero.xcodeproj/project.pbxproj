@@ -21,7 +21,7 @@
 		049BEF692AA5B0C800ED2B58 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049BEF682AA5B0C800ED2B58 /* LoginView.swift */; };
 		049CF12C2AA9AA4B00FF2F1B /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CF12B2AA9AA4B00FF2F1B /* CustomSearchBar.swift */; };
 		049CF12F2AA9D4D000FF2F1B /* DICreateAdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CF12E2AA9D4D000FF2F1B /* DICreateAdView.swift */; };
-		049CF1312AA9D4ED00FF2F1B /* DICreateAdVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CF1302AA9D4ED00FF2F1B /* DICreateAdVC.swift */; };
+		049CF1312AA9D4ED00FF2F1B /* RoomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CF1302AA9D4ED00FF2F1B /* RoomVC.swift */; };
 		049CF1352AA9DC7600FF2F1B /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CF1342AA9DC7600FF2F1B /* MainController.swift */; };
 		049D3A922AAD8C1C004864E9 /* MyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049D3A912AAD8C1C004864E9 /* MyProfileView.swift */; };
 		049D3A942AAD9379004864E9 /* MyProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049D3A932AAD9379004864E9 /* MyProfileVC.swift */; };
@@ -41,6 +41,7 @@
 		04A168BB2AA8549C0065F607 /* DIPickerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A168BA2AA8549C0065F607 /* DIPickerModel.swift */; };
 		04B514A52AA71CAA00E99A1B /* OtpConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B514A42AA71CAA00E99A1B /* OtpConfirmView.swift */; };
 		04B514A72AA71CDB00E99A1B /* OtpConfirmVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B514A62AA71CDB00E99A1B /* OtpConfirmVC.swift */; };
+		04B7CC192AB1CCD100C50CF3 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B7CC182AB1CCD100C50CF3 /* test.swift */; };
 		04CA49052AA43FEB00C69767 /* DITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA49042AA43FEB00C69767 /* DITextField.swift */; };
 		04CA490D2AA44D3400C69767 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04CA490C2AA44D2D00C69767 /* OpenSans-Regular.ttf */; };
 		04CA490E2AA44D3600C69767 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04CA490B2AA44D2D00C69767 /* OpenSans-SemiBold.ttf */; };
@@ -105,7 +106,7 @@
 		049BEF682AA5B0C800ED2B58 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		049CF12B2AA9AA4B00FF2F1B /* CustomSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
 		049CF12E2AA9D4D000FF2F1B /* DICreateAdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DICreateAdView.swift; sourceTree = "<group>"; };
-		049CF1302AA9D4ED00FF2F1B /* DICreateAdVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DICreateAdVC.swift; sourceTree = "<group>"; };
+		049CF1302AA9D4ED00FF2F1B /* RoomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomVC.swift; sourceTree = "<group>"; };
 		049CF1342AA9DC7600FF2F1B /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 		049D3A912AAD8C1C004864E9 /* MyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileView.swift; sourceTree = "<group>"; };
 		049D3A932AAD9379004864E9 /* MyProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileVC.swift; sourceTree = "<group>"; };
@@ -126,6 +127,7 @@
 		04A168BA2AA8549C0065F607 /* DIPickerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIPickerModel.swift; sourceTree = "<group>"; };
 		04B514A42AA71CAA00E99A1B /* OtpConfirmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpConfirmView.swift; sourceTree = "<group>"; };
 		04B514A62AA71CDB00E99A1B /* OtpConfirmVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpConfirmVC.swift; sourceTree = "<group>"; };
+		04B7CC182AB1CCD100C50CF3 /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
 		04CA49042AA43FEB00C69767 /* DITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITextField.swift; sourceTree = "<group>"; };
 		04CA490B2AA44D2D00C69767 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		04CA490C2AA44D2D00C69767 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
@@ -200,17 +202,18 @@
 		04996CB82AA46E5E00DB618F /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				04956D2C2AB06F2000540F44 /* updateEmail */,
-				049D3A902AAD8BFD004864E9 /* MyProfile */,
-				049CF1322AA9DC3D00FF2F1B /* MainTabBar */,
 				049CF12D2AA9D46900FF2F1B /* DICreateAd */,
 				04A168B32AA854260065F607 /* DiPicker */,
-				04A168AE2AA840990065F607 /* Registration */,
-				04A168A92AA83FF80065F607 /* NoConnection */,
-				04A168A32AA8394B0065F607 /* Welcome */,
-				04B514A32AA71C8400E99A1B /* OTPConfirm */,
 				049BEF652AA5B08D00ED2B58 /* Login */,
+				049CF1322AA9DC3D00FF2F1B /* MainTabBar */,
+				049D3A902AAD8BFD004864E9 /* MyProfile */,
+				04A168A92AA83FF80065F607 /* NoConnection */,
 				04CA49112AA45E1600C69767 /* OnBoardingPage */,
+				04B514A32AA71C8400E99A1B /* OTPConfirm */,
+				04A168AE2AA840990065F607 /* Registration */,
+				04B7CC172AB1CCC200C50CF3 /* test */,
+				04956D2C2AB06F2000540F44 /* updateEmail */,
+				04A168A32AA8394B0065F607 /* Welcome */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -253,7 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				049CF12E2AA9D4D000FF2F1B /* DICreateAdView.swift */,
-				049CF1302AA9D4ED00FF2F1B /* DICreateAdVC.swift */,
+				049CF1302AA9D4ED00FF2F1B /* RoomVC.swift */,
 			);
 			path = DICreateAd;
 			sourceTree = "<group>";
@@ -321,6 +324,14 @@
 				04B514A62AA71CDB00E99A1B /* OtpConfirmVC.swift */,
 			);
 			path = OTPConfirm;
+			sourceTree = "<group>";
+		};
+		04B7CC172AB1CCC200C50CF3 /* test */ = {
+			isa = PBXGroup;
+			children = (
+				04B7CC182AB1CCD100C50CF3 /* test.swift */,
+			);
+			path = test;
 			sourceTree = "<group>";
 		};
 		04CA49062AA446F000C69767 /* openSans */ = {
@@ -583,7 +594,7 @@
 				E0FE06422AA43D1B001DBDF5 /* AlertHelper.swift in Sources */,
 				E0FE062A2AA43D1B001DBDF5 /* UICollectionView+Ext.swift in Sources */,
 				E0FE06352AA43D1B001DBDF5 /* UIView+Ext.swift in Sources */,
-				049CF1312AA9D4ED00FF2F1B /* DICreateAdVC.swift in Sources */,
+				049CF1312AA9D4ED00FF2F1B /* RoomVC.swift in Sources */,
 				E0FE06212AA43D1B001DBDF5 /* FontConstants.swift in Sources */,
 				04B514A52AA71CAA00E99A1B /* OtpConfirmView.swift in Sources */,
 				049698542AAEFD6200CDD456 /* logModel.swift in Sources */,
@@ -602,6 +613,7 @@
 				E0FE06272AA43D1B001DBDF5 /* UIImageView+Ext.swift in Sources */,
 				E0FE062E2AA43D1B001DBDF5 /* UINavigationController+Ext.swift in Sources */,
 				04A168AB2AA840260065F607 /* NoConnectionVC.swift in Sources */,
+				04B7CC192AB1CCD100C50CF3 /* test.swift in Sources */,
 				04A168B02AA840B60065F607 /* RegistrationView.swift in Sources */,
 				E0FE06442AA43D1B001DBDF5 /* ImagePickerHelper.swift in Sources */,
 				E0FE06462AA43D1B001DBDF5 /* PhoneCodeHelper.swift in Sources */,

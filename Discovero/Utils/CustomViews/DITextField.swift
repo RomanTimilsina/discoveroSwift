@@ -25,6 +25,12 @@ class DITextField: UIView {
         button.setTitle("I didn't receive a code", for: .normal)
         return  button
     }()
+    
+    let textFieldCoverLabel = UILabel(text: "", font: OpenSans.regular, size: 14)
+    let image = UIImageView(contentMode: .scaleAspectFit, clipsToBounds: true)
+    
+    lazy var textCover = HorizontalStackView(arrangedSubViews: [textFieldCoverLabel, image], spacing: 5)
+    
     let otpTextfield = DIOTPField()
     
     init(title: String, placholder: String, isPrimaryColor: Bool = false, typePad: UIKeyboardType, isOtpTextField: Bool = true, contentHeight: CGFloat = 74, placeholderHeight: CGFloat = 32, textHeight: CGFloat = 24) {
@@ -42,6 +48,10 @@ class DITextField: UIView {
         super.init(frame: .zero)
         textFieldAttribute(placeholderText: placholder, placeholderHeight: placeholderHeight)
         setConstraint()
+        
+        textFieldCoverLabel.font = UIFont.font(with: 24, family: OpenSans.regular)
+        textFieldCoverLabel.tintColor = Color.appWhite
+        
     }
     
     required init?(coder: NSCoder) {
@@ -56,7 +66,12 @@ class DITextField: UIView {
         titleLabel.anchor(top: contentVeiw.topAnchor, leading: contentVeiw.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 0, bottom: 10, right: 0))
         
         contentVeiw.addSubview(textField)
-        textField.anchor(top: titleLabel.bottomAnchor, leading: contentVeiw.leadingAnchor, bottom: nil, trailing: contentVeiw.trailingAnchor, padding: .init(top: 2, left: 0, bottom: 0, right: 0))
+    
+        textField.anchor(top: titleLabel.bottomAnchor, leading: contentVeiw.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 2, left: 0, bottom: 0, right: 0))
+        
+        contentVeiw.addSubview(textCover)
+
+        textCover.anchor(top: titleLabel.bottomAnchor, leading: contentVeiw.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 2, left: 0, bottom: 0, right: 0))
         
         contentVeiw.addSubview(otpTextfield)
         otpTextfield.anchor(top: titleLabel.bottomAnchor, leading: contentVeiw.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 2, left: 0, bottom: 0, right: 0))

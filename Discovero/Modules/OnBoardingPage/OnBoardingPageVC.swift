@@ -16,24 +16,29 @@ class OnBoardingPageVC: UIViewController {
         super.viewDidLoad()
         currentView.backgroundColor = Color.appBlack
         setupCollectionView()
-        
-        registerAndLogin()
+        observeViewEvents()
     }
     
     func setupCollectionView() {
-        currentView.onBoardingCollection.register(OnBoardingPageViewCell.self, forCellWithReuseIdentifier: "cell")
-        currentView.onBoardingCollection.delegate = self
-        currentView.onBoardingCollection.dataSource = self
+        currentView.onboardingCollection.register(OnBoardingPageViewCell.self, forCellWithReuseIdentifier: OnBoardingPageViewCell.identifier)
+        currentView.onboardingCollection.delegate = self
+        currentView.onboardingCollection.dataSource = self
     }
     
     override func  loadView() {
         view = currentView
     }
     
-    func registerAndLogin() {
-        currentView.handleRegister = {[weak self] log in
+    func observeViewEvents() {
+        currentView.handleLoginClicked = {[weak self] in
             guard let self = self else {return}
-            login.isLogin = log
+            login.isFromLogin = true
+            navigationController?.pushViewController(login, animated: true)
+        }
+        
+        currentView.handleRegisterClicked = {[weak self] in
+            guard let self = self else {return}
+            login.isFromLogin = false
             navigationController?.pushViewController(login, animated: true)
         }
     }
@@ -46,7 +51,7 @@ extension OnBoardingPageVC: UICollectionViewDelegate, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let data = OnBoardingCollectionManager().getData()[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! OnBoardingPageViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OnBoardingPageViewCell.identifier, for: indexPath) as! OnBoardingPageViewCell
         cell.configureCellData(data: data)
         return cell
     }
@@ -64,9 +69,9 @@ extension OnBoardingPageVC: UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let visibleRect = CGRect(origin: currentView.onBoardingCollection.contentOffset, size: currentView.onBoardingCollection.bounds.size)
+        let visibleRect = CGRect(origin: currentView.onboardingCollection.contentOffset, size: currentView.onboardingCollection.bounds.size)
         let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
-        if let visibleIndexPath = currentView.onBoardingCollection.indexPathForItem(at: visiblePoint){
+        if let visibleIndexPath = currentView.onboardingCollection.indexPathForItem(at: visiblePoint){
             currentView.indicator.currentPage = visibleIndexPath.row
         }
     }
