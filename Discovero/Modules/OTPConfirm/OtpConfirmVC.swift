@@ -10,7 +10,6 @@ import UIKit
 class OTPConfirmVC: UIViewController {
     
     let currentView = OTPConfirmView()
-    let registrationVC = RegistrationVC()
     var isFromLogin: Bool?
     
     override func loadView() {
@@ -32,6 +31,7 @@ class OTPConfirmVC: UIViewController {
         }
         
         currentView.codeTextField.otpTextfield.onOtpFilled = {[weak self] text, isFilled in
+            let registrationVC = RegistrationVC()
             guard let self = self, let isFromLogin = isFromLogin else {return}
             if isFilled {
                 navigationController?.pushViewController(isFromLogin ? MainController() : registrationVC, animated: true)

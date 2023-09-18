@@ -10,8 +10,7 @@ import UIKit
 class OnBoardingPageVC: UIViewController {
     
     let currentView = OnBoardingPageView()
-    let login = LoginVC()
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         currentView.backgroundColor = Color.appBlack
@@ -32,15 +31,19 @@ class OnBoardingPageVC: UIViewController {
     func observeViewEvents() {
         currentView.handleLoginClicked = {[weak self] in
             guard let self = self else {return}
-            login.isFromLogin = true
-            navigationController?.pushViewController(login, animated: true)
+            gotoLogin(isFromLogin: true)
         }
         
         currentView.handleRegisterClicked = {[weak self] in
             guard let self = self else {return}
-            login.isFromLogin = false
-            navigationController?.pushViewController(login, animated: true)
+            gotoLogin(isFromLogin: false)
         }
+    }
+    
+    private func gotoLogin(isFromLogin: Bool) {
+        let login = LoginVC()
+        login.isFromLogin = isFromLogin
+        navigationController?.pushViewController(login, animated: true)
     }
 }
 

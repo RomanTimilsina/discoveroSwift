@@ -11,7 +11,6 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
     let registrationView = RegistrationView()
     lazy var countryPicker = DIPickerVC()
     var country: DIPickerModel?
-    let welcomeVC = WelcomeVC()
     var hasName: Bool?
     var isSelected: Bool?
     
@@ -48,6 +47,8 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
         }
         
         registrationView.handleSignUp = {[weak self] text in
+            let welcomeVC = WelcomeVC()
+
             guard let self = self, let text = text else {return}
             welcomeVC.name = text
             navigationController?.pushViewController(welcomeVC, animated: true)

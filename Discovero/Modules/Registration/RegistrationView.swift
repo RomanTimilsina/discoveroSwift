@@ -14,6 +14,7 @@ class RegistrationView: UIView {
     
     var overlayViewTap: ((UITapGestureRecognizer) -> Void)?
     let headerView = DIHeaderView(title: "Registration", hasBack: false)
+    let view = UIView()
     let smallLabel = UILabel(text: "Few more things", font: OpenSans.regular, size: 14)
     let personalInfoTextField = DITextField(title: "What's your name?", placholder: "Name goes here", isPrimaryColor: false, typePad: .default, contentHeight: 68, placeholderHeight: 24)
     let pickerTextField = DITextField(title: "Select language you know", placholder: "Tap here to chose", isPrimaryColor: false, typePad: .default, contentHeight: 76, placeholderHeight: 24)
@@ -57,6 +58,11 @@ class RegistrationView: UIView {
         
         addSubview(headerView)
         headerView.anchor(top:  safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
+        
+        addSubview(view)
+        view.anchor(top: topAnchor, leading: leadingAnchor, bottom: headerView.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0 ))
+        view.backgroundColor = Color.gray900
+        
         
         addSubview(smallLabel)
         smallLabel.anchor(top: headerView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 78, left: 12, bottom: 0, right: 0))

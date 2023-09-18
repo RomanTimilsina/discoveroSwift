@@ -15,12 +15,14 @@
 		04996CBF2AA4725300DB618F /* DIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04996CBE2AA4725300DB618F /* DIButton.swift */; };
 		04996CC12AA489F600DB618F /* OnBoardingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04996CC02AA489F600DB618F /* OnBoardingPageView.swift */; };
 		04996CC42AA4A10200DB618F /* OnBoardingCollectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04996CC32AA4A10200DB618F /* OnBoardingCollectionModel.swift */; };
+		049AF2AB2AB6D3800033EF2F /* DIHeaderTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049AF2AA2AB6D3800033EF2F /* DIHeaderTab.swift */; };
+		049AF2AD2AB70A600033EF2F /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049AF2AC2AB70A600033EF2F /* FilterView.swift */; };
 		049BEF602AA593EA00ED2B58 /* DIPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049BEF5F2AA593EA00ED2B58 /* DIPageViewController.swift */; };
 		049BEF642AA5AD4E00ED2B58 /* DIHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049BEF632AA5AD4E00ED2B58 /* DIHeaderView.swift */; };
 		049BEF672AA5B0B000ED2B58 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049BEF662AA5B0B000ED2B58 /* LoginVC.swift */; };
 		049BEF692AA5B0C800ED2B58 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049BEF682AA5B0C800ED2B58 /* LoginView.swift */; };
 		049CF12C2AA9AA4B00FF2F1B /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CF12B2AA9AA4B00FF2F1B /* CustomSearchBar.swift */; };
-		049CF12F2AA9D4D000FF2F1B /* DICreateAdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CF12E2AA9D4D000FF2F1B /* DICreateAdView.swift */; };
+		049CF12F2AA9D4D000FF2F1B /* DIRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CF12E2AA9D4D000FF2F1B /* DIRoomView.swift */; };
 		049CF1312AA9D4ED00FF2F1B /* RoomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CF1302AA9D4ED00FF2F1B /* RoomVC.swift */; };
 		049CF1352AA9DC7600FF2F1B /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CF1342AA9DC7600FF2F1B /* MainController.swift */; };
 		049D3A922AAD8C1C004864E9 /* MyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049D3A912AAD8C1C004864E9 /* MyProfileView.swift */; };
@@ -100,12 +102,14 @@
 		04996CBE2AA4725300DB618F /* DIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIButton.swift; sourceTree = "<group>"; };
 		04996CC02AA489F600DB618F /* OnBoardingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingPageView.swift; sourceTree = "<group>"; };
 		04996CC32AA4A10200DB618F /* OnBoardingCollectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingCollectionModel.swift; sourceTree = "<group>"; };
+		049AF2AA2AB6D3800033EF2F /* DIHeaderTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIHeaderTab.swift; sourceTree = "<group>"; };
+		049AF2AC2AB70A600033EF2F /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		049BEF5F2AA593EA00ED2B58 /* DIPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIPageViewController.swift; sourceTree = "<group>"; };
 		049BEF632AA5AD4E00ED2B58 /* DIHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIHeaderView.swift; sourceTree = "<group>"; };
 		049BEF662AA5B0B000ED2B58 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		049BEF682AA5B0C800ED2B58 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		049CF12B2AA9AA4B00FF2F1B /* CustomSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
-		049CF12E2AA9D4D000FF2F1B /* DICreateAdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DICreateAdView.swift; sourceTree = "<group>"; };
+		049CF12E2AA9D4D000FF2F1B /* DIRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIRoomView.swift; sourceTree = "<group>"; };
 		049CF1302AA9D4ED00FF2F1B /* RoomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomVC.swift; sourceTree = "<group>"; };
 		049CF1342AA9DC7600FF2F1B /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 		049D3A912AAD8C1C004864E9 /* MyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileView.swift; sourceTree = "<group>"; };
@@ -229,6 +233,8 @@
 				049CF12B2AA9AA4B00FF2F1B /* CustomSearchBar.swift */,
 				049D3A992AADBE86004864E9 /* DICustomProfileView.swift */,
 				04956D282AB01D8A00540F44 /* CustomAdView.swift */,
+				049AF2AA2AB6D3800033EF2F /* DIHeaderTab.swift */,
+				049AF2AC2AB70A600033EF2F /* FilterView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -255,7 +261,7 @@
 		049CF12D2AA9D46900FF2F1B /* DICreateAd */ = {
 			isa = PBXGroup;
 			children = (
-				049CF12E2AA9D4D000FF2F1B /* DICreateAdView.swift */,
+				049CF12E2AA9D4D000FF2F1B /* DIRoomView.swift */,
 				049CF1302AA9D4ED00FF2F1B /* RoomVC.swift */,
 			);
 			path = DICreateAd;
@@ -589,7 +595,7 @@
 				04A168A22AA835380065F607 /* DIOTPField.swift in Sources */,
 				04B514A72AA71CDB00E99A1B /* OtpConfirmVC.swift in Sources */,
 				E0FE05C72AA439C1001DBDF5 /* OnBoardingPageVC.swift in Sources */,
-				049CF12F2AA9D4D000FF2F1B /* DICreateAdView.swift in Sources */,
+				049CF12F2AA9D4D000FF2F1B /* DIRoomView.swift in Sources */,
 				E0FE06402AA43D1B001DBDF5 /* EmailValidator.swift in Sources */,
 				E0FE06422AA43D1B001DBDF5 /* AlertHelper.swift in Sources */,
 				E0FE062A2AA43D1B001DBDF5 /* UICollectionView+Ext.swift in Sources */,
@@ -629,6 +635,7 @@
 				04A168B22AA840E20065F607 /* RegistrationVC.swift in Sources */,
 				E0FE062B2AA43D1B001DBDF5 /* Double+Ext.swift in Sources */,
 				04996CC42AA4A10200DB618F /* OnBoardingCollectionModel.swift in Sources */,
+				049AF2AB2AB6D3800033EF2F /* DIHeaderTab.swift in Sources */,
 				E0FE06482AA43D1B001DBDF5 /* DateConverterHelper.swift in Sources */,
 				E0FE06292AA43D1B001DBDF5 /* Gradient+Ext.swift in Sources */,
 				E0FE062C2AA43D1B001DBDF5 /* UITextField+Ext.swift in Sources */,
@@ -636,6 +643,7 @@
 				04CA49102AA4530F00C69767 /* OnBoardingPageViewCell.swift in Sources */,
 				04956D2E2AB06F4900540F44 /* ProfileItemVC.swift in Sources */,
 				E0FE06232AA43D1B001DBDF5 /* BaseViewController.swift in Sources */,
+				049AF2AD2AB70A600033EF2F /* FilterView.swift in Sources */,
 				049D3A962AAD9EE0004864E9 /* MyProfileCell.swift in Sources */,
 				E0FE06262AA43D1B001DBDF5 /* UILabel+Ext.swift in Sources */,
 				E0FE05C32AA439C1001DBDF5 /* AppDelegate.swift in Sources */,
@@ -795,6 +803,7 @@
 				INFOPLIST_FILE = Discovero/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -826,6 +835,7 @@
 				INFOPLIST_FILE = Discovero/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;

@@ -10,7 +10,6 @@ import UIKit
 class LoginVC: UIViewController {
     
     let currentView = LoginView()
-    let otpConfirmVC = OTPConfirmVC()
     var isFromLogin: Bool?
     
     override func loadView() {
@@ -31,6 +30,7 @@ class LoginVC: UIViewController {
         }
         
         currentView.handleConfirmOTP = {[weak self] in
+            let otpConfirmVC = OTPConfirmVC()
             guard let self = self, let isFromLogin = isFromLogin else {return}
             otpConfirmVC.isFromLogin = isFromLogin
             navigationController?.pushViewController(otpConfirmVC, animated: true)

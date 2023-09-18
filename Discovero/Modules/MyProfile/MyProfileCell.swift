@@ -40,8 +40,6 @@ class MyProfileCell: UITableViewCell {
         emptyView.isHidden = false
         emptyView.constraintHeight(constant: 3)
         emptyView.centerXInSuperview()
-        titleLabel.text = ""
-        valueLabel.text = ""
         emptyView.backgroundColor = .gray
     }
 }

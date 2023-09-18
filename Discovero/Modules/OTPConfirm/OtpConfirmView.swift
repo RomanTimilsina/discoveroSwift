@@ -14,6 +14,7 @@ class OTPConfirmView: UIView {
     let getStartedLabel = UILabel(text: "Confirm your number", font: OpenSans.semiBold, size: 14)
     let codeTextField = DITextField(title: "Ener the 6 digit code", placholder: "0000 000 000", isPrimaryColor: true, typePad: .numberPad, isOtpTextField: false, contentHeight: 90)
     let titleDescLabel = UILabel(text: "We’ll call or text to confirm your number. Standard message and data rates apply.",color: Color.appWhite, font: OpenSans.regular, size: 12, numberOfLines: 0, alignment: .left)
+    let codeNotReceivedLabel = UILabel(text: "I didn't receive a code",color: Color.primary, font: OpenSans.semiBold, size: 14)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,5 +46,17 @@ class OTPConfirmView: UIView {
         
         addSubview(titleDescLabel)
         titleDescLabel.anchor(top: codeTextField.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 17, left: 12, bottom: 0, right: 18))
+        
+        addSubview(codeNotReceivedLabel)
+        codeNotReceivedLabel.anchor(top: nil, leading: nil, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 12, bottom: 28, right: 0))
+        codeNotReceivedLabel.centerXInSuperview()
+        let resendCode = UITapGestureRecognizer(target: self, action: #selector(handleResendCode))
+        codeNotReceivedLabel.addGestureRecognizer(resendCode)
+        codeNotReceivedLabel.isUserInteractionEnabled = true
+
+    }
+    
+    @objc func handleResendCode() {
+        print("Call api to resend code")
     }
 }
