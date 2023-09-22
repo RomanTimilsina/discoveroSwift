@@ -30,11 +30,15 @@ class LoginVC: UIViewController {
         }
         
         currentView.handleConfirmOTP = {[weak self] in
-            let otpConfirmVC = OTPConfirmVC()
             guard let self = self, let isFromLogin = isFromLogin else {return}
-            otpConfirmVC.isFromLogin = isFromLogin
-            navigationController?.pushViewController(otpConfirmVC, animated: true)
+            self.gotoOTPConfirmV(isFromLogin: isFromLogin)
         }
+    }
+    
+    private func gotoOTPConfirmV(isFromLogin: Bool) {
+        let otpConfirmVC = OTPConfirmVC()
+        otpConfirmVC.isFromLogin = isFromLogin
+        navigationController?.pushViewController(otpConfirmVC, animated: true)
     }
 }
 

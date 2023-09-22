@@ -26,7 +26,7 @@ class DIHeaderTab: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupTab()
-        backgroundColor = Color.gray900
+       
     }
     
     required init?(coder: NSCoder) {

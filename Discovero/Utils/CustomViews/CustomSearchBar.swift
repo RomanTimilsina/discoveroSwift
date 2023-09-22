@@ -31,14 +31,8 @@ class CustomSearchBar: UIView {
         return textField
     }()
     
-    let searchBarRightIconContainer = UIView()
-    
-    let  searchBarRightIcon: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(named: "fllterButton")
-        view.contentMode = .scaleAspectFit
-        return view
-    }()
+    let iconContainer = UIView()
+    let filterImage = UIImageView(image: UIImage(named: "filterButton") ,contentMode: .scaleAspectFit, clipsToBounds: true)
     
     init(placeholder: String = "Search for room", placeholderHeight: CGFloat = 14) {
         super.init(frame: .zero)
@@ -59,14 +53,11 @@ class CustomSearchBar: UIView {
         searchField.leftViewMode = .always
         searchField.leftView = magnifyingGlassView
         
-        searchBarRightIconContainer.addSubview(searchBarRightIcon)
-        searchBarRightIcon.anchor(top: searchBarRightIconContainer.topAnchor, leading: searchBarRightIconContainer.leadingAnchor, bottom: searchBarRightIconContainer.bottomAnchor, trailing: searchBarRightIconContainer.trailingAnchor, padding: .init(top: 7, left: 7, bottom: 7, right: 7))
-        searchBarRightIcon.constraintWidth(constant: 30)
-        searchBarRightIconContainer.constraintWidth(constant: 44)
-        searchBarRightIconContainer.constraintHeight(constant: 44)
+        iconContainer.addSubview(filterImage)
+        filterImage.anchor(top: iconContainer.topAnchor, leading: iconContainer.leadingAnchor, bottom: iconContainer.bottomAnchor, trailing: iconContainer.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 7))
         
         searchField.rightViewMode = .always
-        searchField.rightView = searchBarRightIconContainer
+        searchField.rightView = iconContainer
         
         searchBarContainer.addSubview(searchField)
         searchField.anchor(top: searchBarContainer.topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 0, right: 12 ))

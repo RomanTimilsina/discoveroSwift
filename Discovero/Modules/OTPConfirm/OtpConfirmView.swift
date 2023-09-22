@@ -53,7 +53,6 @@ class OTPConfirmView: UIView {
         let resendCode = UITapGestureRecognizer(target: self, action: #selector(handleResendCode))
         codeNotReceivedLabel.addGestureRecognizer(resendCode)
         codeNotReceivedLabel.isUserInteractionEnabled = true
-
     }
     
     @objc func handleResendCode() {

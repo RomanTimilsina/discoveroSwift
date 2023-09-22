@@ -10,17 +10,16 @@ class FilterView: UIView {
     let view = UIView()
     let imageView = UIImageView(image: UIImage(named: "filterImage"),contentMode: .scaleAspectFit, clipsToBounds: true)
     let filtersLabel = UILabel(text: "Filters", font: OpenSans.semiBold, size: 15)
-    let circleView = UIView(color: Color.primary, cornerRadius: 8)
+    let circleView = UIView(color: Color.primary, cornerRadius: 10)
     let filterNumber = UILabel(text: "6", color: Color.appBlack, font: OpenSans.regular, size: 12)
     let numberOfOffers = UILabel(text: "\(29) Offers", font: OpenSans.semiBold, size: 12)
 
-    lazy var filterStack = HorizontalStackView(arrangedSubViews: [imageView, filtersLabel, circleView])
-//    let filterContainerView = UIView()
+    lazy var filterStack = HorizontalStackView(arrangedSubViews: [imageView, filtersLabel, circleView], spacing: 6)
+    let filterContainerView = UIView(color: Color.gray700, cornerRadius: 15)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupFilter()
-        backgroundColor = Color.gray700
     }
     
     required init?(coder: NSCoder) {
@@ -28,22 +27,26 @@ class FilterView: UIView {
     }
     
     func setupFilter() {
-        
         addSubview(numberOfOffers)
         numberOfOffers.anchor(top: safeAreaLayoutGuide.topAnchor, leading: safeAreaLayoutGuide.leadingAnchor, bottom: nil , trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0  ))
         numberOfOffers.constraintHeight(constant: 40)
         
-        addSubview(filterStack)
-        filterStack.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil , trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0  ))
+        imageView.constraintWidth(constant: 18)
         
-//        filterStack.centerXInSuperview()
-        numberOfOffers.centerYAnchor.constraint(equalTo: filterStack.centerYAnchor).isActive = true
-        filterStack.centerXInSuperview()
+        addSubview(filterContainerView)
+        filterContainerView.constraintHeight(constant: 30)
+        filterContainerView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: nil, bottom: nil , trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: UIScreen.main.bounds.width/2 - 47))
+        
+        filterContainerView.addSubview(filterStack)
+        filterStack.anchor(top: filterContainerView.topAnchor, leading: filterContainerView.leadingAnchor, bottom: filterContainerView.bottomAnchor , trailing: filterContainerView.trailingAnchor, padding: .init(top: 5, left: 4, bottom: 5, right: 4  ))
+        
+        numberOfOffers.centerYAnchor.constraint(equalTo:filterContainerView.centerYAnchor).isActive = true
         
         circleView.backgroundColor = Color.primary
-        circleView.constraintHeight(constant: 16)
-        circleView.constraintWidth(constant: 16)
+        circleView.constraintHeight(constant: 20)
+        circleView.constraintWidth(constant: 20)
         
-        
+        circleView.addSubview(filterNumber)
+        filterNumber.centerInSuperview()
     }
 }
