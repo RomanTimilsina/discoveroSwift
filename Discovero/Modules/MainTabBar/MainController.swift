@@ -7,36 +7,36 @@
 
 import UIKit
 
-class MainController: UITabBarController {
+class HomeController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let Room = UINavigationController(rootViewController: RoomVC())
-        let Jobs = UINavigationController(rootViewController: RoomVC())
-        let Sales = UINavigationController(rootViewController: RoomVC())
-        let Announcements = UINavigationController(rootViewController: RoomVC())
-        let Matches = UINavigationController(rootViewController: RoomVC())
-        let Profile = UINavigationController(rootViewController: MyProfileVC())
+        let room = UINavigationController(rootViewController: RoomVC())
+        let jobs = UINavigationController(rootViewController: RoomVC())
+        let sales = UINavigationController(rootViewController: RoomVC())
+        let announcements = UINavigationController(rootViewController: RoomVC())
+        let matches = UINavigationController(rootViewController: RoomVC())
+        let profile = UINavigationController(rootViewController: MyProfileVC())
         
-        Room.tabBarItem.image = UIImage(named: "roomImage")
-        Jobs.tabBarItem.image = UIImage(named: "jobsImage")
-        Sales.tabBarItem.image = UIImage(named: "salesImage")
-        Announcements.tabBarItem.image = UIImage(named: "announcementsImage")
-        Matches.tabBarItem.image = UIImage(named: "matchesImage")
-        Profile.tabBarItem.image = UIImage(named: "profileImage")
+        room.tabBarItem.image = UIImage(named: "roomImage")
+        jobs.tabBarItem.image = UIImage(named: "jobsImage")
+        sales.tabBarItem.image = UIImage(named: "salesImage")
+        announcements.tabBarItem.image = UIImage(named: "announcementsImage")
+        matches.tabBarItem.image = UIImage(named: "matchesImage")
+        profile.tabBarItem.image = UIImage(named: "profileImage")
         
-        Room.title = "Room"
-        Jobs.title = "Jobs"
-        Sales.title = "Sales"
-        Announcements.title = "Announcements"
-        Matches.title = "Matches"
-        Profile.title = "Profile"
+        room.title = "Room"
+        jobs.title = "Jobs"
+        sales.title = "Sales"
+        announcements.title = "Announcements"
+        matches.title = "Matches"
+        profile.title = "Profile"
         
         tabBar.backgroundColor = Color.gray800
         tabBar.tintColor = Color.appWhite
         tabBar.barTintColor = UIColor.red
         
-        setViewControllers([Room, Jobs, Sales, Announcements, Profile], animated: true)
+        setViewControllers([room, jobs, sales, announcements, matches, profile], animated: true)
     }
 }

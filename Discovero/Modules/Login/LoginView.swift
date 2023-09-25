@@ -12,31 +12,25 @@ class LoginView: UIView {
     var handleConfirmOTP: (() -> Void)?
     
     let view = UIView()
-    
     let headerView = DIHeaderView(title: "Verify your number", hasBack: false, hasBGColor: true)
-    
     let getStartedLabel = UILabel(text: "Let's get started", font: OpenSans.semiBold, size: 14)
-    
-    let phoneNumberTextField = DITextField(title: "What’s your phone number?", placholder: "0000 000 000", isPrimaryColor: true, typePad: .numberPad)
-    
+    let phoneNumberTextField = DITextField(title: "What’s your phone number?", placholder: "0000 000 000", isPrimaryColor: true, typePad: .numberPad, countryCode: "+977")
     let noticeLabel = UILabel(text: "We’ll call or text to confirm your number. Standard message and data rates apply.",color: Color.appWhite, font: OpenSans.regular, size: 12, numberOfLines: 0, alignment: .left)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupLogin()
-        backgroundColor = Color.appBlack
+        setupView()
+        observeEvents()
+        backgroundColor = Color.gray900
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupLogin() {
-      
-       
+    func setupView() {
         addSubview(headerView)
         headerView.anchor(top:safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 13, left: 0, bottom: 0, right: 0))
-//        headerView.constraintHeight(constant: 40)
         
         addSubview(view)
         view.anchor(top: topAnchor, leading: leadingAnchor, bottom: headerView.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0 ))
@@ -47,16 +41,23 @@ class LoginView: UIView {
         
         addSubview(phoneNumberTextField)
         phoneNumberTextField.anchor(top: getStartedLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 12, left: 12, bottom: 0, right: 0))
-        phoneNumberTextField.textField.addTarget(self, action: #selector(textChanged(_:)), for: .editingChanged)
         
         addSubview(noticeLabel)
         noticeLabel.anchor(top: phoneNumberTextField.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 24, left: 12, bottom: 0, right: 18))
+    }
+    
+    private func observeEvents() {
+        phoneNumberTextField.textField.addTarget(self, action: #selector(textChanged(_:)), for: .editingChanged)
     }
     
     @objc func textChanged(_ textfield: UITextField) {
         if let enteredText = textfield.text {
             if enteredText.count > 9 {
                 handleConfirmOTP?()
+            }
+            
+            if enteredText.count == 4 {
+
             }
         }
     }

@@ -16,7 +16,7 @@ class OnBoardingPageView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.backgroundColor = Color.appBlack
+        view.backgroundColor = Color.gray900
         view.isPagingEnabled = true
         return view
     }()
@@ -34,7 +34,7 @@ class OnBoardingPageView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = Color.appBlack
+        backgroundColor = Color.gray900
         setupUI()
     }
     

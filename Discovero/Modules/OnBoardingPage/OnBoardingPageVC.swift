@@ -10,10 +10,10 @@ import UIKit
 class OnBoardingPageVC: UIViewController {
     
     let currentView = OnBoardingPageView()
+    let manager = OnBoardingCollectionManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        currentView.backgroundColor = Color.appBlack
         setupCollectionView()
         observeViewEvents()
     }
@@ -24,7 +24,7 @@ class OnBoardingPageVC: UIViewController {
         currentView.onboardingCollection.dataSource = self
     }
     
-    override func  loadView() {
+    override func loadView() {
         view = currentView
     }
     
@@ -49,11 +49,11 @@ class OnBoardingPageVC: UIViewController {
 
 extension OnBoardingPageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return manager.getData().count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let data = OnBoardingCollectionManager().getData()[indexPath.row]
+        let data = manager.getData()[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OnBoardingPageViewCell.identifier, for: indexPath) as! OnBoardingPageViewCell
         cell.configureCellData(data: data)
         return cell
@@ -71,6 +71,7 @@ extension OnBoardingPageVC: UICollectionViewDelegate, UICollectionViewDataSource
         return 0
     }
     
+    // Indicator scroll index
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let visibleRect = CGRect(origin: currentView.onboardingCollection.contentOffset, size: currentView.onboardingCollection.bounds.size)
         let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)

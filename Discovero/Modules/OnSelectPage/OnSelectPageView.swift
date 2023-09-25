@@ -82,18 +82,12 @@ class OnSelectPageView: UIView {
     func setup() {
         gapView.constraintHeight(constant: 20)
         
-        
-        
         addSubview(scrollView)
         scrollView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 20, left: 5, bottom: 0, right: 0))
         
         scrollView.addSubview(cellStack)
-
         cellStack.anchor(top: scrollView.topAnchor, leading: scrollView.leadingAnchor, bottom: scrollView.bottomAnchor, trailing: scrollView.trailingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: -370))
        
-        
-       
-        
         addSubview(totalViewStack)
         totalViewStack.anchor(top: likesStack.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 0, left: 0, bottom: 8, right: 0))
         totalViewStack.centerXAnchor.constraint(equalTo: likesStack.centerXAnchor).isActive = true

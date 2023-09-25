@@ -31,7 +31,7 @@ class OnBoardingPageViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = Color.appBlack
+        backgroundColor = Color.gray900
         setupUI()
     }
     

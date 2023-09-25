@@ -8,6 +8,7 @@
 import UIKit
 
 class OTPConfirmView: UIView {
+    var didNotReceiveCode: (() -> Void)?
     
     let headerView = DIHeaderView(title: "Confirm your number", hasBack: false)
     let view = UIView()
@@ -18,9 +19,9 @@ class OTPConfirmView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = Color.appBlack
+        backgroundColor = Color.gray900
         setupUI()
-       
+        observeEvents()
     }
     
     required init?(coder: NSCoder) {
@@ -32,11 +33,9 @@ class OTPConfirmView: UIView {
         headerView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 13, left: 0, bottom: 0, right: 0))
         headerView.constraintHeight(constant: 40)
         
-        
         addSubview(view)
         view.anchor(top: topAnchor, leading: leadingAnchor, bottom: headerView.topAnchor, trailing: trailingAnchor)
         view.backgroundColor = Color.gray900
-        
         
         addSubview(getStartedLabel)
         getStartedLabel.anchor(top: headerView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 78, left: 12, bottom: 0, right: 0))
@@ -50,12 +49,15 @@ class OTPConfirmView: UIView {
         addSubview(codeNotReceivedLabel)
         codeNotReceivedLabel.anchor(top: nil, leading: nil, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 12, bottom: 28, right: 0))
         codeNotReceivedLabel.centerXInSuperview()
+    }
+    
+    private func observeEvents() {
         let resendCode = UITapGestureRecognizer(target: self, action: #selector(handleResendCode))
         codeNotReceivedLabel.addGestureRecognizer(resendCode)
         codeNotReceivedLabel.isUserInteractionEnabled = true
     }
     
     @objc func handleResendCode() {
-        print("Call api to resend code")
+        didNotReceiveCode?()
     }
 }

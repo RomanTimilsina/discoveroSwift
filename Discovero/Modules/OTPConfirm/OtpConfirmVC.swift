@@ -30,12 +30,20 @@ class OTPConfirmVC: UIViewController {
             navigationController?.popViewController(animated: true)
         }
         
-        currentView.codeTextField.otpTextfield.onOtpFilled = {[weak self] text, isFilled in
-            let registrationVC = RegistrationVC()
+        currentView.codeTextField.otpTextfield.onOtpFilled = {[weak self] text, isOTPTextFilled in
             guard let self = self, let isFromLogin = isFromLogin else {return}
-            if isFilled {
-                navigationController?.pushViewController(isFromLogin ? MainController() : registrationVC, animated: true)
+            if isOTPTextFilled {
+                gotoNextPage(isFromLogin: isFromLogin)
             }
         }
+        
+        currentView.didNotReceiveCode = {[weak self] in
+            guard let self else {return}
+        }
+    }
+    
+    private func gotoNextPage(isFromLogin: Bool) {
+        let registrationVC = RegistrationVC()
+        navigationController?.pushViewController(isFromLogin ? HomeController() : registrationVC, animated: true)
     }
 }

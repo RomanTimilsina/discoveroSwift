@@ -13,6 +13,17 @@ struct DIPickerModel {
     var isSelected: Bool? = false
 }
 
+struct CountryModel: Codable {
+    let name, dialCode, code: String
+
+    enum CodingKeys: String, CodingKey {
+        case name
+        case dialCode = "dial_code"
+        case code
+    }
+}
+
+
 struct DIPickerManager {
     var data = [DIPickerModel]()
     
