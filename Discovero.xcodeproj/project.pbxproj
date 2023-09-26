@@ -45,6 +45,13 @@
 		04CA490D2AA44D3400C69767 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04CA490C2AA44D2D00C69767 /* OpenSans-Regular.ttf */; };
 		04CA490E2AA44D3600C69767 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04CA490B2AA44D2D00C69767 /* OpenSans-SemiBold.ttf */; };
 		04CA49102AA4530F00C69767 /* OnBoardingPageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA490F2AA4530F00C69767 /* OnBoardingPageViewCell.swift */; };
+		E003B8862AB311AC0090EC9D /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E003B8852AB311AC0090EC9D /* FirebaseAnalytics */; };
+		E003B8882AB311AC0090EC9D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E003B8872AB311AC0090EC9D /* FirebaseAuth */; };
+		E003B88A2AB311AC0090EC9D /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = E003B8892AB311AC0090EC9D /* FirebaseCrashlytics */; };
+		E003B88C2AB311AC0090EC9D /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = E003B88B2AB311AC0090EC9D /* FirebaseFirestore */; };
+		E003B88E2AB311AC0090EC9D /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = E003B88D2AB311AC0090EC9D /* FirebaseMessaging */; };
+		E003B8902AB311C50090EC9D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E003B88F2AB311C50090EC9D /* ViewController.swift */; };
+		E003B8922AB313250090EC9D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E003B8912AB313240090EC9D /* GoogleService-Info.plist */; };
 		E0FE05C32AA439C1001DBDF5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FE05C22AA439C1001DBDF5 /* AppDelegate.swift */; };
 		E0FE05C52AA439C1001DBDF5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FE05C42AA439C1001DBDF5 /* SceneDelegate.swift */; };
 		E0FE05C72AA439C1001DBDF5 /* OnBoardingPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FE05C62AA439C1001DBDF5 /* OnBoardingPageVC.swift */; };
@@ -130,6 +137,8 @@
 		04CA490B2AA44D2D00C69767 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		04CA490C2AA44D2D00C69767 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		04CA490F2AA4530F00C69767 /* OnBoardingPageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingPageViewCell.swift; sourceTree = "<group>"; };
+		E003B88F2AB311C50090EC9D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E003B8912AB313240090EC9D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E0FE05BF2AA439C1001DBDF5 /* Discovero.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Discovero.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0FE05C22AA439C1001DBDF5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E0FE05C42AA439C1001DBDF5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -178,9 +187,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E003B88E2AB311AC0090EC9D /* FirebaseMessaging in Frameworks */,
 				E0FE05E12AA43CA2001DBDF5 /* Kingfisher in Frameworks */,
+				E003B8882AB311AC0090EC9D /* FirebaseAuth in Frameworks */,
 				E0FE05DB2AA43B7E001DBDF5 /* MBProgressHUD in Frameworks */,
+				E003B88A2AB311AC0090EC9D /* FirebaseCrashlytics in Frameworks */,
 				E0FE05D82AA43B57001DBDF5 /* IQKeyboardManagerSwift in Frameworks */,
+				E003B88C2AB311AC0090EC9D /* FirebaseFirestore in Frameworks */,
+				E003B8862AB311AC0090EC9D /* FirebaseAnalytics in Frameworks */,
 				E0FE05DE2AA43C0B001DBDF5 /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -369,6 +383,8 @@
 				E0FE05E32AA43CCC001DBDF5 /* Resources */,
 				E0FE05E22AA43CB7001DBDF5 /* SupportingFiles */,
 				E0FE05D02AA439C2001DBDF5 /* Info.plist */,
+				E003B8912AB313240090EC9D /* GoogleService-Info.plist */,
+				E003B88F2AB311C50090EC9D /* ViewController.swift */,
 			);
 			path = Discovero;
 			sourceTree = "<group>";
@@ -504,6 +520,11 @@
 				E0FE05DA2AA43B7E001DBDF5 /* MBProgressHUD */,
 				E0FE05DD2AA43C0B001DBDF5 /* KeychainAccess */,
 				E0FE05E02AA43CA2001DBDF5 /* Kingfisher */,
+				E003B8852AB311AC0090EC9D /* FirebaseAnalytics */,
+				E003B8872AB311AC0090EC9D /* FirebaseAuth */,
+				E003B8892AB311AC0090EC9D /* FirebaseCrashlytics */,
+				E003B88B2AB311AC0090EC9D /* FirebaseFirestore */,
+				E003B88D2AB311AC0090EC9D /* FirebaseMessaging */,
 			);
 			productName = Discovero;
 			productReference = E0FE05BF2AA439C1001DBDF5 /* Discovero.app */;
@@ -538,6 +559,7 @@
 				E0FE05D92AA43B7E001DBDF5 /* XCRemoteSwiftPackageReference "MBProgressHUD" */,
 				E0FE05DC2AA43C0B001DBDF5 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				E0FE05DF2AA43CA2001DBDF5 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				E003B8842AB311AC0090EC9D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = E0FE05C02AA439C1001DBDF5 /* Products */;
 			projectDirPath = "";
@@ -558,6 +580,7 @@
 				04996CBA2AA46F8500DB618F /* Color.xcassets in Resources */,
 				04CA490E2AA44D3600C69767 /* OpenSans-SemiBold.ttf in Resources */,
 				04CA490D2AA44D3400C69767 /* OpenSans-Regular.ttf in Resources */,
+				E003B8922AB313250090EC9D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -576,6 +599,7 @@
 				04CA49052AA43FEB00C69767 /* DITextField.swift in Sources */,
 				049BEF692AA5B0C800ED2B58 /* LoginView.swift in Sources */,
 				04A168A22AA835380065F607 /* DIOTPField.swift in Sources */,
+				E003B8902AB311C50090EC9D /* ViewController.swift in Sources */,
 				04B514A72AA71CDB00E99A1B /* OtpConfirmVC.swift in Sources */,
 				E0FE05C72AA439C1001DBDF5 /* OnBoardingPageVC.swift in Sources */,
 				049CF12F2AA9D4D000FF2F1B /* DICreateAdView.swift in Sources */,
@@ -778,7 +802,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2LVA8QJKSB;
+				DEVELOPMENT_TEAM = RFPH376797;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Discovero/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -791,7 +815,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sujal.Discovero;
+				PRODUCT_BUNDLE_IDENTIFIER = com.aeniac.Discovero;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -809,7 +833,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2LVA8QJKSB;
+				DEVELOPMENT_TEAM = RFPH376797;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Discovero/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -822,7 +846,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sujal.Discovero;
+				PRODUCT_BUNDLE_IDENTIFIER = com.aeniac.Discovero;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -857,6 +881,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E003B8842AB311AC0090EC9D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
 		E0FE05D62AA43B57001DBDF5 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
@@ -892,6 +924,31 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E003B8852AB311AC0090EC9D /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E003B8842AB311AC0090EC9D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		E003B8872AB311AC0090EC9D /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E003B8842AB311AC0090EC9D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		E003B8892AB311AC0090EC9D /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E003B8842AB311AC0090EC9D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		E003B88B2AB311AC0090EC9D /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E003B8842AB311AC0090EC9D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		E003B88D2AB311AC0090EC9D /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E003B8842AB311AC0090EC9D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
 		E0FE05D72AA43B57001DBDF5 /* IQKeyboardManagerSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E0FE05D62AA43B57001DBDF5 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
