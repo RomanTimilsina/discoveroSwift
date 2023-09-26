@@ -11,110 +11,131 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
     let registrationView = RegistrationView()
     lazy var countryPicker = DIPickerVC()
     var country: DIPickerModel?
-    let welcomeVC = WelcomeVC()
+    var hasName: Bool?
+    var isSelected: Bool?
+    var newCountryModel = countryManager()
+
     
     override func loadView() {
-        super.loadView()
         view = registrationView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = true
-        view.backgroundColor = Color.gray900
         registrationView.personalInfoTextField.textField.delegate = self
-        
-        if let country = country {
-            print(country.countryName)
-            registrationView.pickerTextField.textField.placeholder = country.countryName
-        }
-        loginEvents()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
+        observeViewEvents()
     }
     
-    func loginEvents() {
-        
-        
-        registrationView.openPicker = { [weak self] in
+    func observeViewEvents() {
+        registrationView.openPicker = {[weak self] in
             guard let self = self else { return }
-            self.openCountryPicker()
+            openCountryPicker()
         }
         
-        countryPicker.closePicker = { [weak self] in
+        countryPicker.closePicker = {[weak self] in
             guard let self = self else { return }
-            registrationView.backgroundColor = UIColor.white.withAlphaComponent(0)
-            self.dismiss(animated: true, completion: nil)
+            dismiss(animated: true, completion: nil)
         }
         
-        registrationView.headerView.onClose = { [weak self] in
+        registrationView.headerView.onClose = {[weak self] in
             guard let self = self else { return }
-            self.navigationController?.popViewController(animated: true)
+            navigationController?.popViewController(animated: true)
         }
         
-        registrationView.handleSignUp = {[weak self] text in
-            guard let self = self, let text = text else {return}
-            welcomeVC.name = text
-            navigationController?.pushViewController(welcomeVC, animated: true)
-            
+        registrationView.handleSignUp = {[weak self] nameText in
+            guard let self, let nameText else {return}
+            gotoWelcomePageVC(nameText: nameText)
+        }
+        
+        countryPicker.onPicked = {[weak self] model in
+            guard let self = self else {return}
+            registrationView.languagePickerTextField.textField.placeholder = ""
+            registrationView.languagePickerTextField.textFieldCoverLabel.text = model.name
+            registrationView.languagePickerTextField.flagImageView.image = model.flagImage
+            isSelected = true
+            if let isSelected, let hasName {
+                if isSelected && hasName {
+                    registrationView.signUpButton.setValidState()
+                } else {
+                    registrationView.signUpButton.setValidState()
+                }
+            }
         }
     }
+    
+    private func gotoWelcomePageVC(nameText: String) {
+        let welcomeVC = WelcomeVC()
+        welcomeVC.nameText = nameText
+        navigationController?.pushViewController(welcomeVC, animated: true)
+    }
+    
+//    func openCountryPicker() {
+//        if let sheet = countryPicker.sheetPresentationController {
+//            sheet.prefersGrabberVisible = true
+//            sheet.preferredCornerRadius = 30
+//            sheet.detents = [.large(),.medium()]
+//            sheet.delegate = self
+//        }
+//        present(countryPicker, animated: true)
+//    }
     
     func openCountryPicker() {
+        if let country: [CountryModel] = Bundle.main.decode(from: "Countries.json") {
+//            print(country[0].name, country[0].dialCode, country[0].code)
+            
+            
+            for (index,_) in country.enumerated() {
+                let name = country[index].code.lowercased()
+                if let image = UIImage(named: name) {
+                    newCountryModel.setData(name: country[index].name, dialCode: country[index].dialCode, code: country[index].code, imageName: country[index].code)
+                }
+            }
+        } else {
+            print("Failed to load and decode the JSON file.")
+        }
+        
+        
+        countryPicker.countryModel = newCountryModel.getData()
         if let sheet = countryPicker.sheetPresentationController {
             sheet.prefersGrabberVisible = true
             sheet.preferredCornerRadius = 30
-            
-            sheet.detents = [.large(),.medium()]
-            
+            sheet.detents = [.large()]
             sheet.delegate = self
         }
-        registrationView.backgroundColor = UIColor.white.withAlphaComponent(0.1)
-        
+
         present(countryPicker, animated: true)
+      
     }
+}
+
+extension RegistrationVC {
     
-    // MARK: - UISheetPresentationControllerDelegate
-    
-    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        registrationView.backgroundColor = UIColor.white.withAlphaComponent(0)
-    }
-    //
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        registrationView.pickerTextField.textField.resignFirstResponder()
-            return true
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField === registrationView.languagePickerTextField.textField {
         }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
+    }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField === registrationView.personalInfoTextField.textField {
             guard let text = textField.text else {return}
             if !text.isEmpty {
-                registrationView.signUpButton.setValidState()
+                hasName = true
             }
+            else {
+                hasName = false
+            }
+        }
+        
+        guard let isSelected = isSelected , let hasName = self.hasName else {return}
+        if isSelected && hasName {
+            registrationView.signUpButton.setValidState()
+        } else {
+            registrationView.signUpButton.setInvalidState()
         }
     }
-
-    
-    @objc func keyboardWillShow(notification: NSNotification) {
-            if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-                let keyboardHeight = keyboardSize.height
-                UIView.animate(withDuration: 0.3) {
-                    self.registrationView.verticalStack.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
-                    self.registrationView.verticalStack.isHidden = false
-                }
-            }
-        }
-    
-    @objc func keyboardWillHide(notification: NSNotification) {
-            UIView.animate(withDuration: 0.3) {
-                self.registrationView.verticalStack.transform = CGAffineTransform(translationX: 0, y: 100)
-                self.registrationView.verticalStack.transform = .identity
-            }
-        }
-    
-    deinit {
-            NotificationCenter.default.removeObserver(self)
-        }
 }

@@ -9,43 +9,39 @@ import UIKit
 
 class OTPConfirmVC: UIViewController {
     
-    let otpConfirm = OTPConfirmView()
-    let onBoardingPage = OnBoardingPageView()
-    let registration = RegistrationVC()
-    var logged: Bool?
+    let currentView = OTPConfirmView()
+    var isFromLogin: Bool?
     
     override func loadView() {
         super.loadView()
-        view = otpConfirm
+        view = currentView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = true
-        
-        view.backgroundColor = Color.gray900
-        otpConfirm.loginTextField.otpTextfield.configure()
-        loginEvents()
-        
-        
-        func loginEvents() {
-            otpConfirm.headerView.onClose = {[weak self] in
-                guard let self = self else {return}
-                navigationController?.popViewController(animated: true)
-            }
-            print()
-            
-            otpConfirm.loginTextField.otpTextfield.onOtpFilled = {[weak self] text, isFilled in
-                guard let self = self, let isLogin = logged else {return}
-                if isFilled {
-                    if isLogin {
-                        navigationController?.pushViewController(MainController(), animated: true)
-                    } else {
-                        
-                            navigationController?.pushViewController(registration, animated: true)
-                    }
-                }
-            }
+        currentView.codeTextField.otpTextfield.configure()
+        observeViewEvents()
+    }
+    
+    func observeViewEvents() {
+        currentView.headerView.onClose = {[weak self] in
+            guard let self = self else {return}
+            navigationController?.popViewController(animated: true)
         }
+        
+        currentView.didNotReceiveCode = {[weak self] in
+            guard let self else {return}
+        }
+        
+        currentView.confirmOTP = {[weak self] in
+            guard let self = self, let isFromLogin = isFromLogin else {return}
+            gotoNextPage(isFromLogin: isFromLogin)
+        }
+    }
+    
+    private func gotoNextPage(isFromLogin: Bool) {
+        let registrationVC = RegistrationVC()
+        navigationController?.pushViewController(isFromLogin ? HomeController() : registrationVC, animated: true)
     }
 }

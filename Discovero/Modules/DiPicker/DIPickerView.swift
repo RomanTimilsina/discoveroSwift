@@ -9,22 +9,15 @@ import UIKit
 
 class DIPickerView: UIView {
     
-    var onClose: (() -> Void)?
+    var onCloseClick: (() -> Void)?
+    var onNextClick: (() -> Void)?
     
-    let table: UITableView = {
-        let table = UITableView()
-        table.backgroundColor = Color.gray900
-        return table
-    }()
+    let table = UITableView()
     let pickerHeaderView = UIView()
     let crossIcon = UIImageView(image: UIImage(named: "crossIcon"),contentMode: .scaleAspectFit, clipsToBounds: true)
     let chooseNationalityLabel = UILabel(text: "Choose your nationality", font: OpenSans.semiBold, size: 16)
     let nextButton = UIButton(title: "Next", titleColor: Color.appWhite, font: OpenSans.bold, fontSize: 14)
-    let lineView: UIView = {
-        let view = UIView()
-        view.backgroundColor = Color.gray600
-        return view
-    }()
+    let lineView = UIView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,13 +30,8 @@ class DIPickerView: UIView {
     }
     
     func setupConstraint() {
-        
         addSubview(pickerHeaderView)
         pickerHeaderView.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 12, left: 12, bottom: 0, right: 14))
-        
-        let signUpTextTapGesture = UITapGestureRecognizer(target: self, action: #selector(close))
-        crossIcon.addGestureRecognizer(signUpTextTapGesture)
-        crossIcon.isUserInteractionEnabled = true
         
         pickerHeaderView.addSubview(crossIcon)
         crossIcon.anchor(top: pickerHeaderView.topAnchor, leading: pickerHeaderView.leadingAnchor, bottom: pickerHeaderView.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
@@ -60,12 +48,26 @@ class DIPickerView: UIView {
         pickerHeaderView.addSubview(lineView)
         lineView.anchor(top: chooseNationalityLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor ,padding: .init(top: 12, left: 0, bottom: -1, right: 0))
         lineView.constraintHeight(constant: 1)
+        lineView.backgroundColor = Color.gray600
         
         addSubview(table)
         table.anchor(top: lineView.bottomAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 10, right: 0))
+        table.backgroundColor = Color.gray900
     }
     
-    @objc func close() {
-        onClose?()
+    private func observeEvents() {
+        let signUpTextTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleClose))
+        crossIcon.addGestureRecognizer(signUpTextTapGesture)
+        crossIcon.isUserInteractionEnabled = true
+        
+        nextButton.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
+    }
+    
+    @objc func handleClose() {
+        onCloseClick?()
+    }
+    
+    @objc func handleNext() {
+        onNextClick?()
     }
 }

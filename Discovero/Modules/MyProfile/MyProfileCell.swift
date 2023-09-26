@@ -11,8 +11,8 @@ class MyProfileCell: UITableViewCell {
     
     static let identifier = "TableViewCell"
     
-    let titleLabel = UILabel(text: "FullName", font: OpenSans.semiBold, size: 14, alignment: .left)
-    let valueLabel = UILabel(text: "Ankit Chaudhary", font: OpenSans.regular, size: 14, alignment: .left)
+    let titleLabel = UILabel(text: "", font: OpenSans.semiBold, size: 14, alignment: .left)
+    let valueLabel = UILabel(text: "", font: OpenSans.regular, size: 14, alignment: .left)
     let  emptyView = UIView()
     lazy var stack = VerticalStackView(arrangedSubViews: [UIView(), titleLabel,emptyView, valueLabel], spacing: 0, distribution: .fill)
     
@@ -40,8 +40,6 @@ class MyProfileCell: UITableViewCell {
         emptyView.isHidden = false
         emptyView.constraintHeight(constant: 3)
         emptyView.centerXInSuperview()
-        titleLabel.text = ""
-        valueLabel.text = ""
         emptyView.backgroundColor = .gray
     }
 }

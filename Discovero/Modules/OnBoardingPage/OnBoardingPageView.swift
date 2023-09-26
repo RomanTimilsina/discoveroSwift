@@ -9,32 +9,32 @@ import UIKit
 
 class OnBoardingPageView: UIView {
     
-    var handleRegister: ((Bool) -> Void)?
+    var handleRegisterClicked: (() -> Void)?
+    var handleLoginClicked: (() -> Void)?
     
-    var log: Bool = true
-    let onBoardingCollection: UICollectionView = {
+    let onboardingCollection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.backgroundColor = Color.appBlack
+        view.backgroundColor = Color.gray900
         view.isPagingEnabled = true
         return view
     }()
     
-    let indicator : DIPageController = {
+    let indicator: DIPageController = {
         let page = DIPageController()
         page.numberOfPages = 4
         return page
     }()
     
-    let accountQueryLabel = UILabel(text: "Already have an account?", font: OpenSans.regular, size: 18)
+    let accountDescLabel = UILabel(text: "Already have an account?", font: OpenSans.regular, size: 18)
     let logInButton = UIButton(title: "Log In", titleColor: Color.primary, font: OpenSans.regular, fontSize: 18)
     let registerButton = DIButton(buttonTitle: "Register")
-    lazy var logInStack = HorizontalStackView(arrangedSubViews: [accountQueryLabel, logInButton], spacing: 5, distribution: .equalCentering)
+    lazy var logInStack = HorizontalStackView(arrangedSubViews: [accountDescLabel, logInButton], spacing: 5, distribution: .equalCentering)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = Color.appBlack
+        backgroundColor = Color.gray900
         setupUI()
     }
     
@@ -42,7 +42,6 @@ class OnBoardingPageView: UIView {
         addSubview(logInStack)
         logInStack.anchor(top: nil, leading: nil, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 40, right: 0))
         logInStack.centerXInSuperview()
-        
         logInButton.addTarget(self, action: #selector(login), for: .touchUpInside)
         
         addSubview(registerButton)
@@ -53,16 +52,16 @@ class OnBoardingPageView: UIView {
         indicator.anchor(top: registerButton.topAnchor, leading: leadingAnchor, bottom: registerButton.topAnchor, trailing: trailingAnchor, padding: .init(top: -33, left: 12, bottom: 20, right: 12))
         indicator.centerXInSuperview()
         
-        addSubview(onBoardingCollection)
-        onBoardingCollection.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: indicator.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 60, right: 12))
+        addSubview(onboardingCollection)
+        onboardingCollection.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: indicator.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 60, right: 12))
     }
     
     @objc func register() {
-        handleRegister?(!log)
+        handleRegisterClicked?()
     }
     
     @objc func login() {
-        handleRegister?(log)
+        handleLoginClicked?()
     }
     
     required init?(coder: NSCoder) {

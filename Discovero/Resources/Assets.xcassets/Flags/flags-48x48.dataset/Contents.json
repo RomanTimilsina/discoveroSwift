@@ -1,0 +1,12 @@
+{
+  "data" : [
+    {
+      "filename" : "flags-48x48.json",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
