@@ -6,17 +6,19 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class LoginView: UIView {
     
-    var handleConfirmOTP: (() -> Void)?
+    var handleConfirmPhoneNumber: (() -> Void)?
     
     let view = UIView()
     let headerView = DIHeaderView(title: "Verify your number", hasBack: false, hasBGColor: true)
     let getStartedLabel = UILabel(text: "Let's get started", font: OpenSans.semiBold, size: 14)
     let phoneNumberTextField = DITextField(title: "What’s your phone number?", placholder: "0000 000 000", isPrimaryColor: true, typePad: .numberPad, countryCode: "+977")
     let noticeLabel = UILabel(text: "We’ll call or text to confirm your number. Standard message and data rates apply.",color: Color.appWhite, font: OpenSans.regular, size: 12, numberOfLines: 0, alignment: .left)
-    
+    let nextButton = DIButton(buttonTitle: "next")
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -44,21 +46,46 @@ class LoginView: UIView {
         
         addSubview(noticeLabel)
         noticeLabel.anchor(top: phoneNumberTextField.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 24, left: 12, bottom: 0, right: 18))
+        
+        addSubview(nextButton)
+        nextButton.anchor(top: noticeLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 24, left: 12, bottom: 0, right: 12))
     }
     
     private func observeEvents() {
+        nextButton.addTarget(self, action: #selector(confirmPhoneNumber), for: .touchUpInside)
+        
         phoneNumberTextField.textField.addTarget(self, action: #selector(textChanged(_:)), for: .editingChanged)
     }
     
-    @objc func textChanged(_ textfield: UITextField) {
-        if let enteredText = textfield.text {
-            if enteredText.count > 9 {
-                handleConfirmOTP?()
-            }
-            
-            if enteredText.count == 4 {
-
+    @objc func confirmPhoneNumber() {
+        handleConfirmPhoneNumber?()
+    }
+    
+    @objc func textChanged(_ textField: UITextField) {
+        if let enteredText = textField.text {
+            let unformattedText = enteredText.replacingOccurrences(of: " ", with: "")
+            if unformattedText.count > 10 {
+                let truncatedText = String(unformattedText.prefix(10))
+                let formattedText = formatPhoneNumber(truncatedText)
+                textField.text = formattedText
+            } else {
+                let formattedText = formatPhoneNumber(unformattedText)
+                textField.text = formattedText
             }
         }
+    }
+
+    func formatPhoneNumber(_ phoneNumber: String) -> String {
+        var formattedPhoneNumber = ""
+        for (index, character) in phoneNumber.enumerated() {
+            if index > 0 && (index == 4) {
+                formattedPhoneNumber += " "
+            }
+            if index > 0 && (index == 7) {
+                formattedPhoneNumber += " "
+            }
+            formattedPhoneNumber.append(character)
+        }
+        return formattedPhoneNumber
     }
 }

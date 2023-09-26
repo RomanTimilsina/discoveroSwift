@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import os
 
 class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
     
@@ -15,7 +14,7 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
     lazy var countryPicker = DIPickerVC()
 //    let newcountryModel = [NewCountryModel]()
     var newCountryModel = countryManager()
-    
+    var timer: Timer?
     
     override func loadView() {
         super.loadView()
@@ -35,9 +34,10 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
             navigationController?.popViewController(animated: true)
         }
         
-        currentView.handleConfirmOTP = {[weak self] in
-            guard let self = self, let isFromLogin = isFromLogin else {return}
-            self.gotoOTPConfirmV(isFromLogin: isFromLogin)
+        currentView.handleConfirmPhoneNumber = {[weak self] in
+            guard let self = self else {return}
+            showHUD()
+            timer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(self.timerFired), userInfo: nil, repeats: false)
         }
         
         currentView.phoneNumberTextField.handleCountryCode  = {[weak self] in
@@ -51,12 +51,18 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
         }
     }
     
+    @objc func timerFired() {
+        guard let isFromLogin = isFromLogin else {return}
+        self.gotoOTPConfirmV(isFromLogin: isFromLogin)
+
+    }
+    
     func openCountryPicker() {
         if let country: [CountryModel] = Bundle.main.decode(from: "Countries.json") {
 //            print(country[0].name, country[0].dialCode, country[0].code)
             
             
-            for (index ,number ) in country.enumerated() {
+            for (index,_) in country.enumerated() {
                 let name = country[index].code.lowercased()
                 if let image = UIImage(named: name) {
                     newCountryModel.setData(name: country[index].name, dialCode: country[index].dialCode, code: country[index].code, imageName: country[index].code)
@@ -66,7 +72,6 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
             print("Failed to load and decode the JSON file.")
         }
         
-        
         countryPicker.countryModel = newCountryModel.getData()
         if let sheet = countryPicker.sheetPresentationController {
             sheet.prefersGrabberVisible = true
@@ -74,9 +79,8 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
             sheet.detents = [.large()]
             sheet.delegate = self
         }
-//            print("P")
+        
         present(countryPicker, animated: true)
-      
     }
     
    

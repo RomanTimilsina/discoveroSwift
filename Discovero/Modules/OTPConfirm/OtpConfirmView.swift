@@ -9,14 +9,16 @@ import UIKit
 
 class OTPConfirmView: UIView {
     var didNotReceiveCode: (() -> Void)?
+    var confirmOTP: (() -> Void)?
     
-    let headerView = DIHeaderView(title: "Confirm your number", hasBack: false)
+    let headerView = DIHeaderView(title: "Confirm your number", hasBack: true)
     let view = UIView()
     let getStartedLabel = UILabel(text: "Confirm your number", font: OpenSans.semiBold, size: 14)
     let codeTextField = DITextField(title: "Ener the 6 digit code", placholder: "0000 000 000", isPrimaryColor: true, typePad: .numberPad, isOtpTextField: false, contentHeight: 90)
     let titleDescLabel = UILabel(text: "We’ll call or text to confirm your number. Standard message and data rates apply.",color: Color.appWhite, font: OpenSans.regular, size: 12, numberOfLines: 0, alignment: .left)
     let codeNotReceivedLabel = UILabel(text: "I didn't receive a code",color: Color.primary, font: OpenSans.semiBold, size: 14)
-    
+    let nextButton = DIButton(buttonTitle: "next")
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = Color.gray900
@@ -46,15 +48,26 @@ class OTPConfirmView: UIView {
         addSubview(titleDescLabel)
         titleDescLabel.anchor(top: codeTextField.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 17, left: 12, bottom: 0, right: 18))
         
+        addSubview(nextButton)
+        nextButton.anchor(top: titleDescLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 12, left: 12, bottom: 0, right: 12))
+        
         addSubview(codeNotReceivedLabel)
-        codeNotReceivedLabel.anchor(top: nil, leading: nil, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 12, bottom: 28, right: 0))
+        codeNotReceivedLabel.anchor(top: nextButton.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 12, left: 12, bottom: 0, right: 0))
         codeNotReceivedLabel.centerXInSuperview()
+        
+        
     }
     
     private func observeEvents() {
         let resendCode = UITapGestureRecognizer(target: self, action: #selector(handleResendCode))
         codeNotReceivedLabel.addGestureRecognizer(resendCode)
         codeNotReceivedLabel.isUserInteractionEnabled = true
+        
+        nextButton.addTarget(self, action: #selector(handleConfirmOTP), for: .touchUpInside)
+    }
+    
+    @objc func handleConfirmOTP() {
+        confirmOTP?()
     }
     
     @objc func handleResendCode() {

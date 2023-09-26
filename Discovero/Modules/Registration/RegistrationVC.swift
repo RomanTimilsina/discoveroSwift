@@ -13,6 +13,8 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
     var country: DIPickerModel?
     var hasName: Bool?
     var isSelected: Bool?
+    var newCountryModel = countryManager()
+
     
     override func loadView() {
         view = registrationView
@@ -50,7 +52,7 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
             guard let self = self else {return}
             registrationView.languagePickerTextField.textField.placeholder = ""
             registrationView.languagePickerTextField.textFieldCoverLabel.text = model.name
-//            registrationView.languagePickerTextField.image.image = model.countryImage
+            registrationView.languagePickerTextField.flagImageView.image = model.flagImage
             isSelected = true
             if let isSelected, let hasName {
                 if isSelected && hasName {
@@ -68,14 +70,42 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
         navigationController?.pushViewController(welcomeVC, animated: true)
     }
     
+//    func openCountryPicker() {
+//        if let sheet = countryPicker.sheetPresentationController {
+//            sheet.prefersGrabberVisible = true
+//            sheet.preferredCornerRadius = 30
+//            sheet.detents = [.large(),.medium()]
+//            sheet.delegate = self
+//        }
+//        present(countryPicker, animated: true)
+//    }
+    
     func openCountryPicker() {
+        if let country: [CountryModel] = Bundle.main.decode(from: "Countries.json") {
+//            print(country[0].name, country[0].dialCode, country[0].code)
+            
+            
+            for (index,_) in country.enumerated() {
+                let name = country[index].code.lowercased()
+                if let image = UIImage(named: name) {
+                    newCountryModel.setData(name: country[index].name, dialCode: country[index].dialCode, code: country[index].code, imageName: country[index].code)
+                }
+            }
+        } else {
+            print("Failed to load and decode the JSON file.")
+        }
+        
+        
+        countryPicker.countryModel = newCountryModel.getData()
         if let sheet = countryPicker.sheetPresentationController {
             sheet.prefersGrabberVisible = true
             sheet.preferredCornerRadius = 30
-            sheet.detents = [.large(),.medium()]
+            sheet.detents = [.large()]
             sheet.delegate = self
         }
+
         present(countryPicker, animated: true)
+      
     }
 }
 

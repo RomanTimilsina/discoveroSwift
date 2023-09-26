@@ -10,7 +10,7 @@ import UIKit
 class DIOTPField: UITextField {
     
     var onOtpFilled: ((String, Bool) -> Void)?
-    var defaultCharacter = ""
+    var defaultCharacter = "" 
     
     private var isConfigured = false
     

@@ -29,7 +29,7 @@ class DIHeaderView: UIView {
         super.init(frame: .zero)
         textLabel.text = title
         
-        backButtonStack.isHidden = hasBack
+        backButtonStack.isHidden = !hasBack
         backgroundColor = hasBGColor ? Color.gray900 : Color.appBlack
         view.backgroundColor = hasBGColor ? Color.gray900 : Color.appBlack
         setupConstraints()

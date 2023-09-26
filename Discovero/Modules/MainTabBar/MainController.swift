@@ -33,7 +33,9 @@ class HomeController: UITabBarController {
         matches.title = "Matches"
         profile.title = "Profile"
         
-        tabBar.backgroundColor = Color.gray800
+        tabBar.selectionIndicatorImage = UIImage(named: "background")
+        tabBar.backgroundColor = Color.tabbarColor
+
         tabBar.tintColor = Color.appWhite
         tabBar.barTintColor = UIColor.red
         

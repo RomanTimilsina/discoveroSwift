@@ -19,6 +19,9 @@ enum Color {
     static let gray700 = UIColor(named: "gray700")
     static let gray800 = UIColor(named: "gray800")
     static let gray900 = UIColor(named: "gray900")
+    static let tabbarColor = UIColor(named: "tabbarColor")
+
+    
     static let placeholderGray = UIColor(named: "placeholderGray")
     static let blurColor = #colorLiteral(red: 0.464191258, green: 0.4560914391, blue: 0.4613485326, alpha: 1)
 }

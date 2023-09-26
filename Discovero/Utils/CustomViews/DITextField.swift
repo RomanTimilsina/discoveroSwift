@@ -27,12 +27,11 @@ class DITextField: UIView {
         button.setTitle("I didn't receive a code", for: .normal)
         return  button
     }()
-    
     let textFieldCoverLabel = UILabel(text: "", font: OpenSans.regular, size: 14)
-    let image = UIImageView(contentMode: .scaleAspectFit, clipsToBounds: true)
+    let flagImageView = UIImageView(contentMode: .scaleAspectFit, clipsToBounds: true)
     let countryCodeLabel = UILabel(text: "", color: Color.primary, font: OpenSans.regular, size: 32)
     
-    lazy var textCover = HorizontalStackView(arrangedSubViews: [textFieldCoverLabel, image], spacing: 5)
+    lazy var textCover = HorizontalStackView(arrangedSubViews: [textFieldCoverLabel, flagImageView], spacing: 5, distribution: .equalCentering)
     
     let otpTextfield = DIOTPField()
     
@@ -43,7 +42,7 @@ class DITextField: UIView {
         textField.textColor = isPrimaryColor ? Color.primary : Color.appWhite
         textField.tintColor = Color.appWhite
         textField.keyboardType = typePad
-        textField.font = UIFont.font(with: 24, family: OpenSans.regular)
+        textField.font = UIFont.font(with: 32, family: OpenSans.regular)
         titleLabel.font = UIFont.font(with: textHeight, family: OpenSans.regular)
         otpTextfield.isHidden = isOtpTextField
         textField.isHidden = !isOtpTextField
@@ -55,9 +54,9 @@ class DITextField: UIView {
             countryCodeLabel.isHidden = true
         }
         setConstraint()
-        
         textFieldCoverLabel.font = UIFont.font(with: 24, family: OpenSans.regular)
         textFieldCoverLabel.tintColor = Color.appWhite
+        
         
         observeEvents()
     }
@@ -76,12 +75,15 @@ class DITextField: UIView {
         contentVeiw.addSubview(countryCodeLabel)
         countryCodeLabel.anchor(top: titleLabel.bottomAnchor, leading: contentVeiw.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 2, left: 0, bottom: 0, right: 0))
         
+        
         contentVeiw.addSubview(textField)
         textField.anchor(top: titleLabel.bottomAnchor, leading: countryCodeLabel.trailingAnchor, bottom: nil, trailing: nil, padding: .init(top: 2, left: 12, bottom: 0, right: 0))
+        countryCodeLabel.centerYAnchor.constraint(equalTo: textField.centerYAnchor).isActive = true
         
         contentVeiw.addSubview(textCover)
-
-        textCover.anchor(top: titleLabel.bottomAnchor, leading: contentVeiw.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 2, left: 0, bottom: 0, right: 0))
+        textCover.anchor(top: titleLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 2, left: 0, bottom: 0, right: 0))
+        
+        flagImageView.constraintHeight(constant: 25)
         
         contentVeiw.addSubview(otpTextfield)
         otpTextfield.anchor(top: titleLabel.bottomAnchor, leading: contentVeiw.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 2, left: 0, bottom: 0, right: 0))
