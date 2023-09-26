@@ -8,20 +8,25 @@
 import UIKit
 
 class WelcomeVC: UIViewController {
-
-    let welcome = WelcomeView()
-    var name:  String?
-
+    
+    let welcomeView = WelcomeView()
+    var nameText:  String?
+    var timer: Timer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let name = name {
-            self.welcome.welcomeLabel.text = "Welcome \(name)"
+        if let nameText {
+            self.welcomeView.welcomeLabel.text = "Welcome \(nameText)"
         }
+        
+        timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(timerFired), userInfo: nil, repeats: false)
+    }
+    
+    @objc func timerFired() {
+        navigationController?.pushViewController(HomeController(), animated: true)
     }
     
     override func loadView() {
-        super.loadView()
-        view = welcome
+        view = welcomeView
     }
 }

@@ -28,6 +28,7 @@ class DIPickerCell: UITableViewCell {
     func setupContraints() {
         addSubview(countryImage)
         countryImage.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 12, bottom: 0, right: 0))
+        countryImage.constraintWidth(constant: 20)
         countryImage.centerYInSuperview()
         
         addSubview(countryName)
@@ -35,8 +36,8 @@ class DIPickerCell: UITableViewCell {
         countryName.centerYInSuperview()
     }
     
-    func configureData(data: DIPickerModel) {
-        countryImage.image = data.countryImage
-        countryName.text = data.countryName
+    func configureData(data: NewCountryModel) {
+        countryName.text = data.name
+        countryImage.image = data.flagImage
     }
 }

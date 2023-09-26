@@ -9,10 +9,13 @@ import UIKit
 
 class DIButton : UIButton {
     
-    init(buttonTitle: String, height: CGFloat = 44, textSize: CGFloat = 16) {
+    init(buttonTitle: String, height: CGFloat = 44, textSize: CGFloat = 16, blackButton: Bool = false) {
         super.init(frame: .zero)
         setupUI(buttonTitle: buttonTitle, textSize: textSize)
         constraintHeight(constant: height)
+        if blackButton {
+            setBlackButton()
+        }
     }
     
     func setupUI(buttonTitle: String, textSize: CGFloat) {
@@ -21,6 +24,13 @@ class DIButton : UIButton {
         titleLabel?.font = UIFont(name: "OpenSans-SemiBold", size: textSize)
         layer.cornerRadius = 5
         backgroundColor = Color.primary
+    }
+    
+    func setBlackButton() {
+        backgroundColor = Color.appBlack
+        setTitleColor(Color.appWhite, for: .normal)
+        layer.borderColor = Color.appWhite.cgColor
+        layer.borderWidth = 1
     }
     
     func setInvalidState() {

@@ -10,8 +10,9 @@ import UIKit
 class DIPickerVC: UIViewController {
     
     let pickerView = DIPickerView()
-    var getModel = DIPickerManager()
+    var countryModel = [NewCountryModel]()
     var closePicker: (() -> Void)?
+    var onPicked: ((NewCountryModel) -> Void)?
     let registration = RegistrationVC()
     
     override func viewDidLoad() {
@@ -26,7 +27,7 @@ class DIPickerVC: UIViewController {
     }
     
     func observeEvents() {
-        pickerView.onClose = {[weak self] in
+        pickerView.onCloseClick = {[weak self] in
             guard let self = self else {return}
             closePicker?()
         }
@@ -41,12 +42,12 @@ class DIPickerVC: UIViewController {
 
 extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        getModel.getData().count
+        countryModel.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: DIPickerCell.identifier, for: indexPath) as! DIPickerCell
-        let data = getModel.getData()[indexPath.row]
+        let data = countryModel[indexPath.row]
         cell.configureData(data: data)
         cell.selectionStyle = .none
         return cell
@@ -57,8 +58,9 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let data = getModel.getData()[indexPath.row]
-//        registration.country = data
+        let data = countryModel[indexPath.row]
+        onPicked?(data)
+        registration.isSelected = true
         dismiss(animated: true)
     }
 }

@@ -29,7 +29,7 @@ extension UIViewController {
         guard MBProgressHUD.forView(view) == nil else { return }
         let indicator = MBProgressHUD.showAdded(to: view, animated: true)
         indicator.contentColor = Color.primary
-        indicator.bezelView.style = .blur
+        indicator.bezelView.style = .solidColor
         indicator.show(animated: true)
     }
 

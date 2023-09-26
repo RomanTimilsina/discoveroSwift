@@ -19,15 +19,17 @@ class DICustomProfileView: UIView {
     lazy var nameStack = VerticalStackView(arrangedSubViews: [title, subStack], spacing: 0)
     
     let rightArrowImage = UIImageView(contentMode: .scaleAspectFit, clipsToBounds: true)
+    let sideTitle = UILabel(text: "select your location",color: Color.appWhite, font: OpenSans.regular, size: 14)
+
+    lazy var mainStack = HorizontalStackView(arrangedSubViews: [nameStack, UIView(), sideTitle, rightArrowImage], spacing: 8)
     
-    lazy var mainStack = HorizontalStackView(arrangedSubViews: [nameStack, UIView(), rightArrowImage], spacing: 0)
-    
-    init(titleText: String, text: String, nation: UIImage? = nil, show:Bool? = false, isGrey: Bool? = false) {
+    init(titleText: String, text: String, nation: UIImage? = nil, show:Bool? = false, isGrey: Bool? = false, sideTitleString: String = "") {
         super.init(frame: .zero)
         title.text = titleText
         subTitle.text = text
         subTitle.textColor = Color.appWhite
         nationImageView.image = nation
+        sideTitle.text = sideTitleString
             if isGrey == true {
                 title.textColor = Color.gray400
                 subTitle.textColor = Color.gray500

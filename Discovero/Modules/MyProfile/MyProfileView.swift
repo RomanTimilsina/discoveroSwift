@@ -10,6 +10,8 @@ import UIKit
 class MyProfileView: UIView {
     
     let header = DIHeaderView(title: "Account Details")
+    let view = UIView()
+    let scrollView = UIScrollView()
     var profileArray = [DICustomProfileView]()
     
     let noAvatarImage = UIImageView(image: UIImage(named: "noAvatarImage"),contentMode: .scaleAspectFit, clipsToBounds: true)
@@ -34,7 +36,7 @@ class MyProfileView: UIView {
     let line = UIView(color: Color.gray700)
     let logoutLabel = UILabel(text: "Logout", color: Color.primary, font: OpenSans.regular, size: 14)
     
-    lazy var formStack = VerticalStackView(arrangedSubViews: [nameView,emailView,phoneView,addressView,nationalityView,genderView,line,adsView,favouritesView,termsView,policyView,DeleteView, logoutLabel], spacing: 18, distribution: .fill)
+    lazy var formStack = VerticalStackView(arrangedSubViews: [nameView,emailView,phoneView,addressView,nationalityView,genderView,line,adsView,favouritesView,termsView,policyView,DeleteView, logoutLabel], spacing: 24, distribution: .fill)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -50,16 +52,26 @@ class MyProfileView: UIView {
     
     func setupConstraint () {
         
+        addSubview(view)
+        view.anchor(top: topAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0 ))
+        view.backgroundColor = Color.gray900
+        
         addSubview(header)
-        header.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        header.anchor(top: view.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+//        header.constraintHeight(constant: 40)
         
-        addSubview(noAvatarImage)
-        noAvatarImage.anchor(top: header.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 24, left: 0, bottom: 0, right: 0))
+        
+        
+        addSubview(scrollView)
+        scrollView.anchor(top: header.bottomAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 30, right: 0))
+        
+        scrollView.addSubview(noAvatarImage)
+        noAvatarImage.anchor(top: scrollView.topAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 22, left: 0, bottom: 0, right: 0))
         noAvatarImage.centerXInSuperview()
-        noAvatarImage.constraintWidth(constant: 80)
+        noAvatarImage.constraintHeight(constant: 80)
         
-        addSubview(formStack)
-        formStack.anchor(top: noAvatarImage.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 24, left: 12, bottom: 100, right: 12))
+        scrollView.addSubview(formStack)
+        formStack.anchor(top: noAvatarImage.bottomAnchor, leading: leadingAnchor, bottom: scrollView.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 24, left: 12, bottom: 10, right: 24))
         
         line.constraintHeight(constant: 1)
     }
