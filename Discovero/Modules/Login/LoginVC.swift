@@ -6,6 +6,10 @@
 //
 
 import UIKit
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseAuth
+import Firebase
 
 class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
     
@@ -13,8 +17,9 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
     var isFromLogin: Bool?
     lazy var countryPicker = DIPickerVC()
 //    let newcountryModel = [NewCountryModel]()
-    var newCountryModel = countryManager()
+    var newCountryModel = CountryManager()
     var timer: Timer?
+    let countries: [CountryModel] = Bundle.main.decode(from: "Countries.json")
     
     override func loadView() {
         super.loadView()
@@ -26,7 +31,26 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
         navigationController?.isNavigationBarHidden = true
         observeViewEvents()
         APICall()
+        currentView.phoneNumberTextField.countryCodeLabel.text = findExtensionCode(for: UserDefaultsHelper.getStringData(forKey: .defaultCountryCode))
+        setupNewCountryModel()
     }
+    
+    func setupNewCountryModel() {
+        for (index,_) in countries.enumerated() {
+            let name = countries[index].code.lowercased()
+            if let image = UIImage(named: name) {
+                newCountryModel.setData(name: countries[index].name, dialCode: countries[index].dialCode, code: countries[index].code, imageName: countries[index].code)
+            }
+        }
+    }
+    
+    func findExtensionCode(for countryCode: String) -> String? {
+            if let country = countries.first(where: { $0.code == countryCode }) {
+                return country.dialCode
+            } else {
+                return nil // Country code not found in the array
+            }
+        }
     
     func observeViewEvents() {
         currentView.headerView.onClose = {[weak self] in
@@ -34,10 +58,15 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
             navigationController?.popViewController(animated: true)
         }
         
-        currentView.handleConfirmPhoneNumber = {[weak self] in
+        currentView.onNextClick = {[weak self] phoneNum in
             guard let self = self else {return}
             showHUD()
-            timer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(self.timerFired), userInfo: nil, repeats: false)
+            gotoOTPConfirmV(isFromLogin: isFromLogin ?? false, phoneNum: phoneNum)
+        }
+        
+        countryPicker.closePicker = {[weak self] in
+            guard let self else { return }
+            dismiss(animated: true, completion: nil)
         }
         
         currentView.phoneNumberTextField.handleCountryCode  = {[weak self] in
@@ -51,27 +80,7 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
         }
     }
     
-    @objc func timerFired() {
-        guard let isFromLogin = isFromLogin else {return}
-        self.gotoOTPConfirmV(isFromLogin: isFromLogin)
-
-    }
-    
     func openCountryPicker() {
-        if let country: [CountryModel] = Bundle.main.decode(from: "Countries.json") {
-//            print(country[0].name, country[0].dialCode, country[0].code)
-            
-            
-            for (index,_) in country.enumerated() {
-                let name = country[index].code.lowercased()
-                if let image = UIImage(named: name) {
-                    newCountryModel.setData(name: country[index].name, dialCode: country[index].dialCode, code: country[index].code, imageName: country[index].code)
-                }
-            }
-        } else {
-            print("Failed to load and decode the JSON file.")
-        }
-        
         countryPicker.countryModel = newCountryModel.getData()
         if let sheet = countryPicker.sheetPresentationController {
             sheet.prefersGrabberVisible = true
@@ -79,15 +88,31 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
             sheet.detents = [.large()]
             sheet.delegate = self
         }
-        
         present(countryPicker, animated: true)
     }
     
    
-    private func gotoOTPConfirmV(isFromLogin: Bool) {
-        let otpConfirmVC = OTPConfirmVC()
-        otpConfirmVC.isFromLogin = isFromLogin
-        navigationController?.pushViewController(otpConfirmVC, animated: true)
+    private func gotoOTPConfirmV(isFromLogin: Bool, phoneNum: String) {
+        
+        var phoneNumber = "\(currentView.phoneNumberTextField.countryCodeLabel.text ?? "")\(phoneNum)"
+        PhoneAuthProvider.provider()
+            .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { verificationID, error in
+                if let error = error {
+                    print("Error: ", error.localizedDescription)
+                    // show alert
+                    return
+                }
+                print("Verification ID: ", verificationID)
+                
+                self.hideHUD()
+                let otpConfirmVC = OTPConfirmVC()
+                otpConfirmVC.verificationId = verificationID
+                otpConfirmVC.isFromLogin = isFromLogin
+                self.navigationController?.pushViewController(otpConfirmVC, animated: true)
+                // goto OTP screen
+                // Sign in using the verificationID and the code sent to the user
+                // ...
+            }
     }
 }
 
@@ -117,7 +142,7 @@ extension LoginVC {
                                 do {
                                     let encodedData = try JSONEncoder().encode(locationInfo)
                                     userDefaults.set(encodedData, forKey: "locationInfo")
-                                    
+                                    UserDefaultsHelper.setStringData(value: locationInfo.countryCode, key: .defaultCountryCode)
                                     DispatchQueue.main.async {
                                         print(locationInfo)
                                     }
@@ -135,4 +160,3 @@ extension LoginVC {
         }
     }
 }
-

@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        getUsers()
+//        getUsers()
     }
     
     func testSendOTP(for phoneNumber: String) {
@@ -50,6 +50,8 @@ class ViewController: UIViewController {
             // Check "Users" table in firestore db
             
             print("id: ", authResult?.user.uid)
+            
+//            self.getUserWithUID(authResult?.user.uid ?? "")
         }
     }
     
@@ -62,7 +64,35 @@ class ViewController: UIViewController {
             }
             guard let documents = query?.documents else { return } // Swift Struct model
             let firstData = documents.first?.data()
-            print("First data: ", firstData)
+            
         }
     }
+    
+//    func getUserWithUID(_ targetUID: String) {
+//        Firestore.firestore().collection("Users")
+//            .whereField("userInfo.uid", isEqualTo: targetUID)
+//            .getDocuments { querySnapshot, error in
+//                if let error = error {
+//                    print("Error: ", error.localizedDescription)
+//                    // Show an alert
+//                    return
+//                }
+//                
+//                if let document = querySnapshot?.documents.first {
+//                    let userData = document.data()
+//                    if let userInfoData = userData["userInfo"] as? [String: Any],
+//                       let uid = userInfoData["uid"] as? String {
+//                        print("Found user with UID:", uid)
+//                        // Now you have the user data with the matching UID
+//                    } else {
+//                        print("User data format is incorrect")
+//                        // Show an alert indicating the incorrect data format
+//                    }
+//                } else {
+//                    print("No user found with the specified UID")
+//                    // Show an alert indicating that no user with the specified UID was found
+//                }
+//            }
+//    }
+
 }

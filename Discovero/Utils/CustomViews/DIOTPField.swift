@@ -105,7 +105,7 @@ class DIOTPField: UITextField {
         }
         
         if text.count == digitLabels.count {
-            resignFirstResponder()
+//            resignFirstResponder()
             onOtpFilled?(text, true)
         } else {
             onOtpFilled?(text, false)

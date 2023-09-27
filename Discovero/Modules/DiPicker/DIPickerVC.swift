@@ -14,11 +14,16 @@ class DIPickerVC: UIViewController {
     var closePicker: (() -> Void)?
     var onPicked: ((NewCountryModel) -> Void)?
     let registration = RegistrationVC()
+    var searchModel = [NewCountryModel]()
+    var state: String?
+    var languageModel = [LanguageModel]()
+    var isRegistration: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTable()
         observeEvents()
+        searchModel = countryModel
     }
     
     override func loadView() {
@@ -31,6 +36,19 @@ class DIPickerVC: UIViewController {
             guard let self = self else {return}
             closePicker?()
         }
+        
+        pickerView.onSarchEdit = {[weak self] searchText in
+            guard let self else {return}
+            if searchText.isEmpty {
+                searchModel = countryModel
+            } else {
+                searchModel = countryModel.filter({ item in
+                    return item.name.lowercased().contains(searchText.lowercased())
+                })
+            }
+            
+            pickerView.table.reloadData()
+        }
     }
     
     func setupTable() {
@@ -42,15 +60,27 @@ class DIPickerVC: UIViewController {
 
 extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        countryModel.count
+        if isRegistration  {
+            return languageModel.count
+        } else {
+            return searchModel.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: DIPickerCell.identifier, for: indexPath) as! DIPickerCell
-        let data = countryModel[indexPath.row]
-        cell.configureData(data: data)
-        cell.selectionStyle = .none
-        return cell
+        if !isRegistration {
+            let cell = tableView.dequeueReusableCell(withIdentifier: DIPickerCell.identifier, for: indexPath) as! DIPickerCell
+            let data = searchModel[indexPath.row]
+            cell.configureData(data: data)
+            cell.selectionStyle = .none
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: DIPickerCell.identifier, for: indexPath) as! DIPickerCell
+            let data = languageModel[indexPath.row]
+            cell.configureLanguageData(data: data)
+            cell.selectionStyle = .none
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -58,9 +88,15 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let data = countryModel[indexPath.row]
-        onPicked?(data)
-        registration.isSelected = true
-        dismiss(animated: true)
+        if !isRegistration {
+            let data = searchModel[indexPath.row]
+            onPicked?(data)
+            registration.isSelected = true
+            dismiss(animated: true)
+        } else {
+            let data = languageModel[indexPath.row]
+            
+            dismiss(animated: true)
+        }
     }
 }

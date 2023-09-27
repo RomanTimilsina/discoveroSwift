@@ -9,7 +9,7 @@ import UIKit
 
 class OTPConfirmView: UIView {
     var didNotReceiveCode: (() -> Void)?
-    var confirmOTP: (() -> Void)?
+    var onNextClick: ((String) -> Void)?
     
     let headerView = DIHeaderView(title: "Confirm your number", hasBack: true)
     let view = UIView()
@@ -17,7 +17,7 @@ class OTPConfirmView: UIView {
     let codeTextField = DITextField(title: "Ener the 6 digit code", placholder: "0000 000 000", isPrimaryColor: true, typePad: .numberPad, isOtpTextField: false, contentHeight: 90)
     let titleDescLabel = UILabel(text: "We’ll call or text to confirm your number. Standard message and data rates apply.",color: Color.appWhite, font: OpenSans.regular, size: 12, numberOfLines: 0, alignment: .left)
     let codeNotReceivedLabel = UILabel(text: "I didn't receive a code",color: Color.primary, font: OpenSans.semiBold, size: 14)
-    let nextButton = DIButton(buttonTitle: "next")
+    let nextButton = DIButton(buttonTitle: "Next")
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -63,11 +63,11 @@ class OTPConfirmView: UIView {
         codeNotReceivedLabel.addGestureRecognizer(resendCode)
         codeNotReceivedLabel.isUserInteractionEnabled = true
         
-        nextButton.addTarget(self, action: #selector(handleConfirmOTP), for: .touchUpInside)
+        nextButton.addTarget(self, action: #selector(handleNextButton), for: .touchUpInside)
     }
     
-    @objc func handleConfirmOTP() {
-        confirmOTP?()
+    @objc func handleNextButton() {
+        onNextClick?(codeTextField.otpTextfield.text ?? "")
     }
     
     @objc func handleResendCode() {

@@ -24,7 +24,6 @@ class RegistrationView: UIView {
     let termsAndPolicyLabel2 = UILabel(text: "", font: OpenSans.regular, size: 14, alignment: .center)
     let signUpButton = DIButton(buttonTitle: "Sign Up")
     lazy var bottomVerticalStack = VerticalStackView(arrangedSubViews: [termsAndPolicyLabel, termsAndPolicyLabel2, signUpButton], spacing: 8)
-    
     let overlayView = UIView(color: UIColor.clear)
     
     override init(frame: CGRect) {

@@ -9,16 +9,15 @@ import UIKit
 import MBProgressHUD
 
 class LoginView: UIView {
-    
-    var handleConfirmPhoneNumber: (() -> Void)?
+    var onNextClick: ((String) -> Void)?
     
     let view = UIView()
     let headerView = DIHeaderView(title: "Verify your number", hasBack: false, hasBGColor: true)
     let getStartedLabel = UILabel(text: "Let's get started", font: OpenSans.semiBold, size: 14)
-    let phoneNumberTextField = DITextField(title: "What’s your phone number?", placholder: "0000 000 000", isPrimaryColor: true, typePad: .numberPad, countryCode: "+977")
+    let phoneNumberTextField = DITextField(title: "What’s your phone number?", placholder: "0000 000 000", isPrimaryColor: true, typePad: .numberPad, countryCode: "+1")
     let noticeLabel = UILabel(text: "We’ll call or text to confirm your number. Standard message and data rates apply.",color: Color.appWhite, font: OpenSans.regular, size: 12, numberOfLines: 0, alignment: .left)
-    let nextButton = DIButton(buttonTitle: "next")
-
+    let nextButton = DIButton(buttonTitle: "Next")
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -52,15 +51,18 @@ class LoginView: UIView {
     }
     
     private func observeEvents() {
-        nextButton.addTarget(self, action: #selector(confirmPhoneNumber), for: .touchUpInside)
+        nextButton.addTarget(self, action: #selector(handleNextButton), for: .touchUpInside)
         
         phoneNumberTextField.textField.addTarget(self, action: #selector(textChanged(_:)), for: .editingChanged)
     }
     
-    @objc func confirmPhoneNumber() {
-        handleConfirmPhoneNumber?()
+    @objc func handleNextButton() {
+        onNextClick?(phoneNumberTextField.textField.text?.replacingOccurrences(of: " ", with: "") ?? "")
     }
-    
+}
+
+//MARK: for space between phone number
+extension LoginView {
     @objc func textChanged(_ textField: UITextField) {
         if let enteredText = textField.text {
             let unformattedText = enteredText.replacingOccurrences(of: " ", with: "")
@@ -74,7 +76,7 @@ class LoginView: UIView {
             }
         }
     }
-
+    
     func formatPhoneNumber(_ phoneNumber: String) -> String {
         var formattedPhoneNumber = ""
         for (index, character) in phoneNumber.enumerated() {
@@ -89,3 +91,4 @@ class LoginView: UIView {
         return formattedPhoneNumber
     }
 }
+

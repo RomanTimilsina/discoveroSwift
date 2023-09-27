@@ -40,4 +40,9 @@ class DIPickerCell: UITableViewCell {
         countryName.text = data.name
         countryImage.image = data.flagImage
     }
+    
+    func configureLanguageData(data: LanguageModel) {
+        countryName.text = data.language
+//        countryImage.isSelected = data.isSelected
+    }
 }

@@ -9,6 +9,7 @@ import UIKit
 
 class CustomSearchBar: UIView {
     
+    var onSearchEdit: ((String) -> Void)?
     let searchBarContainer = UIView(color: Color.gray900)
     
     let magnifyingGlassView: UIImageView = {
@@ -34,10 +35,12 @@ class CustomSearchBar: UIView {
     let iconContainer = UIView()
     let filterImage = UIImageView(image: UIImage(named: "filterButton") ,contentMode: .scaleAspectFit, clipsToBounds: true)
     
-    init(placeholder: String = "Search for room", placeholderHeight: CGFloat = 14) {
+    init(placeholder: String = "Search for room", placeholderHeight: CGFloat = 14, isFilterEnable: Bool = false) {
         super.init(frame: .zero)
         setupConstraint()
+        observeSearchEvent()
         textFieldAttribute(placeholderText: placeholder , placeholderHeight: placeholderHeight )
+        filterImage.isHidden = isFilterEnable
     }
     
     required init?(coder: NSCoder) {
@@ -76,5 +79,13 @@ class CustomSearchBar: UIView {
             attributes: attributes
         )
         searchField.attributedPlaceholder = attributedPlaceholder
+    }
+    
+    private func observeSearchEvent() {
+        searchField.addTarget(self, action: #selector(handleSearch), for: .editingChanged)
+    }
+    
+    @objc func handleSearch() {
+        onSearchEdit?(searchField.text ?? "")
     }
 }
