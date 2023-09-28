@@ -16,9 +16,7 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
     let currentView = LoginView()
     var isFromLogin: Bool?
     lazy var countryPicker = DIPickerVC()
-//    let newcountryModel = [NewCountryModel]()
     var newCountryModel = CountryManager()
-    var timer: Timer?
     let countries: [CountryModel] = Bundle.main.decode(from: "Countries.json")
     
     override func loadView() {
@@ -30,8 +28,10 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = true
         observeViewEvents()
-        APICall()
-        currentView.phoneNumberTextField.countryCodeLabel.text = findExtensionCode(for: UserDefaultsHelper.getStringData(forKey: .defaultCountryCode))
+        apiCall(completion: { [weak self] locationModel in
+            guard let self else {return}
+            currentView.phoneNumberTextField.countryCodeLabel.text = findExtensionCode(for: locationModel?.countryCode ?? "")
+        })
         setupNewCountryModel()
     }
     
@@ -45,12 +45,12 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
     }
     
     func findExtensionCode(for countryCode: String) -> String? {
-            if let country = countries.first(where: { $0.code == countryCode }) {
-                return country.dialCode
-            } else {
-                return nil // Country code not found in the array
-            }
+        if let country = countries.first(where: { $0.code == countryCode }) {
+            return country.dialCode
+        } else {
+            return nil // Country code not found in the array
         }
+    }
     
     func observeViewEvents() {
         currentView.headerView.onClose = {[weak self] in
@@ -91,10 +91,8 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
         present(countryPicker, animated: true)
     }
     
-   
     private func gotoOTPConfirmV(isFromLogin: Bool, phoneNum: String) {
-        
-        var phoneNumber = "\(currentView.phoneNumberTextField.countryCodeLabel.text ?? "")\(phoneNum)"
+        let phoneNumber = "\(currentView.phoneNumberTextField.countryCodeLabel.text ?? "")\(phoneNum)"
         PhoneAuthProvider.provider()
             .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { verificationID, error in
                 if let error = error {
@@ -102,28 +100,22 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
                     // show alert
                     return
                 }
-                print("Verification ID: ", verificationID)
-                
                 self.hideHUD()
                 let otpConfirmVC = OTPConfirmVC()
                 otpConfirmVC.verificationId = verificationID
-                otpConfirmVC.isFromLogin = isFromLogin
                 self.navigationController?.pushViewController(otpConfirmVC, animated: true)
-                // goto OTP screen
-                // Sign in using the verificationID and the code sent to the user
-                // ...
             }
     }
 }
 
 extension LoginVC {
-    func APICall() {
+    func apiCall(completion: @escaping (LocationModel?) -> Void) {
         if let url = URL(string: "https://pro.ip-api.com/json/?key=xylJvTwPTjbRGfQ&fbclid=IwAR32KyySS9xuWC3BQzE3VCO9rTft6-E4yFNsPbKKDOfUZPwS-wtTvkErTgY") {
-            let task = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
-                guard let self = self else { return }
+            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                 
                 if let error = error {
                     print("Error: \(error)")
+                    completion(nil)
                     return
                 }
                 
@@ -142,17 +134,19 @@ extension LoginVC {
                                 do {
                                     let encodedData = try JSONEncoder().encode(locationInfo)
                                     userDefaults.set(encodedData, forKey: "locationInfo")
-                                    UserDefaultsHelper.setStringData(value: locationInfo.countryCode, key: .defaultCountryCode)
                                     DispatchQueue.main.async {
                                         print(locationInfo)
+                                        completion(locationInfo)
                                     }
                                 } catch {
                                     print("Error encoding locationInfo: \(error)")
+                                    completion(nil)
                                 }
                             }
                         }
                     } catch {
                         print("Error parsing JSON: \(error)")
+                        completion(nil)
                     }
                 }
             }

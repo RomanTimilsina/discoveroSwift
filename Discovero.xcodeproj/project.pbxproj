@@ -30,6 +30,7 @@
 		04996CBF2AA4725300DB618F /* DIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04996CBE2AA4725300DB618F /* DIButton.swift */; };
 		04996CC12AA489F600DB618F /* OnBoardingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04996CC02AA489F600DB618F /* OnBoardingPageView.swift */; };
 		04996CC42AA4A10200DB618F /* OnBoardingCollectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04996CC32AA4A10200DB618F /* OnBoardingCollectionModel.swift */; };
+		0499EA4D2AC55CF200E25B15 /* FirestoreDatabaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0499EA4C2AC55CF200E25B15 /* FirestoreDatabaseHelper.swift */; };
 		049AF2AB2AB6D3800033EF2F /* DIHeaderTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049AF2AA2AB6D3800033EF2F /* DIHeaderTab.swift */; };
 		049AF2AD2AB70A600033EF2F /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049AF2AC2AB70A600033EF2F /* FilterView.swift */; };
 		049BEF602AA593EA00ED2B58 /* DIPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049BEF5F2AA593EA00ED2B58 /* DIPageViewController.swift */; };
@@ -138,6 +139,7 @@
 		04996CBE2AA4725300DB618F /* DIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIButton.swift; sourceTree = "<group>"; };
 		04996CC02AA489F600DB618F /* OnBoardingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingPageView.swift; sourceTree = "<group>"; };
 		04996CC32AA4A10200DB618F /* OnBoardingCollectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingCollectionModel.swift; sourceTree = "<group>"; };
+		0499EA4C2AC55CF200E25B15 /* FirestoreDatabaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirestoreDatabaseHelper.swift; sourceTree = "<group>"; };
 		049AF2AA2AB6D3800033EF2F /* DIHeaderTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIHeaderTab.swift; sourceTree = "<group>"; };
 		049AF2AC2AB70A600033EF2F /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		049BEF5F2AA593EA00ED2B58 /* DIPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIPageViewController.swift; sourceTree = "<group>"; };
@@ -570,6 +572,7 @@
 		E0FE060F2AA43D1B001DBDF5 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				0499EA4C2AC55CF200E25B15 /* FirestoreDatabaseHelper.swift */,
 				E0FE06102AA43D1B001DBDF5 /* TimeFormatter.swift */,
 				E0FE06112AA43D1B001DBDF5 /* EmailValidator.swift */,
 				E0FE06132AA43D1B001DBDF5 /* AlertHelper.swift */,
@@ -709,6 +712,7 @@
 				E0FE064A2AA43D1B001DBDF5 /* Connectivity.swift in Sources */,
 				E0FE061E2AA43D1B001DBDF5 /* FieldValidator.swift in Sources */,
 				04A168B92AA854870065F607 /* DIPickerCell.swift in Sources */,
+				0499EA4D2AC55CF200E25B15 /* FirestoreDatabaseHelper.swift in Sources */,
 				E0FE06302AA43D1B001DBDF5 /* String+Ext.swift in Sources */,
 				049D3A982AADA382004864E9 /* MyProfileModel.swift in Sources */,
 				04956D302AB06F6A00540F44 /* ProfileItemView.swift in Sources */,
