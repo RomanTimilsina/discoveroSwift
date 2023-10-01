@@ -33,6 +33,7 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
             currentView.phoneNumberTextField.countryCodeLabel.text = findExtensionCode(for: locationModel?.countryCode ?? "")
         })
         setupNewCountryModel()
+        currentView.nextButton.setInvalidState()
     }
     
     func setupNewCountryModel() {
@@ -69,9 +70,9 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
             dismiss(animated: true, completion: nil)
         }
         
-        currentView.phoneNumberTextField.handleCountryCode  = {[weak self] in
+        currentView.phoneNumberTextField.handleCountryCode = {[weak self] in
             guard let self else {return}
-            openCountryPicker()
+            self.openCountryPicker()
         }
         
         countryPicker.onPicked = {[weak self] model in
@@ -81,6 +82,7 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
     }
     
     func openCountryPicker() {
+        countryPicker.modalPresentationStyle = .fullScreen
         countryPicker.countryModel = newCountryModel.getData()
         if let sheet = countryPicker.sheetPresentationController {
             sheet.prefersGrabberVisible = true
@@ -88,6 +90,7 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
             sheet.detents = [.large()]
             sheet.delegate = self
         }
+        countryPicker.pickerView.searchBar.textFieldAttribute(placeholderText: "Search for Nation", placeholderHeight: 14)
         present(countryPicker, animated: true)
     }
     
@@ -95,14 +98,17 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
         let phoneNumber = "\(currentView.phoneNumberTextField.countryCodeLabel.text ?? "")\(phoneNum)"
         PhoneAuthProvider.provider()
             .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { verificationID, error in
+                self.hideHUD()
                 if let error = error {
+                    self.hideHUD()
                     print("Error: ", error.localizedDescription)
-                    // show alert
+                    self.currentView.alert.message = "\(error)"
+                    self.present(self.currentView.alert, animated: true, completion: nil)
                     return
                 }
-                self.hideHUD()
                 let otpConfirmVC = OTPConfirmVC()
                 otpConfirmVC.verificationId = verificationID
+                otpConfirmVC.phoneNumber = "\(self.currentView.phoneNumberTextField.countryCodeLabel.text ?? "")\(phoneNum)"
                 self.navigationController?.pushViewController(otpConfirmVC, animated: true)
             }
     }
@@ -114,6 +120,8 @@ extension LoginVC {
             let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                 
                 if let error = error {
+                    self.currentView.alert.message = "\(error)"
+                    self.present(self.currentView.alert, animated: true, completion: nil)
                     print("Error: \(error)")
                     completion(nil)
                     return
@@ -139,12 +147,16 @@ extension LoginVC {
                                         completion(locationInfo)
                                     }
                                 } catch {
+                                    self.currentView.alert.message = "\(error)"
+                                    self.present(self.currentView.alert, animated: true, completion: nil)
                                     print("Error encoding locationInfo: \(error)")
                                     completion(nil)
                                 }
                             }
                         }
                     } catch {
+                        self.currentView.alert.message = "\(error)"
+                        self.present(self.currentView.alert, animated: true, completion: nil)
                         print("Error parsing JSON: \(error)")
                         completion(nil)
                     }

@@ -17,6 +17,7 @@ class LoginView: UIView {
     let phoneNumberTextField = DITextField(title: "What’s your phone number?", placholder: "0000 000 000", isPrimaryColor: true, typePad: .numberPad, countryCode: "+1")
     let noticeLabel = UILabel(text: "We’ll call or text to confirm your number. Standard message and data rates apply.",color: Color.appWhite, font: OpenSans.regular, size: 12, numberOfLines: 0, alignment: .left)
     let nextButton = DIButton(buttonTitle: "Next")
+    let alert = UIAlertController(title: "Alert Title", message: "Can't select more than 3 languages", preferredStyle: .alert)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -50,10 +51,17 @@ class LoginView: UIView {
         nextButton.anchor(top: noticeLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 24, left: 12, bottom: 0, right: 12))
     }
     
+    let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+        // Handle OK button tap here
+        print("OK button tapped")
+    }
+    
     private func observeEvents() {
         nextButton.addTarget(self, action: #selector(handleNextButton), for: .touchUpInside)
         
         phoneNumberTextField.textField.addTarget(self, action: #selector(textChanged(_:)), for: .editingChanged)
+        
+        alert.addAction(okAction)
     }
     
     @objc func handleNextButton() {
@@ -73,6 +81,12 @@ extension LoginView {
             } else {
                 let formattedText = formatPhoneNumber(unformattedText)
                 textField.text = formattedText
+            }
+            
+            if enteredText.replacingOccurrences(of: " ", with: "").count > 9 {
+                nextButton.setValidState()
+            } else {
+                nextButton.setInvalidState()
             }
         }
     }

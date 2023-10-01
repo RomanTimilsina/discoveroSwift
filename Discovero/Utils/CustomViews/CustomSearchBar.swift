@@ -35,12 +35,12 @@ class CustomSearchBar: UIView {
     let iconContainer = UIView()
     let filterImage = UIImageView(image: UIImage(named: "filterButton") ,contentMode: .scaleAspectFit, clipsToBounds: true)
     
-    init(placeholder: String = "Search for room", placeholderHeight: CGFloat = 14, isFilterEnable: Bool = false) {
+    init(placeholder: String = "Search for language", placeholderHeight: CGFloat = 14, isFilterEnable: Bool = false) {
         super.init(frame: .zero)
         setupConstraint()
         observeSearchEvent()
         textFieldAttribute(placeholderText: placeholder , placeholderHeight: placeholderHeight )
-        filterImage.isHidden = isFilterEnable
+        filterImage.isHidden = !isFilterEnable
     }
     
     required init?(coder: NSCoder) {

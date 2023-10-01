@@ -19,7 +19,7 @@ struct OnBoardingCollectionManager {
     private var data = [onBoardingCollectionModel]()
     
     init() {
-        data.append(onBoardingCollectionModel(image: UIImage(named: "onBoardingPageImage1"), icons: UIImage(named: "bedIcon"), title: "Find your  room", description:"A incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation."))
+        data.append(onBoardingCollectionModel(image: UIImage(named: "onBoardingPageImage1"), icons: UIImage(named: "bedIcon"), title: "Find your room", description:"A incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation."))
         data.append(onBoardingCollectionModel(image: UIImage(named: "onBoardingPageImage2"), icons: UIImage(named: "icon2"), title: "Explore Jobs", description: """
                                               A incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation.
                                               """))
