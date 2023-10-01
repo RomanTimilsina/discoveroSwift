@@ -30,12 +30,13 @@ class DITextField: UIView {
     let textFieldCoverLabel = UILabel(text: "", font: OpenSans.regular, size: 14)
     let flagImageView = UIImageView(contentMode: .scaleAspectFit, clipsToBounds: true)
     let countryCodeLabel = UILabel(text: "", color: Color.primary, font: OpenSans.regular, size: 32)
+    var searchText: String = "Search for country"
     
     lazy var textCover = HorizontalStackView(arrangedSubViews: [textFieldCoverLabel, flagImageView], spacing: 5, distribution: .equalCentering)
     
     let otpTextfield = DIOTPField()
     
-    init(title: String, placholder: String, isPrimaryColor: Bool = false, typePad: UIKeyboardType, isOtpTextField: Bool = true, contentHeight: CGFloat = 74, placeholderHeight: CGFloat = 32, textHeight: CGFloat = 24, countryCode: String = "") {
+    init(title: String, placholder: String, isPrimaryColor: Bool = false, typePad: UIKeyboardType, isOtpTextField: Bool = true, contentHeight: CGFloat = 74, placeholderHeight: CGFloat = 32, textHeight: CGFloat = 24, countryCode: String = "", searchLabel: String = "Search for country") {
         titleLabel.text = title
         titleLabel.textColor = Color.appWhite
         textField.placeholder = placholder
@@ -56,7 +57,7 @@ class DITextField: UIView {
         setConstraint()
         textFieldCoverLabel.font = UIFont.font(with: 24, family: OpenSans.regular)
         textFieldCoverLabel.tintColor = Color.appWhite
-        
+        searchText = searchLabel
         
         observeEvents()
     }
@@ -74,7 +75,6 @@ class DITextField: UIView {
         
         contentVeiw.addSubview(countryCodeLabel)
         countryCodeLabel.anchor(top: titleLabel.bottomAnchor, leading: contentVeiw.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 2, left: 0, bottom: 0, right: 0))
-        
         
         contentVeiw.addSubview(textField)
         textField.anchor(top: titleLabel.bottomAnchor, leading: countryCodeLabel.trailingAnchor, bottom: nil, trailing: nil, padding: .init(top: 2, left: 12, bottom: 0, right: 0))

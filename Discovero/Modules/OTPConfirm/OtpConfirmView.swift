@@ -18,7 +18,8 @@ class OTPConfirmView: UIView {
     let titleDescLabel = UILabel(text: "We’ll call or text to confirm your number. Standard message and data rates apply.",color: Color.appWhite, font: OpenSans.regular, size: 12, numberOfLines: 0, alignment: .left)
     let codeNotReceivedLabel = UILabel(text: "I didn't receive a code",color: Color.primary, font: OpenSans.semiBold, size: 14)
     let nextButton = DIButton(buttonTitle: "Next")
-
+    let alert = UIAlertController(title: "Alert Title", message: "Can't select more than 3 languages", preferredStyle: .alert)
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = Color.gray900
@@ -54,8 +55,11 @@ class OTPConfirmView: UIView {
         addSubview(codeNotReceivedLabel)
         codeNotReceivedLabel.anchor(top: nextButton.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 12, left: 12, bottom: 0, right: 0))
         codeNotReceivedLabel.centerXInSuperview()
-        
-        
+    }
+    
+    let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+        // Handle OK button tap here
+        print("OK button tapped")
     }
     
     private func observeEvents() {
@@ -64,6 +68,8 @@ class OTPConfirmView: UIView {
         codeNotReceivedLabel.isUserInteractionEnabled = true
         
         nextButton.addTarget(self, action: #selector(handleNextButton), for: .touchUpInside)
+        
+        alert.addAction(okAction)
     }
     
     @objc func handleNextButton() {
