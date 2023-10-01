@@ -17,7 +17,7 @@ class RegistrationView: UIView {
     let headerBackgroundView = UIView()
     let smallLabel = UILabel(text: "Few more things", font: OpenSans.regular, size: 14)
     lazy var personalInfoTextField = DITextField(title: "What's your name?", placholder: "Name goes here", isPrimaryColor: false, typePad: .default, contentHeight: 68, placeholderHeight: 24)
-    let languagePickerTextField = DITextField(title: "Select language you know", placholder: "Tap here to chose", isPrimaryColor: false, typePad: .default, contentHeight: 76, placeholderHeight: 24)
+    let languagePickerTextField = DITextField(title: "Select language you know", placholder: "Tap here to chose", isPrimaryColor: false, typePad: .default, contentHeight: 76, placeholderHeight: 24, searchLabel: "Search for language")
     //MARK: - Need to make NSattribute
     let termsAndPolicyLabel = UILabel(text: "By signing up you agree to discovero’s",color: Color.appWhite, font: OpenSans.regular, size: 14, numberOfLines: 0, alignment: .center)
     let text =  "Terms of Use and Privacy Policy"
@@ -69,6 +69,11 @@ class RegistrationView: UIView {
             (Color.primary, "Privacy Policy")
         ]
         applyColorsAndBold(toLabel: termsAndPolicyLabel2, text: text, colorsAndSubstrings: colorsAndSubstrings)
+    }
+    
+    let okAction = UIAlertAction(title: "OK", style: .default) { (_) in
+        // Handle the user's response when they tap the OK button
+        print("OK button tapped")
     }
     
     func observeEvent() {

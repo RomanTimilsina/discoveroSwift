@@ -15,11 +15,13 @@ class DIPickerView: UIView {
     
     let table = UITableView()
     let pickerHeaderView = UIView()
-    let crossIcon = UIImageView(image: UIImage(named: "crossIcon"),contentMode: .scaleAspectFit, clipsToBounds: true)
+    let crossIcon = UIImageView(image: UIImage(named: "back"),contentMode: .scaleAspectFit, clipsToBounds: true)
     let chooseNationalityLabel = UILabel(text: "Choose your nationality", font: OpenSans.semiBold, size: 16)
     let nextButton = UIButton(title: "Next", titleColor: Color.appWhite, font: OpenSans.bold, fontSize: 14)
     let lineView = UIView()
-    let searchBar = CustomSearchBar()
+    
+    lazy var searchBar = CustomSearchBar(placeholder: "" ,isFilterEnable: false)
+    let alert = UIAlertController(title: "Alert Title", message: "Can't select more than 3 languages", preferredStyle: .alert)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,7 +36,7 @@ class DIPickerView: UIView {
     
     func setupConstraint() {
         addSubview(pickerHeaderView)
-        pickerHeaderView.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 12, left: 12, bottom: 0, right: 14))
+        pickerHeaderView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 12, left: 12, bottom: 0, right: 14))
         
         pickerHeaderView.addSubview(crossIcon)
         crossIcon.anchor(top: pickerHeaderView.topAnchor, leading: pickerHeaderView.leadingAnchor, bottom: pickerHeaderView.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
@@ -49,20 +51,23 @@ class DIPickerView: UIView {
         nextButton.anchor(top: pickerHeaderView.topAnchor, leading: nil, bottom: pickerHeaderView.bottomAnchor, trailing: pickerHeaderView.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         nextButton.centerYInSuperview()
         nextButton.isHidden = true
-
+        
         pickerHeaderView.addSubview(lineView)
         lineView.anchor(top: chooseNationalityLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor ,padding: .init(top: 12, left: 0, bottom: -1, right: 0))
         lineView.constraintHeight(constant: 1)
         lineView.backgroundColor = Color.gray600
         
-        
         addSubview(searchBar)
-        searchBar.anchor(top: lineView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        searchBar.anchor(top: lineView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 12, left: 0, bottom: 0, right: 0))
         searchBar.constraintHeight(constant: 40)
         
         addSubview(table)
         table.anchor(top: searchBar.bottomAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 10, right: 0))
         table.backgroundColor = Color.gray900
+    }
+    
+    let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+        print("OK button tapped")
     }
     
     private func observeEvents() {
@@ -71,8 +76,9 @@ class DIPickerView: UIView {
         crossIcon.isUserInteractionEnabled = true
         
         searchBar.onSearchEdit = {[weak self] searchText in
-                self?.onSarchEdit?(searchText)
+            self?.onSarchEdit?(searchText)
         }
+        alert.addAction(okAction)
     }
     
     @objc func handleClose() {

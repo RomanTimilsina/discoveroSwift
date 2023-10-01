@@ -4,9 +4,8 @@ import UIKit
 class DIPickerCell: UITableViewCell {
     
     static let identifier  = "pickerTableCell"
-   
-    var passCheck: ((Bool) -> Void)?
     
+    var passCheck: ((Bool) -> Void)?
     let countryImage = UIImageView(image: UIImage(), contentMode: .scaleAspectFit, clipsToBounds: true)
     let countryName = UILabel(text: "", font: OpenSans.regular, size: 14)
     var isChecked = false
@@ -26,7 +25,8 @@ class DIPickerCell: UITableViewCell {
     func setupConstraints() {
         contentView.addSubview(countryImage)
         countryImage.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 12, bottom: 0, right: 0))
-        countryImage.constraintWidth(constant: 20)
+        countryImage.constraintWidth(constant: 25)
+        countryImage.constraintHeight(constant: 25)
         countryImage.centerYInSuperview()
         
         addSubview(countryName)
@@ -42,23 +42,6 @@ class DIPickerCell: UITableViewCell {
     
     @objc func checkManage() {
         isChecked = !isChecked
-        
-//        if isCheck {
-//            if countCheck < 4 {
-//                countCheck += 1
-//            } else {
-//                isCheck = false
-//            }
-//        }
-//        
-//        if !isCheck {
-//            if countCheck <= 4 {
-//                countCheck = countCheck - 1
-//            } else {
-//                isCheck = true
-//
-//            }
-//        }       
         passCheck?(isChecked)
     }
     

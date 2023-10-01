@@ -25,34 +25,34 @@ struct FinalModel {
     let gender: String
     let displayLocation: String
     let myads: MyAds
-
+    
     // Properties from SecondData
     let countryCode: String
-
+    
     // Properties from ThirdUserData
     let favorites: [String: Any]
     let phoneNumber: Int
     let fcmToken: String
     let locationDetails: LocationDetails
-
+    
     // Properties for RoomOffer
     let roomOffer: [RoomOffer]
-
+    
     // Properties for RoomWanted
     let roomWanted: [RoomWanted]
-
+    
     // Properties for JobOffer
     let jobOffer: [JobOffer]
-
+    
     // Properties for JobWanted
     let jobWanted: [JobWanted]
-
+    
     // Properties for SalesOffer
     let salesOffer: [SalesOffer]
-
+    
     // Properties for SalesWanted
     let salesWanted: [SalesWanted]
-
+    
     struct LocationDetail {
         let buildingNo: String
         let country: String
@@ -61,7 +61,7 @@ struct FinalModel {
         let streetNo: String
         let suburb: String
     }
-
+    
     struct LocationDetails {
         let buildingN: String
         let country: String
@@ -70,12 +70,12 @@ struct FinalModel {
         let streetNo: String
         let suburb: String
     }
-
+    
     struct MyAds {
         // Properties for Announcement
         let announcement: [Announcement]
     }
-
+    
     struct Announcement {
         let adType: String
         let commentCount: Int
@@ -91,7 +91,7 @@ struct FinalModel {
         let viewCount: Int
         let viewCountArray: [Any]
     }
-
+    
     struct RoomOffer {
         // Properties for RoomOffer
         let adsType: String
@@ -113,7 +113,7 @@ struct FinalModel {
         let viewcount: Int
         let viewedUserIds: [Any]
     }
-
+    
     struct RoomWanted {
         // Properties for RoomWanted
         let adsType: String
@@ -137,7 +137,7 @@ struct FinalModel {
         let viewCount: Int
         let viewCountArray: [Any]
     }
-
+    
     struct JobOffer {
         // Properties for JobOffer
         let adType: String
@@ -160,7 +160,7 @@ struct FinalModel {
         let viewCount: Int
         let viewCountArray: [Any]
     }
-
+    
     struct JobWanted {
         // Properties for JobWanted
         let adTyps: String
@@ -182,7 +182,7 @@ struct FinalModel {
         let viewCounts: Int
         let viewCountArray: [Any]
     }
-
+    
     struct SalesOffer {
         // Properties for SalesOffer
         let adType: String
@@ -204,7 +204,7 @@ struct FinalModel {
         let viewCount: Int
         let viewCountArray: [Any]
     }
-
+    
     struct SalesWanted {
         // Properties for SalesWanted
         let adTypes: String
@@ -226,7 +226,7 @@ struct FinalModel {
         let viewCount: Int
         let viewCountArray: [Any]
     }
-
+    
     struct UserInfo {
         // Properties for UserInfo
         let languagesSpeaks: [String]
@@ -234,7 +234,7 @@ struct FinalModel {
         let phoneNo: String
         let uid: String
     }
-
+    
     struct Favorites {
         // Properties for Favorites
         let announcement: [Announcement]
@@ -243,7 +243,6 @@ struct FinalModel {
         let jobWanted: [JobWanted]
     }
 }
-
 
 struct FireStoreDatabaseHelper {
     let navigationController: UINavigationController
@@ -256,15 +255,18 @@ struct FireStoreDatabaseHelper {
         Firestore.firestore().collection("Users").getDocuments { query, error in
             if let error = error {
                 print("Error: ", error.localizedDescription)
-                // Show alert
                 return
             }
             guard let documents = query?.documents else { return }
             
             let uids = documents.map { $0.data()["uid"] as? String ?? "" }
-            if uids.contains(uid) {
-                self.navigationController.pushViewController(RoomVC(), animated: true)
+            if let document = documents.first(where: { $0.data()["uid"] as? String == uid }) {
+                let name = document.data()["name"] as? String ?? ""
+                let welcomeVC = WelcomeVC()
+                welcomeVC.nameText = name
+                self.navigationController.pushViewController(welcomeVC, animated: true)
             } else {
+                // User not found
                 self.navigationController.pushViewController(RegistrationVC(), animated: true)
             }
         }

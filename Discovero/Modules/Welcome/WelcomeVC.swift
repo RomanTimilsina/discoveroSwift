@@ -18,8 +18,7 @@ class WelcomeVC: UIViewController {
         if let nameText {
             self.welcomeView.welcomeLabel.text = "Welcome \(nameText)"
         }
-        
-        timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(timerFired), userInfo: nil, repeats: false)
+        //        timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(timerFired), userInfo: nil, repeats: false)
     }
     
     @objc func timerFired() {
