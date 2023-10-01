@@ -14,7 +14,7 @@ class OTPConfirmView: UIView {
     let headerView = DIHeaderView(title: "Confirm your number", hasBack: true)
     let view = UIView()
     let getStartedLabel = UILabel(text: "Confirm your number", font: OpenSans.semiBold, size: 14)
-    let codeTextField = DITextField(title: "Ener the 6 digit code", placholder: "0000 000 000", isPrimaryColor: true, typePad: .numberPad, isOtpTextField: false, contentHeight: 90)
+    let codeTextField = DITextField(title: "Enter the 6 digit code", placholder: "0000 000 000", isPrimaryColor: true, typePad: .numberPad, isOtpTextField: false, contentHeight: 90)
     let titleDescLabel = UILabel(text: "We’ll call or text to confirm your number. Standard message and data rates apply.",color: Color.appWhite, font: OpenSans.regular, size: 12, numberOfLines: 0, alignment: .left)
     let codeNotReceivedLabel = UILabel(text: "I didn't receive a code",color: Color.primary, font: OpenSans.semiBold, size: 14)
     let nextButton = DIButton(buttonTitle: "Next")
