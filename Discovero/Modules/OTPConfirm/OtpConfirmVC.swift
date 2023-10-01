@@ -6,11 +6,15 @@
 //
 
 import UIKit
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseAuth
+import Firebase
 
 class OTPConfirmVC: UIViewController {
     
     let currentView = OTPConfirmView()
-    var isFromLogin: Bool?
+    var verificationId: String?
     
     override func loadView() {
         super.loadView()
@@ -32,16 +36,34 @@ class OTPConfirmVC: UIViewController {
         
         currentView.didNotReceiveCode = {[weak self] in
             guard let self else {return}
+            // need to add didNtReceiveCode
         }
         
-        currentView.confirmOTP = {[weak self] in
-            guard let self = self, let isFromLogin = isFromLogin else {return}
-            gotoNextPage(isFromLogin: isFromLogin)
+        currentView.onNextClick = {[weak self] otpText in
+            guard let self else {return}
+            showHUD()
+            gotoNextPage(verificationID: verificationId ?? "", verificationCode: otpText)
         }
     }
     
-    private func gotoNextPage(isFromLogin: Bool) {
-        let registrationVC = RegistrationVC()
-        navigationController?.pushViewController(isFromLogin ? HomeController() : registrationVC, animated: true)
+    private func gotoNextPage(verificationID: String, verificationCode: String) {
+        
+        let credential = PhoneAuthProvider.provider().credential(
+            withVerificationID: verificationID,
+            verificationCode: verificationCode
+        )
+        
+        Auth.auth().signIn(with: credential) { authResult, error in
+            if let error = error {
+                print("Error: ", error.localizedDescription)
+                // Show alert
+                return
+            }
+            self.hideHUD()
+            if let uid = authResult?.user.uid {
+                //In Helpers folder FireStoreDatabaseHelper()sends to login/ register
+                FireStoreDatabaseHelper(navigationController: self.navigationController!).checkAuthentication(uid: uid)
+            }
+        }
     }
 }

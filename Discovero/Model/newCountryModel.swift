@@ -20,7 +20,7 @@ struct NewCountryModel {
 //    return NewCountryModel(name: country.name, dialCode: country.dialCode, code: country.code, flagImage: UIImage(named: country.code))
 //}
 
-struct countryManager {
+struct CountryManager {
     private var data = [NewCountryModel]()
     
     init() {

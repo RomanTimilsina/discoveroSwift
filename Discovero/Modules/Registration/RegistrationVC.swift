@@ -13,7 +13,8 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
     var country: DIPickerModel?
     var hasName: Bool?
     var isSelected: Bool?
-    var newCountryModel = countryManager()
+    var newCountryModel = CountryManager()
+    var languageManager = LanguageManager()
 
     
     override func loadView() {
@@ -24,7 +25,9 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = true
         registrationView.personalInfoTextField.textField.delegate = self
+        setLanguage()
         observeViewEvents()
+        
     }
     
     func observeViewEvents() {
@@ -80,30 +83,44 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
 //        present(countryPicker, animated: true)
 //    }
     
-    func openCountryPicker() {
-        if let country: [CountryModel] = Bundle.main.decode(from: "Countries.json") {
-//            print(country[0].name, country[0].dialCode, country[0].code)
-            
-            
-            for (index,_) in country.enumerated() {
-                let name = country[index].code.lowercased()
-                if let image = UIImage(named: name) {
-                    newCountryModel.setData(name: country[index].name, dialCode: country[index].dialCode, code: country[index].code, imageName: country[index].code)
-                }
-            }
-        } else {
-            print("Failed to load and decode the JSON file.")
+    func setLanguage() {
+        let country: [String] = [
+            "Afar", "Afrikaans", "Albanian", "Amharic", "Arabic", "Aramaic", "Armenian", "Assamese", "Azerbaijani", "Balochi", "Basque", "Belarusian", "Bengali", "Berber", "Bhojpuri", "Bodo", "Bosnian", "Breton", "Bulgarian", "Burmese", "Cantonese", "Catalan", "Cebuano", "Chechen", "Chewa", "Chinese", "Comorian", "Corsican", "Creole", "Croatian", "Czech", "Dakhini", "Danish", "Dogri", "Dutch", "Dzongkha", "English", "Esperanto", "Estonian", "Ewe", "Faroese", "Filipino", "Finnish", "French", "Frisian", "Fulani", "Galician", "Garhwali", "Georgian", "German", "Greek", "Guarani", "Gujarati", "Hakka", "Haryanvi", "Hausa", "Hawaiian", "Hebrew", "Hiligaynon", "Hindi", "Hmong", "Hokkien", "Hungarian", "Icelandic", "Igbo", "Indonesian", "Irish", "Italian", "Jamaican Patois", "Japanese", "Javanese", "Kannada", "Kashmiri", "Kazakh", "Khmer", "Kikongo", "Kinyarwanda", "Kirundi", "Kodava", "Konkani", "Korean", "Kumaoni", "Kurdish", "Kutchi", "Kyrgyz", "Lao", "Latin", "Latvian", "Lingala", "Lithuanian", "Luo", "Luxembourgish", "Macedonian", "Maithili", "Malagasy", "Malay", "Malayalam", "Maltese", "Mandarin", "Maori", "Marathi", "Marwari", "Mayan", "Meitei", "Mongolian", "Montenegrin", "Nahuatl", "Nepali", "Norwegian", "Occitan", "Oriya", "Oromo", "Pahari", "Papiamento", "Pashto", "Persian", "Polish", "Portuguese", "Punjabi", "Quechua", "Rajasthani", "Romanian", "Romansh", "Russian", "Sami", "Sankethi", "Sanskrit", "Santali", "Saurashtra", "Sepedi", "Serbian", "Sesotho", "Setswana", "Sign Language", "Sindhi", "Sinhala", "Slovak", "Slovenian", "Somali", "Spanish", "Swahili", "Swati", "Swedish", "Tagalog", "Taiwanese", "Tajik", "Tamil", "Telugu", "Teochew", "Thai", "Tibetan", "Tigrinya", "Tsonga", "Tulu", "Turkish", "Ukrainian", "Urdu", "Venda", "Vietnamese", "Welsh", "Yiddish", "Yoruba", "Zulu"
+        ]
+        
+        for language in country {
+            languageManager.setData(language: language, isSelected: false)
         }
+    }
+    
+    func openCountryPicker() {
         
         
-        countryPicker.countryModel = newCountryModel.getData()
+//        if let country: [CountryModel] = Bundle.main.decode(from: "Countries.json") {
+////            print(country[0].name, country[0].dialCode, country[0].code)
+//            
+//            
+////            for (index,_) in country.enumerated() {
+////                let name = country[index].code.lowercased()
+////                if let image = UIImage(named: name) {
+////                    newCountryModel.setData(name: country[index].name, dialCode: country[index].dialCode, code: country[index].code, imageName: country[index].code)
+////                }
+////            }
+//        } else {
+//            print("Failed to load and decode the JSON file.")
+//        }
+        
+        
+        countryPicker.languageModel = languageManager.getData()
         if let sheet = countryPicker.sheetPresentationController {
             sheet.prefersGrabberVisible = true
             sheet.preferredCornerRadius = 30
             sheet.detents = [.large()]
             sheet.delegate = self
         }
-
+        
+        countryPicker.isRegistration = true
+        
         present(countryPicker, animated: true)
       
     }

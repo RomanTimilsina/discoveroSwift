@@ -11,6 +11,7 @@ class DIPickerView: UIView {
     
     var onCloseClick: (() -> Void)?
     var onNextClick: (() -> Void)?
+    var onSarchEdit: ((String) -> Void)?
     
     let table = UITableView()
     let pickerHeaderView = UIView()
@@ -18,11 +19,13 @@ class DIPickerView: UIView {
     let chooseNationalityLabel = UILabel(text: "Choose your nationality", font: OpenSans.semiBold, size: 16)
     let nextButton = UIButton(title: "Next", titleColor: Color.appWhite, font: OpenSans.bold, fontSize: 14)
     let lineView = UIView()
+    let searchBar = CustomSearchBar()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = Color.gray900
         setupConstraint()
+        observeEvents()
     }
     
     required init?(coder: NSCoder) {
@@ -35,6 +38,7 @@ class DIPickerView: UIView {
         
         pickerHeaderView.addSubview(crossIcon)
         crossIcon.anchor(top: pickerHeaderView.topAnchor, leading: pickerHeaderView.leadingAnchor, bottom: pickerHeaderView.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        crossIcon.constraintHeight(constant: 30)
         crossIcon.centerYInSuperview()
         
         pickerHeaderView.addSubview(chooseNationalityLabel)
@@ -44,23 +48,31 @@ class DIPickerView: UIView {
         pickerHeaderView.addSubview(nextButton)
         nextButton.anchor(top: pickerHeaderView.topAnchor, leading: nil, bottom: pickerHeaderView.bottomAnchor, trailing: pickerHeaderView.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         nextButton.centerYInSuperview()
-        
+        nextButton.isHidden = true
+
         pickerHeaderView.addSubview(lineView)
         lineView.anchor(top: chooseNationalityLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor ,padding: .init(top: 12, left: 0, bottom: -1, right: 0))
         lineView.constraintHeight(constant: 1)
         lineView.backgroundColor = Color.gray600
         
+        
+        addSubview(searchBar)
+        searchBar.anchor(top: lineView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        searchBar.constraintHeight(constant: 40)
+        
         addSubview(table)
-        table.anchor(top: lineView.bottomAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 10, right: 0))
+        table.anchor(top: searchBar.bottomAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 10, right: 0))
         table.backgroundColor = Color.gray900
     }
     
     private func observeEvents() {
-        let signUpTextTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleClose))
-        crossIcon.addGestureRecognizer(signUpTextTapGesture)
+        let closeTextTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleClose))
+        crossIcon.addGestureRecognizer(closeTextTapGesture)
         crossIcon.isUserInteractionEnabled = true
         
-        nextButton.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
+        searchBar.onSearchEdit = {[weak self] searchText in
+                self?.onSarchEdit?(searchText)
+        }
     }
     
     @objc func handleClose() {

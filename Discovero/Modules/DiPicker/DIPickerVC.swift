@@ -14,11 +14,22 @@ class DIPickerVC: UIViewController {
     var closePicker: (() -> Void)?
     var onPicked: ((NewCountryModel) -> Void)?
     let registration = RegistrationVC()
+    var searchModel = [NewCountryModel]()
+//    var state: String?
+    var languageModel = [LanguageModel]()
+    var searchLanguageModel = [LanguageModel]()
+    var savedData = [LanguageModel]()
+    var isRegistration: Bool = false
+//    var checker: Bool?
+//    let languageManager = LanguageManager()
+    var count = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTable()
         observeEvents()
+        searchModel = countryModel
+        searchLanguageModel = languageModel
     }
     
     override func loadView() {
@@ -31,6 +42,27 @@ class DIPickerVC: UIViewController {
             guard let self = self else {return}
             closePicker?()
         }
+                //MARK: - need to work on languag filter
+        pickerView.onSarchEdit = {[weak self] searchText in
+            guard let self else {return}
+            if isRegistration  {
+                if searchText.isEmpty {
+                    searchLanguageModel = languageModel
+                } else {
+                    searchLanguageModel = languageModel.filter({ $0.language.lowercased().contains(searchText.lowercased())
+                    })
+                }
+            } else {
+                if searchText.isEmpty {
+                    searchModel = countryModel
+                } else {
+                    searchModel = countryModel.filter({ item in
+                        return item.name.lowercased().contains(searchText.lowercased())
+                    })
+                }
+            }
+            pickerView.table.reloadData()
+        }
     }
     
     func setupTable() {
@@ -42,15 +74,45 @@ class DIPickerVC: UIViewController {
 
 extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        countryModel.count
+        if isRegistration  {
+            return searchLanguageModel.count
+        } else {
+            return searchModel.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: DIPickerCell.identifier, for: indexPath) as! DIPickerCell
-        let data = countryModel[indexPath.row]
-        cell.configureData(data: data)
-        cell.selectionStyle = .none
-        return cell
+        if !isRegistration {
+            let data = searchModel[indexPath.row]
+            cell.configureData(data: data)
+            cell.selectionStyle = .none
+            return cell
+        } else {
+            let data = searchLanguageModel[indexPath.row]
+            cell.passCheck = {[weak self] isChecked in
+                guard let self else {return}
+                if isChecked {
+                    count += 1
+                }
+                
+                if !isChecked {
+                    count -= 1
+                }
+                
+                if count < 4 {
+                    searchLanguageModel[indexPath.row].isSelected = isChecked
+                    
+                    savedData.append(searchLanguageModel[indexPath.row])
+                    print(savedData)
+                    cell.countryImage.image = isChecked ? UIImage(systemName: "checkmark.square") : UIImage(systemName: "square")
+                }
+            }
+            
+            cell.configureLanguageData(data: data)
+            cell.selectionStyle = .none
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -58,9 +120,15 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let data = countryModel[indexPath.row]
-        onPicked?(data)
-        registration.isSelected = true
-        dismiss(animated: true)
+        if !isRegistration {
+            let data = searchModel[indexPath.row]
+            onPicked?(data)
+            registration.isSelected = true
+            dismiss(animated: true)
+        } else {
+            let data = searchLanguageModel[indexPath.row]
+            
+//            dismiss(animated: true)
+        }
     }
 }
