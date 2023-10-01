@@ -49,7 +49,7 @@ class ViewController: UIViewController {
             // User is signed in -> Check if user id is present in firestore db and decide where to go
             // Check "Users" table in firestore db
             
-            print("id: ", authResult?.user.uid)
+            print("id: ", authResult?.user.uid )
             
 //            self.getUserWithUID(authResult?.user.uid ?? "")
         }

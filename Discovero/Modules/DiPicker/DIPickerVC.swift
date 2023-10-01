@@ -15,14 +15,14 @@ class DIPickerVC: UIViewController {
     var onPicked: ((NewCountryModel) -> Void)?
     let registration = RegistrationVC()
     var searchModel = [NewCountryModel]()
-//    var state: String?
+    //    var state: String?
     var languageModel = [LanguageModel]()
     var searchLanguageModel = [LanguageModel]()
-    var savedData = [LanguageModel]()
+    var savedData = [String]()
     var isRegistration: Bool = false
-//    var checker: Bool?
-//    let languageManager = LanguageManager()
-    var count = 0
+    //    var checker: Bool?
+    //    let languageManager = LanguageManager()
+    var countSelected = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,13 +42,15 @@ class DIPickerVC: UIViewController {
             guard let self = self else {return}
             closePicker?()
         }
-                //MARK: - need to work on languag filter
+        //MARK: - need to work on languag filter
         pickerView.onSarchEdit = {[weak self] searchText in
             guard let self else {return}
             if isRegistration  {
                 if searchText.isEmpty {
                     searchLanguageModel = languageModel
                 } else {
+                    
+                    
                     searchLanguageModel = languageModel.filter({ $0.language.lowercased().contains(searchText.lowercased())
                     })
                 }
@@ -64,6 +66,8 @@ class DIPickerVC: UIViewController {
             pickerView.table.reloadData()
         }
     }
+    
+    
     
     func setupTable() {
         pickerView.table.register(DIPickerCell.self, forCellReuseIdentifier: DIPickerCell.identifier)
@@ -90,25 +94,51 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
             return cell
         } else {
             let data = searchLanguageModel[indexPath.row]
-            cell.passCheck = {[weak self] isChecked in
-                guard let self else {return}
+            cell.isSelected = data.isSelected!
+            cell.passCheck = { [weak self] isChecked in
+                guard let self = self else { return }
+                
+                
+                
                 if isChecked {
-                    count += 1
-                }
-                
-                if !isChecked {
-                    count -= 1
-                }
-                
-                if count < 4 {
-                    searchLanguageModel[indexPath.row].isSelected = isChecked
+                    if countSelected < 3 {
+                        countSelected += 1
+                        cell.countryImage.image = UIImage(systemName: "checkmark.square")
+                        searchLanguageModel[indexPath.row].isSelected = true
+                        savedData.append(searchLanguageModel[indexPath.row].language)
+                    } else {
+                        cell.isChecked = false
+                        cell.countryImage.image = UIImage(systemName: "square")
+                        searchLanguageModel[indexPath.row].isSelected = false
+                        savedData.removeAll {
+                            $0 == self.searchLanguageModel[indexPath.row].language
+                        }
+                    }
+                } else {
+                    countSelected -= 1
+                    searchLanguageModel[indexPath.row].isSelected = false
+                    savedData.removeAll {
+                        $0 == self.searchLanguageModel[indexPath.row].language
+                    }
+                    cell.countryImage.image = UIImage(systemName: "square")
                     
-                    savedData.append(searchLanguageModel[indexPath.row])
-                    print(savedData)
-                    cell.countryImage.image = isChecked ? UIImage(systemName: "checkmark.square") : UIImage(systemName: "square")
                 }
+                
+                for (index, language) in languageModel.enumerated() {
+                    if let matchingLanguage = searchLanguageModel.first(where: { $0.language == language.language }) {
+                        languageModel[index] = matchingLanguage
+//                        savedData.append(matchingLanguage)
+                    }
+                }
+                
+//                for (index, language) in languageModel.enumerated() {
+//                    if let matchingLanguage = searchLanguageModel.first(where: { $0.isSelected == language.isSelected }) {
+//                        savedData.append(matchingLanguage)
+//                    }
+//                }
+                
+                print(savedData)
             }
-            
             cell.configureLanguageData(data: data)
             cell.selectionStyle = .none
             return cell
@@ -128,7 +158,7 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
         } else {
             let data = searchLanguageModel[indexPath.row]
             
-//            dismiss(animated: true)
+            //            dismiss(animated: true)
         }
     }
 }

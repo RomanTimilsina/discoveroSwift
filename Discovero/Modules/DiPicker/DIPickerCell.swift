@@ -42,6 +42,23 @@ class DIPickerCell: UITableViewCell {
     
     @objc func checkManage() {
         isChecked = !isChecked
+        
+//        if isCheck {
+//            if countCheck < 4 {
+//                countCheck += 1
+//            } else {
+//                isCheck = false
+//            }
+//        }
+//        
+//        if !isCheck {
+//            if countCheck <= 4 {
+//                countCheck = countCheck - 1
+//            } else {
+//                isCheck = true
+//
+//            }
+//        }       
         passCheck?(isChecked)
     }
     
@@ -53,6 +70,7 @@ class DIPickerCell: UITableViewCell {
     
     func configureLanguageData(data: LanguageModel) {
         countryName.text = data.language
+        isChecked = data.isSelected!
         //initially data.isSelected = false as nothing yet selected
         countryImage.image = data.isSelected! ? UIImage(systemName: "checkmark.square") : UIImage(systemName: "square")
         countryImage.tintColor = Color.primary
