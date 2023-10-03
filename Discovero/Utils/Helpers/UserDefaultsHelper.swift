@@ -19,36 +19,15 @@ final class UserDefaultsHelper {
     }
     
     static func removeAllData() {
-        UserDefaultsHelper.removeData(key: .country)
-        UserDefaultsHelper.removeData(key: .defaultCountry)
-        UserDefaultsHelper.removeData(key: .defaultCountryCode)
-        UserDefaultsHelper.removeData(key: .jurisdiction)
-        UserDefaultsHelper.removeData(key: .memberName)
-        UserDefaultsHelper.removeData(key: .language)
-        UserDefaultsHelper.removeData(key: .loginID)
-        UserDefaultsHelper.removeData(key: .verificationStatus)
-        UserDefaultsHelper.removeData(key: .verificationComplete)
-        UserDefaultsHelper.removeData(key: .email)
-        UserDefaultsHelper.removeData(key: .isIb)
-        UserDefaultsHelper.removeData(key: .retailDemo)
+        UserDefaultsHelper.removeData(key: .isLoggedIn)
+        UserDefaultsHelper.removeData(key: .userId)
     }
 }
 
 enum UserDefaultKeys: String {
     case appLanguage
-    case country
-    case defaultCountry
-    case defaultCountryCode
-    case jurisdiction
-    case memberName
-    case language
-    case loginID
-    case verificationStatus
-    case isOnboardingShown
-    case verificationComplete
-    case email
-    case isIb
-    case retailDemo
+    case isLoggedIn
+    case userId
 }
 
 extension UserDefaults {

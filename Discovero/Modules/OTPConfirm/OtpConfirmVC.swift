@@ -40,25 +40,24 @@ class OTPConfirmVC: UIViewController {
     }
     
     func observeViewEvents() {
-        currentView.headerView.onClose = {[weak self] in
-            guard let self = self else {return}
+        currentView.headerView.onClose = { [weak self] in
+            guard let self = self else { return }
             navigationController?.popViewController(animated: true)
         }
         
-        currentView.didNotReceiveCode = {[weak self] in
-            guard let self else {return}
+        currentView.didNotReceiveCode = { [weak self] in
+            guard let self else { return }
             self.showHUD()
             self.resendOTP(phoneNum: self.phoneNumber)
         }
         
-        currentView.onNextClick = {[weak self] otpText in
-            guard let self else {return}
-            
+        currentView.onNextClick = { [weak self] otpText in
+            guard let self else { return }
             showHUD()
             gotoNextPage(verificationID: verificationId ?? "", verificationCode: otpText)
         }
         
-        currentView.codeTextField.otpTextfield.onOtpFilled = {[weak self] text, isFilled in
+        currentView.codeTextField.otpTextfield.onOtpFilled = { [weak self] text, isFilled in
             guard let self else {return}
             if isFilled {
                 self.currentView.nextButton.setValidState()
@@ -74,17 +73,18 @@ class OTPConfirmVC: UIViewController {
             verificationCode: verificationCode
         )
         
-        Auth.auth().signIn(with: credential) { authResult, error in
+        Auth.auth().signIn(with: credential) { [weak self] authResult, error in
+            guard let self = self else { return }
             self.hideHUD()
             if let error = error {
                 print("Error: ", error.localizedDescription)
-                self.currentView.alert.message = "\(error)"
+                self.currentView.alert.message = "\(error.localizedDescription)"
                 self.present(self.currentView.alert, animated: true, completion: nil)
                 return
             }
             if let uid = authResult?.user.uid {
                 //In Helpers folder FireStoreDatabaseHelper()sends to login/ register
-                FireStoreDatabaseHelper(navigationController: self.navigationController!).checkAuthentication(uid: uid)
+                FireStoreDatabaseHelper(navigationController: self.navigationController!).checkAuthentication(uid: uid, phone: phoneNumber)
             }
         }
     }

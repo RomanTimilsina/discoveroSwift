@@ -134,8 +134,10 @@ extension LoginVC {
                                let country = json["country"] as? String,
                                let countryCode = json["countryCode"] as? String,
                                let lat = json["lat"] as? Double,
-                               let lon = json["lon"] as? Double {
-                                let locationInfo = LocationModel(city: city, country: country, countryCode: countryCode, lat: lat, lon: lon)
+                               let lon = json["lon"] as? Double,
+                               let regionName = json["regionName"] as? String
+                            {
+                                let locationInfo = LocationModel(city: city, country: country, countryCode: countryCode, regionName: regionName, lat: lat, lon: lon)
                                 
                                 let userDefaults = UserDefaults.standard
                                 

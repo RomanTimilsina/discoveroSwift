@@ -11,6 +11,7 @@ struct LocationModel: Codable {
     let city: String
     let country: String
     let countryCode: String
+    let regionName: String
     let lat: Double
     let lon: Double
 }

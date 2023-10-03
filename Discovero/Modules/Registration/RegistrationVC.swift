@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, UITextFieldDelegate {
     let currentView = RegistrationView()
@@ -18,8 +19,13 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
     var sendSavedData = [String]()
     var selectedLanguage: String?
     
-    override func loadView() {
-        view = currentView
+    let phoneNumber: String
+    let userId: String
+    
+    init(phoneNumber: String, userId: String) {
+        self.phoneNumber = phoneNumber
+        self.userId = userId
+        super.init(nibName: nil, bundle: nil)
     }
     
     override func viewDidLoad() {
@@ -46,9 +52,9 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
             navigationController?.popViewController(animated: true)
         }
         
-        currentView.handleSignUp = {[weak self] nameText in
-            guard let self, let nameText else {return}
-            gotoWelcomePageVC(nameText: nameText)
+        currentView.handleSignUp = { [weak self] nameText in
+            guard let self = self else { return }
+            saveRegisterData()
         }
         
         countryPicker.onPicked = {[weak self] model in
@@ -71,6 +77,69 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
         let welcomeVC = WelcomeVC()
         welcomeVC.nameText = nameText
         navigationController?.pushViewController(welcomeVC, animated: true)
+    }
+    
+    private func saveRegisterData() {
+        showHUD()
+        
+        let database = Firestore.firestore()
+        let userDefaults = UserDefaults.standard
+        
+        let languages = selectedLanguage?.components(separatedBy: ",") ?? []
+        if let locationData = userDefaults.data(forKey: "locationInfo") {
+            do {
+                let decoder = JSONDecoder()
+                let location = try decoder.decode(LocationModel.self, from: locationData)
+                
+                let data = [
+                    "country": location.country,
+                    "countryCode": location.countryCode,
+                    "dialCode": findExtensionCode(for: location.countryCode) ?? "",
+                    "displayLocation": location.city,
+                    "languages": languages,
+                    "locationDetail": [
+                        "buildingNo": "",
+                        "country": location.country,
+                        "state": location.regionName,
+                        "streetName": "",
+                        "streetNo": "",
+                        "suburb": location.regionName,
+                    ],
+                    "name": currentView.personalInfoTextField.textField.text ?? "",
+                    "phoneNumber": phoneNumber,
+                    "uid": userId
+                ] as [String : Any]
+                                
+                database.collection("Users").addDocument(data: data) { [weak self] error in
+                    guard let self = self else { return }
+                    hideHUD()
+                    if let error = error {
+                        AlertMessage.showBasicAlert(on: self, message: error.localizedDescription)
+                    } else {
+                        print("success")
+                        UserDefaultsHelper.setStringData(value: "set", key: .isLoggedIn)
+                        UserDefaultsHelper.setStringData(value: userId, key: .userId)
+                        gotoWelcomePageVC(nameText: currentView.personalInfoTextField.textField.text ?? "")
+                    }
+                }
+                
+            } catch let error {
+                hideHUD()
+                print("Unable to Decode (\(error))")
+            }
+        } else {
+            hideHUD()
+            print("Error to decode location data")
+        }
+    }
+    
+    func findExtensionCode(for countryCode: String) -> String? {
+        let countries: [CountryModel] = Bundle.main.decode(from: "Countries.json")
+        if let country = countries.first(where: { $0.code == countryCode }) {
+            return country.dialCode
+        } else {
+            return nil // Country code not found in the array
+        }
     }
     
     func setLanguage() {
@@ -123,6 +192,14 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
                 }
             }
         }
+    }
+    
+    override func loadView() {
+        view = currentView
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

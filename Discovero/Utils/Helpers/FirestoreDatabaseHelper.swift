@@ -2,7 +2,7 @@
 //  FirestoreDatabaseHelper.swift
 //  Discovero
 //
-//  Created by Wishuv on 28/09/2023.
+//  Created by Mac on 28/09/2023.
 //
 
 import Foundation
@@ -251,7 +251,7 @@ struct FireStoreDatabaseHelper {
         self.navigationController = navigationController
     }
     
-    func checkAuthentication(uid: String) {
+    func checkAuthentication(uid: String, phone: String) {
         Firestore.firestore().collection("Users").getDocuments { query, error in
             if let error = error {
                 print("Error: ", error.localizedDescription)
@@ -264,10 +264,13 @@ struct FireStoreDatabaseHelper {
                 let name = document.data()["name"] as? String ?? ""
                 let welcomeVC = WelcomeVC()
                 welcomeVC.nameText = name
+                UserDefaultsHelper.setStringData(value: uid, key: .userId)
+                UserDefaultsHelper.setStringData(value: "set", key: .isLoggedIn)
                 self.navigationController.pushViewController(welcomeVC, animated: true)
             } else {
                 // User not found
-                self.navigationController.pushViewController(RegistrationVC(), animated: true)
+                let vc = RegistrationVC(phoneNumber: phone, userId: uid)
+                self.navigationController.pushViewController(vc, animated: true)
             }
         }
     }

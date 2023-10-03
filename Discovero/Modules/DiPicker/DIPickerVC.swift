@@ -13,7 +13,7 @@ class DIPickerVC: UIViewController {
     var countryModel = [NewCountryModel]()
     var closePicker: (() -> Void)?
     var onPicked: ((NewCountryModel) -> Void)?
-    let registration = RegistrationVC()
+    
     var searchModel = [NewCountryModel]()
     var languageModel = [LanguageModel]()
     var searchLanguageModel = [LanguageModel]()
@@ -139,7 +139,8 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
         if !isRegistration {
             let data = searchModel[indexPath.row]
             onPicked?(data)
-            registration.isSelected = true
+//            let registration = RegistrationVC()
+//            registration.isSelected = true
             dismiss(animated: true)
         } else {
             let data = searchLanguageModel[indexPath.row]
