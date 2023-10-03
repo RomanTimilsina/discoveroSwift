@@ -29,7 +29,7 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
         navigationController?.isNavigationBarHidden = true
         observeViewEvents()
         apiCall(completion: { [weak self] locationModel in
-            guard let self else {return}
+            guard let self else { return }
             currentView.phoneNumberTextField.countryCodeLabel.text = findExtensionCode(for: locationModel?.countryCode ?? "")
         })
         setupNewCountryModel()
@@ -54,29 +54,29 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
     }
     
     func observeViewEvents() {
-        currentView.headerView.onClose = {[weak self] in
-            guard let self else {return}
+        currentView.headerView.onClose = { [weak self] in
+            guard let self else { return }
             navigationController?.popViewController(animated: true)
         }
         
-        currentView.onNextClick = {[weak self] phoneNum in
-            guard let self = self else {return}
+        currentView.onNextClick = { [weak self] phoneNum in
+            guard let self = self else { return }
             showHUD()
             gotoOTPConfirmV(isFromLogin: isFromLogin ?? false, phoneNum: phoneNum)
         }
         
-        countryPicker.closePicker = {[weak self] in
+        countryPicker.closePicker = { [weak self] in
             guard let self else { return }
             dismiss(animated: true, completion: nil)
         }
         
-        currentView.phoneNumberTextField.handleCountryCode = {[weak self] in
-            guard let self else {return}
+        currentView.phoneNumberTextField.handleCountryCode = { [weak self] in
+            guard let self else { return }
             self.openCountryPicker()
         }
         
-        countryPicker.onPicked = {[weak self] model in
-            guard let self = self else {return}
+        countryPicker.onPicked = { [weak self] model in
+            guard let self = self else { return }
             currentView.phoneNumberTextField.countryCodeLabel.text = model.dialCode
         }
     }
@@ -97,7 +97,8 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
     private func gotoOTPConfirmV(isFromLogin: Bool, phoneNum: String) {
         let phoneNumber = "\(currentView.phoneNumberTextField.countryCodeLabel.text ?? "")\(phoneNum)"
         PhoneAuthProvider.provider()
-            .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { verificationID, error in
+            .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] verificationID, error in
+                guard let self else { return }
                 self.hideHUD()
                 if let error = error {
                     self.hideHUD()
@@ -117,8 +118,8 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
 extension LoginVC {
     func apiCall(completion: @escaping (LocationModel?) -> Void) {
         if let url = URL(string: "https://pro.ip-api.com/json/?key=xylJvTwPTjbRGfQ&fbclid=IwAR32KyySS9xuWC3BQzE3VCO9rTft6-E4yFNsPbKKDOfUZPwS-wtTvkErTgY") {
-            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-                
+            let task = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
+                guard let self else { return }
                 if let error = error {
                     self.currentView.alert.message = "\(error)"
                     self.present(self.currentView.alert, animated: true, completion: nil)

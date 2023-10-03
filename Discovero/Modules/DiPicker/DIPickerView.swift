@@ -75,7 +75,7 @@ class DIPickerView: UIView {
         crossIcon.addGestureRecognizer(closeTextTapGesture)
         crossIcon.isUserInteractionEnabled = true
         
-        searchBar.onSearchEdit = {[weak self] searchText in
+        searchBar.onSearchEdit = { [weak self] searchText in
             self?.onSarchEdit?(searchText)
         }
         alert.addAction(okAction)

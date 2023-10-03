@@ -13,6 +13,8 @@ class DIPickerVC: UIViewController {
     var countryModel = [NewCountryModel]()
     var closePicker: (() -> Void)?
     var onPicked: ((NewCountryModel) -> Void)?
+    var sendLanguageData: (([LanguageModel]) -> Void)?
+
     
     var searchModel = [NewCountryModel]()
     var languageModel = [LanguageModel]()
@@ -22,6 +24,14 @@ class DIPickerVC: UIViewController {
     var countSelected = 0
     var searchLabel: String?
     var sendSavedData: (([String]) -> Void)?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        pickerView.searchBar.searchField.text = ""
+        if pickerView.searchBar.searchField.text == "" {
+            searchLanguageModel = languageModel
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,13 +47,14 @@ class DIPickerVC: UIViewController {
     }
     
     func observeEvents() {
-        pickerView.onCloseClick = {[weak self] in
-            guard let self = self else {return}
+        pickerView.onCloseClick = { [weak self] in
+            guard let self = self else { return }
             closePicker?()
         }
+        
         //MARK: - need to work on languag filter
-        pickerView.onSarchEdit = {[weak self] searchText in
-            guard let self else {return}
+        pickerView.onSarchEdit = { [weak self] searchText in
+            guard let self else { return }
             if isRegistration  {
                 if searchText.isEmpty {
                     searchLanguageModel = languageModel
@@ -123,6 +134,8 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
                         languageModel[index] = matchingLanguage
                     }
                 }
+                
+                sendLanguageData?(languageModel)
                 sendSavedData?(savedData)
             }
             cell.configureLanguageData(data: data)

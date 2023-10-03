@@ -33,21 +33,23 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
         navigationController?.isNavigationBarHidden = true
         currentView.personalInfoTextField.textField.delegate = self
         setLanguage()
+        countryPicker.languageModel = languageManager.getData()
         observeViewEvents()
+        
     }
     
     func observeViewEvents() {
-        currentView.openPicker = {[weak self] in
+        currentView.openPicker = { [weak self] in
             guard let self = self else { return }
             openCountryPicker()
         }
         
-        countryPicker.closePicker = {[weak self] in
+        countryPicker.closePicker = { [weak self] in
             guard let self = self else { return }
             dismiss(animated: true, completion: nil)
         }
         
-        currentView.headerView.onClose = {[weak self] in
+        currentView.headerView.onClose = { [weak self] in
             guard let self = self else { return }
             navigationController?.popViewController(animated: true)
         }
@@ -57,8 +59,8 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
             saveRegisterData()
         }
         
-        countryPicker.onPicked = {[weak self] model in
-            guard let self = self else {return}
+        countryPicker.onPicked = { [weak self] model in
+            guard let self = self else { return }
             currentView.languagePickerTextField.textField.placeholder = ""
             currentView.languagePickerTextField.textFieldCoverLabel.text = model.name
             currentView.languagePickerTextField.flagImageView.image = model.flagImage
@@ -90,7 +92,7 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
             do {
                 let decoder = JSONDecoder()
                 let location = try decoder.decode(LocationModel.self, from: locationData)
-                
+
                 let data = [
                     "country": location.country,
                     "countryCode": location.countryCode,
@@ -122,7 +124,6 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
                         gotoWelcomePageVC(nameText: currentView.personalInfoTextField.textField.text ?? "")
                     }
                 }
-                
             } catch let error {
                 hideHUD()
                 print("Unable to Decode (\(error))")
@@ -154,7 +155,8 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
     
     func openCountryPicker() {
         countryPicker.modalPresentationStyle = .fullScreen
-        countryPicker.languageModel = languageManager.getData()
+        countryPicker.pickerView.searchBar.searchField.text = ""
+//        countryPicker.pickerView.searchBar.searchField.text = ""
         if let sheet = countryPicker.sheetPresentationController {
             
             sheet.prefersGrabberVisible = true
@@ -167,10 +169,10 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
         countryPicker.pickerView.searchBar.textFieldAttribute(placeholderText: "Search for Language", placeholderHeight: 14)
         present(countryPicker, animated: true)
         
-        currentView.languagePickerTextField.textField.placeholder = ""
-        countryPicker.sendSavedData = {[weak self] selectedLanguages in
+//        currentView.languagePickerTextField.textField.placeholder = ""
+        countryPicker.sendSavedData = { [weak self] selectedLanguages in
             self?.selectedLanguage = ""
-            guard let self = self else {return}
+            guard let self = self else { return }
             for (index, languages) in selectedLanguages.enumerated() {
                 self.selectedLanguage! +=  index == 0 ? "\(languages)" : ", \(languages)"
             }
@@ -179,8 +181,9 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
             if selectedLanguages.isEmpty == true {
                 isSelected = false
                 self.currentView.languagePickerTextField.textField.placeholder = "Tap here to choose"
-                self.currentView.languagePickerTextField.textFieldCoverLabel.text = ""
+                self.currentView.languagePickerTextField.textFieldCoverLabel.text =  ""
             } else {
+                self.currentView.languagePickerTextField.textField.placeholder = ""
                 self.currentView.languagePickerTextField.textFieldCoverLabel.text =  self.selectedLanguage
             }
             
@@ -216,7 +219,7 @@ extension RegistrationVC {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField === currentView.personalInfoTextField.textField {
-            guard let text = textField.text else {return}
+            guard let text = textField.text else { return }
             if !text.isEmpty {
                 hasName = true
             }
@@ -225,7 +228,7 @@ extension RegistrationVC {
             }
         }
         
-        guard let isSelected = isSelected , let hasName = self.hasName else {return}
+        guard let isSelected = isSelected , let hasName = self.hasName else { return }
         if isSelected && hasName {
             currentView.signUpButton.setValidState()
         } else {

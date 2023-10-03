@@ -56,8 +56,8 @@ class ProfileItemVC: UIViewController, UITextFieldDelegate  {
     }
     
     func loginEvents() {
-        email.header.onClose = {[weak self] in
-            guard let self = self else {return}
+        email.header.onClose = { [weak self] in
+            guard let self = self else { return }
             navigationController?.popViewController(animated: true)
         }
     }

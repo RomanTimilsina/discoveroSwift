@@ -13,8 +13,8 @@ class OnSelectPageVC: UIViewController {
 
     
     override func viewWillAppear(_ animated: Bool) {
-        currentView.handleToggleButtonTap = {[weak self] isShowLess, adsHeight in
-            guard let self = self else {return}
+        currentView.handleToggleButtonTap = { [weak self] isShowLess, adsHeight in
+            guard let self = self else { return }
             if isShowLess  {
                 self.currentView.showToggleButton.setTitle("Read More", for: .normal)
                 self.currentView.adDesciptionLabel.text = "\(currentView.adDescritionText.prefix(200))..."

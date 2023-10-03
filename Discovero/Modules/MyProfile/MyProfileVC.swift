@@ -19,8 +19,8 @@ class MyProfileVC: UIViewController {
         
         navigationController?.navigationBar.isHidden = true
         for (index, profile) in profileView.profileArray.enumerated() {
-            profile.profileTap = {[weak self] text in
-                guard let self = self else {return}
+            profile.profileTap = { [weak self] text in
+                guard let self = self else { return }
                 let profileItem = ProfileItemVC()
 
 //                if i {return}

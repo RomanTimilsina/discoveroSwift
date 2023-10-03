@@ -19,14 +19,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func configureWindowScene(_ windowScene: UIWindowScene) {
         window = UIWindow(windowScene: windowScene)
 //        UserDefaultsHelper.removeAllData()
-        let isLoggedIn = !UserDefaultsHelper.getStringData(forKey: .isLoggedIn).isEmpty
-        if isLoggedIn {
-            let navController = UINavigationController(rootViewController: WelcomeVC())
-            window?.rootViewController = navController
-        } else {
-            let navController = UINavigationController(rootViewController: OnBoardingPageVC())
-            window?.rootViewController = navController
-        }
+//        let isLoggedIn = !UserDefaultsHelper.getStringData(forKey: .isLoggedIn).isEmpty
+//        if isLoggedIn {
+//            let navController = UINavigationController(rootViewController: WelcomeVC())
+//            window?.rootViewController = navController
+//        } else {
+//            let navController = UINavigationController(rootViewController: OnBoardingPageVC())
+//            window?.rootViewController = navController
+//        }
+        let navController = UINavigationController(rootViewController: RoomVC())
+        window?.rootViewController = navController
         window?.makeKeyAndVisible()
     }
 }

@@ -155,4 +155,9 @@ class RoomTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func configureData(data: RoomOffer) {
+        print(data.userInfo.name)
+        nameLabel.text = data.userInfo.name
+    }
 }

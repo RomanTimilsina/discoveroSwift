@@ -29,13 +29,13 @@ class OnBoardingPageVC: UIViewController {
     }
     
     func observeViewEvents() {
-        currentView.handleLoginClicked = {[weak self] in
-            guard let self = self else {return}
+        currentView.handleLoginClicked = { [weak self] in
+            guard let self = self else { return }
             gotoLogin(isFromLogin: true)
         }
         
-        currentView.handleRegisterClicked = {[weak self] in
-            guard let self = self else {return}
+        currentView.handleRegisterClicked = { [weak self] in
+            guard let self = self else { return }
             gotoLogin(isFromLogin: false)
         }
     }
