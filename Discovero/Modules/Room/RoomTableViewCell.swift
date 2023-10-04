@@ -18,19 +18,21 @@ class RoomTableViewCell: UITableViewCell {
     let identifier = "RoomTableCell"
     
     //Ads header part
+    let profileView = UIView(color: Color.appWhite)
     let profileImageView = UIImageView(image: UIImage(named: "AC"), contentMode: .scaleAspectFit, clipsToBounds: true)
-    let nameLabel = UILabel(text: "ankit chaudhary", font: OpenSans.semiBold, size: 14)
-    let countryFlageImage = UIImageView(image: UIImage(named: "nepal"), contentMode: .scaleAspectFit)
-    let uploadedTime = UILabel(text: "41 minutes ago", font: OpenSans.regular, size: 12)
+    let nameLabel = UILabel(text: "", font: OpenSans.semiBold, size: 14)
+    let namePrefixLabel = UILabel(text: "AC",color: Color.appBlack, font: OpenSans.regular, size: 14)
+    let countryFlageImage = UIImageView(image: UIImage(named: ""), contentMode: .scaleAspectFit)
+    let uploadedTime = UILabel(text: "", font: OpenSans.regular, size: 12)
     let dot = UIImageView(image: UIImage(named: "dot"), contentMode: .scaleAspectFit, clipsToBounds: true)
-    let nswLabel = UILabel(text: "NSW", font: OpenSans.semiBold, size: 14)
+    let stateLabel = UILabel(text: "", font: OpenSans.semiBold, size: 14)
     let likeButton = UIImageView(image: UIImage(named: "heart"), contentMode: .scaleAspectFit, clipsToBounds: true)
-    let noOfLikes = UILabel(text: "100", font: OpenSans.semiBold, size: 12)
+    let noOfLikes = UILabel(text: "", font: OpenSans.semiBold, size: 12)
     lazy var titleStack = HorizontalStackView(arrangedSubViews: [nameLabel, countryFlageImage], spacing: 5)
-    lazy var subTitleStack = HorizontalStackView(arrangedSubViews: [uploadedTime,dot, nswLabel], spacing: 5)
+    lazy var subTitleStack = HorizontalStackView(arrangedSubViews: [uploadedTime,dot, stateLabel], spacing: 5)
     lazy var userStack = VerticalStackView(arrangedSubViews: [titleStack, subTitleStack], distribution: .fillProportionally)
     lazy var likesStack = VerticalStackView(arrangedSubViews: [likeButton, noOfLikes])
-    lazy var adHeaderStack = HorizontalStackView(arrangedSubViews: [profileImageView, userStack, UIView(),likesStack], spacing: 10)
+    lazy var adHeaderStack = HorizontalStackView(arrangedSubViews: [profileView,profileImageView, userStack, UIView(),likesStack], spacing: 10)
     
     //Ads comment part
     let callImageView = UIImageView(image: UIImage(named: "call"), contentMode: .scaleAspectFit, clipsToBounds: true)
@@ -49,44 +51,38 @@ class RoomTableViewCell: UITableViewCell {
     lazy var adFooterStack = HorizontalStackView(arrangedSubViews: [callStack, messageStack, commentsStack], distribution: .fillEqually)
     
     // Ads middle part
-    let adLabel = UILabel(text: "2 Big Room with attached bath room and parking in Sydney2 Big Room with attached bath room and parking in Sydney2 Big Room with attached bath room and parking in Sydney2 Big Room with attached bath room and parking in Sydney2 Big Room with attached bath room and parking in Sydney2 Big Room with attached bath room and parking in Sydney2 Big Room with attached bath room and parking in Sydney2 Big Room with attached bath room and parking in Sydney2 Big Room with attached bath room and parking in Sydney2 Big Room with attached bath room and parking in Sydney2 Big Room with attached bath room and parking in Sydney2 Big Room with attached bath room and parking in Sydney2 Big Room with attached bath room and parking in Sydney2 Big Room with attached bath room and parking in Sydney2 Big Room with attached bath room and parking in Sydney", font: OpenSans.semiBold, size: 16, numberOfLines: 0, alignment: .left)
+    let adLabel = UILabel(text: "", font: OpenSans.semiBold, size: 16, numberOfLines: 0, alignment: .left)
     let dollarImageView = UIImageView(image: UIImage(named: "dollar"), contentMode: .scaleAspectFit, clipsToBounds: true)
-    let priceAmountLabel = UILabel(text: "$879.00", color: Color.primary, font: OpenSans.semiBold, size: 14)
-    let durationLabel = UILabel(text: "per week", font: OpenSans.semiBold, size: 14)
+    let priceAmountLabel = UILabel(text: "", color: Color.primary, font: OpenSans.semiBold, size: 14)
+    let durationLabel = UILabel(text: "per week", font: OpenSans.regular, size: 14)
     lazy var priceStack = HorizontalStackView(arrangedSubViews: [dollarImageView, priceAmountLabel, durationLabel, UIView()], spacing: 6)
     
     let placeImage = UIImageView(image:UIImage(named: "place") ,contentMode: .scaleAspectFit, clipsToBounds: true)
-    let location = UILabel(text: "Fredrick St.Broome", font: OpenSans.regular, size: 14)
+    let location = UILabel(text: "", font: OpenSans.regular, size: 14)
     lazy var locationStack = HorizontalStackView(arrangedSubViews: [placeImage, location, UIView()], spacing: 6)
     
     let bedroomImage =  UIImageView(image:UIImage(named: "bedroomImage") ,contentMode: .scaleAspectFit, clipsToBounds: true)
-    let bedroomNumberLabel = UILabel(text: "3", font: OpenSans.regular, size: 14)
+    let bedroomNumberLabel = UILabel(text: "", font: OpenSans.regular, size: 14)
     let tubImage =  UIImageView(image:UIImage(named: "tub") ,contentMode: .scaleAspectFit, clipsToBounds: true)
-    let tubNumberLabel = UILabel(text: "2", font: OpenSans.regular, size: 14)
+    let tubNumberLabel = UILabel(text: "", font: OpenSans.regular, size: 14)
     let garageImage =  UIImageView(image:UIImage(named: "garage") ,contentMode: .scaleAspectFit, clipsToBounds: true)
-    let garageNumberLabel = UILabel(text: "2", font: OpenSans.regular, size: 14)
+    let garageNumberLabel = UILabel(text: "", font: OpenSans.regular, size: 14)
     let line =  UIImageView(image:UIImage(named: "line") ,contentMode: .scaleAspectFit, clipsToBounds: true)
-    let typeLabel = UILabel(text: "Apartment", font: OpenSans.regular, size: 14)
+    let propertyTypeLabel = UILabel(text: "", font: OpenSans.regular, size: 14)
     let eyeImage = UIImageView(image:UIImage(named: "eye"),contentMode: .scaleAspectFit, clipsToBounds: true)
-    let viewCount = UILabel(text: "200", font: OpenSans.regular, size: 14)
+    let viewCount = UILabel(text: "", font: OpenSans.regular, size: 14)
     lazy var totalViewStack = VerticalStackView(arrangedSubViews: [eyeImage, viewCount])
-    lazy var apartmentDescriptionStack = HorizontalStackView(arrangedSubViews: [bedroomImage, bedroomNumberLabel, tubImage, tubNumberLabel, garageImage, garageNumberLabel, line, typeLabel, UIView()], spacing: 8)
+    lazy var apartmentDescriptionStack = HorizontalStackView(arrangedSubViews: [bedroomImage, bedroomNumberLabel, tubImage, tubNumberLabel, garageImage, garageNumberLabel, line, propertyTypeLabel, UIView()], spacing: 8)
+    let lineView = UIView(color: Color.gray600)
     lazy var middleAdStack = VerticalStackView(arrangedSubViews: [adLabel, priceStack, locationStack, apartmentDescriptionStack], spacing: 8)
-    lazy var cellStack = VerticalStackView(arrangedSubViews: [adHeaderStack, middleAdStack, adFooterStack], spacing: 12)
-    
-    let likeTapView = UIView(color: .clear)
-    let callTapView = UIView(color: .clear)
-    let messageTapView = UIView(color: .clear)
-    let commentTapView = UIView(color: .clear)
+    lazy var cellStack = VerticalStackView(arrangedSubViews: [adHeaderStack, middleAdStack, lineView, adFooterStack], spacing: 19)
     let currentView = UIView()
-    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
         observeEvents()
         backgroundColor = Color.gray900
-        
     }
     
     func setupView() {
@@ -98,12 +94,26 @@ class RoomTableViewCell: UITableViewCell {
         gapView.constraintHeight(constant: 20)
         gapView.backgroundColor = Color.appBlack
         
+        lineView.constraintHeight(constant: 0.7)
+        lineView.setContentHuggingPriority(.required, for: .vertical)
+        lineView.setContentCompressionResistancePriority(.required, for: .vertical)
+        
         currentView.addSubview(cellStack)
         cellStack.constraintWidth(constant: 100)
-        cellStack.anchor(top: gapView.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 0, bottom: 10, right: 0))
+        cellStack.anchor(top: gapView.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 12, bottom: 10, right: 12))
         
+        profileView.constraintWidth(constant: 30)
+        profileView.constraintHeight(constant: 30)
+        profileView.layer.cornerRadius = 15
+        profileView.addSubview(namePrefixLabel)
+        namePrefixLabel.centerInSuperview()
+        
+       
+
         currentView.addSubview(totalViewStack)
-        totalViewStack.anchor(top: nil, leading: nil, bottom: adFooterStack.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 8, right: 5))
+        totalViewStack.anchor(top: nil, leading: nil, bottom: lineView.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 8, right: 12))
+        //        totalViewStack.centerXAnchor.constraint(equalTo: likesStack.centerXAnchor).isActive = true
+        viewCount.centerXInSuperview()
         
         currentView.addSubview(circleView)
         circleView.anchor(top: nil, leading: commentsLabel.trailingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 5, bottom: 0, right: 5))
@@ -157,7 +167,51 @@ class RoomTableViewCell: UITableViewCell {
     }
     
     func configureData(data: RoomOffer) {
-        print(data.userInfo.name)
+        
+        namePrefixLabel.text = "\(namePrefix(name: data.userInfo.name))"
+        profileImageView.isHidden = true
         nameLabel.text = data.userInfo.name
+        countryFlageImage.image = UIImage(named: data.location.country)
+        stateLabel.text = data.location.state
+        uploadedTime.text = "Posted \(formatDate(from: (data.timestamp)))"
+        // Configure likes count
+        //        noOfLikes.text = "\(data.likesCount)"
+        adLabel.text = data.description
+        priceAmountLabel.text = "$\(String(format: "%.2f", data.price))"
+        location.text = data.location.state + ", " + data.location.country
+        propertyTypeLabel.text = data.propertyType
+        bedroomNumberLabel.text = "\(data.noOfBedroom)"
+        tubNumberLabel.text = "\(data.noOfBathroom)"
+        garageNumberLabel.text = "\(data.noOfParkings)"
+        viewCount.text = "\(data.viewCount < 10 ? " " : "")\(data.viewCount)"
+        commentCount.text = "\(data.comments.count)"
+    }
+    
+    func formatDate(from timestamp: Double) -> String {
+        let currentDate = Date()
+        let date = Date(timeIntervalSince1970: timestamp / 1000) // Convert milliseconds to seconds
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .weekOfYear, .day], from: date, to: currentDate)
+        
+        if let years = components.year, years > 0 {
+            return years == 1 ? "1 year ago" : "\(years) years ago"
+        } else if let weeks = components.weekOfYear, weeks > 0 {
+            return weeks == 1 ? "1 week ago" : "\(weeks) weeks ago"
+        } else if let days = components.day, days > 0 {
+            return days == 1 ? "1 day ago" : "\(days) days ago"
+        } else {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "HH:mm:ss" // Customize the time format as needed
+            return dateFormatter.string(from: date)
+        }
+    }
+    
+    func namePrefix(name: String) -> String {
+        let words = name.split(separator: " ")
+        var initials = ""
+        for word in words {
+            initials += word.prefix(1)
+        }
+        return initials
     }
 }

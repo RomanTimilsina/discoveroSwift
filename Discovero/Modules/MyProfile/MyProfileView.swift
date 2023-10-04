@@ -15,19 +15,12 @@ class MyProfileView: UIView {
     var profileArray = [DICustomProfileView]()
     
     let noAvatarImage = UIImageView(image: UIImage(named: "noAvatarImage"),contentMode: .scaleAspectFit, clipsToBounds: true)
-    
     let nameView = DICustomProfileView(titleText: "Full Name", text: "Ankit Chaudhary", show: true)
-    
     let emailView = DICustomProfileView(titleText: "Email Address", text: "Tap here to add email", show: true, isGrey: true)
-    
     let phoneView = DICustomProfileView(titleText: "Phone Number", text: "+677-9851442275")
-    
     let addressView = DICustomProfileView(titleText: "Address", text: "Frederick St,Broome", show: true)
-    
     let nationalityView = DICustomProfileView(titleText: "Nationality", text: "Nepali", nation: UIImage(named: "nepal"), show: true)
-    
     let genderView = DICustomProfileView(titleText: "Gender", text: "Male", show: true)
-    
     let adsView = DICustomProfileView(titleText: "My Ads", text: "", show: true)
     let favouritesView = DICustomProfileView(titleText: "My Favourites", text: "", show: true)
     let termsView = DICustomProfileView(titleText: "Terms and condition", text: "", show: true)
@@ -51,7 +44,6 @@ class MyProfileView: UIView {
     }
     
     func setupConstraint () {
-        
         addSubview(view)
         view.anchor(top: topAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0 ))
         view.backgroundColor = Color.gray900
@@ -59,8 +51,6 @@ class MyProfileView: UIView {
         addSubview(header)
         header.anchor(top: view.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
 //        header.constraintHeight(constant: 40)
-        
-        
         
         addSubview(scrollView)
         scrollView.anchor(top: header.bottomAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 30, right: 0))

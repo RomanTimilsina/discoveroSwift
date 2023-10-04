@@ -8,9 +8,10 @@
 import Foundation
 
 struct RoomOffer {
-    let id, title, description: String
+    let id, title, description, propertyType: String
     let price: Double
-    let bedrooms, bathrooms, parkings, viewCount, commentCount: Int
+    let noOfBedroom, noOfBathroom, noOfParkings, viewCount, commentCount: Int
+    let timestamp: TimeInterval
     let isAnonymous: Bool
     let userInfo: UserInfo
     let location: Location

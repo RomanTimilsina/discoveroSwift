@@ -21,16 +21,18 @@ class MyProfileVC: UIViewController {
         for (index, profile) in profileView.profileArray.enumerated() {
             profile.profileTap = { [weak self] text in
                 guard let self = self else { return }
-                let profileItem = ProfileItemVC()
-
-//                if i {return}
-                if index < 6 && index != 2{
-                    
-                    profileItem.onTitle = value1[index]
-                    profileItem.onPlaceholder = value2[index]
-                    navigationController?.pushViewController(profileItem, animated: true)
-                }
+                setProfileTab(index: index)
             }
+        }
+    }
+    
+    func setProfileTab(index: Int) {
+        let profileItem = ProfileItemVC()
+        
+        if index < 6 && index != 2{
+            profileItem.onTitle = value1[index]
+            profileItem.onPlaceholder = value2[index]
+            navigationController?.pushViewController(profileItem, animated: true)
         }
     }
     

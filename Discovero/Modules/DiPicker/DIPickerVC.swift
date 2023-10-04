@@ -15,7 +15,6 @@ class DIPickerVC: UIViewController {
     var onPicked: ((NewCountryModel) -> Void)?
     var sendLanguageData: (([LanguageModel]) -> Void)?
 
-    
     var searchModel = [NewCountryModel]()
     var languageModel = [LanguageModel]()
     var searchLanguageModel = [LanguageModel]()
@@ -24,14 +23,6 @@ class DIPickerVC: UIViewController {
     var countSelected = 0
     var searchLabel: String?
     var sendSavedData: (([String]) -> Void)?
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        pickerView.searchBar.searchField.text = ""
-        if pickerView.searchBar.searchField.text == "" {
-            searchLanguageModel = languageModel
-        }
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

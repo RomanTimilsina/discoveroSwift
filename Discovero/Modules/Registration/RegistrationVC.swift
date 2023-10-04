@@ -35,7 +35,6 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
         setLanguage()
         countryPicker.languageModel = languageManager.getData()
         observeViewEvents()
-        
     }
     
     func observeViewEvents() {
@@ -92,7 +91,6 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
             do {
                 let decoder = JSONDecoder()
                 let location = try decoder.decode(LocationModel.self, from: locationData)
-
                 let data = [
                     "country": location.country,
                     "countryCode": location.countryCode,
@@ -155,7 +153,6 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
     
     func openCountryPicker() {
         countryPicker.modalPresentationStyle = .fullScreen
-        countryPicker.pickerView.searchBar.searchField.text = ""
 //        countryPicker.pickerView.searchBar.searchField.text = ""
         if let sheet = countryPicker.sheetPresentationController {
             

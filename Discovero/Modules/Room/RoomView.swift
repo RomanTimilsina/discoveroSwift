@@ -9,6 +9,10 @@ import UIKit
 
 class RoomView: UIView {
     
+//    var handleRoomRefresh: (() -> Void)?
+    
+//    let refreshControl = UIRefreshControl()
+
     let searchBar = CustomSearchBar()
     let searchBarBackgroundView = UIView()
     let homeImg = UIImageView(image: UIImage(named: "homeImg"),contentMode: .scaleAspectFit, clipsToBounds: true)
@@ -24,13 +28,22 @@ class RoomView: UIView {
     let filterSection = FilterView()
     
     let adsTable = UITableView()
+//    let adsCollectionView: UICollectionView = {
+//        let layout = UICollectionViewFlowLayout()
+//        layout.scrollDirection = .vertical
+//        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+//        collectionView.translatesAutoresizingMaskIntoConstraints = false
+//        collectionView.backgroundColor = Color.appBlack
+//        return collectionView
+//    }()
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupConstraint()
         observeEvents()
         backgroundColor = Color.appBlack
-        hideTable()
+        emptyStackView.isHidden = true
     }
     
     required init?(coder: NSCoder) {
@@ -73,6 +86,9 @@ class RoomView: UIView {
     
     private func observeEvents() {
         createAdButton.addTarget(self, action: #selector(createAd), for: .touchUpInside)
+        
+//        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+//        adsTable.addSubview(refreshControl)
     }
     
     func hideTable() {
@@ -88,6 +104,15 @@ class RoomView: UIView {
         filterSection.isHidden = false
         emptyStackView.isHidden = true
     }
+    
+//    @objc func refreshData() {
+////        getRoomOffered { [weak self] roomOffers in
+////                    self?.roomOffers = roomOffers
+////                    self?.adsTable.reloadData()
+////                    self?.refreshControl.endRefreshing()
+////                }
+//        handleRoomRefresh?()
+//    }
     
     @objc func createAd() {
         print("Check")

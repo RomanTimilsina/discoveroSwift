@@ -13,12 +13,10 @@ class FilterSelectorView: UIView {
     let propertyTypeLabel = DICustomProfileView(titleText: "Property Type", text: "", show: true, sideTitleString: "Apartment")
     let nationalityLabel = DICustomProfileView(titleText: "Nationality", text: "", show: true, sideTitleString: "Nepal")
     let bedroomSelector = CustomSelectorView()
-    
     let outerLineView = UIView()
     let knob1 = UIView(color: Color.appWhite, cornerRadius: 10)
     let knob2 = UIView(color: Color.appWhite, cornerRadius: 10)
     let middleView = UIView()
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,7 +30,6 @@ class FilterSelectorView: UIView {
     func setup() {
         addSubview(locationLabel)
         locationLabel.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-        
         
         addSubview(bedroomSelector)
         bedroomSelector.anchor(top: locationLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 150, left: 20, bottom: 0, right: 20))

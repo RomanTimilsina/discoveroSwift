@@ -11,12 +11,20 @@ class RoomVC: UIViewController {
     
     let roomView = RoomView()
     var roomOffers: [RoomOffer] = []
+    var items: [RoomOffer] = []
+    
+//    let pageSize = 5
+//    var currentPage = 1
+//    var isLoading = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
         setupTable()
         fetchRoomOfferedData()
+        observeEvents()
+//        
+//        loadMoreData()
     }
     
     override func loadView() {
@@ -29,96 +37,104 @@ class RoomVC: UIViewController {
         roomView.adsTable.dataSource = self
     }
     
+    func observeEvents() {
+//        roomView.handleRoomRefresh = { [weak self] in
+//            
+//            FireStoreDatabaseHelper().getRoomOffered { [weak self] rooms in
+//                self?.roomOffers.removeAll()
+//                guard let self = self else { return }
+//                self.roomOffers.append(contentsOf: rooms)
+//                DispatchQueue.main.async {
+//                            self.roomView.adsTable.reloadData()
+//                        }
+//                roomView.refreshControl.endRefreshing()
+//
+//                let data = roomOffers[0]
+//                let fontToUse = UIFont.systemFont(ofSize: 16) // You can use the desired font
+//                let maxWidth = UIScreen.main.bounds.width - 12
+//                print(numberOfLinesThatFit(text: data.description, font: fontToUse, maxWidth: maxWidth) * 25)
+//            }
+//        }
+    }
+    
+//    func loadMoreData() {
+//            if isLoading {
+//                return
+//            }
+//            
+//            isLoading = true
+//            
+//            // Simulate an API call or database query
+//            DispatchQueue.global().async {
+//                // Simulate a delay
+//                sleep(2)
+//                
+//                // Generate new items
+//                for rooms in self.roomOffers {
+//                    for _ in self.currentPage...self.pageSize {
+//                        self.items.append(rooms)
+//                    }
+//                }
+//                
+//                
+//            }
+//        }
+    
+    
+    
+    func numberOfLinesThatFit(text: String, font: UIFont, maxWidth: CGFloat) -> Int {
+        // Create a label with the same font and set the maximum width
+        let label = UILabel()
+        label.font = font
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.frame.size = CGSize(width: maxWidth, height: .greatestFiniteMagnitude)
+
+        // Set the text to the label and calculate the size needed
+        label.text = text
+        let textSize = label.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+
+        // Calculate the number of lines based on text size and font height
+        let lineHeight = ceil(font.lineHeight)
+        let numberOfLines = Int(ceil(textSize.height / lineHeight))
+
+        return numberOfLines
+    }//
+//    // Usage example:
+//    let text = "This is some text that you want to check if it fits on the screen."
+//    let font = UIFont.systemFont(ofSize: 16) // Change to your desired font
+//    let fitsOnScreen = doesTextFitOnScreen(text: text, font: font)
+//
+//    if fitsOnScreen {
+//        print("The text fits on the screen.")
+//    } else {
+//        print("The text does not fit on the screen.")
+//    }
+
+    
     private func fetchRoomOfferedData() {
-        FireStoreDatabaseHelper().getRoomOffered { [weak self] documents in
+        showHUD()
+        FireStoreDatabaseHelper().getRoomOffered { [weak self] rooms in
             self?.roomOffers.removeAll()
             guard let self = self else { return }
 
-            for document in documents {
-
-                let data = document.data()
-                let id = data["id"] as? String
-                let title = data["title"] as? String
-                let description = data["description"] as? String
-                let price = data["price"] as? Double
-                let bedrooms = data["bedrooms"] as? Int
-                let bathrooms = data["bathrooms"] as? Int
-                let parkings = data["parkings"] as? Int
-                let viewCount = data["viewCount"] as? Int
-                let commentCount = data["commentCount"] as? Int
-                let isAnonymous = data["isAnonymous"] as? Bool
-                let userInfoData = data["userInfo"] as? [String: Any]
-                let locationData = data["location"] as? [String: String]
-                let comments = data["comments"] as? [String]
-                let favorites = data["favorites"] as? [String]
-                
-                let userInfoName = userInfoData?["name"] as? String
-                let userInfoPhoneNo = userInfoData?["phoneNo"] as? String
-                let userInfoLanguagesSpeaks = userInfoData?["languagesSpeaks"] as? [String]
-                let userInfoUid = userInfoData?["uid"] as? [String]
-                let locationBuildingNo = locationData?["buildingNo"]
-                let locationCountry = locationData?["country"]
-                let locationState = locationData?["state"]
-                let locationStreetName = locationData?["streetName"]
-                let locationStreetNo = locationData?["streetNo"]
-                let locationSuburb = locationData?["suburb"]
-                
-                
-                let userInfo = UserInfo(
-                    name: userInfoName ?? "",
-                    phoneNo: userInfoPhoneNo ?? "",
-                    languagesSpeaks: userInfoLanguagesSpeaks ?? [],
-                    uid: userInfoUid ?? []
-                )
-                
-                let location = Location(
-                    buildingNo: locationBuildingNo ?? "",
-                    country: locationCountry ?? "",
-                    state: locationState ?? "",
-                    streetName: locationStreetName ?? "",
-                    streetNo: locationStreetNo ?? "",
-                    suburb: locationSuburb ?? ""
-                )
-                
-                let roomOffer = RoomOffer(
-                    id: id ?? "",
-                    title: title ?? "",
-                    description: description ?? "",
-                    price: price ?? 0,
-                    bedrooms: bedrooms ?? 0,
-                    bathrooms: bathrooms ?? 0,
-                    parkings: parkings ?? 0,
-                    viewCount: viewCount ?? 0,
-                    commentCount: commentCount ?? 0,
-                    isAnonymous: isAnonymous ?? false,
-                    userInfo: userInfo,
-                    location: location,
-                    comments: comments ?? [],
-                    favorites: favorites ?? []
-                )
-                self.roomOffers.append(roomOffer)
-                print(roomOffers)
-            }
+            self.roomOffers.append(contentsOf: rooms)
             DispatchQueue.main.async {
+                self.hideHUD()
                         self.roomView.adsTable.reloadData()
                     }
         }
-        // Reload the table view to display the fetched data
-        
     }
 }
 
-
 extension RoomVC: UITableViewDelegate, UITableViewDataSource  {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return roomOffers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: RoomTableViewCell().identifier, for: indexPath) as! RoomTableViewCell
         cell.selectionStyle = .none
-        print(roomOffers)
        let data = roomOffers[indexPath.row]
         
         print(data)
@@ -128,24 +144,36 @@ extension RoomVC: UITableViewDelegate, UITableViewDataSource  {
         }
         
         cell.handleCall = {
-            // Handle the "call" action for this cell
-            // You can initiate a call or perform any other task here
+            //on process
         }
         
         cell.handleMessage = {
-            // Handle the "message" action for this cell
-            // You can open a chat screen or perform any other task here
+            //on process
         }
         
         cell.handleComments = {
-            // Handle the "comments" action for this cell
-            // You can open a comments view or perform any other task here
+            //on process
         }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        280
+        let data = roomOffers[indexPath.row]
+        let labelHeight = (((data.description.count)/80) * 30) + 245
+        return CGFloat(labelHeight)
     }
+    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//            let offsetY = scrollView.contentOffset.y
+//            let contentHeight = scrollView.contentSize.height
+//            let screenHeight = scrollView.frame.size.height
+//            
+//            if offsetY > contentHeight - screenHeight - 100 && !isLoading {
+//                loadMoreData()
+//            }
+//        }
 }
+
+
+
