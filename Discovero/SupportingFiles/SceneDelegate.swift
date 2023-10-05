@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let navController = UINavigationController(rootViewController: WelcomeVC())
             window?.rootViewController = navController
         } else {
-            let navController = UINavigationController(rootViewController: OnBoardingPageVC())
+            let navController = UINavigationController(rootViewController: RoomVC())
             window?.rootViewController = navController
         }
 //        let navController = UINavigationController(rootViewController: RegistrationVC(phoneNumber: "",userId: ""))

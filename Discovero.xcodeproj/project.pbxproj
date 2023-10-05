@@ -59,6 +59,7 @@
 		04A168B72AA8544F0065F607 /* DIPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A168B62AA8544F0065F607 /* DIPickerView.swift */; };
 		04A168B92AA854870065F607 /* DIPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A168B82AA854870065F607 /* DIPickerCell.swift */; };
 		04A168BB2AA8549C0065F607 /* DIPickerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A168BA2AA8549C0065F607 /* DIPickerModel.swift */; };
+		04A7BB982ACECE620050C1AA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0FE05CD2AA439C2001DBDF5 /* LaunchScreen.storyboard */; };
 		04B514A52AA71CAA00E99A1B /* OtpConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B514A42AA71CAA00E99A1B /* OtpConfirmView.swift */; };
 		04B514A72AA71CDB00E99A1B /* OtpConfirmVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B514A62AA71CDB00E99A1B /* OtpConfirmVC.swift */; };
 		04CA49052AA43FEB00C69767 /* DITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA49042AA43FEB00C69767 /* DITextField.swift */; };
@@ -76,7 +77,6 @@
 		E0FE05C52AA439C1001DBDF5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FE05C42AA439C1001DBDF5 /* SceneDelegate.swift */; };
 		E0FE05C72AA439C1001DBDF5 /* OnBoardingPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FE05C62AA439C1001DBDF5 /* OnBoardingPageVC.swift */; };
 		E0FE05CC2AA439C2001DBDF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E0FE05CB2AA439C2001DBDF5 /* Assets.xcassets */; };
-		E0FE05CF2AA439C2001DBDF5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0FE05CD2AA439C2001DBDF5 /* LaunchScreen.storyboard */; };
 		E0FE05D82AA43B57001DBDF5 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E0FE05D72AA43B57001DBDF5 /* IQKeyboardManagerSwift */; };
 		E0FE05DB2AA43B7E001DBDF5 /* MBProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = E0FE05DA2AA43B7E001DBDF5 /* MBProgressHUD */; };
 		E0FE05DE2AA43C0B001DBDF5 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = E0FE05DD2AA43C0B001DBDF5 /* KeychainAccess */; };
@@ -677,11 +677,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E0FE05CF2AA439C2001DBDF5 /* LaunchScreen.storyboard in Resources */,
 				E0FE05CC2AA439C2001DBDF5 /* Assets.xcassets in Resources */,
 				04996CBA2AA46F8500DB618F /* Color.xcassets in Resources */,
 				04CA490E2AA44D3600C69767 /* OpenSans-SemiBold.ttf in Resources */,
 				047954292AC180D2002BB17B /* Countries.json in Resources */,
+				04A7BB982ACECE620050C1AA /* LaunchScreen.storyboard in Resources */,
 				04CA490D2AA44D3400C69767 /* OpenSans-Regular.ttf in Resources */,
 				E003B8922AB313250090EC9D /* GoogleService-Info.plist in Resources */,
 			);

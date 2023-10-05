@@ -9,9 +9,9 @@ import UIKit
 
 class RoomView: UIView {
     
-//    var handleRoomRefresh: (() -> Void)?
+    var handleRoomRefresh: (() -> Void)?
     
-//    let refreshControl = UIRefreshControl()
+    let refreshControl = UIRefreshControl()
 
     let searchBar = CustomSearchBar()
     let searchBarBackgroundView = UIView()
@@ -21,6 +21,7 @@ class RoomView: UIView {
     let createAdButton = DIButton(buttonTitle: "Create your first ad",textSize: 14)
     let adView = CustomAdView("Jasper's market", "Check out our best quality", UIImage(named: "rightAdImage"), UIImage(named: "leftAdImage"))
     let line = UIView()
+    let addButtonView = UIImageView(image: UIImage(named: "plus") ,contentMode: .scaleAspectFit)
     
     lazy var emptyStackView = VerticalStackView(arrangedSubViews: [homeImg, createAdLabel,adDescriptionLabel, createAdButton], spacing: 30)
     
@@ -51,24 +52,25 @@ class RoomView: UIView {
     }
     
     func setupConstraint() {
-        addSubview(searchBar)
-        searchBar.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 10, right: 0))
+//        addSubview(searchBar)
+//        searchBar.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 10, right: 0))
         
-        addSubview(searchBarBackgroundView)
-        searchBarBackgroundView.anchor(top: topAnchor, leading: leadingAnchor, bottom: searchBar.topAnchor, trailing: trailingAnchor)
-        searchBarBackgroundView.backgroundColor = Color.gray900
+//        addSubview(searchBarBackgroundView)
+//        searchBarBackgroundView.anchor(top: topAnchor, leading: leadingAnchor, bottom: searchBar.topAnchor, trailing: trailingAnchor)
+//        searchBarBackgroundView.backgroundColor = Color.gray900
         
         addSubview(emptyStackView)
         emptyStackView.centerInSuperview()
         emptyStackView.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 0, right: 12))
         
         addSubview(headerTab)
-        headerTab.anchor(top: searchBar.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 10, right: 0))
+        headerTab.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 10, right: 0))
         headerTab.constraintHeight(constant: 48)
         
         addSubview(filterSection)
-        filterSection.anchor(top: headerTab.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        filterSection.anchor(top: headerTab.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 0, right: 0))
         filterSection.constraintHeight(constant: 40)
+        
         
         addSubview(adsTable)
         adsTable.anchor(top: filterSection.bottomAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 70, right: 0))
@@ -82,13 +84,18 @@ class RoomView: UIView {
         line.anchor(top: adView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         line.constraintHeight(constant: 1)
         line.backgroundColor = Color.gray700
+        
+        addSubview(addButtonView)
+        addButtonView.anchor(top: nil, leading: nil, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 80, right: 18))
+        addButtonView.constraintHeight(constant: 50)
+        addButtonView.constraintWidth(constant: 50)
     }
     
     private func observeEvents() {
         createAdButton.addTarget(self, action: #selector(createAd), for: .touchUpInside)
         
-//        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-//        adsTable.addSubview(refreshControl)
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        adsTable.addSubview(refreshControl)
     }
     
     func hideTable() {
@@ -105,14 +112,14 @@ class RoomView: UIView {
         emptyStackView.isHidden = true
     }
     
-//    @objc func refreshData() {
-////        getRoomOffered { [weak self] roomOffers in
-////                    self?.roomOffers = roomOffers
-////                    self?.adsTable.reloadData()
-////                    self?.refreshControl.endRefreshing()
-////                }
-//        handleRoomRefresh?()
-//    }
+    @objc func refreshData() {
+//        getRoomOffered { [weak self] roomOffers in
+//                    self?.roomOffers = roomOffers
+//                    self?.adsTable.reloadData()
+//                    self?.refreshControl.endRefreshing()
+//                }
+        handleRoomRefresh?()
+    }
     
     @objc func createAd() {
         print("Check")

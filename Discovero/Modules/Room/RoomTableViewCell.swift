@@ -89,7 +89,7 @@ class RoomTableViewCell: UITableViewCell {
         contentView.addSubview(currentView)
         currentView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0 ))
         
-        currentView.addSubview(gapView)
+        addSubview(gapView)
         gapView.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         gapView.constraintHeight(constant: 20)
         gapView.backgroundColor = Color.appBlack
@@ -98,7 +98,7 @@ class RoomTableViewCell: UITableViewCell {
         lineView.setContentHuggingPriority(.required, for: .vertical)
         lineView.setContentCompressionResistancePriority(.required, for: .vertical)
         
-        currentView.addSubview(cellStack)
+        addSubview(cellStack)
         cellStack.constraintWidth(constant: 100)
         cellStack.anchor(top: gapView.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 12, bottom: 10, right: 12))
         
@@ -107,16 +107,14 @@ class RoomTableViewCell: UITableViewCell {
         profileView.layer.cornerRadius = 15
         profileView.addSubview(namePrefixLabel)
         namePrefixLabel.centerInSuperview()
-        
-       
 
-        currentView.addSubview(totalViewStack)
+        addSubview(totalViewStack)
         totalViewStack.anchor(top: nil, leading: nil, bottom: lineView.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 8, right: 12))
         //        totalViewStack.centerXAnchor.constraint(equalTo: likesStack.centerXAnchor).isActive = true
         viewCount.centerXInSuperview()
         
         currentView.addSubview(circleView)
-        circleView.anchor(top: nil, leading: commentsLabel.trailingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 5, bottom: 0, right: 5))
+        circleView.anchor(top: nil, leading: commentsLabel.trailingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 5, bottom: 0, right: 5))
         circleView.centerYAnchor.constraint(equalTo: commentsLabel.centerYAnchor).isActive = true
         circleView.constraintWidth(constant: 14)
         circleView.constraintHeight(constant: 14)
