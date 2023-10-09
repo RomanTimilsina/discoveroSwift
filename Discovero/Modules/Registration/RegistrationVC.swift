@@ -76,7 +76,6 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
     
     private func gotoWelcomePageVC(nameText: String) {
         let welcomeVC = WelcomeVC()
-        welcomeVC.nameText = nameText
         navigationController?.pushViewController(welcomeVC, animated: true)
     }
     

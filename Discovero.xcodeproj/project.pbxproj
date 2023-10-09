@@ -62,6 +62,7 @@
 		04A7BB982ACECE620050C1AA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0FE05CD2AA439C2001DBDF5 /* LaunchScreen.storyboard */; };
 		04B514A52AA71CAA00E99A1B /* OtpConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B514A42AA71CAA00E99A1B /* OtpConfirmView.swift */; };
 		04B514A72AA71CDB00E99A1B /* OtpConfirmVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B514A62AA71CDB00E99A1B /* OtpConfirmVC.swift */; };
+		04BA4C682AD3C45800029E5A /* AllUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA4C672AD3C45800029E5A /* AllUserData.swift */; };
 		04CA49052AA43FEB00C69767 /* DITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA49042AA43FEB00C69767 /* DITextField.swift */; };
 		04CA490D2AA44D3400C69767 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04CA490C2AA44D2D00C69767 /* OpenSans-Regular.ttf */; };
 		04CA490E2AA44D3600C69767 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04CA490B2AA44D2D00C69767 /* OpenSans-SemiBold.ttf */; };
@@ -173,6 +174,7 @@
 		04A168BA2AA8549C0065F607 /* DIPickerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIPickerModel.swift; sourceTree = "<group>"; };
 		04B514A42AA71CAA00E99A1B /* OtpConfirmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpConfirmView.swift; sourceTree = "<group>"; };
 		04B514A62AA71CDB00E99A1B /* OtpConfirmVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpConfirmVC.swift; sourceTree = "<group>"; };
+		04BA4C672AD3C45800029E5A /* AllUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllUserData.swift; sourceTree = "<group>"; };
 		04CA49042AA43FEB00C69767 /* DITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITextField.swift; sourceTree = "<group>"; };
 		04CA490B2AA44D2D00C69767 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		04CA490C2AA44D2D00C69767 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 			isa = PBXGroup;
 			children = (
 				0491EFF12ACC148600E0803A /* RoomOfferModel.swift */,
+				04BA4C672AD3C45800029E5A /* AllUserData.swift */,
 			);
 			path = FireStoreModels;
 			sourceTree = "<group>";
@@ -772,6 +775,7 @@
 				E0FE063F2AA43D1B001DBDF5 /* TimeFormatter.swift in Sources */,
 				E0FE05C52AA439C1001DBDF5 /* SceneDelegate.swift in Sources */,
 				E0FE06242AA43D1B001DBDF5 /* HorizontalStackView.swift in Sources */,
+				04BA4C682AD3C45800029E5A /* AllUserData.swift in Sources */,
 				04956D292AB01D8A00540F44 /* CustomAdView.swift in Sources */,
 				E0FE06452AA43D1B001DBDF5 /* CameraHandler.swift in Sources */,
 				049CF1352AA9DC7600FF2F1B /* MainController.swift in Sources */,

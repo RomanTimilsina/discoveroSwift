@@ -16,14 +16,18 @@ class RoomVC: UIViewController {
     var fireStore = FireStoreDatabaseHelper()
     var isLoading = false
     var firstTime = true
-
+    var timer: Timer?
+    var country, state: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
         setupTable()
-        fetchRoomOfferedData()
         observeEvents()
+        
+        getUsersData()
+        fetchRoomOfferedData()
+
     }
     
     override func loadView() {
@@ -37,18 +41,27 @@ class RoomVC: UIViewController {
     }
     
     func observeEvents() {
-        roomView.handleRoomRefresh = { [weak self] in
+//        roomView.handleRoomRefresh = { [weak self] in
+//            
+//            self?.fireStore.getRoomOffered { [weak self] rooms in
+//                self?.roomOffers.removeAll()
+//                guard let self = self else { return }
+//                self.roomOffers.append(contentsOf: rooms)
+//                
+//                DispatchQueue.main.async {
+//                    self.roomView.adsTable.reloadData()
+//                }
+//                roomView.refreshControl.endRefreshing()
+//            }
+//        }
+    }
+    
+    func getUsersData() {
+        fireStore.getUserDataFromDefaults { [weak self] userData in
+            guard let self, let userData else { return }
             
-            self?.fireStore.getRoomOffered { [weak self] rooms in
-                self?.roomOffers.removeAll()
-                guard let self = self else { return }
-                self.roomOffers.append(contentsOf: rooms)
-                
-                DispatchQueue.main.async {
-                    self.roomView.adsTable.reloadData()
-                }
-                roomView.refreshControl.endRefreshing()
-            }
+            fireStore.country = userData.country
+            fireStore.state = userData.locationDetail.state
         }
     }
     
@@ -105,35 +118,43 @@ class RoomVC: UIViewController {
 
     private func fetchRoomOfferedData() {
         showHUD()
-        fireStore.getRoomOffered { [weak self] rooms in
+        fireStore.getRoomOffered(completion: { [weak self] rooms in
             self?.roomOffers.removeAll()
             guard let self = self else { return }
             
             if !isLoading {
                 self.roomOffers.append(contentsOf: rooms)
-                isLoading = true
             }
             
             DispatchQueue.main.async {
                 self.hideHUD()
                 self.roomView.adsTable.reloadData()
             }
-        }
+            
+            timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+
+
+        })
     }
     
-//    private func fetchMoreRoomData() {
-//        showHUD()
-//        fireStore.getMoreRooms(completion: { [weak self] rooms in
-//            self?.roomOffers.removeAll()
-//            guard let self = self else { return }
-//            self.roomOffers.append(contentsOf: rooms)
-//            
-//            DispatchQueue.main.async {
-//                self.hideHUD()
-//                self.roomView.adsTable.reloadData()
-//            }
-//        })
-//    }
+    @objc func updateTime() {
+           isLoading = false
+        }
+    
+    private func fetchMoreRoomData() {
+        showHUD()
+        fireStore.getMoreRooms(completion: { [weak self] (rooms: [RoomOffer]) in
+            self?.roomOffers.removeAll()
+            guard let self = self else { return }
+            self.roomOffers.append(contentsOf: rooms)
+            
+            
+            DispatchQueue.main.async {
+                self.hideHUD()
+                self.roomView.adsTable.reloadData()
+            }
+        })
+    }
 }
 
 extension RoomVC: UITableViewDelegate, UITableViewDataSource  {
@@ -188,8 +209,10 @@ extension RoomVC: UITableViewDelegate, UITableViewDataSource  {
         let contentHeight = scrollView.contentSize.height
         let screenHeight = scrollView.frame.size.height
         
-        if offsetY > contentHeight - screenHeight - 100  {
-//             fetchMoreRoomData()
+        if offsetY > contentHeight - screenHeight - 100 && !isLoading {
+//                fetchMoreRoomData()
+            
+                isLoading = true
         }
     }
 }

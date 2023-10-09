@@ -68,9 +68,9 @@ class OTPConfirmVC: UIViewController {
         }
     }
     
-    private func gotoWelcomePage(name: String) {
+    private func gotoWelcomePage(uid: String) {
         let welcomeVC = WelcomeVC()
-        welcomeVC.nameText = name
+        welcomeVC.uid = uid
         self.navigationController?.pushViewController(welcomeVC, animated: true)
     }
     
@@ -102,9 +102,9 @@ class OTPConfirmVC: UIViewController {
             
             if let uid = authResult?.user.uid {
                 self.fireStore.checkAuthentication(uid: uid, phone: phoneNumber) { name, uid in
+                    self.gotoWelcomePage(uid: uid)
                     if !name.isEmpty {
-//                        self.gotoWelcomePage(name: name)
-                        self.gotoHomePage()
+//                        self.gotoHomePage()
                         UserDefaultsHelper.setStringData(value: uid, key: .userId)
                         UserDefaultsHelper.setStringData(value: "set", key: .isLoggedIn)
                     } else {
@@ -117,7 +117,7 @@ class OTPConfirmVC: UIViewController {
 }
 
 extension OTPConfirmVC {
-    private func resendOTP( phoneNum: String) {
+     func resendOTP( phoneNum: String) {
         let phoneNumber = phoneNum
         let timer = CountdownTimer()
         PhoneAuthProvider.provider()
