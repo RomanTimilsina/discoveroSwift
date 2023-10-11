@@ -9,17 +9,21 @@ import UIKit
 
 class CustomSelectorView: UIView {
 
+    let titleLabel = UILabel(text: "", font: OpenSans.semiBold, size: 16)
     let outerView = UIView()
     var viewsArray = [UIView]()
-    let slidableItemView = SlidableItemView(frame: CGRect(x: 100, y: 200, width: 14, height: 14))
+//    let slidableItemView = SlidableItemView(frame: CGRect(x: 100, y: 200, width: 14, height: 14))
     lazy var stack = HorizontalStackView(arrangedSubViews: viewsArray, spacing: 0, distribution: .fillEqually)
+    var selected = true
     
-    init(){
+    init(_ title: String = ""){
         super.init(frame: .zero)
-        setup()
+        setupView()
+        titleLabel.text = title
+        
     }
     
-    func setup() {
+    func setupView() {
         
         for number in 0...5 {
             let view = UIView()
@@ -40,19 +44,27 @@ class CustomSelectorView: UIView {
             line.constraintWidth(constant: 1)
             line.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
             line.centerYInSuperview()
-            line.backgroundColor = Color.gray700
+            line.backgroundColor = Color.gray400
             label.centerInSuperview()
             view.constraintHeight(constant: 30)
             view.constraintWidth(constant: 50)
+            
+            let viewTap = UITapGestureRecognizer(target: self, action: #selector(viewTapped(_:)))
+            view.addGestureRecognizer(viewTap)
+            view.isUserInteractionEnabled = true
+            
             viewsArray.append(view)
 
-            if number == 0 {
+            if number == 5 {
                 line.removeFromSuperview()
             }
         }
-
+        
+        addSubview(titleLabel)
+        titleLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        
         addSubview(outerView)
-        outerView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        outerView.anchor(top: titleLabel.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 12, left: 0, bottom: 0, right: 0))
         
         outerView.addSubview(stack)
         stack.anchor(top: outerView.topAnchor, leading: outerView.leadingAnchor, bottom: outerView.bottomAnchor, trailing: outerView.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
@@ -60,6 +72,25 @@ class CustomSelectorView: UIView {
         
         outerView.layer.cornerRadius = 3
 
+    }
+    
+    @objc func viewTapped(_ gesture: UITapGestureRecognizer) {
+        guard let selectedView = gesture.view
+        else { return }
+
+        for (index, view) in viewsArray.enumerated() {
+            if let label = view.subviews.first as? UILabel {
+                if view == selectedView {
+                    label.textColor = Color.appWhite
+                    print(label.text)
+                    view.backgroundColor = Color.gray400
+                } else {
+                    label.textColor = Color.gray400
+                    view.backgroundColor = Color.gray800
+                }
+            }
+        }
+        
     }
     
     required init?(coder: NSCoder) {

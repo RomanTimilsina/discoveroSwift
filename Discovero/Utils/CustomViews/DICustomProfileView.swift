@@ -20,7 +20,7 @@ class DICustomProfileView: UIView {
     
     let rightArrowImage = UIImageView(contentMode: .scaleAspectFit, clipsToBounds: true)
     let sideTitle = UILabel(text: "select your location",color: Color.appWhite, font: OpenSans.regular, size: 14)
-
+    let lineView = UIView(color: Color.gray800)
     lazy var mainStack = HorizontalStackView(arrangedSubViews: [nameStack, UIView(), sideTitle, rightArrowImage], spacing: 8)
     
     init(titleText: String, text: String, nation: UIImage? = nil, show:Bool? = false, isGrey: Bool? = false, sideTitleString: String = "") {
@@ -30,6 +30,7 @@ class DICustomProfileView: UIView {
         subTitle.textColor = Color.appWhite
         nationImageView.image = nation
         sideTitle.text = sideTitleString
+        sideTitle.textColor = Color.gray400
             if isGrey == true {
                 title.textColor = Color.gray400
                 subTitle.textColor = Color.gray500
@@ -48,6 +49,10 @@ class DICustomProfileView: UIView {
     func setupConstraints () {
         addSubview(mainStack)
         mainStack.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        
+        addSubview(lineView)
+        lineView.anchor(top: mainStack.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 5, left: 0, bottom: 0, right: 0))
+        lineView.constraintHeight(constant: 2)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTap))
         mainStack.addGestureRecognizer(tapGesture)

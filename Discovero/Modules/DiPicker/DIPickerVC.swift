@@ -20,15 +20,25 @@ class DIPickerVC: UIViewController {
     var searchLanguageModel = [LanguageModel]()
     var savedData = [String]()
     var isRegistration: Bool = false
-    var countSelected = 0
+    lazy var languageArray: [String] = []
+    lazy var countSelected = languageArray.count
     var searchLabel: String?
     var sendSavedData: (([String]) -> Void)?
-    
+    var firestore = FireStoreDatabaseHelper()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTable()
         observeEvents()
         searchModel = countryModel
+        
+        firestore.getUserDataFromDefaults { [weak self] userData in
+            guard let self, let userData else { return }
+            for (language) in userData.languages {
+                languageArray.append(language.replacingOccurrences(of: " ", with: ""))
+            }
+        }
+
         searchLanguageModel = languageModel
     }
     
@@ -90,7 +100,9 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = .none
             return cell
         } else {
+
             let data = searchLanguageModel[indexPath.row]
+            
             cell.isSelected = data.isSelected!
             cell.passCheck = { [weak self] isChecked in
                 guard let self = self else { return }
@@ -98,21 +110,21 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
                     if countSelected < 3 {
                         countSelected += 1
                         cell.countryImage.image = UIImage(systemName: "checkmark.square")
-                        searchLanguageModel[indexPath.row].isSelected = true
+                        searchLanguageModel[indexPath.row].isSelected = !searchLanguageModel[indexPath.row].isSelected!
                         savedData.append(searchLanguageModel[indexPath.row].language)
                     } else {
-                        cell.isChecked = false
+                        cell.isChecked = !cell.isChecked
                         present(pickerView.alert, animated: true, completion: nil)
                         
                         cell.countryImage.image = UIImage(systemName: "square")
-                        searchLanguageModel[indexPath.row].isSelected = false
+                        searchLanguageModel[indexPath.row].isSelected = !searchLanguageModel[indexPath.row].isSelected!
                         savedData.removeAll {
                             $0 == self.searchLanguageModel[indexPath.row].language
                         }
                     }
                 } else {
                     countSelected -= 1
-                    searchLanguageModel[indexPath.row].isSelected = false
+                    searchLanguageModel[indexPath.row].isSelected = !searchLanguageModel[indexPath.row].isSelected!
                     savedData.removeAll {
                         $0 == self.searchLanguageModel[indexPath.row].language
                     }
@@ -129,6 +141,8 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
                 sendLanguageData?(languageModel)
                 sendSavedData?(savedData)
             }
+            
+
             cell.configureLanguageData(data: data)
             cell.selectionStyle = .none
             return cell

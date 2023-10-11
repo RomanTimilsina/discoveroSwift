@@ -10,9 +10,10 @@ import UIKit
 class RoomView: UIView {
     
     var handleRoomRefresh: (() -> Void)?
-    
-    let refreshControl = UIRefreshControl()
 
+    let refreshControl = UIRefreshControl()
+    var heights = [CGFloat]()
+    var roomOffer = [RoomOffer]()
     let searchBar = CustomSearchBar()
     let searchBarBackgroundView = UIView()
     let homeImg = UIImageView(image: UIImage(named: "homeImg"),contentMode: .scaleAspectFit, clipsToBounds: true)
@@ -27,6 +28,7 @@ class RoomView: UIView {
     
     let headerTab = DIHeaderTab()
     let filterSection = FilterView()
+//    let filterCover = UIView(color: .blue)
     
     let adsTable = UITableView()
 //    let adsCollectionView: UICollectionView = {
@@ -37,28 +39,26 @@ class RoomView: UIView {
 //        collectionView.backgroundColor = Color.appBlack
 //        return collectionView
 //    }()
-
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupConstraint()
         observeEvents()
-        backgroundColor = Color.appBlack
         emptyStackView.isHidden = true
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        backgroundColor = Color.appBlack
     }
     
     func setupConstraint() {
 //        addSubview(searchBar)
 //        searchBar.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 10, right: 0))
-        
+//        searchBar.constraintHeight(constant: 0)
+//
+//        
 //        addSubview(searchBarBackgroundView)
 //        searchBarBackgroundView.anchor(top: topAnchor, leading: leadingAnchor, bottom: searchBar.topAnchor, trailing: trailingAnchor)
 //        searchBarBackgroundView.backgroundColor = Color.gray900
-        
+//        searchBarBackgroundView.constraintHeight(constant: 0)
+//        
         addSubview(emptyStackView)
         emptyStackView.centerInSuperview()
         emptyStackView.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 0, right: 12))
@@ -70,7 +70,10 @@ class RoomView: UIView {
         addSubview(filterSection)
         filterSection.anchor(top: headerTab.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 0, right: 0))
         filterSection.constraintHeight(constant: 40)
+        filterSection.constraintWidth(constant: 95)
         
+//        addSubview(filterCover)
+//        filterCover.anchor(top: filterSection.topAnchor, leading: filterSection.leadingAnchor, bottom: filterSection.bottomAnchor, trailing: filterSection.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         
         addSubview(adsTable)
         adsTable.anchor(top: filterSection.bottomAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 70, right: 0))
@@ -89,15 +92,39 @@ class RoomView: UIView {
         addButtonView.anchor(top: nil, leading: nil, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 80, right: 18))
         addButtonView.constraintHeight(constant: 50)
         addButtonView.constraintWidth(constant: 50)
+        
+//        calculateLinesOfAd()
     }
+    
+//    func calculateLinesOfAd() {
+//        var labels: [UILabel] = []
+//        for (index, room) in roomOffer.enumerated() {
+//            let label =  UILabel(text: room.description, font: OpenSans.semiBold, size: 16, numberOfLines: 0, alignment: .left)
+//            addSubview(label)
+//            if labels.isEmpty {
+//                label.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor)
+//                heights.append(label.frame.size.height)
+//            } else {
+//                label.anchor(top: labels[index - 1].bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor)
+//                heights.append(label.frame.size.height)
+//            }
+//            
+//            labels.append(label)
+//        }
+//        print(heights)
+//    }
+    
     
     private func observeEvents() {
         createAdButton.addTarget(self, action: #selector(createAd), for: .touchUpInside)
         
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         adsTable.addSubview(refreshControl)
+        
+//        filterSection.isUserInteractionEnabled = false
     }
     
+
     func hideTable() {
         adsTable.isHidden = true
         headerTab.isHidden = true
@@ -125,4 +152,9 @@ class RoomView: UIView {
         print("Check")
         showTable()
     }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
 }

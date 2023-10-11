@@ -33,6 +33,7 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
         navigationController?.isNavigationBarHidden = true
         currentView.personalInfoTextField.textField.delegate = self
         setLanguage()
+        
         countryPicker.languageModel = languageManager.getData()
         observeViewEvents()
     }

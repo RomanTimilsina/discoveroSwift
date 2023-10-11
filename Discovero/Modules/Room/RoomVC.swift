@@ -16,8 +16,10 @@ class RoomVC: UIViewController {
     var fireStore = FireStoreDatabaseHelper()
     var isLoading = false
     var firstTime = true
+    var loadMore = true
     var timer: Timer?
     var country, state: String?
+    var heights = [CGFloat]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +29,7 @@ class RoomVC: UIViewController {
         
         getUsersData()
         fetchRoomOfferedData()
-
+        roomView.roomOffer = roomOffers
     }
     
     override func loadView() {
@@ -54,7 +56,16 @@ class RoomVC: UIViewController {
 //                roomView.refreshControl.endRefreshing()
 //            }
 //        }
+        
+        roomView.filterSection.handleFilter = { [weak self] in
+            guard let self else { return }
+            let filterVC = FilterSelectorVC()
+            filterVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(filterVC, animated: true)
+        }
     }
+    
+
     
     func getUsersData() {
         fireStore.getUserDataFromDefaults { [weak self] userData in
@@ -143,11 +154,11 @@ class RoomVC: UIViewController {
     
     private func fetchMoreRoomData() {
         showHUD()
-        fireStore.getMoreRooms(completion: { [weak self] (rooms: [RoomOffer]) in
+        fireStore.getMoreRooms(completion: { [weak self] (rooms: [RoomOffer], isBoolVal) in
             self?.roomOffers.removeAll()
             guard let self = self else { return }
             self.roomOffers.append(contentsOf: rooms)
-            
+            loadMore = isBoolVal
             
             DispatchQueue.main.async {
                 self.hideHUD()
@@ -166,7 +177,7 @@ extension RoomVC: UITableViewDelegate, UITableViewDataSource  {
         let cell = tableView.dequeueReusableCell(withIdentifier: RoomTableViewCell().identifier, for: indexPath) as! RoomTableViewCell
         cell.selectionStyle = .none
         let data = roomOffers[indexPath.row]
-        
+
         if firstTime {
             cell.gapView.isHidden = true
             cell.gapView.constraintHeight(constant: 0)
@@ -196,12 +207,12 @@ extension RoomVC: UITableViewDelegate, UITableViewDataSource  {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        let data = roomOffers[indexPath.row]
-        let approximateHeightOfFont = 30
-        let approximateNoOfLetters = 40
-        let heightOfEmptyTable = 245
-        let labelHeight = (((data.description.count)/approximateNoOfLetters) * approximateHeightOfFont) + heightOfEmptyTable
-        return CGFloat(labelHeight)
+//        let data = roomOffers[indexPath.row]
+//        let approximateHeightOfFont = 30
+//        let approximateNoOfLetters = 40
+//        let heightOfEmptyTable = 245
+//        let labelHeight = (((data.description.count)/approximateNoOfLetters) * approximateHeightOfFont) + heightOfEmptyTable
+        return 254
     }
     
      func scrollViewDidScroll(_ scrollView: UIScrollView)  {
@@ -209,8 +220,8 @@ extension RoomVC: UITableViewDelegate, UITableViewDataSource  {
         let contentHeight = scrollView.contentSize.height
         let screenHeight = scrollView.frame.size.height
         
-        if offsetY > contentHeight - screenHeight - 100 && !isLoading {
-//                fetchMoreRoomData()
+        if offsetY > contentHeight - screenHeight - 100 && !isLoading && loadMore {
+                fetchMoreRoomData()
             
                 isLoading = true
         }
