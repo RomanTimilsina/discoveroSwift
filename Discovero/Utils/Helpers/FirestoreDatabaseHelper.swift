@@ -36,15 +36,16 @@ struct UsersInfoList {
 }
 var roomOffers: [RoomOffer] = []
 var lastDocument: DocumentSnapshot?
+var next: Query?
 
 struct FireStoreDatabaseHelper {
     let first = Firestore.firestore().collection("RoomOffer")
-        .limit(to: 30)
+        .limit(to: 15)
     
     
     var handleNextPage: ((UIViewController) -> Void)?
     var country, state: String?
-    
+
     func checkAuthentication(uid: String, phone: String, completion: @escaping (String, String) -> Void) {
         Firestore.firestore().collection("Users").getDocuments { query, error in
             if let error = error {
@@ -122,7 +123,6 @@ struct FireStoreDatabaseHelper {
     func getRoomOffered(completion: @escaping ([RoomOffer]) -> Void) {
         guard let country, let state else { return }
         
-        
         first.whereField("location.state", isEqualTo: state).whereField("location.country", isEqualTo: country).getDocuments { query, error in
             print(country, state)
             guard let query = query else {
@@ -165,7 +165,6 @@ struct FireStoreDatabaseHelper {
                 let locationStreetNo = locationData?["streetNo"]
                 let locationSuburb = locationData?["suburb"]
                 
-                
                 let userInfo = UserInfo(
                     name: userInfoName ?? "",
                     phoneNo: userInfoPhoneNo ?? "",
@@ -204,21 +203,36 @@ struct FireStoreDatabaseHelper {
             }
             completion((roomOffers))
             print(lastDocument)
-            
-            
         }
     }
     
     func getMoreRooms(completion: @escaping ([RoomOffer], Bool) -> Void) {
         
-        let next = first.whereField("location.state", isEqualTo: state)
-            .whereField("location.country", isEqualTo: country)
-            .start(afterDocument: lastDocument!)
-        next.getDocuments { query, error in
+//        var next: Query?
+        if let lastDocument {
+             next = first.whereField("location.state", isEqualTo: state)
+                 .whereField("location.country", isEqualTo: country)
+                 .start(afterDocument: lastDocument)
+        } else {
+            next = first.whereField("location.state", isEqualTo: state)
+                .whereField("location.country", isEqualTo: country)
+        }
+
+//        if lastDocument != nil {
+//
+//        } else {
+//            next = first.whereField("location.state", isEqualTo: state)
+//                .whereField("location.country", isEqualTo: country)
+//        }
+        
+        
+        
+//        guard let next else { return }
+        
+        next?.getDocuments { query, error in
             
             guard let query = query else { return }
             lastDocument = query.documents.last
-            
             
             for (index, document) in query.documents.enumerated() {
                 lastDocument = document
@@ -290,7 +304,7 @@ struct FireStoreDatabaseHelper {
                 roomOffers.append(roomOffer)
             }
             if let lastDocument {
-                completion(roomOffers, true)
+                completion(roomOffers, false)
             } else {
                 completion(roomOffers, false)
             }
@@ -321,5 +335,46 @@ struct FireStoreDatabaseHelper {
         } else {
             completion(nil)
         }
+    }
+    
+    func getCountryWithState(completion: @escaping ([CountryStateModel]) -> Void) {
+        Firestore.firestore().collection("Country_State").getDocuments { query, error in
+            if let error = error {
+                print("Error: ", error.localizedDescription)
+                return
+            }
+            
+            guard let documents = query?.documents else {
+                return
+            }
+            var states = [States]()
+            var countries = [CountryStateModel]()
+            var country: CountryStateModel
+            for document in documents {
+
+                let data = document.data()
+
+                for countryName in data.keys {
+
+                    
+                    if let dataValues = data[countryName] as? [Any] {
+                        for state in dataValues {
+                            let state = States(name: state as! String)
+                            states.append(state)
+                        }
+                    }
+                    
+                    country = CountryStateModel(name: countryName, state: states)
+                    countries.append(country)
+                    states = []
+                }
+                completion(countries)
+
+                
+//                print(countries)
+            }
+
+        }
+
     }
 }

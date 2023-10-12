@@ -39,9 +39,10 @@ class DIHeaderTab: UIView {
         wantedVStack.constraintHeight(constant: 24)
         
         addSubview(viewStack)
-        viewStack.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        viewStack.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         viewStack.backgroundColor = Color.gray900
         viewStack.constraintHeight(constant: 36)
+        viewStack.constraintHeight(constant: 40)
     }
     
     private func observeEvents() {

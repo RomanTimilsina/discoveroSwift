@@ -52,19 +52,20 @@ class RoomView: UIView {
 //        addSubview(searchBar)
 //        searchBar.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 10, right: 0))
 //        searchBar.constraintHeight(constant: 0)
-//
+////
 //        
 //        addSubview(searchBarBackgroundView)
 //        searchBarBackgroundView.anchor(top: topAnchor, leading: leadingAnchor, bottom: searchBar.topAnchor, trailing: trailingAnchor)
 //        searchBarBackgroundView.backgroundColor = Color.gray900
 //        searchBarBackgroundView.constraintHeight(constant: 0)
 //        
-        addSubview(emptyStackView)
-        emptyStackView.centerInSuperview()
-        emptyStackView.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 0, right: 12))
+//        addSubview(emptyStackView)
+//        emptyStackView.centerInSuperview()
+//        emptyStackView.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 0, right: 12))
         
         addSubview(headerTab)
-        headerTab.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 10, right: 0))
+        headerTab.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: -20, left: 0, bottom: 10, right: 0))
+        //        searchBar.constraintHeight(constant: 0)
         headerTab.constraintHeight(constant: 48)
         
         addSubview(filterSection)

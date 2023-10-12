@@ -34,4 +34,8 @@ struct CountryManager {
     mutating func setData (name: String, dialCode: String, code: String, imageName: String) {
         data.append(NewCountryModel(name: name, dialCode: dialCode, code: code, flagImage: UIImage(named: "\(code)".lowercased())))
     }
+    
+    mutating func setsData (name: String, dialCode: String = "", code: String, imageName: String = "") {
+        data.append(NewCountryModel(name: name, dialCode: dialCode, code: code, flagImage: UIImage(named: "\(code)".lowercased())))
+    }
 }

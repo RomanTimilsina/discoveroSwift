@@ -14,7 +14,8 @@ class HomeController: UITabBarController, UITabBarControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
-
+        navigationController?.navigationBar.isHidden = true
+        
         let room = UINavigationController(rootViewController: RoomVC())
         let jobs = UINavigationController(rootViewController: RoomVC())
         let sales = UINavigationController(rootViewController: RoomVC())

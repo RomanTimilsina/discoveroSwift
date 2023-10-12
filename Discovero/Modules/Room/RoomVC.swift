@@ -129,7 +129,7 @@ class RoomVC: UIViewController {
 
     private func fetchRoomOfferedData() {
         showHUD()
-        fireStore.getRoomOffered(completion: { [weak self] rooms in
+        fireStore.getRoomOffered(completion: { [weak self] (rooms: [RoomOffer]) in
             self?.roomOffers.removeAll()
             guard let self = self else { return }
             
@@ -220,7 +220,7 @@ extension RoomVC: UITableViewDelegate, UITableViewDataSource  {
         let contentHeight = scrollView.contentSize.height
         let screenHeight = scrollView.frame.size.height
         
-        if offsetY > contentHeight - screenHeight - 100 && !isLoading && loadMore {
+        if offsetY > contentHeight - screenHeight - 100 && !isLoading  {
                 fetchMoreRoomData()
             
                 isLoading = true

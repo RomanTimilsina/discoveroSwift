@@ -60,6 +60,10 @@
 		04A168B92AA854870065F607 /* DIPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A168B82AA854870065F607 /* DIPickerCell.swift */; };
 		04A168BB2AA8549C0065F607 /* DIPickerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A168BA2AA8549C0065F607 /* DIPickerModel.swift */; };
 		04A7BB982ACECE620050C1AA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0FE05CD2AA439C2001DBDF5 /* LaunchScreen.storyboard */; };
+		04A91E742AD7B72A0037920D /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A91E732AD7B72A0037920D /* test.swift */; };
+		04A91E772AD7BD610037920D /* LocationFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A91E762AD7BD610037920D /* LocationFilterView.swift */; };
+		04A91E792AD7BDB80037920D /* LocationFilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A91E782AD7BDB80037920D /* LocationFilterVC.swift */; };
+		04A91E7B2AD7EF4E0037920D /* CountryStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A91E7A2AD7EF4E0037920D /* CountryStateModel.swift */; };
 		04B514A52AA71CAA00E99A1B /* OtpConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B514A42AA71CAA00E99A1B /* OtpConfirmView.swift */; };
 		04B514A72AA71CDB00E99A1B /* OtpConfirmVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B514A62AA71CDB00E99A1B /* OtpConfirmVC.swift */; };
 		04BA4C682AD3C45800029E5A /* AllUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA4C672AD3C45800029E5A /* AllUserData.swift */; };
@@ -172,6 +176,10 @@
 		04A168B62AA8544F0065F607 /* DIPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIPickerView.swift; sourceTree = "<group>"; };
 		04A168B82AA854870065F607 /* DIPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIPickerCell.swift; sourceTree = "<group>"; };
 		04A168BA2AA8549C0065F607 /* DIPickerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIPickerModel.swift; sourceTree = "<group>"; };
+		04A91E732AD7B72A0037920D /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
+		04A91E762AD7BD610037920D /* LocationFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationFilterView.swift; sourceTree = "<group>"; };
+		04A91E782AD7BDB80037920D /* LocationFilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationFilterVC.swift; sourceTree = "<group>"; };
+		04A91E7A2AD7EF4E0037920D /* CountryStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryStateModel.swift; sourceTree = "<group>"; };
 		04B514A42AA71CAA00E99A1B /* OtpConfirmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpConfirmView.swift; sourceTree = "<group>"; };
 		04B514A62AA71CDB00E99A1B /* OtpConfirmVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpConfirmVC.swift; sourceTree = "<group>"; };
 		04BA4C672AD3C45800029E5A /* AllUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllUserData.swift; sourceTree = "<group>"; };
@@ -267,6 +275,7 @@
 			children = (
 				0491EFF12ACC148600E0803A /* RoomOfferModel.swift */,
 				04BA4C672AD3C45800029E5A /* AllUserData.swift */,
+				04A91E7A2AD7EF4E0037920D /* CountryStateModel.swift */,
 			);
 			path = FireStoreModels;
 			sourceTree = "<group>";
@@ -293,6 +302,7 @@
 			isa = PBXGroup;
 			children = (
 				04967AC02ABB09440035B359 /* OnlyForTest.swift */,
+				04A91E732AD7B72A0037920D /* test.swift */,
 			);
 			path = OnlyForTest;
 			sourceTree = "<group>";
@@ -300,6 +310,7 @@
 		04996CB82AA46E5E00DB618F /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				04A91E752AD7BD290037920D /* New Group */,
 				04967ABF2ABB092C0035B359 /* OnlyForTest */,
 				04967AAF2ABAC9CF0035B359 /* Filter */,
 				04775C3F2AB96085005F9B4C /* OnSelectPage */,
@@ -428,6 +439,15 @@
 				04A168BA2AA8549C0065F607 /* DIPickerModel.swift */,
 			);
 			path = DiPicker;
+			sourceTree = "<group>";
+		};
+		04A91E752AD7BD290037920D /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				04A91E762AD7BD610037920D /* LocationFilterView.swift */,
+				04A91E782AD7BDB80037920D /* LocationFilterVC.swift */,
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		04B514A32AA71C8400E99A1B /* OTPConfirm */ = {
@@ -712,6 +732,9 @@
 				E0FE05C72AA439C1001DBDF5 /* OnBoardingPageVC.swift in Sources */,
 				049CF12F2AA9D4D000FF2F1B /* RoomView.swift in Sources */,
 				E0FE06402AA43D1B001DBDF5 /* EmailValidator.swift in Sources */,
+				04A91E742AD7B72A0037920D /* test.swift in Sources */,
+				04A91E7B2AD7EF4E0037920D /* CountryStateModel.swift in Sources */,
+				04A91E772AD7BD610037920D /* LocationFilterView.swift in Sources */,
 				E0FE06422AA43D1B001DBDF5 /* AlertHelper.swift in Sources */,
 				E0FE062A2AA43D1B001DBDF5 /* UICollectionView+Ext.swift in Sources */,
 				04967AB52ABAD8BA0035B359 /* CustomSliderView.swift in Sources */,
@@ -768,6 +791,7 @@
 				04775C432AB96106005F9B4C /* OnSelectPageView.swift in Sources */,
 				049D3A962AAD9EE0004864E9 /* MyProfileCell.swift in Sources */,
 				E0FE06262AA43D1B001DBDF5 /* UILabel+Ext.swift in Sources */,
+				04A91E792AD7BDB80037920D /* LocationFilterVC.swift in Sources */,
 				E0FE05C32AA439C1001DBDF5 /* AppDelegate.swift in Sources */,
 				04967AB12ABAC9E40035B359 /* FilterSelectorView.swift in Sources */,
 				049BEF602AA593EA00ED2B58 /* DIPageViewController.swift in Sources */,

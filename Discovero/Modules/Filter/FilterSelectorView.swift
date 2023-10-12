@@ -35,6 +35,8 @@ class FilterSelectorView: UIView {
                button.setTitleColor(.white, for: .normal)
         return button
     }()
+    var editMenuInteraction: UIEditMenuInteraction?
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -68,6 +70,7 @@ class FilterSelectorView: UIView {
         
         addSubview(propertyTypeLabel)
         propertyTypeLabel.anchor(top: parkingSelector.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 30, left: 12, bottom: 0, right: 12))
+        propertyTypeLabel.constraintHeight(constant: 40)
         
         if let sideTitle = propertyTypeLabel.subTitle.text {
             propertyTypeLabel.sideTitle.text = ""
@@ -118,44 +121,26 @@ class FilterSelectorView: UIView {
         //        let panGesture2 = UIPanGestureRecognizer(target: self, action: #selector(handlePanKnob(_:)))
         //        knob2.addGestureRecognizer(panGesture2)
         
-//        let languageGesture = UITapGestureRecognizer(target: self, action: #selector(languageTapped))
-//        nationalityLabel.addGestureRecognizer(languageGesture)
-//        nationalityLabel.isUserInteractionEnabled = true
-//        nationalityLabel.backgroundColor = .blue
-                let propertyLabelGesture = UITapGestureRecognizer(target: self, action: #selector(showMenu))
-                propertyTypeLabel.addGestureRecognizer(propertyLabelGesture)
-                propertyTypeLabel.isUserInteractionEnabled = true
-        
+        propertyTypeLabel.propertyCoverButton.isEnabled = true
+        propertyTypeLabel.propertyCoverButton.showsMenuAsPrimaryAction = true
+        propertyTypeLabel.propertyCoverButton.menu = addInfoMenu()
+
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
+//        propertyTypeLabel.mainStack.addGestureRecognizer(tap)
+
     }
     
+    private func addInfoMenu() -> UIMenu {
+        let Both = UIAction(title: "Any", handler: { _ in
+        })
+        let Apartment = UIAction(title: "Apartment", handler: { _ in
+        })
+        let House = UIAction(title: "House", handler: { _ in
+        })
+        let infoMenu = UIMenu(title: "", children: [Both, Apartment, House])
+        return infoMenu
     }
-
-    @objc func showMenu() {
-            // Create actions for the menu
-            let option1Action = UIAction(title: "Option 1") { _ in
-                print("Option 1 selected")
-            }
-
-            let option2Action = UIAction(title: "Option 2") { _ in
-                print("Option 2 selected")
-            }
-
-            let option3Action = UIAction(title: "Option 3") { _ in
-                print("Option 3 selected")
-            }
-
-            // Create the menu with the actions
-            let menu = UIMenu(title: "Select an Option", children: [option1Action, option2Action, option3Action])
-
-            // Show the menu anchored to the button
-            let menuConfiguration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-                return menu
-            }
-
-            UIMenuController.shared.showMenu(from: self.view, rect: button.frame, in: self.view)
-            UIMenuController.shared.update(with: menuConfiguration)
-        }
-
+    
     @objc func languageTapped() {
         openPicker?()
     }

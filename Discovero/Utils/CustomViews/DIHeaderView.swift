@@ -9,8 +9,8 @@ import UIKit
 
 class DIHeaderView: UIView {
     
-    let view = UIView()
-    let anotherView = UIView()
+//    let view = UIView()
+//    let anotherView = UIView()
     
     var onClose: (() -> Void)?
     
@@ -33,8 +33,9 @@ class DIHeaderView: UIView {
         
         backButtonStack.isHidden = !hasBack
         backgroundColor = hasBGColor ? Color.gray900 : Color.appBlack
-        view.backgroundColor = hasBGColor ? Color.gray900 : Color.appBlack
+//        view.backgroundColor = hasBGColor ? Color.gray900 : Color.appBlack
         setupConstraints()
+//        backgroundColor = .systemPink
     }
     
     required init?(coder: NSCoder) {

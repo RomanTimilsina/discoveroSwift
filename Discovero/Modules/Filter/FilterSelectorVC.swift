@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate {
+class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate, UIEditMenuInteractionDelegate {
 
     let currentView = FilterSelectorView()
     lazy var countryPicker = DIPickerVC()
@@ -18,11 +18,29 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
     var languageArray: [String] = []
     var usersData: UserData?
     var location = ""
+    var editMenuInteraction: UIEditMenuInteraction?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         observeViewEvents()
         navigationController?.navigationBar.isHidden = true
+//----------------------------------------
+//        editMenuInteraction = UIEditMenuInteraction(delegate: self)
+//        guard let editMenuInteraction else { return }
+//        currentView.propertyTypeLabel.mainStack.addInteraction(editMenuInteraction)
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
+//    currentView.propertyTypeLabel.mainStack.addGestureRecognizer(tap)
+  //----------------------------------------
+        // Create the gesture recognizer.
+
+        
+//        editMenuInteraction = UIEditMenuInteraction(delegate: self)
+//
+//           interactionView.addInteraction(editMenuInteraction!)
+        
+//        currentView.propertyTypeLabel.isUserInteractionEnabled = true
+//        let menuInteraction = UIContextMenuInteraction(delegate: self)
+//        currentView.propertyTypeLabel.addInteraction(menuInteraction)
 
         firestore.getUserDataFromDefaults { [weak self] userData in
             guard let self, let userData else { return }
@@ -32,6 +50,15 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
         setLanguage()
         countryPicker.languageModel = languageManager.getData()
     }
+    
+//    @objc func didTap(_ recognizer: UITapGestureRecognizer) {
+//        let location = recognizer.location(in: currentView.propertyTypeLabel)
+//        let configuration = UIEditMenuConfiguration(identifier: nil, sourcePoint: location)
+//        if let interaction = editMenuInteraction {
+//            // Present the edit menu interaction.
+//            interaction.presentEditMenu(with: configuration)
+//        }
+//    }
     
     override func loadView() {
         view = currentView
@@ -59,10 +86,16 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
             guard let self = self else { return }
             openCountryPicker()
         }
+        currentView.propertyTypeLabel.profileTap = { [weak self] text in
+            guard let self = self else { return }
+            
+            //uimenu
+        }
         
         currentView.locationLabel.profileTap = { [weak self] text in
             guard let self = self else { return }
-            
+            //got location form
+            gotoLocationFilterVC()
         }
         
         countryPicker.closePicker = { [weak self] in
@@ -77,9 +110,15 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
         
         countryPicker.onPicked = { [weak self] model in
             guard let self = self else { return }
-
+            
             currentView.nationalityLabel.sideTitle.text = model.name
         }
+    }
+    
+    func gotoLocationFilterVC() {
+        let locationFilter = LocationFilterVC()
+        locationFilter.userData = usersData
+        navigationController?.pushViewController(locationFilter, animated: true)
     }
     
     func openCountryPicker() {
@@ -115,6 +154,23 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
 
             }
         }
+    
+//    func editMenuInteraction(_ interaction: UIEditMenuInteraction, menuFor configuration: UIEditMenuConfiguration, suggestedActions: [UIMenuElement]) -> UIMenu? {
+//        // Create a custom menu with three items
+//        let customMenu = UIMenu(title: "mycustom", children: [
+//            UIAction(title: "menuItem1") { _ in
+//                print("menuItem1")
+//            },
+//            UIAction(title: "menuItem2") { _ in
+//                print("menuItem2")
+//            },
+//            UIAction(title: "menuItem3") { _ in
+//                print("menuItem3")
+//            }
+//        ])
+//        // Return the custom menu
+//        return customMenu
+//    }
     
     func setLanguage() {
         let country: [String] = [
