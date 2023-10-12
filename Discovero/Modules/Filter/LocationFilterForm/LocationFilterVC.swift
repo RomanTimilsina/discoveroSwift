@@ -29,7 +29,6 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
         currentView.statesTextField.text = userData?.locationDetail.state
         
         setupNewCountryModel()
-        print(countryManager.getData())
         countryPicker.countryModel = countryManager.getData()
         observeViewEvents()
     }
@@ -48,18 +47,17 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
                         }
                     }
                 }
-//                                countryManager.setsData(name: <#T##String#>, dialCode: <#T##String#>, code: <#T##String#>, imageName: <#T##String#>)
             }
         }
     }
     
     func setupNewCountryModel() {
-
+        
     }
     
     override func loadView() {
         view = currentView
-//        navigationController?.navigationBar.isHidden = true
+        //        navigationController?.navigationBar.isHidden = true
     }
     
     func observeViewEvents() {
@@ -112,7 +110,7 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
         ]
         
         for language in country {
-//            countryManager.setData(name: <#T##String#>, dialCode: <#T##String#>, code: <#T##String#>, imageName: <#T##String#>)
+            //            countryManager.setData(name: <#T##String#>, dialCode: <#T##String#>, code: <#T##String#>, imageName: <#T##String#>)
         }
     }
     
@@ -128,42 +126,6 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
         countryPicker.pickerView.searchBar.textFieldAttribute(placeholderText: "Search for Nation", placeholderHeight: 14)
         present(countryPicker, animated: true)
     }
-    
-//    func openCountryPicker() {
-//        countryPicker.modalPresentationStyle = .fullScreen
-////        countryPicker.pickerView.searchBar.searchField.text = ""
-//        if let sheet = countryPicker.sheetPresentationController {
-//            
-//            sheet.prefersGrabberVisible = true
-//            sheet.preferredCornerRadius = 30
-//            sheet.detents = [.large()]
-//            sheet.delegate = self
-//        }
-//        
-//        countryPicker.isRegistration = true
-//        countryPicker.pickerView.searchBar.textFieldAttribute(placeholderText: "", placeholderHeight: 14)
-//        present(countryPicker, animated: true)
-//        
-////        currentView.languagePickerTextField.textField.placeholder = ""
-//        countryPicker.sendSavedData = { [weak self] selectedLanguages in
-//            self?.selectedLanguage = ""
-//            guard let self = self else { return }
-//            for (index, languages) in selectedLanguages.enumerated() {
-//                self.selectedLanguage! +=  index == 0 ? "\(languages)" : ", \(languages)"
-//            }
-//            
-//            isSelected = true
-//            if selectedLanguages.isEmpty == true {
-//                isSelected = false
-//                self.currentView.countriesTextField.placeholder = "Tap here to choose"
-//                self.currentView.countriesTextField.text =  ""
-//            } else {
-//                self.currentView.countriesTextField.placeholder = ""
-//                self.currentView.countriesTextField.text =  self.selectedLanguage
-//            }
-//        }
-//    }
-
 }
 
 

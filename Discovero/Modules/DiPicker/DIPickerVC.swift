@@ -14,7 +14,7 @@ class DIPickerVC: UIViewController {
     var closePicker: (() -> Void)?
     var onPicked: ((NewCountryModel) -> Void)?
     var sendLanguageData: (([LanguageModel]) -> Void)?
-
+    
     var searchModel = [NewCountryModel]()
     var languageModel = [LanguageModel]()
     var searchLanguageModel = [LanguageModel]()
@@ -25,7 +25,7 @@ class DIPickerVC: UIViewController {
     var searchLabel: String?
     var sendSavedData: (([String]) -> Void)?
     var firestore = FireStoreDatabaseHelper()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTable()
@@ -38,7 +38,7 @@ class DIPickerVC: UIViewController {
                 languageArray.append(language.replacingOccurrences(of: " ", with: ""))
             }
         }
-
+        
         searchLanguageModel = languageModel
     }
     
@@ -100,7 +100,7 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = .none
             return cell
         } else {
-
+            
             let data = searchLanguageModel[indexPath.row]
             
             cell.isSelected = data.isSelected!
@@ -142,7 +142,6 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
                 sendSavedData?(savedData)
             }
             
-
             cell.configureLanguageData(data: data)
             cell.selectionStyle = .none
             return cell
@@ -157,8 +156,6 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
         if !isRegistration {
             let data = searchModel[indexPath.row]
             onPicked?(data)
-//            let registration = RegistrationVC()
-//            registration.isSelected = true
             dismiss(animated: true)
         } else {
             let data = searchLanguageModel[indexPath.row]

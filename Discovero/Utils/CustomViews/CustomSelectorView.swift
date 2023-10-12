@@ -8,11 +8,10 @@
 import UIKit
 
 class CustomSelectorView: UIView {
-
+    
     let titleLabel = UILabel(text: "", font: OpenSans.semiBold, size: 16)
     let outerView = UIView()
     var viewsArray = [UIView]()
-//    let slidableItemView = SlidableItemView(frame: CGRect(x: 100, y: 200, width: 14, height: 14))
     lazy var stack = HorizontalStackView(arrangedSubViews: viewsArray, spacing: 0, distribution: .fillEqually)
     var selected = true
     
@@ -20,11 +19,9 @@ class CustomSelectorView: UIView {
         super.init(frame: .zero)
         setupView()
         titleLabel.text = title
-        
     }
     
     func setupView() {
-        
         for number in 0...5 {
             let view = UIView()
             var label: UILabel
@@ -54,7 +51,7 @@ class CustomSelectorView: UIView {
             view.isUserInteractionEnabled = true
             
             viewsArray.append(view)
-
+            
             if number == 5 {
                 line.removeFromSuperview()
             }
@@ -71,13 +68,12 @@ class CustomSelectorView: UIView {
         outerView.clipsToBounds = true
         
         outerView.layer.cornerRadius = 3
-
     }
     
     @objc func viewTapped(_ gesture: UITapGestureRecognizer) {
         guard let selectedView = gesture.view
         else { return }
-
+        
         for (index, view) in viewsArray.enumerated() {
             if let label = view.subviews.first as? UILabel {
                 if view == selectedView {
@@ -90,7 +86,6 @@ class CustomSelectorView: UIView {
                 }
             }
         }
-        
     }
     
     required init?(coder: NSCoder) {

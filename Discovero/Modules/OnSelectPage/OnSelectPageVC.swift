@@ -8,9 +8,8 @@
 import UIKit
 
 class OnSelectPageVC: UIViewController {
-
+    
     let currentView = OnSelectPageView()
-
     
     override func viewWillAppear(_ animated: Bool) {
         currentView.handleToggleButtonTap = { [weak self] isShowLess, adsHeight in
@@ -27,7 +26,7 @@ class OnSelectPageVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         navigationController?.navigationBar.isHidden = true
         if currentView.adDescritionText.count < 199 {
             currentView.showToggleButton.isHidden = true
@@ -35,6 +34,6 @@ class OnSelectPageVC: UIViewController {
     }
     
     override func loadView() {
-            view = currentView
+        view = currentView
     }
 }

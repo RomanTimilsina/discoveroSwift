@@ -7,8 +7,8 @@
 
 import UIKit
 
-class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate, UIEditMenuInteractionDelegate {
-
+class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate {
+    
     let currentView = FilterSelectorView()
     lazy var countryPicker = DIPickerVC()
     var languageManager = LanguageManager()
@@ -18,30 +18,12 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate,
     var languageArray: [String] = []
     var usersData: UserData?
     var location = ""
-    var editMenuInteraction: UIEditMenuInteraction?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         observeViewEvents()
         navigationController?.navigationBar.isHidden = true
-//----------------------------------------
-//        editMenuInteraction = UIEditMenuInteraction(delegate: self)
-//        guard let editMenuInteraction else { return }
-//        currentView.propertyTypeLabel.mainStack.addInteraction(editMenuInteraction)
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
-//    currentView.propertyTypeLabel.mainStack.addGestureRecognizer(tap)
-  //----------------------------------------
-        // Create the gesture recognizer.
-
         
-//        editMenuInteraction = UIEditMenuInteraction(delegate: self)
-//
-//           interactionView.addInteraction(editMenuInteraction!)
-        
-//        currentView.propertyTypeLabel.isUserInteractionEnabled = true
-//        let menuInteraction = UIContextMenuInteraction(delegate: self)
-//        currentView.propertyTypeLabel.addInteraction(menuInteraction)
-
         firestore.getUserDataFromDefaults { [weak self] userData in
             guard let self, let userData else { return }
             usersData = userData
@@ -50,15 +32,6 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate,
         setLanguage()
         countryPicker.languageModel = languageManager.getData()
     }
-    
-//    @objc func didTap(_ recognizer: UITapGestureRecognizer) {
-//        let location = recognizer.location(in: currentView.propertyTypeLabel)
-//        let configuration = UIEditMenuConfiguration(identifier: nil, sourcePoint: location)
-//        if let interaction = editMenuInteraction {
-//            // Present the edit menu interaction.
-//            interaction.presentEditMenu(with: configuration)
-//        }
-//    }
     
     override func loadView() {
         view = currentView
@@ -71,7 +44,7 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate,
         }
         location = "\(usersData.locationDetail.country), \(usersData.locationDetail.state)"
         currentView.nationalityLabel.subTitle.text = ""
-
+        
         for (index, language) in languageArray.enumerated() {
             currentView.nationalityLabel.subTitle.text! += "\(language)"
             if index != languageArray.count {
@@ -88,13 +61,11 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate,
         }
         currentView.propertyTypeLabel.profileTap = { [weak self] text in
             guard let self = self else { return }
-            
             //uimenu
         }
         
         currentView.locationLabel.profileTap = { [weak self] text in
             guard let self = self else { return }
-            //got location form
             gotoLocationFilterVC()
         }
         
@@ -110,7 +81,6 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate,
         
         countryPicker.onPicked = { [weak self] model in
             guard let self = self else { return }
-            
             currentView.nationalityLabel.sideTitle.text = model.name
         }
     }
@@ -123,9 +93,7 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate,
     
     func openCountryPicker() {
         countryPicker.modalPresentationStyle = .fullScreen
-//        countryPicker.pickerView.searchBar.searchField.text = ""
         if let sheet = countryPicker.sheetPresentationController {
-            
             sheet.prefersGrabberVisible = true
             sheet.preferredCornerRadius = 30
             sheet.detents = [.large()]
@@ -136,7 +104,6 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate,
         countryPicker.pickerView.searchBar.textFieldAttribute(placeholderText: "Search for Language", placeholderHeight: 14)
         present(countryPicker, animated: true)
         
-//        currentView.languagePickerTextField.textField.placeholder = ""
         countryPicker.sendSavedData = { [weak self] selectedLanguages in
             self?.selectedLanguage = ""
             guard let self = self else { return }
@@ -151,26 +118,8 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate,
                 self.currentView.nationalityLabel.sideTitle.text = ""
                 self.currentView.nationalityLabel.subTitle.text =  self.selectedLanguage
             }
-
-            }
         }
-    
-//    func editMenuInteraction(_ interaction: UIEditMenuInteraction, menuFor configuration: UIEditMenuConfiguration, suggestedActions: [UIMenuElement]) -> UIMenu? {
-//        // Create a custom menu with three items
-//        let customMenu = UIMenu(title: "mycustom", children: [
-//            UIAction(title: "menuItem1") { _ in
-//                print("menuItem1")
-//            },
-//            UIAction(title: "menuItem2") { _ in
-//                print("menuItem2")
-//            },
-//            UIAction(title: "menuItem3") { _ in
-//                print("menuItem3")
-//            }
-//        ])
-//        // Return the custom menu
-//        return customMenu
-//    }
+    }
     
     func setLanguage() {
         let country: [String] = [

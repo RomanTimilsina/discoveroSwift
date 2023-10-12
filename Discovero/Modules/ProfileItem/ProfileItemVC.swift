@@ -21,7 +21,6 @@ class ProfileItemVC: UIViewController, UITextFieldDelegate  {
         email.Field.textField.placeholder = onPlaceholder ?? ""
         email.Field.textField.text = ""
         email.Field.textField.delegate = self
-        
     }
     
     override func viewDidLoad() {
@@ -32,10 +31,8 @@ class ProfileItemVC: UIViewController, UITextFieldDelegate  {
                 email.saveButton.setInvalidState()
             } else {
                 email.saveButton.setValidState()
-                
             }
         }
-        
         loginEvents()
     }
     
@@ -61,6 +58,7 @@ class ProfileItemVC: UIViewController, UITextFieldDelegate  {
             navigationController?.popViewController(animated: true)
         }
     }
+    
     private func checkAndUpdateSaveButtonState() {
         if let text = email.Field.textField.text {
             if text.isEmpty {

@@ -10,7 +10,7 @@ class HomeController: UITabBarController, UITabBarControllerDelegate {
     let lineView = UIView()
     var xVal: CGFloat = 0
     var itemWidth: CGFloat = 0
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
@@ -20,21 +20,21 @@ class HomeController: UITabBarController, UITabBarControllerDelegate {
         let jobs = UINavigationController(rootViewController: RoomVC())
         let sales = UINavigationController(rootViewController: RoomVC())
         let announcements = UINavigationController(rootViewController: RoomVC())
-//        let matches = UINavigationController(rootViewController: RoomVC())
+        //        let matches = UINavigationController(rootViewController: RoomVC())
         let profile = UINavigationController(rootViewController: MyProfileVC())
         
         room.tabBarItem.image = UIImage(named: "roomImage")
         jobs.tabBarItem.image = UIImage(named: "jobsImage")
         sales.tabBarItem.image = UIImage(named: "salesImage")
         announcements.tabBarItem.image = UIImage(named: "announcementsImage")
-//        matches.tabBarItem.image = UIImage(named: "matchesImage")
+        //        matches.tabBarItem.image = UIImage(named: "matchesImage")
         profile.tabBarItem.image = UIImage(named: "profileImage")
         
         room.title = "Room"
         jobs.title = "Jobs"
         sales.title = "Sales"
         announcements.title = "Announcements"
-//        matches.title = "Matches"
+        //        matches.title = "Matches"
         profile.title = "Profile"
         
         tabBar.tintColor = Color.appWhite

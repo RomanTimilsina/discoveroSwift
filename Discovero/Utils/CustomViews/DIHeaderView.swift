@@ -9,8 +9,8 @@ import UIKit
 
 class DIHeaderView: UIView {
     
-//    let view = UIView()
-//    let anotherView = UIView()
+    //    let view = UIView()
+    //    let anotherView = UIView()
     
     var onClose: (() -> Void)?
     
@@ -20,7 +20,7 @@ class DIHeaderView: UIView {
     let cancelLabel = UILabel(text: "Cancel", font: OpenSans.regular, size: 14)
     lazy var backButtonStack = HorizontalStackView(arrangedSubViews: [backImage, backLabel], spacing: 6)
     lazy var mainStack = HorizontalStackView(arrangedSubViews: [backButtonStack, UIView(), cancelLabel], spacing: 6)
-
+    
     let line : UIView = {
         let line = UIView()
         line.backgroundColor = Color.gray700
@@ -33,9 +33,7 @@ class DIHeaderView: UIView {
         
         backButtonStack.isHidden = !hasBack
         backgroundColor = hasBGColor ? Color.gray900 : Color.appBlack
-//        view.backgroundColor = hasBGColor ? Color.gray900 : Color.appBlack
         setupConstraints()
-//        backgroundColor = .systemPink
     }
     
     required init?(coder: NSCoder) {
@@ -45,18 +43,16 @@ class DIHeaderView: UIView {
     func setupConstraints() {
         addSubview(mainStack)
         mainStack.constraintHeight(constant: 20)
-       
+        
         addSubview(textLabel)
         textLabel.anchor(top: topAnchor, leading: nil, bottom: bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 10, right: 0))
         textLabel.centerInSuperview()
-        
-//        addSubview(cancelLabel)
-//        cancelLabel.anchor(top: topAnchor, leading: nil, bottom: bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 10, right: 0))
+ 
         cancelLabel.centerYAnchor.constraint(equalTo: textLabel.centerYAnchor).isActive = true
         backButtonStack.centerYAnchor.constraint(equalTo: textLabel.centerYAnchor).isActive = true
-
+        
         mainStack.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 14, bottom: 0, right: 14))
-
+        
         let backButtonStackTapGesture = UITapGestureRecognizer(target: self, action: #selector(close))
         backButtonStack.addGestureRecognizer(backButtonStackTapGesture)
         backButtonStack.isUserInteractionEnabled = true

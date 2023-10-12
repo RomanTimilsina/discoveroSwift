@@ -15,54 +15,10 @@ struct DIPickerModel {
 
 struct CountryModel: Codable {
     let name, dialCode, code: String
-
+    
     enum CodingKeys: String, CodingKey {
         case name
         case dialCode = "dial_code"
         case code
-    }
-}
-
-
-struct DIPickerManager {
-    var data = [DIPickerModel]()
-    
-    init(){
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Nepalese"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-        data.append(DIPickerModel(countryImage: UIImage(named: "icn_brazil"), countryName: "Brazil"))
-    }
-    
-    func getData() -> [DIPickerModel] {
-        return data
     }
 }

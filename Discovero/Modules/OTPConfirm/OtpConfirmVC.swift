@@ -104,7 +104,7 @@ class OTPConfirmVC: UIViewController {
                 self.fireStore.checkAuthentication(uid: uid, phone: phoneNumber) { name, uid in
                     self.gotoWelcomePage(uid: uid)
                     if !name.isEmpty {
-//                        self.gotoHomePage()
+                        //                        self.gotoHomePage()
                         UserDefaultsHelper.setStringData(value: uid, key: .userId)
                         UserDefaultsHelper.setStringData(value: "set", key: .isLoggedIn)
                     } else {
@@ -117,7 +117,7 @@ class OTPConfirmVC: UIViewController {
 }
 
 extension OTPConfirmVC {
-     func resendOTP( phoneNum: String) {
+    func resendOTP( phoneNum: String) {
         let phoneNumber = phoneNum
         let timer = CountdownTimer()
         PhoneAuthProvider.provider()

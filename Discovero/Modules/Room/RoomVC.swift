@@ -43,19 +43,19 @@ class RoomVC: UIViewController {
     }
     
     func observeEvents() {
-//        roomView.handleRoomRefresh = { [weak self] in
-//            
-//            self?.fireStore.getRoomOffered { [weak self] rooms in
-//                self?.roomOffers.removeAll()
-//                guard let self = self else { return }
-//                self.roomOffers.append(contentsOf: rooms)
-//                
-//                DispatchQueue.main.async {
-//                    self.roomView.adsTable.reloadData()
-//                }
-//                roomView.refreshControl.endRefreshing()
-//            }
-//        }
+        //        roomView.handleRoomRefresh = { [weak self] in
+        //            
+        //            self?.fireStore.getRoomOffered { [weak self] rooms in
+        //                self?.roomOffers.removeAll()
+        //                guard let self = self else { return }
+        //                self.roomOffers.append(contentsOf: rooms)
+        //                
+        //                DispatchQueue.main.async {
+        //                    self.roomView.adsTable.reloadData()
+        //                }
+        //                roomView.refreshControl.endRefreshing()
+        //            }
+        //        }
         
         roomView.filterSection.handleFilter = { [weak self] in
             guard let self else { return }
@@ -65,7 +65,7 @@ class RoomVC: UIViewController {
         }
     }
     
-
+    
     
     func getUsersData() {
         fireStore.getUserDataFromDefaults { [weak self] userData in
@@ -108,25 +108,25 @@ class RoomVC: UIViewController {
     //        }
     //    }
     
-//    func numberOfLinesThatFit(text: String, font: UIFont, maxWidth: CGFloat) -> Int {
-//        // Create a label with the same font and set the maximum width
-//        let label = UILabel()
-//        label.font = font
-//        label.numberOfLines = 0
-//        label.lineBreakMode = .byWordWrapping
-//        label.frame.size = CGSize(width: maxWidth, height: .greatestFiniteMagnitude)
-//        
-//        // Set the text to the label and calculate the size needed
-//        label.text = text
-//        let textSize = label.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-//        
-//        // Calculate the number of lines based on text size and font height
-//        let lineHeight = ceil(font.lineHeight)
-//        let numberOfLines = Int(ceil(textSize.height / lineHeight))
-//        
-//        return numberOfLines
-//    }
-
+    //    func numberOfLinesThatFit(text: String, font: UIFont, maxWidth: CGFloat) -> Int {
+    //        // Create a label with the same font and set the maximum width
+    //        let label = UILabel()
+    //        label.font = font
+    //        label.numberOfLines = 0
+    //        label.lineBreakMode = .byWordWrapping
+    //        label.frame.size = CGSize(width: maxWidth, height: .greatestFiniteMagnitude)
+    //        
+    //        // Set the text to the label and calculate the size needed
+    //        label.text = text
+    //        let textSize = label.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+    //        
+    //        // Calculate the number of lines based on text size and font height
+    //        let lineHeight = ceil(font.lineHeight)
+    //        let numberOfLines = Int(ceil(textSize.height / lineHeight))
+    //        
+    //        return numberOfLines
+    //    }
+    
     private func fetchRoomOfferedData() {
         showHUD()
         fireStore.getRoomOffered(completion: { [weak self] (rooms: [RoomOffer]) in
@@ -143,14 +143,12 @@ class RoomVC: UIViewController {
             }
             
             timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
-
-
         })
     }
     
     @objc func updateTime() {
-           isLoading = false
-        }
+        isLoading = false
+    }
     
     private func fetchMoreRoomData() {
         showHUD()
@@ -177,7 +175,7 @@ extension RoomVC: UITableViewDelegate, UITableViewDataSource  {
         let cell = tableView.dequeueReusableCell(withIdentifier: RoomTableViewCell().identifier, for: indexPath) as! RoomTableViewCell
         cell.selectionStyle = .none
         let data = roomOffers[indexPath.row]
-
+        
         if firstTime {
             cell.gapView.isHidden = true
             cell.gapView.constraintHeight(constant: 0)
@@ -207,23 +205,23 @@ extension RoomVC: UITableViewDelegate, UITableViewDataSource  {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-//        let data = roomOffers[indexPath.row]
-//        let approximateHeightOfFont = 30
-//        let approximateNoOfLetters = 40
-//        let heightOfEmptyTable = 245
-//        let labelHeight = (((data.description.count)/approximateNoOfLetters) * approximateHeightOfFont) + heightOfEmptyTable
+        //        let data = roomOffers[indexPath.row]
+        //        let approximateHeightOfFont = 30
+        //        let approximateNoOfLetters = 40
+        //        let heightOfEmptyTable = 245
+        //        let labelHeight = (((data.description.count)/approximateNoOfLetters) * approximateHeightOfFont) + heightOfEmptyTable
         return 254
     }
     
-     func scrollViewDidScroll(_ scrollView: UIScrollView)  {
+    func scrollViewDidScroll(_ scrollView: UIScrollView)  {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         let screenHeight = scrollView.frame.size.height
         
         if offsetY > contentHeight - screenHeight - 100 && !isLoading  {
-                fetchMoreRoomData()
+            fetchMoreRoomData()
             
-                isLoading = true
+            isLoading = true
         }
     }
 }

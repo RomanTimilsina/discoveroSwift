@@ -33,12 +33,10 @@ class ProfileItemView: UIView {
     func setuConstraints () {
         addSubview(header)
         header.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-        //
         
         addSubview(view)
         view.anchor(top: topAnchor, leading: leadingAnchor, bottom: header.topAnchor, trailing: trailingAnchor)
         view.backgroundColor = Color.gray900
-        
         
         addSubview(Field)
         Field.anchor(top: header.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 32, left: 14, bottom: 0, right: 14))

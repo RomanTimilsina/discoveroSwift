@@ -19,6 +19,7 @@ class FilterSelectorView: UIView {
     let bedroomSelector = CustomSelectorView("Bedroom")
     let bathroomSelector = CustomSelectorView("Bathroom")
     let parkingSelector = CustomSelectorView("Number of parkings")
+    
     let outerLineView = UIView()
     let knob1 = UIView(color: Color.appWhite, cornerRadius: 10)
     let knob2 = UIView(color: Color.appWhite, cornerRadius: 10)
@@ -35,8 +36,6 @@ class FilterSelectorView: UIView {
                button.setTitleColor(.white, for: .normal)
         return button
     }()
-    var editMenuInteraction: UIEditMenuInteraction?
-
     
     override init(frame: CGRect) {
         super.init(frame: frame)

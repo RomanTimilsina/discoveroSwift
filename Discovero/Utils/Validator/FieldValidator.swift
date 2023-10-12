@@ -48,11 +48,11 @@ struct FieldValidator {
         let capitalLetterRegEx  = ".*[A-Z]+.*"
         let capitalStringCheck = NSPredicate(format:"SELF MATCHES %@", capitalLetterRegEx)
         let capitalResult = capitalStringCheck.evaluate(with: passwordValue)
-
+        
         let smallLetterRegEx  = ".*[a-z]+.*"
         let smallStringCheck = NSPredicate(format:"SELF MATCHES %@", smallLetterRegEx)
         let smallResult = smallStringCheck.evaluate(with: passwordValue)
-
+        
         let numberRegEx  = ".*[0-9]+.*"
         let numberCheck = NSPredicate(format:"SELF MATCHES %@", numberRegEx)
         let numberResult = numberCheck.evaluate(with: passwordValue)

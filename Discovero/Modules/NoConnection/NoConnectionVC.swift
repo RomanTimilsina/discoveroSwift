@@ -19,5 +19,4 @@ class NoConnectionVC: UIViewController {
         super.loadView()
         view = noConnectionView
     }
-
 }

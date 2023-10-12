@@ -33,12 +33,12 @@ enum UserDefaultKeys: String {
 extension UserDefaults {
     /// Make sure this is always the same name as `UserDefaultKeys.isLoggedIn`
     @objc dynamic public var isLoggedIn: String {
-      get { string(forKey: #function) ?? "" }
-      set { set(newValue, forKey: #function) }
+        get { string(forKey: #function) ?? "" }
+        set { set(newValue, forKey: #function) }
     }
     
     @objc dynamic public var orderPlaced: String {
-      get { string(forKey: #function) ?? "" }
-      set { set(newValue, forKey: #function) }
+        get { string(forKey: #function) ?? "" }
+        set { set(newValue, forKey: #function) }
     }
 }

@@ -11,10 +11,17 @@ class DIHeaderTab: UIView {
     
     let offerView = UIView()
     let wantedView = UIView()
-    let offerLabel = UILabel(text: "Offer", color: Color.appWhite
-                             , font: OpenSans.regular, size: 15, numberOfLines: 0, alignment: .center)
-    let wantedLabel = UILabel(text: "Wanted", color: Color.appWhite
-                             , font: OpenSans.regular, size: 15, numberOfLines: 0, alignment: .center)
+    let offerLabel = UILabel(text: "Offer",
+                             color: Color.appWhite,
+                             font: OpenSans.regular,
+                             size: 15, numberOfLines: 0,
+                             alignment: .center)
+    let wantedLabel = UILabel(text: "Wanted",
+                              color: Color.appWhite,
+                              font: OpenSans.regular,
+                              size: 15,
+                              numberOfLines: 0,
+                              alignment: .center)
     lazy var offerVStack = VerticalStackView(arrangedSubViews: [offerLabel, offerView])
     lazy var wantedVStack = VerticalStackView(arrangedSubViews: [wantedLabel, wantedView])
     lazy var viewStack = HorizontalStackView(arrangedSubViews: [offerVStack, wantedVStack], distribution: .fill)
@@ -54,7 +61,6 @@ class DIHeaderTab: UIView {
         wantedVStack.addGestureRecognizer(wantedTabTap)
         wantedVStack.isUserInteractionEnabled = true
     }
-    
     
     @objc func offerViewTap() {
         offerView.backgroundColor = Color.primary

@@ -8,7 +8,7 @@
 import UIKit
 
 class LocationFilterView: UIView {
-
+    
     var countriesTap: (() -> Void)?
     var stateTap: (() -> Void)?
     
@@ -19,7 +19,7 @@ class LocationFilterView: UIView {
         textfield.text = ""
         textfield.isUserInteractionEnabled = false
         textfield.textColor = Color.appWhite
-        textfield.borderStyle = .line 
+        textfield.borderStyle = .line
         return textfield
     }()
     let stateLabel = UILabel(text: "State", color: Color.appWhite, font: OpenSans.semiBold, size: 15)
@@ -48,7 +48,7 @@ class LocationFilterView: UIView {
     let countriesTFCoverButton = UIButton(title: "", titleColor: .clear, font: OpenSans.regular, fontSize: 1)
     let stateTFCoverButton = UIButton(title: "", titleColor: .clear, font: OpenSans.regular, fontSize: 1)
     let alert = UIAlertController(title: "Alert Title", message: "Can't select more than 3 languages", preferredStyle: .alert)
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = Color.appBlack
@@ -64,6 +64,7 @@ class LocationFilterView: UIView {
     func setupFilter(){
         addSubview(headerView)
         headerView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor , padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        headerView.constraintHeight(constant: 40)
         headerView.cancelLabel.isHidden = true
         
         addSubview(countryLabel)
@@ -84,11 +85,11 @@ class LocationFilterView: UIView {
         
         addSubview(statesTextField)
         statesTextField.anchor(top: stateLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 10, bottom: 0, right: 10))
-//        constraintHeight(constant: 50)
+        //        constraintHeight(constant: 50)
         
         addSubview(stateTFCoverButton)
         stateTFCoverButton.anchor(top: statesTextField.topAnchor, leading: statesTextField.leadingAnchor, bottom: statesTextField.bottomAnchor, trailing: statesTextField.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-
+        
         addSubview(lineview2)
         lineview2.anchor(top: statesTextField.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top:  0, left: 0, bottom: 0, right: 0))
         lineview2.constraintHeight(constant: 0.5)

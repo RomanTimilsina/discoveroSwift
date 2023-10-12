@@ -8,7 +8,7 @@
 import UIKit
 
 class CustomAdView: UIView {
-
+    
     var handleViewMore: (() -> Void)?
     
     let leftImage = UIImageView(image: UIImage(named: "leftAdImage"),contentMode: .scaleAspectFit, clipsToBounds: true)
@@ -31,7 +31,7 @@ class CustomAdView: UIView {
         adDescription.text = description
         leftImage.image = leftImg
         rightImage.image = rightImg
-
+        
         smallGrayView.addSubview(adText)
         backgroundColor = Color.gray800
         setupConstraint()
@@ -39,7 +39,7 @@ class CustomAdView: UIView {
     
     func setupConstraint() {
         smallGrayView.constraintHeight(constant: 16)
-//        smallView.constraintWidth(constant: 24)
+        //        smallView.constraintWidth(constant: 24)
         
         adText.centerInSuperview()
         
@@ -49,7 +49,7 @@ class CustomAdView: UIView {
         let viewMoreTapGesture = UITapGestureRecognizer(target: self, action: #selector(viewMoreTap))
         viewMoreButton.addGestureRecognizer(viewMoreTapGesture)
         viewMoreButton.isUserInteractionEnabled = true
-        }
+    }
     
     @objc func viewMoreTap() {
         handleViewMore?()

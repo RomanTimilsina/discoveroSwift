@@ -16,11 +16,6 @@ class WelcomeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        if let nameText {
-        //            self.welcomeView.welcomeLabel.text = "Welcome \(nameText)"
-        //        }
-                       
-        
         fetchUserData()
     }
     

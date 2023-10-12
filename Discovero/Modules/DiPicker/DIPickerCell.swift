@@ -7,7 +7,7 @@ class DIPickerCell: UITableViewCell {
     
     var passCheck: ((Bool) -> Void)?
     var passpass: (() -> Void)?
-
+    
     let countryImage = UIImageView(image: UIImage(), contentMode: .scaleAspectFit, clipsToBounds: true)
     let countryName = UILabel(text: "", font: OpenSans.regular, size: 14)
     var isChecked = false
@@ -46,7 +46,7 @@ class DIPickerCell: UITableViewCell {
     
     @objc func check() {
         passpass?()
-
+        
     }
     
     @objc func checkManage() {

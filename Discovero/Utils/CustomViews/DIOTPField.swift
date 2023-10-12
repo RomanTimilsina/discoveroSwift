@@ -39,9 +39,9 @@ class DIOTPField: UITextField {
             labelsStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             labelsStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             labelsStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
-            ])
+        ])
     }
-
+    
     private func configureTextField() {
         tintColor = .clear
         textColor = .clear
@@ -59,7 +59,7 @@ class DIOTPField: UITextField {
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
         stackView.spacing = 17
-       
+        
         for _ in 1 ... count {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
@@ -70,7 +70,7 @@ class DIOTPField: UITextField {
             label.textColor = Color.primary
             
             let lineView: UIView = {
-               let view = UIView()
+                let view = UIView()
                 view.backgroundColor = Color.gray500
                 view.constraintHeight(constant: 3)
                 return view
@@ -105,13 +105,12 @@ class DIOTPField: UITextField {
         }
         
         if text.count == digitLabels.count {
-//            resignFirstResponder()
+            //            resignFirstResponder()
             onOtpFilled?(text, true)
         } else {
             onOtpFilled?(text, false)
         }
     }
-    
 }
 
 extension DIOTPField: UITextFieldDelegate {

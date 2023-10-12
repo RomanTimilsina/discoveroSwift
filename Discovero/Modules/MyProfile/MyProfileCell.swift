@@ -30,7 +30,7 @@ class MyProfileCell: UITableViewCell {
         stack.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
     }
     
-    func configureData(data: profileModel){
+    func configureData(data: ProfileModel){
         emptyView.isHidden = true
         titleLabel.text = data.title
         valueLabel.text = data.value

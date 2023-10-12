@@ -109,7 +109,7 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
                     "phoneNumber": phoneNumber,
                     "uid": userId
                 ] as [String : Any]
-                                
+                
                 database.collection("Users").addDocument(data: data) { [weak self] error in
                     guard let self = self else { return }
                     hideHUD()
@@ -153,7 +153,7 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
     
     func openCountryPicker() {
         countryPicker.modalPresentationStyle = .fullScreen
-//        countryPicker.pickerView.searchBar.searchField.text = ""
+        //        countryPicker.pickerView.searchBar.searchField.text = ""
         if let sheet = countryPicker.sheetPresentationController {
             
             sheet.prefersGrabberVisible = true
@@ -166,7 +166,7 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
         countryPicker.pickerView.searchBar.textFieldAttribute(placeholderText: "Search for Language", placeholderHeight: 14)
         present(countryPicker, animated: true)
         
-//        currentView.languagePickerTextField.textField.placeholder = ""
+        //        currentView.languagePickerTextField.textField.placeholder = ""
         countryPicker.sendSavedData = { [weak self] selectedLanguages in
             self?.selectedLanguage = ""
             guard let self = self else { return }

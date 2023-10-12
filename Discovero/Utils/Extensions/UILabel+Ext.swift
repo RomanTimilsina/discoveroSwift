@@ -19,10 +19,10 @@ extension UILabel {
     func setText(text: String, withLineSpacing lineSpacing: CGFloat) {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = lineSpacing
-
+        
         let attrString = NSMutableAttributedString(string: text)
         attrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
-
+        
         self.attributedText = attrString
     }
     

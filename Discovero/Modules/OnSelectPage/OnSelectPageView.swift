@@ -10,7 +10,7 @@ import UIKit
 class OnSelectPageView: UIView {
     
     var handleToggleButtonTap: ((Bool, CGFloat) -> Void)?
-
+    
     let profileImageView = UIImageView(image: UIImage(named: "AC"), contentMode: .scaleAspectFit, clipsToBounds: true)
     let nameLabel = UILabel(text: "ankit chaudhary", font: OpenSans.semiBold, size: 14)
     let countryFlageImage = UIImageView(image: UIImage(named: "nepal"), contentMode: .scaleAspectFit)
@@ -73,7 +73,7 @@ class OnSelectPageView: UIView {
     lazy var cellStack = VerticalStackView(arrangedSubViews: [adHeaderStack, middleAdStack, commentsTitle, comentsList, gapView, adFooterStack], spacing: 12, distribution: .fillProportionally)
     let scrollView = UIScrollView()
     lazy var adsHeight = adDesciptionLabel.bounds.size.height
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -87,7 +87,7 @@ class OnSelectPageView: UIView {
         
         scrollView.addSubview(cellStack)
         cellStack.anchor(top: scrollView.topAnchor, leading: scrollView.leadingAnchor, bottom: scrollView.bottomAnchor, trailing: scrollView.trailingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: -370))
-       
+        
         addSubview(totalViewStack)
         totalViewStack.anchor(top: likesStack.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 0, left: 0, bottom: 8, right: 0))
         totalViewStack.centerXAnchor.constraint(equalTo: likesStack.centerXAnchor).isActive = true

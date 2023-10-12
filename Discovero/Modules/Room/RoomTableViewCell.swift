@@ -107,7 +107,7 @@ class RoomTableViewCell: UITableViewCell {
         profileView.layer.cornerRadius = 15
         profileView.addSubview(namePrefixLabel)
         namePrefixLabel.centerInSuperview()
-
+        
         addSubview(totalViewStack)
         totalViewStack.anchor(top: nil, leading: nil, bottom: lineView.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 8, right: 12))
         //        totalViewStack.centerXAnchor.constraint(equalTo: likesStack.centerXAnchor).isActive = true

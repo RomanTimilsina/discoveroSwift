@@ -31,10 +31,10 @@ class DICustomProfileView: UIView {
         nationImageView.image = nation
         sideTitle.text = sideTitleString
         sideTitle.textColor = Color.gray400
-            if isGrey == true {
-                title.textColor = Color.gray400
-                subTitle.textColor = Color.gray500
-            }
+        if isGrey == true {
+            title.textColor = Color.gray400
+            subTitle.textColor = Color.gray500
+        }
         if text.isEmpty  {
             title.font = UIFont.font(with: 16, family: OpenSans.semiBold)
             subTitle.isHidden = true
@@ -65,7 +65,6 @@ class DICustomProfileView: UIView {
     }
     
     @objc func onTap() {
-        
         profileTap?(title.text)
     }
     
