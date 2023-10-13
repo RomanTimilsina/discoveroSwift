@@ -9,6 +9,7 @@ import UIKit
 
 class CustomSelectorView: UIView {
     
+    var handleTap: ((String) -> Void)?
     let titleLabel = UILabel(text: "", font: OpenSans.semiBold, size: 16)
     let outerView = UIView()
     var viewsArray = [UIView]()
@@ -79,6 +80,7 @@ class CustomSelectorView: UIView {
                 if view == selectedView {
                     label.textColor = Color.appWhite
                     view.backgroundColor = Color.gray400
+                    handleTap?(label.text?.replacingOccurrences(of: "+", with: "") ?? "")
                 } else {
                     label.textColor = Color.gray400
                     view.backgroundColor = Color.gray800

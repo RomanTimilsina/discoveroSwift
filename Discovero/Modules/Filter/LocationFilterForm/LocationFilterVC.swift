@@ -9,6 +9,8 @@ import UIKit
 
 class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentationControllerDelegate {
     
+    var handlePop: ((String, String, String) -> Void)?
+    
     lazy var countryPicker = DIPickerVC()
     var currentView = LocationFilterView()
     var userData: UserData?
@@ -17,6 +19,10 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
     var selectedLanguage: String?
     var isSelected: Bool?
     var newCountryModel = CountryManager()
+    var countryList: [CountryStateModel] = []
+    var selectedCountyList: [String] = []
+    
+    var selectedCountryName = ""
     
     let countries: [CountryModel] = Bundle.main.decode(from: "Countries.json")
     
@@ -37,12 +43,19 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
         firestore.getCountryWithState() { [weak self] countriesAndStates in
             guard let self else { return }
             for countryAndStates in countriesAndStates {
-                print(countryAndStates.name)
+//                print(countryAndStates.name)
+
                 
                 for (index,_) in countries.enumerated() {
                     if countries[index].name == countryAndStates.name {
+                        countryList.append(countryAndStates)
+
                         let name = countries[index].code.lowercased()
                         if UIImage(named: name) != nil {
+                            if selectedCountryName == countryAndStates.name {
+
+                            }
+
                             newCountryModel.setData(name: countries[index].name, dialCode: countries[index].dialCode, code: countries[index].code, imageName: countries[index].code)
                         }
                     }
@@ -79,13 +92,47 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
         
         countryPicker.onPicked = { [weak self] model in
             guard let self = self else { return }
+            selectedCountryName = model.name
+            countriesAndState()
             currentView.countriesTextField.text = model.name
+            
+            currentView.statesTextField.text = ""
+    
+            currentView.stateTFCoverButton.menu = addInfoMenu(selectedCountryName)
         }
         
         currentView.headerView.onClose = { [weak self] in
             guard let self = self else { return }
             navigationController?.popViewController(animated: true)
         }
+        
+        currentView.handleSave = { [weak self] country, state, suburb in
+            guard let self else { return }
+            
+            handlePop?(country, state, suburb)
+            navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    private func addInfoMenu(_ CountryName: String) -> UIMenu {
+        var menuList = [UIMenuElement]()
+        for country in countryList {
+                if CountryName == country.name {
+                    
+                    if !selectedCountyList.contains(CountryName) {
+                        let states = UIAction(title: country.state[0].name, handler: { _ in
+                            self.currentView.statesTextField.text = country.state[0].name
+                        })
+                        menuList.append(states)
+                        selectedCountyList.append(CountryName)
+                    }
+                    
+
+            }
+        }
+        
+        let infoMenu = UIMenu(title: "", children: menuList)
+        return infoMenu
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {

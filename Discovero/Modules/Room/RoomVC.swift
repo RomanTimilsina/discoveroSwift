@@ -20,10 +20,17 @@ class RoomVC: UIViewController {
     var timer: Timer?
     var country, state: String?
     var heights = [CGFloat]()
+    let filterVC = FilterSelectorVC()
+    var countryName, stateName, suburbName, property, selectedLanguages, noOfBedroom, noOfBathroom, noOfParking: String?
+    var languages: [String] = []
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.isHidden = true
         setupTable()
         observeEvents()
         
@@ -59,9 +66,22 @@ class RoomVC: UIViewController {
         
         roomView.filterSection.handleFilter = { [weak self] in
             guard let self else { return }
-            let filterVC = FilterSelectorVC()
             filterVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(filterVC, animated: true)
+        }
+        
+        filterVC.handlePop = { [weak self] country, state, suburb, property, selectedLanguages, noOfBedroom, noOfBathroom, noOfParking in
+            guard let self else { return }
+
+            countryName = country
+            stateName = state
+            suburbName = suburb
+            self.property = property
+            self.languages = selectedLanguages
+            self.noOfBedroom = noOfBedroom
+            self.noOfBathroom = noOfBathroom
+            self.noOfParking = noOfParking
+            print(countryName , stateName , suburbName , self.property , self.languages ?? "", self.noOfBedroom , self.noOfBathroom ?? "", self.noOfParking ?? "")
         }
     }
     

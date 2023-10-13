@@ -11,6 +11,11 @@ class HomeController: UITabBarController, UITabBarControllerDelegate {
     var xVal: CGFloat = 0
     var itemWidth: CGFloat = 0
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self

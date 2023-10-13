@@ -11,6 +11,8 @@ class LocationFilterView: UIView {
     
     var countriesTap: (() -> Void)?
     var stateTap: (() -> Void)?
+    var stateList: [String] = []
+    var handleSave: ((String, String, String) -> Void)?
     
     let headerView = DIHeaderView(title: " Location Detail")
     let countryLabel = UILabel(text: "Country ", color: Color.appWhite, font:  OpenSans.semiBold, size: 15)
@@ -52,9 +54,11 @@ class LocationFilterView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = Color.appBlack
+        print(stateList)
         setupFilter()
         textFieldAttribute(placeholderText: "Tap Here", placeholderHeight: 15)
         observeViewEvents()
+
     }
     
     required init?(coder: NSCoder) {
@@ -100,14 +104,14 @@ class LocationFilterView: UIView {
         addSubview(suburbTextField)
         suburbTextField.anchor(top: suburbLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 10, bottom: 0, right: 10))
         suburbTextField.isUserInteractionEnabled = true
+        suburbTextField.tintColor = Color.primary
         
         addSubview(lineview3)
         lineview3.anchor(top: suburbTextField.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top:  0, left: 10, bottom: 0, right: 10))
         lineview3.constraintHeight(constant: 1)
         
         addSubview(saveButton)
-        saveButton.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 12, right: 12))
-        suburbTextField.tintColor = Color.primary
+        saveButton.anchor(top: nil, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 12, right: 12))
     }
     
     let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
@@ -120,8 +124,16 @@ class LocationFilterView: UIView {
         
         stateTFCoverButton.addTarget(self, action: #selector(stateClick), for: .touchUpInside)
         
+        saveButton.addTarget(self, action: #selector(saveTapped), for: .touchUpInside)
+        
         alert.addAction(okAction)
+        
+        stateTFCoverButton.isEnabled = true
+        stateTFCoverButton.showsMenuAsPrimaryAction = true
+//        stateTFCoverButton.menu = addInfoMenu()
     }
+    
+
     
     @objc func countriesClick() {
         countriesTap?()
@@ -129,6 +141,10 @@ class LocationFilterView: UIView {
     
     @objc func stateClick() {
         stateTap?()
+    }
+    
+    @objc func saveTapped() {
+        handleSave?(countriesTextField.text ?? "", statesTextField.text ?? "", suburbTextField.text ?? "")
     }
     
     //MARK: Placeholder attribute set
@@ -144,4 +160,6 @@ class LocationFilterView: UIView {
         )
         suburbTextField.attributedPlaceholder = attributedPlaceholder
     }
+    
+    
 }

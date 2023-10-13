@@ -47,11 +47,9 @@ class DIHeaderView: UIView {
         addSubview(textLabel)
         textLabel.anchor(top: topAnchor, leading: nil, bottom: bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 10, right: 0))
         textLabel.centerInSuperview()
- 
-        cancelLabel.centerYAnchor.constraint(equalTo: textLabel.centerYAnchor).isActive = true
-        backButtonStack.centerYAnchor.constraint(equalTo: textLabel.centerYAnchor).isActive = true
         
-        mainStack.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 14, bottom: 0, right: 14))
+        mainStack.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 14, bottom: 0, right: 14))
+        mainStack.centerYInSuperview()
         
         let backButtonStackTapGesture = UITapGestureRecognizer(target: self, action: #selector(close))
         backButtonStack.addGestureRecognizer(backButtonStackTapGesture)
