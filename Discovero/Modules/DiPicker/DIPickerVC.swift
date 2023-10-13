@@ -158,7 +158,7 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
             onPicked?(data)
             dismiss(animated: true)
         } else {
-            let data = searchLanguageModel[indexPath.row]
+//            let data = searchLanguageModel[indexPath.row]
         }
     }
 }

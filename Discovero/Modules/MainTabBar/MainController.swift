@@ -48,10 +48,9 @@ class HomeController: UITabBarController, UITabBarControllerDelegate {
         
         itemWidth = tabBar.bounds.width / CGFloat(tabBar.items?.count ?? 1)
         
-        if let tabBarController = tabBarController {
-            let selectedIndex = tabBarController.selectedIndex
-            print("Selected tab index: \(tabBarController)")
-        }
+//        if let tabBarController = tabBarController {
+//            let selectedIndex = tabBarController.selectedIndex
+//        }
         
         lineView.frame = CGRect(x: xVal, y: tabBar.bounds.minY, width: itemWidth, height: 2)
         lineView.backgroundColor = Color.primary

@@ -27,7 +27,6 @@ class ViewController: UIViewController {
                     // show alert
                     return
                 }
-                print("Verification ID: ", verificationID)
                 // goto OTP screen
                 // Sign in using the verificationID and the code sent to the user
                 // ...
@@ -48,9 +47,6 @@ class ViewController: UIViewController {
             }
             // User is signed in -> Check if user id is present in firestore db and decide where to go
             // Check "Users" table in firestore db
-            
-            print("id: ", authResult?.user.uid )
-            
 //            self.getUserWithUID(authResult?.user.uid ?? "")
         }
     }
@@ -63,7 +59,7 @@ class ViewController: UIViewController {
                 return
             }
             guard let documents = query?.documents else { return } // Swift Struct model
-            let firstData = documents.first?.data()
+//            let firstData = documents.first?.data()
             
         }
     }

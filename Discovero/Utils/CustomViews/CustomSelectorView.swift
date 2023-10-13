@@ -74,11 +74,10 @@ class CustomSelectorView: UIView {
         guard let selectedView = gesture.view
         else { return }
         
-        for (index, view) in viewsArray.enumerated() {
+        for (_, view) in viewsArray.enumerated() {
             if let label = view.subviews.first as? UILabel {
                 if view == selectedView {
                     label.textColor = Color.appWhite
-                    print(label.text)
                     view.backgroundColor = Color.gray400
                 } else {
                     label.textColor = Color.gray400

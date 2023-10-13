@@ -71,7 +71,7 @@ class FilterSelectorView: UIView {
         propertyTypeLabel.anchor(top: parkingSelector.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 30, left: 12, bottom: 0, right: 12))
         propertyTypeLabel.constraintHeight(constant: 40)
         
-        if let sideTitle = propertyTypeLabel.subTitle.text {
+        if propertyTypeLabel.subTitle.text != nil {
             propertyTypeLabel.sideTitle.text = ""
         } else {
             propertyTypeLabel.sideTitle.text = "Tap here"

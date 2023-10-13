@@ -53,7 +53,7 @@ struct FireStoreDatabaseHelper {
                 return
             }
             guard let documents = query?.documents else { return }
-            let uids = documents.map { $0.data()["uid"] as? String ?? "" }
+//            let uids = documents.map { $0.data()["uid"] as? String ?? "" }
             if let document = documents.first(where: { $0.data()["uid"] as? String == uid }) {
                 let data = document.data()
                 let name = data["name"] as? String
@@ -132,7 +132,7 @@ struct FireStoreDatabaseHelper {
             if let document = query.documents.first(where: { $0.data()["state"] as? String == state }) {
                 print(document)
             }
-            for (index, document) in query.documents.enumerated() {
+            for (_, document) in query.documents.enumerated() {
                 
                 let data = document.data()
                 let id = data["id"] as? String
@@ -205,12 +205,12 @@ struct FireStoreDatabaseHelper {
     
     func getMoreRooms(completion: @escaping ([RoomOffer], Bool) -> Void) {
         if let lastDocument {
-            next = first.whereField("location.state", isEqualTo: state)
-                .whereField("location.country", isEqualTo: country)
+            next = first.whereField("location.state", isEqualTo: state ?? "")
+                .whereField("location.country", isEqualTo: country ?? "")
                 .start(afterDocument: lastDocument)
         } else {
-            next = first.whereField("location.state", isEqualTo: state)
-                .whereField("location.country", isEqualTo: country)
+            next = first.whereField("location.state", isEqualTo: state ?? "")
+                .whereField("location.country", isEqualTo: country ?? "")
         }
         
         //        if lastDocument != nil {
@@ -229,7 +229,7 @@ struct FireStoreDatabaseHelper {
             guard let query = query else { return }
             lastDocument = query.documents.last
             
-            for (index, document) in query.documents.enumerated() {
+            for (_, document) in query.documents.enumerated() {
                 lastDocument = document
                 
                 let data = document.data()
@@ -298,7 +298,7 @@ struct FireStoreDatabaseHelper {
                 roomOffers.append(roomOffer)
             }
             
-            if let lastDocument {
+            if lastDocument != nil {
                 completion(roomOffers, false)
             } else {
                 completion(roomOffers, false)

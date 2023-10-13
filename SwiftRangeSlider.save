@@ -1,4 +1,0 @@
-target 'Discovero
-' do
-  pod 'SwiftRangeSlider', '~> 2.0'
-end

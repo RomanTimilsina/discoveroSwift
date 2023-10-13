@@ -60,7 +60,8 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
             openCountryPicker()
         }
         currentView.propertyTypeLabel.profileTap = { [weak self] text in
-            guard let self = self else { return }
+            guard let self else { return }
+            dismiss(animated: true, completion: nil)
             //uimenu
         }
         

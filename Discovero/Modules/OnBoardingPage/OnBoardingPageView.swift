@@ -55,6 +55,14 @@ class OnBoardingPageView: UIView {
         addSubview(onboardingCollection)
         onboardingCollection.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: indicator.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 60, right: 12))
     }
+        
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+//MARK: Action function
+private extension OnBoardingPageView {
     
     @objc func register() {
         handleRegisterClicked?()
@@ -63,10 +71,4 @@ class OnBoardingPageView: UIView {
     @objc func login() {
         handleLoginClicked?()
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }
-
-

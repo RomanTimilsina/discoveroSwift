@@ -39,7 +39,7 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
     func setupNewCountryModel() {
         for (index,_) in countries.enumerated() {
             let name = countries[index].code.lowercased()
-            if let image = UIImage(named: name) {
+            if UIImage(named: name) != nil {
                 newCountryModel.setData(name: countries[index].name, dialCode: countries[index].dialCode, code: countries[index].code, imageName: countries[index].code)
             }
         }
