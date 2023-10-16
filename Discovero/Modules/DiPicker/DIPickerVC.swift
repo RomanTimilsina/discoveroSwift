@@ -38,7 +38,7 @@ class DIPickerVC: UIViewController {
                 languageArray.append(language.replacingOccurrences(of: " ", with: ""))
             }
         }
-        
+        savedData = languageArray
         searchLanguageModel = languageModel
     }
     

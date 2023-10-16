@@ -219,6 +219,7 @@ import MultiSlider
 class FilterSelectorView: UIView{
     
     var openPicker: (() -> Void)?
+    var handleReset: (() -> Void)?
     var handleSearch: ((String, String, String) -> Void)?
     
     let locationLabel = DICustomProfileView(titleText: "Location", text: "Select your location", show: true, sideTitleString: "")
@@ -229,6 +230,7 @@ class FilterSelectorView: UIView{
     let bedroomSelector = CustomSelectorView("Bedroom")
     let bathroomSelector = CustomSelectorView("Bathroom")
     let parkingSelector = CustomSelectorView("Number of parkings")
+    lazy var selectors = [bedroomSelector, bathroomSelector, parkingSelector]
     let outerLineView = UIView()
     let knob1 = UIView(color: Color.appWhite, cornerRadius: 10)
     let knob2 = UIView(color: Color.appWhite, cornerRadius: 10)
@@ -384,6 +386,8 @@ class FilterSelectorView: UIView{
         
         searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
         
+        resetButton.addTarget(self, action: #selector(resetButtonTapped), for: .touchUpInside)
+        
     }
     
         private func addInfoMenu() -> UIMenu {
@@ -435,6 +439,10 @@ class FilterSelectorView: UIView{
 
     @objc func searchButtonTapped() {
         handleSearch?(propertyTypeLabel.subTitle.text ?? "", minCost, maxCost)
+    }
+    
+    @objc func resetButtonTapped() {
+        handleReset?()
     }
     
     //    @objc func handlePanKnob(_ gesture: UIPanGestureRecognizer) {

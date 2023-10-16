@@ -1,22 +1,23 @@
-//
-//  DICreateAd.swift
+
+//  RoomWantedView.swift
 //  Discovero
 //
-//  Created by Mac on 07/09/2023.
+//  Created by admin on 16/10/2023.
 //
 
 import UIKit
 
-class RoomOfferView: UIView {
+class RoomWantedView: UIView {
+    
     
     var handleRoomRefresh: (() -> Void)?
     
     let refreshControl = UIRefreshControl()
     var heights = [CGFloat]()
     var roomOffer = [RoomOffer]()
-    let searchBar = CustomSearchBar()
-    let searchBarBackgroundView = UIView()
-    let homeImg = UIImageView(image: UIImage(named: "homeImg"),contentMode: .scaleAspectFit, clipsToBounds: true)
+//    let searchBar = CustomSearchBar()
+//    let searchBarBackgroundView = UIView()
+    let homeImage = UIImageView(image: UIImage(named: "homeImg"), contentMode: .scaleAspectFit, clipsToBounds: true)
     let createAdLabel = UILabel(text: "Create your first ad", font: OpenSans.semiBold, size: 16, alignment: .center)
     let adDescriptionLabel = UILabel(text: "There seems to be no room available at the moment in your location. ", font: OpenSans.regular, size: 14,numberOfLines: 0, alignment: .center)
     let createAdButton = DIButton(buttonTitle: "Create your first ad",textSize: 14)
@@ -24,11 +25,10 @@ class RoomOfferView: UIView {
     let line = UIView()
     let addButtonView = UIImageView(image: UIImage(named: "plus") ,contentMode: .scaleAspectFit)
     
-    lazy var emptyStackView = VerticalStackView(arrangedSubViews: [homeImg, createAdLabel,adDescriptionLabel, createAdButton], spacing: 30)
+    lazy var emptyStackView = VerticalStackView(arrangedSubViews: [homeImage, createAdLabel,adDescriptionLabel, createAdButton], spacing: 30)
     
     let headerTab = DIHeaderTab()
     let filterSection = FilterView()
-    //    let filterCover = UIView(color: .blue)
     
     let adsTable = UITableView()
     //    let adsCollectionView: UICollectionView = {
@@ -40,7 +40,7 @@ class RoomOfferView: UIView {
     //        return collectionView
     //    }()
     
-    override init(frame: CGRect) {
+    override init(frame : CGRect) {
         super.init(frame: frame)
         setupConstraint()
         observeEvents()

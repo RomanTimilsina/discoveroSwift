@@ -10,7 +10,7 @@ import MultiSlider
 
 class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate {
     
-    var handlePop: ((String, String, String, String, [String], String, String, String) -> Void)?
+    var handlePop: ((String, String, String, String, [String], String, String, String, String, String) -> Void)?
     
     let currentView = FilterSelectorView()
     lazy var countryPicker = DIPickerVC()
@@ -24,14 +24,9 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
     var location = ""
     let locationFilter = LocationFilterVC()
     var country, state, suburb, noOfBedroom, noOfBathroom, noOfParking, property: String?
-    var countryName, stateName, suburbName, propertyType, noOfBedrooms, noOfBathrooms, noOfParkings: String?
+    var countryName, stateName, suburbName, propertyType, noOfBedrooms, noOfBathrooms, noOfParkings, minCost, maxCost: String?
     var selLanguages: [String] = []
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         observeViewEvents()
@@ -42,7 +37,7 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
             usersData = userData
         }
         
-        
+        setInitialData()
         setLanguageAndLocationLabel()
         setLanguage()
         countryPicker.languageModel = languageManager.getData()
@@ -52,8 +47,52 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
         view = currentView
     }
     
+    func setInitialData() {
+        guard let usersData else { return }
+
+        countryName = usersData.country
+        stateName = usersData.locationDetail.state
+        suburbName = usersData.locationDetail.suburb
+        selLanguages = usersData.languages
+        
+        print(selLanguages)
+    }
+    
+    func resetData() {
+        setInitialData()
+        
+        for selector in currentView.selectors {
+            for view in selector.viewsArray {
+                                if let label = view.subviews.first as? UILabel {
+                                    if view == selector.viewsArray[0] {
+                                        label.textColor = Color.appWhite
+                                        view.backgroundColor = Color.gray400
+                                    } else {
+                                        label.textColor = Color.gray400
+                                        view.backgroundColor = Color.gray800
+                                    }
+                                }
+            }
+        }
+        
+        currentView.rangeSlider.value = [ 0, 5000]
+        self.minCost = "0.0"
+        self.maxCost = "5000.0"
+        currentView.priceRange.text = "$0 to $5000"
+        
+        currentView.propertyTypeLabel.subTitle.text = "Any"
+        countryPicker.languageModel = languageManager.getData()
+        
+        currentView.locationLabel.subTitle.text = "\(usersData?.country ?? ""), \(usersData?.locationDetail.state ?? "")"
+        locationFilter.currentView.countriesTextField.text = usersData?.locationDetail.country ?? ""
+        locationFilter.currentView.statesTextField.text =          usersData?.locationDetail.state ?? ""
+        locationFilter.currentView.suburbTextField.text = usersData?.locationDetail.suburb ?? ""
+    }
+    
     func setLanguageAndLocationLabel() {
         guard let usersData else { return }
+        print(usersData)
+
         for (language) in usersData.languages {
             languageArray.append(language.replacingOccurrences(of: " ", with: ""))
         }
@@ -65,6 +104,9 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
             if index != languageArray.count {
                 currentView.nationalityLabel.subTitle.text! += ", "
             }
+            
+            //initial values
+
         }
         currentView.locationLabel.subTitle.text = location
     }
@@ -108,6 +150,12 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
             currentView.locationLabel.subTitle.text = "\(country), \(state)"
         }
         
+        currentView.handleReset = { [weak self] in
+            guard let self else { return }
+
+            resetData()
+        }
+        
         currentView.handleSearch = { [weak self] property, minCost, maxCost in
             guard let self else { return }
             
@@ -129,19 +177,23 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
             
             if let noOfBathroom {
                 self.noOfBathrooms = noOfBathroom
-                
             }
             
             if let noOfParking {
                 self.noOfParkings = noOfParking
-                
             }
             
-            
+            print(selLanguages)
             self.propertyType = property
-            self.selLanguages = selectedLanguages
+            if !selectedLanguages.isEmpty {
+                self.selLanguages = countryPicker.savedData
+            }
             
-            handlePop?(countryName ?? "", stateName ?? "", suburbName ?? "", propertyType ?? "", selectedLanguages ?? [], noOfBedrooms ?? "", noOfBathrooms ?? "", noOfParkings ?? "")
+            print(selLanguages)
+            self.minCost = minCost
+            self.maxCost = maxCost
+
+            handlePop?(countryName ?? "", stateName ?? "", suburbName ?? "", propertyType ?? "Any", selLanguages, noOfBedrooms ?? "Any", noOfBathrooms ?? "Any", noOfParkings ?? "Any", self.minCost ?? "0", self.maxCost ?? "5000")
             navigationController?.popViewController(animated: true)
 
         }

@@ -119,17 +119,17 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
         for country in countryList {
                 if CountryName == country.name {
                     
-                    if !selectedCountyList.contains(CountryName) {
                         let states = UIAction(title: country.state[0].name, handler: { _ in
                             self.currentView.statesTextField.text = country.state[0].name
                         })
                         menuList.append(states)
                         selectedCountyList.append(CountryName)
-                    }
+                    
                     
 
             }
         }
+        countryList = []
         
         let infoMenu = UIMenu(title: "", children: menuList)
         return infoMenu
