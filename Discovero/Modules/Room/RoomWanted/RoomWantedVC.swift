@@ -33,10 +33,9 @@ class RoomWantedVC: UIViewController{
         super.viewDidLoad()
         setupTable()
         observeEvents()
-        
-        getUsersData()
-        fetchRoomOfferedData()
-        roomWantedView.roomOffer = roomWanted
+
+        getUsersDataFromDefaults()
+//        roomWantedView.roomOffer = roomWanted
     }
     
     override func loadView() {
@@ -71,79 +70,48 @@ class RoomWantedVC: UIViewController{
             navigationController?.pushViewController(filterVC, animated: true)
         }
         
-        filterVC.handlePop = { [weak self] country, state, suburb, property, selectedLanguages, noOfBedroom, noOfBathroom, noOfParking, min, max in
+        filterVC.handlePop = { [weak self] country, state, suburb, property, selectedLanguages, noOfBedroom, noOfBathroom, noOfParking, minCost, maxCost in
             guard let self else { return }
+            debugPrint(selectedLanguages)
+            self.roomWanted = []
+            self.roomWanted.removeAll()
+            self.roomWantedView.adsTable.reloadData()
 
-            countryName = country
-            stateName = state
-            suburbName = suburb
-            self.property = property
-            self.languages = selectedLanguages
-            self.noOfBedroom = noOfBedroom
-            self.noOfBathroom = noOfBathroom
-            self.noOfParking = noOfParking
-            print(countryName , stateName , suburbName , self.property , self.languages ?? "", self.noOfBedroom , self.noOfBathroom ?? "", self.noOfParking ?? "")
+            fireStore.getRoomOffered(isRoomOffer: false, country: country,
+                                     state: state,
+                                     noOfBedroom: Int(noOfBedroom),
+                                     noOfBathRoom: Int(noOfBathroom),
+                                     noOfParking: Int(noOfParking),
+                                     language: selectedLanguages,
+                                     min: Double(minCost),
+                                     max: Double(maxCost)
+            ) { [weak self] roomOffersModel in
+                guard let self else { return }
+//                self.filterRoomOffers.append(contentsOf: roomOffersModel)
+                DispatchQueue.main.async {
+                    self.roomWanted.append(contentsOf: roomOffersModel)
+                       self.roomWantedView.adsTable.reloadData()
+                    }
+                self.hideHUD()
+                }
         }
     }
     
     
-    func getUsersData() {
-        fireStore.getUserDataFromDefaults { [weak self] userData in
-            guard let self, let userData else { return }
-            
-            fireStore.country = userData.country
-            fireStore.state = userData.locationDetail.state
-        }
-    }
     
-    private func fetchRoomOfferedData() {
-        showHUD()
-//        fireStore.getRoomOffered(completion: { [weak self] (rooms: [RoomOffer]) in
-//            self?.roomWanted.removeAll()
-//            guard let self = self else { return }
-//            
-//            if !isLoading {
-//                self.roomWanted.append(contentsOf: rooms)
-//            }
-//            
-//            DispatchQueue.main.async {
-//                self.hideHUD()
-//                self.roomWantedView.adsTable.reloadData()
-//            }
-//            
-//            timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
-//        })
-    }
     
-    @objc func updateTime() {
-        isLoading = false
-    }
     
-    private func fetchMoreRoomData() {
-        showHUD()
-//        fireStore.getRoomOffered(completion: { [weak self] (rooms: [RoomOffer]) in
-//            self?.roomWanted.removeAll()
-//            guard let self = self else { return }
-//            self.roomWanted.append(contentsOf: rooms)
-////            loadMore = isBoolVal
-//            
-//            DispatchQueue.main.async {
-//                self.hideHUD()
-//                self.roomWantedView.adsTable.reloadData()
-//            }
-//        })
-    }
 }
 
 extension RoomWantedVC: UITableViewDelegate, UITableViewDataSource  {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return roomOffers.count
+        return roomWanted.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: RoomOfferTableViewCell().identifier, for: indexPath) as! RoomOfferTableViewCell
         cell.selectionStyle = .none
-        let data = roomOffers[indexPath.row]
+        let data = roomWanted[indexPath.row]
         
         if firstTime {
             cell.gapView.isHidden = true
@@ -194,9 +162,29 @@ extension RoomWantedVC: UITableViewDelegate, UITableViewDataSource  {
         let screenHeight = scrollView.frame.size.height
         
         if offsetY > contentHeight - screenHeight - 100 && !isLoading  {
-            fetchMoreRoomData()
+//            fetchMoreRoomData()
             
             isLoading = true
+        }
+    }
+}
+
+extension RoomWantedVC {
+    func getUsersDataFromDefaults() {
+        fireStore.getUserDataFromDefaults { [weak self] userData in
+            guard let self, let userData else { return }
+            fetchRoomOfferedData(country: userData.country, state: userData.locationDetail.state)
+        }
+    }
+   
+    func fetchRoomOfferedData(country: String, state: String) {
+        showHUD()
+        fireStore.getRoomOffered(isRoomOffer: false, country: country, state: state) { [weak self] roomOffersModel in
+            guard let self else { return }
+            self.roomWanted.append(contentsOf: roomOffersModel)
+            self.hideHUD()
+            self.roomWantedView.adsTable.reloadData()
+            self.roomWantedView.filterSection.numberOfOffers.text = "\(self.roomWanted.count) wanted"
         }
     }
 }

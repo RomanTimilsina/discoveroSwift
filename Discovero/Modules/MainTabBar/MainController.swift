@@ -21,7 +21,7 @@ class HomeController: UITabBarController, UITabBarControllerDelegate {
         self.delegate = self
         navigationController?.navigationBar.isHidden = true
         
-        let room = UINavigationController(rootViewController: RoomOfferVC())
+        let room = UINavigationController(rootViewController: RoomVC())
         let jobs = UINavigationController(rootViewController: RoomWantedVC())
         let sales = UINavigationController(rootViewController: RoomOfferVC())
         let announcements = UINavigationController(rootViewController: RoomOfferVC())

@@ -56,6 +56,8 @@
 		04A168B92AA854870065F607 /* DIPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A168B82AA854870065F607 /* DIPickerCell.swift */; };
 		04A168BB2AA8549C0065F607 /* DIPickerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A168BA2AA8549C0065F607 /* DIPickerModel.swift */; };
 		04A7BB982ACECE620050C1AA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0FE05CD2AA439C2001DBDF5 /* LaunchScreen.storyboard */; };
+		04A7C7BD2ADE994900146688 /* RoomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7C7BC2ADE994900146688 /* RoomVC.swift */; };
+		04A7C7BF2ADE998B00146688 /* RoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7C7BE2ADE998B00146688 /* RoomView.swift */; };
 		04A91E772AD7BD610037920D /* LocationFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A91E762AD7BD610037920D /* LocationFilterView.swift */; };
 		04A91E792AD7BDB80037920D /* LocationFilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A91E782AD7BDB80037920D /* LocationFilterVC.swift */; };
 		04A91E7B2AD7EF4E0037920D /* CountryStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A91E7A2AD7EF4E0037920D /* CountryStateModel.swift */; };
@@ -169,6 +171,8 @@
 		04A168B62AA8544F0065F607 /* DIPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIPickerView.swift; sourceTree = "<group>"; };
 		04A168B82AA854870065F607 /* DIPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIPickerCell.swift; sourceTree = "<group>"; };
 		04A168BA2AA8549C0065F607 /* DIPickerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIPickerModel.swift; sourceTree = "<group>"; };
+		04A7C7BC2ADE994900146688 /* RoomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomVC.swift; sourceTree = "<group>"; };
+		04A7C7BE2ADE998B00146688 /* RoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomView.swift; sourceTree = "<group>"; };
 		04A91E762AD7BD610037920D /* LocationFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationFilterView.swift; sourceTree = "<group>"; };
 		04A91E782AD7BDB80037920D /* LocationFilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationFilterVC.swift; sourceTree = "<group>"; };
 		04A91E7A2AD7EF4E0037920D /* CountryStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryStateModel.swift; sourceTree = "<group>"; };
@@ -477,6 +481,8 @@
 			children = (
 				049CF12D2AA9D46900FF2F1B /* RoomOffer */,
 				04C8752F2ADD57E300248A0F /* RoomWanted */,
+				04A7C7BC2ADE994900146688 /* RoomVC.swift */,
+				04A7C7BE2ADE998B00146688 /* RoomView.swift */,
 			);
 			path = Room;
 			sourceTree = "<group>";
@@ -753,6 +759,7 @@
 				E0FE06202AA43D1B001DBDF5 /* ColorConstants.swift in Sources */,
 				E0FE064A2AA43D1B001DBDF5 /* Connectivity.swift in Sources */,
 				E0FE061E2AA43D1B001DBDF5 /* FieldValidator.swift in Sources */,
+				04A7C7BF2ADE998B00146688 /* RoomView.swift in Sources */,
 				04A168B92AA854870065F607 /* DIPickerCell.swift in Sources */,
 				0499EA4D2AC55CF200E25B15 /* FirestoreDatabaseHelper.swift in Sources */,
 				E0FE06302AA43D1B001DBDF5 /* String+Ext.swift in Sources */,
@@ -774,6 +781,7 @@
 				E0FE06322AA43D1B001DBDF5 /* Collection+Ext.swift in Sources */,
 				E0FE06312AA43D1B001DBDF5 /* UITapGestureRecognizer+Ext.swift in Sources */,
 				049BEF642AA5AD4E00ED2B58 /* DIHeaderView.swift in Sources */,
+				04A7C7BD2ADE994900146688 /* RoomVC.swift in Sources */,
 				E0FE062F2AA43D1B001DBDF5 /* UIButton+Ext.swift in Sources */,
 				04967AB72ABAD9BB0035B359 /* CustomSelectorView.swift in Sources */,
 				04775C412AB960E0005F9B4C /* OnSelectPageVC.swift in Sources */,

@@ -28,6 +28,7 @@ class RoomOfferVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
+        debugPrint(self.roomOffers)
     }
     
     override func viewDidLoad() {
@@ -71,18 +72,33 @@ class RoomOfferVC: UIViewController {
         
         filterVC.handlePop = { [weak self] country, state, suburb, property, selectedLanguages, noOfBedroom, noOfBathroom, noOfParking, minCost, maxCost in
             guard let self else { return }
-            self.filterRoomOffers.removeAll()
-            self.filterRoomOffers = []
-            fireStore.getRoomOffered(country: country,
+            debugPrint(property)
+            self.roomOffers = []
+            self.roomOffers.removeAll()
+            self.roomOfferView.adsTable.reloadData()
+
+            fireStore.getRoomOffered(isRoomOffer: true, country: country,
                                      state: state,
                                      noOfBedroom: Int(noOfBedroom),
                                      noOfBathRoom: Int(noOfBathroom),
-                                     noOfParking: Int(noOfParking)) { [weak self] roomOffersModel in
+                                     noOfParking: Int(noOfParking),
+                                     propertyType: property,
+                                     language: selectedLanguages,
+                                     min: Double(minCost),
+                                     max: Double(maxCost)
+            ) { [weak self] roomOffersModel in
                 guard let self else { return }
-                self.filterRoomOffers.append(contentsOf: roomOffersModel)
+//                self.filterRoomOffers.append(contentsOf: roomOffersModel)
+                DispatchQueue.main.async {
+
+                    self.roomOffers.append(contentsOf: roomOffersModel)
+                       self.roomOfferView.adsTable.reloadData()
+                    self.roomOfferView.filterSection.numberOfOffers.text = "\(self.roomOffers.count) offers"
+                    }
                 self.hideHUD()
-                self.roomOfferView.adsTable.reloadData()
-            }
+                
+
+                }
         }
     }
 }
@@ -98,11 +114,12 @@ extension RoomOfferVC {
    
     func fetchRoomOfferedData(country: String, state: String) {
         showHUD()
-        fireStore.getRoomOffered(country: country, state: state) { [weak self] roomOffersModel in
+        fireStore.getRoomOffered(isRoomOffer: true, country: country, state: state) { [weak self] roomOffersModel in
             guard let self else { return }
             self.roomOffers.append(contentsOf: roomOffersModel)
             self.hideHUD()
             self.roomOfferView.adsTable.reloadData()
+            self.roomOfferView.filterSection.numberOfOffers.text = "\(self.roomOffers.count) offers"
         }
     }
 }
@@ -120,13 +137,15 @@ extension RoomOfferVC: UITableViewDelegate, UITableViewDataSource  {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: RoomOfferTableViewCell().identifier, for: indexPath) as! RoomOfferTableViewCell
         cell.selectionStyle = .none
-        if filterRoomOffers.count > 0 {
-           let data = filterRoomOffers[indexPath.row]
-            cell.configureData(data: data)
-        } else {
-            let data = roomOffers[indexPath.row]
-            cell.configureData(data: data)
-        }
+//        if filterRoomOffers.count > 0 {
+//           let data = filterRoomOffers[indexPath.row]
+//            cell.configureData(data: data)
+//        } else {
+//            let data = roomOffers[indexPath.row]
+//            cell.configureData(data: data)
+//        }
+        let data = roomOffers[indexPath.row]
+        cell.configureData(data: data)
         
         cell.handleLike = { [weak self] in
             guard let self else { return}
@@ -145,10 +164,15 @@ extension RoomOfferVC: UITableViewDelegate, UITableViewDataSource  {
         
         cell.handleComments = { [weak self] in
             guard let self else { return}
-            //on process
+            self.toGoCommentSection()
         }
         
         return cell
+    }
+    
+    func toGoCommentSection() {
+        let vc = OnSelectPageVC()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

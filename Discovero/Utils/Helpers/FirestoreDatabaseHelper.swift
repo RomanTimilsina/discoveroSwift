@@ -41,7 +41,8 @@ var next: Query?
 var batchSize = 33
 var isFirst = true
 var firstTimeRun = true
-    
+var selectedLanguage: [String] = []
+var loopOnce = true
 var first = Firestore.firestore().collection("RoomOffer").limit(to: batchSize)
 
 struct FireStoreDatabaseHelper {
@@ -50,34 +51,6 @@ struct FireStoreDatabaseHelper {
     var country, state: String?
     var countryName: String = "", stateName: String = "", suburb: String = "",
                     property: String = "",languages: [String] = [], noOfBedrooms: Int = 0, noOfBathrooms: Int = 0, noOfParkings: Int = 0, min: Double = 0, max: Double = 5000
-    
-    mutating func filterConditions(country: String, state: String, suburb: String,
-                                   property: String,languages: [String], noOfBedrooms: String, noOfBathrooms: String, noOfParkings: String, min: String, max: String) {
-        
-        self.country = country
-        self.state = state
-//        self.property = property
-//        self.languages = languages
-        print(noOfBedrooms)
-        self.property = property
-        self.languages = languages
-        self.noOfBedrooms = Int(noOfBedrooms) ?? 0
-        self.noOfParkings = Int(noOfParkings) ?? 0
-        self.noOfBathrooms = Int(noOfBathrooms) ?? 0
-//        self.min = Int(min) ?? 0
-//        self.max = Int(max) ?? 0
-        self.max = 400
-        self.min = 200
-//        first = first.whereField("price", isGreaterThanOrEqualTo: 100)
-//            .whereField("price", isLessThanOrEqualTo: 400)
-        first = first.whereField("location.state", isEqualTo: self.state)
-            .whereField("location.country", isEqualTo: self.country)
-            .whereField("noOfBathrooms", isEqualTo: self.noOfBathrooms)
-            .whereField("noOfBedrooms", isEqualTo: self.noOfBedrooms)
-            .whereField("noOfParkings", isEqualTo: self.noOfParkings)
-            .whereField("propertyType", isEqualTo: property)
-//            .whereField("languagesSpeaks", arrayContainsAny: ["English", "Nepali"])
-    }
     
     func checkAuthentication(uid: String, phone: String, completion: @escaping (String, String) -> Void) {
         Firestore.firestore().collection("Users").getDocuments { query, error in
@@ -151,16 +124,19 @@ struct FireStoreDatabaseHelper {
         }
     }
     
-    func getRoomOffered(country: String,
+    func getRoomOffered(isRoomOffer: Bool,
+                        country: String,
                         state: String,
                         noOfBedroom: Int? = nil,
                         noOfBathRoom: Int? = nil,
                         noOfParking: Int? = nil,
                         propertyType: String? = nil,
                         language: [String]? = nil,
+                        min: Double? = nil,
+                        max: Double? = nil,
                         completion: @escaping ([RoomOffer]) -> Void) {
        
-        var fireStoreCollection =  Firestore.firestore().collection("RoomOffer")
+        var fireStoreCollection =  Firestore.firestore().collection(isRoomOffer ? "RoomOffer" : "RoomWanted")
             .whereField("location.state", isEqualTo: state)
             .whereField("location.country", isEqualTo: country)
         
@@ -170,6 +146,7 @@ struct FireStoreDatabaseHelper {
         }
        
         if noOfParking ?? 0 > 0 {
+            debugPrint(noOfParking)
             fireStoreCollection = fireStoreCollection
             .whereField("noOfParkings", isEqualTo: noOfParking)
 
@@ -179,82 +156,135 @@ struct FireStoreDatabaseHelper {
             fireStoreCollection = fireStoreCollection
                 .whereField("noOfBathrooms", isEqualTo: noOfBathRoom)
         }
-           
+        
+        if let propertyType {
+            if propertyType != "Any" {
+                fireStoreCollection = fireStoreCollection
+                    .whereField("propertyType", isEqualTo: propertyType)
+            }
+        }
+//
         fireStoreCollection
             .getDocuments { query, error in
             guard let query = query else {
                 print("Error retreving cities: \(error.debugDescription)")
                 return
             }
+                selectedLanguage = language ?? []
+                if firstTimeRun {
+                    // clear room Offers on each run
+                    roomOffers.removeAll()
+                    firstTimeRun = false
+                }
                 
-            for (_, document) in query.documents.enumerated() {
-                
-                let data = document.data()
-                let id = data["id"] as? String
-                let title = data["title"] as? String
-                let description = data["description"] as? String
-                let price = data["price"] as? Double
-                let bedrooms = data["noOfBedrooms"] as? Int
-                let bathrooms = data["noOfBathrooms"] as? Int
-                let parkings = data["noOfParkings"] as? Int
-                let propertyType = data["propertyType"] as? String
-                let timestamp = data["timestamp"] as? TimeInterval
-                let viewCount = data["viewCount"] as? Int
-                let commentCount = data["commentCount"] as? Int
-                let isAnonymous = data["isAnonymous"] as? Bool
-                let userInfoData = data["userInfo"] as? [String: Any]
-                let locationData = data["location"] as? [String: String]
-                let comments = data["comments"] as? [String]
-                let favorites = data["favorites"] as? [String]
-                
-                let userInfoName = userInfoData?["name"] as? String
-                let userInfoPhoneNo = userInfoData?["phoneNo"] as? String
-                let userInfoLanguagesSpeaks = userInfoData?["languagesSpeaks"] as? [String]
-                let userInfoUid = userInfoData?["uid"] as? [String]
-                let locationBuildingNo = locationData?["buildingNo"]
-                let locationCountry = locationData?["country"]
-                let locationState = locationData?["state"]
-                let locationStreetName = locationData?["streetName"]
-                let locationStreetNo = locationData?["streetNo"]
-                let locationSuburb = locationData?["suburb"]
-                
-                let userInfo = UserInfo(
-                    name: userInfoName ?? "",
-                    phoneNo: userInfoPhoneNo ?? "",
-                    languagesSpeaks: userInfoLanguagesSpeaks ?? [],
-                    uid: userInfoUid ?? []
-                )
-                
-                let location = Location(
-                    buildingNo: locationBuildingNo ?? "",
-                    country: locationCountry ?? "",
-                    state: locationState ?? "",
-                    streetName: locationStreetName ?? "",
-                    streetNo: locationStreetNo ?? "",
-                    suburb: locationSuburb ?? ""
-                )
-                        let roomOffer = RoomOffer(
-                            id: id ?? "",
-                            title: title ?? "",
-                            description: description ?? "",
-                            propertyType: propertyType ?? "",
-                            price: price ?? 0,
-                            noOfBedroom: bedrooms ?? 0,
-                            noOfBathroom: bathrooms ?? 0,
-                            noOfParkings: parkings ?? 0,
-                            viewCount: viewCount ?? 0,
-                            commentCount: commentCount ?? 0,
-                            timestamp: timestamp ?? 0,
-                            isAnonymous: isAnonymous ?? false,
-                            userInfo: userInfo,
-                            location: location,
-                            comments: comments ?? [],
-                            favorites: favorites ?? []
-                        )
+                for (index, document) in query.documents.enumerated() {
+                    let data = document.data()
+                    let id = data["id"] as? String
+                    let title = data["title"] as? String
+                    let description = data["description"] as? String
+                    let price = data["price"] as? Double
+                    let bedrooms = data["noOfBedrooms"] as? Int
+                    let bathrooms = data["noOfBathrooms"] as? Int
+                    let parkings = data["noOfParkings"] as? Int
+                    let propertyType = data["propertyType"] as? String
+                    let timestamp = data["timestamp"] as? TimeInterval
+                    let viewCount = data["viewCount"] as? Int
+                    let commentCount = data["commentCount"] as? Int
+                    let isAnonymous = data["isAnonymous"] as? Bool
+                    let userInfoData = data["userInfo"] as? [String: Any]
+                    let locationData = data["location"] as? [String: String]
+                    let comments = data["comments"] as? [String]
+                    let favorites = data["favorites"] as? [String]
                     
-                roomOffers.append(roomOffer)
+                    let userInfoName = userInfoData?["name"] as? String
+                    let userInfoPhoneNo = userInfoData?["phoneNo"] as? String
+                    let userInfoLanguagesSpeaks = userInfoData?["languagesSpeaks"] as? [String]
+                    let userInfoUid = userInfoData?["uid"] as? [String]
+                    let locationBuildingNo = locationData?["buildingNo"]
+                    let locationCountry = locationData?["country"]
+                    let locationState = locationData?["state"]
+                    let locationStreetName = locationData?["streetName"]
+                    let locationStreetNo = locationData?["streetNo"]
+                    let locationSuburb = locationData?["suburb"]
+                    
+                    let userInfo = UserInfo(
+                        name: userInfoName ?? "",
+                        phoneNo: userInfoPhoneNo ?? "",
+                        languagesSpeaks: userInfoLanguagesSpeaks ?? [],
+                        uid: userInfoUid ?? []
+                    )
+                    
+                    let location = Location(
+                        buildingNo: locationBuildingNo ?? "",
+                        country: locationCountry ?? "",
+                        state: locationState ?? "",
+                        streetName: locationStreetName ?? "",
+                        streetNo: locationStreetNo ?? "",
+                        suburb: locationSuburb ?? ""
+                    )
+                    if let price {
+                        debugPrint(price, min, max)
+                        
+                        if price > min ?? 0 && price < max ?? 5000 {
+                            if selectedLanguage.isEmpty {
+                                let roomOffer = RoomOffer(
+                                    id: id ?? "",
+                                    title: title ?? "",
+                                    description: description ?? "",
+                                    propertyType: propertyType ?? "",
+                                    price: price ?? 0,
+                                    noOfBedroom: bedrooms ?? 0,
+                                    noOfBathroom: bathrooms ?? 0,
+                                    noOfParkings: parkings ?? 0,
+                                    viewCount: viewCount ?? 0,
+                                    commentCount: commentCount ?? 0,
+                                    timestamp: timestamp ?? 0,
+                                    isAnonymous: isAnonymous ?? false,
+                                    userInfo: userInfo,
+                                    location: location,
+                                    comments: comments ?? [],
+                                    favorites: favorites ?? []
+                                )
+                                
+                                roomOffers.append(roomOffer)
+                            } else {
+                                for language in selectedLanguage {
+                                    guard let userInfoLanguagesSpeaks else { return }
+                                    debugPrint(userInfoLanguagesSpeaks)
+                                    if userInfoLanguagesSpeaks.contains(language) {
+                                        // loop once for multilingual user
+                                        if loopOnce {
+                                            let roomOffer = RoomOffer(
+                                                id: id ?? "",
+                                                title: title ?? "",
+                                                description: description ?? "",
+                                                propertyType: propertyType ?? "",
+                                                price: price ?? 0,
+                                                noOfBedroom: bedrooms ?? 0,
+                                                noOfBathroom: bathrooms ?? 0,
+                                                noOfParkings: parkings ?? 0,
+                                                viewCount: viewCount ?? 0,
+                                                commentCount: commentCount ?? 0,
+                                                timestamp: timestamp ?? 0,
+                                                isAnonymous: isAnonymous ?? false,
+                                                userInfo: userInfo,
+                                                location: location,
+                                                comments: comments ?? [],
+                                                favorites: favorites ?? []
+                                            )
+                                            
+                                            roomOffers.append(roomOffer)
+                                            loopOnce = false
+                                        }
+                                    }
+                                }
+                                loopOnce = true
+                            }
+                        }
+                    }
 
-            }
+                }
+                firstTimeRun = true
             completion((roomOffers))
         }
     }

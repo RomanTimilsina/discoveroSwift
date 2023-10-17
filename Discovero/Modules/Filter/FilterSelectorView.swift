@@ -266,8 +266,6 @@ class FilterSelectorView: UIView{
     }()
     var minCost: String = ""
     var maxCost: String = ""
-    var property = ""
-
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -393,15 +391,12 @@ class FilterSelectorView: UIView{
         private func addInfoMenu() -> UIMenu {
             let Both = UIAction(title: "Any", handler: { _ in
                 self.propertyTypeLabel.subTitle.text = "Any"
-                self.property = "Any"
             })
             let Apartment = UIAction(title: "Apartment", handler: { _ in
                 self.propertyTypeLabel.subTitle.text = "Apartment"
-                self.property = "Apartment"
             })
             let House = UIAction(title: "House", handler: { _ in
                 self.propertyTypeLabel.subTitle.text = "House"
-                self.property = "Apartment"
             })
             let infoMenu = UIMenu(title: "", children: [Both, Apartment, House])
             return infoMenu

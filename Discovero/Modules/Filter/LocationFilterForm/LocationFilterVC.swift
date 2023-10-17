@@ -21,21 +21,26 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
     var newCountryModel = CountryManager()
     var countryList: [CountryStateModel] = []
     var selectedCountyList: [String] = []
-    
     var selectedCountryName = ""
     
     let countries: [CountryModel] = Bundle.main.decode(from: "Countries.json")
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         countriesAndState()
         
+
         currentView.suburbTextField.delegate = self
         currentView.countriesTextField.text = userData?.country
         currentView.statesTextField.text = userData?.locationDetail.state
         
         setupNewCountryModel()
         countryPicker.countryModel = countryManager.getData()
+        
+//        selectedCountryName = userData?.country ?? ""
+//        currentView.stateTFCoverButton.menu = addInfoMenu(selectedCountryName)
+
         observeViewEvents()
     }
     
@@ -53,7 +58,8 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
                         let name = countries[index].code.lowercased()
                         if UIImage(named: name) != nil {
                             if selectedCountryName == countryAndStates.name {
-
+//                                selectedCountryName = userData?.country ?? ""
+//                                currentView.stateTFCoverButton.menu = addInfoMenu(selectedCountryName)
                             }
 
                             newCountryModel.setData(name: countries[index].name, dialCode: countries[index].dialCode, code: countries[index].code, imageName: countries[index].code)
@@ -92,14 +98,20 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
         
         countryPicker.onPicked = { [weak self] model in
             guard let self = self else { return }
+            debugPrint(model.name)
             selectedCountryName = model.name
             countriesAndState()
             currentView.countriesTextField.text = model.name
             
             currentView.statesTextField.text = ""
-    
+            
             currentView.stateTFCoverButton.menu = addInfoMenu(selectedCountryName)
         }
+        
+//        currentView.stateTap = { [weak self] in
+//            guard let self = self else { return }
+//            currentView.stateTFCoverButton.menu = addInfoMenu(userData?.country ?? "")
+//        }
         
         currentView.headerView.onClose = { [weak self] in
             guard let self = self else { return }
@@ -124,9 +136,6 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
                         })
                         menuList.append(states)
                         selectedCountyList.append(CountryName)
-                    
-                    
-
             }
         }
         countryList = []

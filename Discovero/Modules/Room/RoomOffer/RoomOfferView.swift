@@ -26,7 +26,6 @@ class RoomOfferView: UIView {
     
     lazy var emptyStackView = VerticalStackView(arrangedSubViews: [homeImg, createAdLabel,adDescriptionLabel, createAdButton], spacing: 30)
     
-    let headerTab = DIHeaderTab()
     let filterSection = FilterView()
     //    let filterCover = UIView(color: .blue)
     
@@ -63,13 +62,8 @@ class RoomOfferView: UIView {
         //        emptyStackView.centerInSuperview()
         //        emptyStackView.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 0, right: 12))
         
-        addSubview(headerTab)
-        headerTab.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 10, right: 0))
-        //        searchBar.constraintHeight(constant: 0)
-        headerTab.constraintHeight(constant: 48)
-        
         addSubview(filterSection)
-        filterSection.anchor(top: headerTab.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 0, right: 0))
+        filterSection.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 0, right: 0))
         filterSection.constraintHeight(constant: 40)
         filterSection.constraintWidth(constant: 95)
         
@@ -104,14 +98,12 @@ class RoomOfferView: UIView {
     
     func hideTable() {
         adsTable.isHidden = true
-        headerTab.isHidden = true
         filterSection.isHidden = true
         emptyStackView.isHidden = false
     }
     
     func showTable() {
         adsTable.isHidden = false
-        headerTab.isHidden = false
         filterSection.isHidden = false
         emptyStackView.isHidden = true
     }

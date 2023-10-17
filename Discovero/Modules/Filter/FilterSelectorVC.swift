@@ -35,6 +35,7 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
         firestore.getUserDataFromDefaults { [weak self] userData in
             guard let self, let userData else { return }
             usersData = userData
+            locationFilter.userData = userData
         }
         
         setInitialData()
@@ -67,12 +68,16 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
                                     if view == selector.viewsArray[0] {
                                         label.textColor = Color.appWhite
                                         view.backgroundColor = Color.gray400
+                                        
                                     } else {
                                         label.textColor = Color.gray400
                                         view.backgroundColor = Color.gray800
                                     }
                                 }
             }
+            noOfBedroom = "Any"
+            noOfBathroom = "Any"
+            noOfParkings = "Any"
         }
         
         currentView.rangeSlider.value = [ 0, 5000]
@@ -198,8 +203,6 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
 
         }
         
-        
-
         currentView.bedroomSelector.handleTap = { [weak self] noOfBedroom in
             guard let self = self else { return }
             self.noOfBedroom = noOfBedroom

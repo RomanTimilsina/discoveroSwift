@@ -9,6 +9,9 @@ import UIKit
 
 class DIHeaderTab: UIView {
     
+    var handleOffer: (() -> Void)?
+    var handleWanted: (() -> Void)?
+
     let offerView = UIView()
     let wantedView = UIView()
     let offerLabel = UILabel(text: "Offer",
@@ -65,13 +68,13 @@ class DIHeaderTab: UIView {
     @objc func offerViewTap() {
         offerView.backgroundColor = Color.primary
         wantedView.backgroundColor = Color.gray900
-        print("go to offer tab")
+        handleOffer?()
     }
     
     @objc func wantedViewTap() {
         wantedView.backgroundColor = Color.primary
         offerView.backgroundColor = Color.gray900
-        print("go to wanted tab")
+        handleWanted?()
     }
 }
 
