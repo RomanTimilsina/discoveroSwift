@@ -98,21 +98,21 @@ class RoomWantedVC: UIViewController{
     
     private func fetchRoomOfferedData() {
         showHUD()
-        fireStore.getRoomOffered(completion: { [weak self] (rooms: [RoomOffer]) in
-            self?.roomWanted.removeAll()
-            guard let self = self else { return }
-            
-            if !isLoading {
-                self.roomWanted.append(contentsOf: rooms)
-            }
-            
-            DispatchQueue.main.async {
-                self.hideHUD()
-                self.roomWantedView.adsTable.reloadData()
-            }
-            
-            timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
-        })
+//        fireStore.getRoomOffered(completion: { [weak self] (rooms: [RoomOffer]) in
+//            self?.roomWanted.removeAll()
+//            guard let self = self else { return }
+//            
+//            if !isLoading {
+//                self.roomWanted.append(contentsOf: rooms)
+//            }
+//            
+//            DispatchQueue.main.async {
+//                self.hideHUD()
+//                self.roomWantedView.adsTable.reloadData()
+//            }
+//            
+//            timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+//        })
     }
     
     @objc func updateTime() {
@@ -121,17 +121,17 @@ class RoomWantedVC: UIViewController{
     
     private func fetchMoreRoomData() {
         showHUD()
-        fireStore.getRoomOffered(completion: { [weak self] (rooms: [RoomOffer]) in
-            self?.roomWanted.removeAll()
-            guard let self = self else { return }
-            self.roomWanted.append(contentsOf: rooms)
-//            loadMore = isBoolVal
-            
-            DispatchQueue.main.async {
-                self.hideHUD()
-                self.roomWantedView.adsTable.reloadData()
-            }
-        })
+//        fireStore.getRoomOffered(completion: { [weak self] (rooms: [RoomOffer]) in
+//            self?.roomWanted.removeAll()
+//            guard let self = self else { return }
+//            self.roomWanted.append(contentsOf: rooms)
+////            loadMore = isBoolVal
+//            
+//            DispatchQueue.main.async {
+//                self.hideHUD()
+//                self.roomWantedView.adsTable.reloadData()
+//            }
+//        })
     }
 }
 

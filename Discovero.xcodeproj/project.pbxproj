@@ -35,8 +35,8 @@
 		049BEF672AA5B0B000ED2B58 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049BEF662AA5B0B000ED2B58 /* LoginVC.swift */; };
 		049BEF692AA5B0C800ED2B58 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049BEF682AA5B0C800ED2B58 /* LoginView.swift */; };
 		049CF12C2AA9AA4B00FF2F1B /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CF12B2AA9AA4B00FF2F1B /* CustomSearchBar.swift */; };
-		049CF12F2AA9D4D000FF2F1B /* RoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CF12E2AA9D4D000FF2F1B /* RoomView.swift */; };
-		049CF1312AA9D4ED00FF2F1B /* RoomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CF1302AA9D4ED00FF2F1B /* RoomVC.swift */; };
+		049CF12F2AA9D4D000FF2F1B /* RoomOfferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CF12E2AA9D4D000FF2F1B /* RoomOfferView.swift */; };
+		049CF1312AA9D4ED00FF2F1B /* RoomOfferVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CF1302AA9D4ED00FF2F1B /* RoomOfferVC.swift */; };
 		049CF1352AA9DC7600FF2F1B /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CF1342AA9DC7600FF2F1B /* MainController.swift */; };
 		049CFEFB2AD90AD4000A4BCB /* MultiSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 049CFEFA2AD90AD4000A4BCB /* MultiSlider */; };
 		049D3A922AAD8C1C004864E9 /* MyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049D3A912AAD8C1C004864E9 /* MyProfileView.swift */; };
@@ -149,8 +149,8 @@
 		049BEF662AA5B0B000ED2B58 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		049BEF682AA5B0C800ED2B58 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		049CF12B2AA9AA4B00FF2F1B /* CustomSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
-		049CF12E2AA9D4D000FF2F1B /* RoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomView.swift; sourceTree = "<group>"; };
-		049CF1302AA9D4ED00FF2F1B /* RoomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomVC.swift; sourceTree = "<group>"; };
+		049CF12E2AA9D4D000FF2F1B /* RoomOfferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomOfferView.swift; sourceTree = "<group>"; };
+		049CF1302AA9D4ED00FF2F1B /* RoomOfferVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomOfferVC.swift; sourceTree = "<group>"; };
 		049CF1342AA9DC7600FF2F1B /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 		049D3A912AAD8C1C004864E9 /* MyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileView.swift; sourceTree = "<group>"; };
 		049D3A932AAD9379004864E9 /* MyProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileVC.swift; sourceTree = "<group>"; };
@@ -298,7 +298,6 @@
 		04996CB82AA46E5E00DB618F /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				04C8752F2ADD57E300248A0F /* RoomWantedVC */,
 				04A168B32AA854260065F607 /* DiPicker */,
 				04967AAF2ABAC9CF0035B359 /* Filter */,
 				049BEF652AA5B08D00ED2B58 /* Login */,
@@ -308,9 +307,9 @@
 				04CA49112AA45E1600C69767 /* OnBoardingPage */,
 				04775C3F2AB96085005F9B4C /* OnSelectPage */,
 				04B514A32AA71C8400E99A1B /* OTPConfirm */,
-				04A168AE2AA840990065F607 /* Registration */,
-				049CF12D2AA9D46900FF2F1B /* Room */,
 				04956D2C2AB06F2000540F44 /* ProfileItem */,
+				04A168AE2AA840990065F607 /* Registration */,
+				8527159C2ADD842400394D85 /* Room */,
 				04A168A32AA8394B0065F607 /* Welcome */,
 			);
 			path = Modules;
@@ -358,14 +357,14 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		049CF12D2AA9D46900FF2F1B /* Room */ = {
+		049CF12D2AA9D46900FF2F1B /* RoomOffer */ = {
 			isa = PBXGroup;
 			children = (
-				049CF12E2AA9D4D000FF2F1B /* RoomView.swift */,
-				049CF1302AA9D4ED00FF2F1B /* RoomVC.swift */,
+				049CF12E2AA9D4D000FF2F1B /* RoomOfferView.swift */,
+				049CF1302AA9D4ED00FF2F1B /* RoomOfferVC.swift */,
 				04978F862AB81E3C00BCACC5 /* RoomTableViewCell.swift */,
 			);
-			path = Room;
+			path = RoomOffer;
 			sourceTree = "<group>";
 		};
 		049CF1322AA9DC3D00FF2F1B /* MainTabBar */ = {
@@ -442,14 +441,14 @@
 			path = OTPConfirm;
 			sourceTree = "<group>";
 		};
-		04C8752F2ADD57E300248A0F /* RoomWantedVC */ = {
+		04C8752F2ADD57E300248A0F /* RoomWanted */ = {
 			isa = PBXGroup;
 			children = (
 				04C875302ADD580100248A0F /* RoomWantedVC.swift */,
 				04C875322ADD582900248A0F /* RoomWantedView.swift */,
 				04C875342ADD584B00248A0F /* RoomWantedTableViewCell.swift */,
 			);
-			path = RoomWantedVC;
+			path = RoomWanted;
 			sourceTree = "<group>";
 		};
 		04CA49062AA446F000C69767 /* openSans */ = {
@@ -471,6 +470,15 @@
 				04996CC02AA489F600DB618F /* OnBoardingPageView.swift */,
 			);
 			path = OnBoardingPage;
+			sourceTree = "<group>";
+		};
+		8527159C2ADD842400394D85 /* Room */ = {
+			isa = PBXGroup;
+			children = (
+				049CF12D2AA9D46900FF2F1B /* RoomOffer */,
+				04C8752F2ADD57E300248A0F /* RoomWanted */,
+			);
+			path = Room;
 			sourceTree = "<group>";
 		};
 		E0FE05B62AA439C1001DBDF5 = {
@@ -724,7 +732,7 @@
 				0479542B2AC18DB2002BB17B /* NewCountryModel.swift in Sources */,
 				04B514A72AA71CDB00E99A1B /* OtpConfirmVC.swift in Sources */,
 				E0FE05C72AA439C1001DBDF5 /* OnBoardingPageVC.swift in Sources */,
-				049CF12F2AA9D4D000FF2F1B /* RoomView.swift in Sources */,
+				049CF12F2AA9D4D000FF2F1B /* RoomOfferView.swift in Sources */,
 				E0FE06402AA43D1B001DBDF5 /* EmailValidator.swift in Sources */,
 				04A91E7B2AD7EF4E0037920D /* CountryStateModel.swift in Sources */,
 				04A91E772AD7BD610037920D /* LocationFilterView.swift in Sources */,
@@ -732,7 +740,7 @@
 				04C875332ADD582900248A0F /* RoomWantedView.swift in Sources */,
 				E0FE062A2AA43D1B001DBDF5 /* UICollectionView+Ext.swift in Sources */,
 				E0FE06352AA43D1B001DBDF5 /* UIView+Ext.swift in Sources */,
-				049CF1312AA9D4ED00FF2F1B /* RoomVC.swift in Sources */,
+				049CF1312AA9D4ED00FF2F1B /* RoomOfferVC.swift in Sources */,
 				E0FE06212AA43D1B001DBDF5 /* FontConstants.swift in Sources */,
 				049AB9CA2AC9440D007200A5 /* CustomTimer.swift in Sources */,
 				04B514A52AA71CAA00E99A1B /* OtpConfirmView.swift in Sources */,

@@ -11,11 +11,11 @@ class RoomOfferVC: UIViewController {
     
     let roomOfferView = RoomOfferView()
     var roomOffers: [RoomOffer] = []
+    var filterRoomOffers: [RoomOffer] = []
     var items: [RoomOffer] = []
     var priceRange: [RoomOffer] = []
     var numberOfLinesForDescriptions: [Int] = []
     var fireStore = FireStoreDatabaseHelper()
-    var isLoading = false
     var firstTime = true
     var loadMore = true
     var timer: Timer?
@@ -28,18 +28,13 @@ class RoomOfferVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
-//        roomOffers = []
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTable()
         observeEvents()
-        
-        getUsersData()
-
-        fetchRoomOfferedData()
-        roomOfferView.roomOffer = roomOffers
+        getUsersDataFromDefaults()
     }
     
     override func loadView() {
@@ -53,6 +48,7 @@ class RoomOfferVC: UIViewController {
     }
     
     func observeEvents() {
+        //MARK: Pull to refresh need to be done
         //        roomView.handleRoomRefresh = { [weak self] in
         //            
         //            self?.fireStore.getRoomOffered { [weak self] rooms in
@@ -75,36 +71,103 @@ class RoomOfferVC: UIViewController {
         
         filterVC.handlePop = { [weak self] country, state, suburb, property, selectedLanguages, noOfBedroom, noOfBathroom, noOfParking, minCost, maxCost in
             guard let self else { return }
-
-            countryName = country
-            stateName = state
-            suburbName = suburb
-            self.property = property
-            self.languages = selectedLanguages
-            self.noOfBedroom = noOfBedroom
-            self.noOfBathroom = noOfBathroom
-            self.noOfParking = noOfParking
-            fireStore.filterConditions(country: countryName ?? "", state: stateName ?? "", suburb: suburbName ?? "", property: self.property ?? "", languages:  self.languages , noOfBedrooms: self.noOfBedroom ?? "", noOfBathrooms: self.noOfBathroom ?? "", noOfParkings: self.noOfParking ?? "", min: minCost, max: maxCost)
-            self.roomOffers.removeAll()
-            roomOffers = []
-            fetchRoomOfferedData()
-//            fetchMoreRoomData()
+            self.filterRoomOffers.removeAll()
+            self.filterRoomOffers = []
+            fireStore.getRoomOffered(country: country,
+                                     state: state,
+                                     noOfBedroom: Int(noOfBedroom),
+                                     noOfBathRoom: Int(noOfBathroom),
+                                     noOfParking: Int(noOfParking)) { [weak self] roomOffersModel in
+                guard let self else { return }
+                self.filterRoomOffers.append(contentsOf: roomOffersModel)
+                self.hideHUD()
+                self.roomOfferView.adsTable.reloadData()
+            }
         }
     }
-    
-    
-    
-    func getUsersData() {
+}
+
+//MARK: Fetch data from firestore
+extension RoomOfferVC {
+    func getUsersDataFromDefaults() {
         fireStore.getUserDataFromDefaults { [weak self] userData in
             guard let self, let userData else { return }
-            
-            fireStore.country = userData.country
-            fireStore.state = userData.locationDetail.state
-            
-            
+            fetchRoomOfferedData(country: userData.country, state: userData.locationDetail.state)
+        }
+    }
+   
+    func fetchRoomOfferedData(country: String, state: String) {
+        showHUD()
+        fireStore.getRoomOffered(country: country, state: state) { [weak self] roomOffersModel in
+            guard let self else { return }
+            self.roomOffers.append(contentsOf: roomOffersModel)
+            self.hideHUD()
+            self.roomOfferView.adsTable.reloadData()
+        }
+    }
+}
+
+//MARK: Table Delegates
+extension RoomOfferVC: UITableViewDelegate, UITableViewDataSource  {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if filterRoomOffers.count > 0 {
+            return filterRoomOffers.count
+        } else {
+            return roomOffers.count
         }
     }
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: RoomOfferTableViewCell().identifier, for: indexPath) as! RoomOfferTableViewCell
+        cell.selectionStyle = .none
+        if filterRoomOffers.count > 0 {
+           let data = filterRoomOffers[indexPath.row]
+            cell.configureData(data: data)
+        } else {
+            let data = roomOffers[indexPath.row]
+            cell.configureData(data: data)
+        }
+        
+        cell.handleLike = { [weak self] in
+            guard let self else { return}
+            //on like clicked
+        }
+        
+        cell.handleCall = { [weak self] in
+            guard let self else { return}
+            //on process
+        }
+        
+        cell.handleMessage = { [weak self] in
+            guard let self else { return}
+            //on process
+        }
+        
+        cell.handleComments = { [weak self] in
+            guard let self else { return}
+            //on process
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 254
+    }
+}
+
+//MARK: Pagination need to be done
+extension RoomOfferVC {
+    func scrollViewDidScroll(_ scrollView: UIScrollView)  {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let screenHeight = scrollView.frame.size.height
+        
+        if offsetY > contentHeight - screenHeight - 100 {
+            
+           
+        }
+    }
     
     //    func loadMoreData() {
     //        if isLoading {
@@ -144,40 +207,18 @@ class RoomOfferVC: UIViewController {
     //        label.numberOfLines = 0
     //        label.lineBreakMode = .byWordWrapping
     //        label.frame.size = CGSize(width: maxWidth, height: .greatestFiniteMagnitude)
-    //        
+    //
     //        // Set the text to the label and calculate the size needed
     //        label.text = text
     //        let textSize = label.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-    //        
+    //
     //        // Calculate the number of lines based on text size and font height
     //        let lineHeight = ceil(font.lineHeight)
     //        let numberOfLines = Int(ceil(textSize.height / lineHeight))
-    //        
+    //
     //        return numberOfLines
     //    }
     
-    private func fetchRoomOfferedData() {
-        showHUD()
-        fireStore.getRoomOffered(completion: { [weak self] (rooms: [RoomOffer]) in
-            self?.roomOffers.removeAll()
-            guard let self = self else { return }
-            
-            if !isLoading {
-                self.roomOffers.append(contentsOf: rooms)
-            }
-            
-            DispatchQueue.main.async {
-                self.hideHUD()
-                self.roomOfferView.adsTable.reloadData()
-            }
-            
-            timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
-        })
-    }
-    
-    @objc func updateTime() {
-        isLoading = false
-    }
     
 //    private func fetchMoreRoomData() {
 //        showHUD()
@@ -186,7 +227,7 @@ class RoomOfferVC: UIViewController {
 //            guard let self = self else { return }
 //            self.roomOffers.append(contentsOf: rooms)
 //            loadMore = isBoolVal
-//            
+//
 //            DispatchQueue.main.async {
 //                self.hideHUD()
 //                self.roomView.adsTable.reloadData()
@@ -194,66 +235,3 @@ class RoomOfferVC: UIViewController {
 //        })
 //    }
 }
-
-extension RoomOfferVC: UITableViewDelegate, UITableViewDataSource  {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return roomOffers.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: RoomOfferTableViewCell().identifier, for: indexPath) as! RoomOfferTableViewCell
-        cell.selectionStyle = .none
-        let data = roomOffers[indexPath.row]
-        
-        if firstTime {
-            cell.gapView.isHidden = true
-            cell.gapView.constraintHeight(constant: 0)
-            firstTime = false
-        }
-        
-        print(data)
-        cell.configureData(data: data)
-        cell.handleLike = {
-            print("click")
-        }
-        
-        cell.handleCall = {
-            //on process
-        }
-        
-        cell.handleMessage = {
-            //on process
-        }
-        
-        cell.handleComments = {
-            //on process
-        }
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        //        let data = roomOffers[indexPath.row]
-        //        let approximateHeightOfFont = 30
-        //        let approximateNoOfLetters = 40
-        //        let heightOfEmptyTable = 245
-        //        let labelHeight = (((data.description.count)/approximateNoOfLetters) * approximateHeightOfFont) + heightOfEmptyTable
-        return 254
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView)  {
-        let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
-        let screenHeight = scrollView.frame.size.height
-        
-        if offsetY > contentHeight - screenHeight - 100 && !isLoading  {
-//            fetchMoreRoomData()
-            
-            isLoading = true
-        }
-    }
-}
-
-
-

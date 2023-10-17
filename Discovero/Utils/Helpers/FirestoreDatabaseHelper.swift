@@ -151,26 +151,42 @@ struct FireStoreDatabaseHelper {
         }
     }
     
-    func getRoomOffered(completion: @escaping ([RoomOffer]) -> Void) {
-        guard let country, let state else { return }
+    func getRoomOffered(country: String,
+                        state: String,
+                        noOfBedroom: Int? = nil,
+                        noOfBathRoom: Int? = nil,
+                        noOfParking: Int? = nil,
+                        propertyType: String? = nil,
+                        language: [String]? = nil,
+                        completion: @escaping ([RoomOffer]) -> Void) {
+       
+        var fireStoreCollection =  Firestore.firestore().collection("RoomOffer")
+            .whereField("location.state", isEqualTo: state)
+            .whereField("location.country", isEqualTo: country)
         
-        first
-//            .whereField("location.state", isEqualTo: self.state)
-//                .whereField("location.country", isEqualTo: self.country)
-//                .whereField("noOfBathrooms", isEqualTo: self.noOfBathrooms)
-//                .whereField("noOfBedrooms", isEqualTo: self.noOfBedrooms)
-//                .whereField("noOfParkings", isEqualTo: self.noOfParkings)
+        if noOfBedroom ?? 0 > 0 {
+            fireStoreCollection = fireStoreCollection
+                .whereField("noOfBedrooms", isEqualTo: noOfBedroom)
+        }
+       
+        if noOfParking ?? 0 > 0 {
+            fireStoreCollection = fireStoreCollection
+            .whereField("noOfParkings", isEqualTo: noOfParking)
+
+        }
+        
+        if noOfBathRoom ?? 0 > 0 {
+            fireStoreCollection = fireStoreCollection
+                .whereField("noOfBathrooms", isEqualTo: noOfBathRoom)
+        }
+           
+        fireStoreCollection
             .getDocuments { query, error in
-            print(country, state)
             guard let query = query else {
                 print("Error retreving cities: \(error.debugDescription)")
                 return
             }
-            
-//            lastDocument = query.documents.last
-            if let document = query.documents.first(where: { $0.data()["state"] as? String == state }) {
-                print(document)
-            }
+                
             for (_, document) in query.documents.enumerated() {
                 
                 let data = document.data()
@@ -217,8 +233,6 @@ struct FireStoreDatabaseHelper {
                     streetNo: locationStreetNo ?? "",
                     suburb: locationSuburb ?? ""
                 )
-                if let price {
-                    if (price) > min && (price) < max {
                         let roomOffer = RoomOffer(
                             id: id ?? "",
                             title: title ?? "",
@@ -238,9 +252,7 @@ struct FireStoreDatabaseHelper {
                             favorites: favorites ?? []
                         )
                     
-                            roomOffers.append(roomOffer)
-                }
-                }
+                roomOffers.append(roomOffer)
 
             }
             completion((roomOffers))
