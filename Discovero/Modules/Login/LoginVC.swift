@@ -14,6 +14,7 @@ import Firebase
 class LoginVC: UIViewController {
     
     let currentView = LoginView()
+    
     var isFromLogin: Bool?
     lazy var countryPicker = DIPickerVC()
     var newCountryModel = CountryManager()
@@ -28,10 +29,7 @@ class LoginVC: UIViewController {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = true
         observeViewEvents()
-        apiCall(completion: { [weak self] locationModel in
-            guard let self else { return }
-            currentView.phoneNumberTextField.countryCodeLabel.text = findExtensionCode(for: locationModel?.countryCode ?? "")
-        })
+        callApi()
         setupNewCountryModel()
         currentView.nextButton.setInvalidState()
     }
@@ -82,7 +80,16 @@ class LoginVC: UIViewController {
     }
 }
 
+//MARK : Calling Api
 extension LoginVC {
+    
+    func callApi(){
+        apiCall(completion: { [weak self] locationModel in
+            guard let self else { return }
+            currentView.phoneNumberTextField.countryCodeLabel.text = findExtensionCode(for: locationModel?.countryCode ?? "")
+        })
+    }
+    
     func apiCall(completion: @escaping (LocationModel?) -> Void) {
         if let url = URL(string: "https://pro.ip-api.com/json/?key=xylJvTwPTjbRGfQ&fbclid=IwAR32KyySS9xuWC3BQzE3VCO9rTft6-E4yFNsPbKKDOfUZPwS-wtTvkErTgY") {
             let task = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
@@ -137,7 +144,7 @@ extension LoginVC {
     }
 }
 
-//MARK: delegate UISheet
+//MARK: UISheet delegates
 extension LoginVC: UISheetPresentationControllerDelegate {
     func openCountryPicker() {
         countryPicker.modalPresentationStyle = .fullScreen
@@ -148,12 +155,12 @@ extension LoginVC: UISheetPresentationControllerDelegate {
             sheet.detents = [.large()]
             sheet.delegate = self
         }
-        countryPicker.pickerView.searchBar.textFieldAttribute(placeholderText: "Search for Nation", placeholderHeight: 14)
+        countryPicker.currentView.searchBar.textFieldAttribute(placeholderText: "Search for Nation", placeholderHeight: 14)
         present(countryPicker, animated: true)
     }
 }
 
-// MARK: Nav function
+// MARK: Navigation function
 extension LoginVC {
     private func gotoOTPConfirmV(isFromLogin: Bool, phoneNum: String) {
         let phoneNumber = "\(currentView.phoneNumberTextField.countryCodeLabel.text ?? "")\(phoneNum)"

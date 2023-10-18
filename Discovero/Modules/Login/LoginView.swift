@@ -9,6 +9,7 @@ import UIKit
 import MBProgressHUD
 
 class LoginView: UIView {
+    
     var onNextClick: ((String) -> Void)?
     
     let view = UIView()

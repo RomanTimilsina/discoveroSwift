@@ -11,11 +11,11 @@ class DIPickerView: UIView {
     
     var onCloseClick: (() -> Void)?
     var onNextClick: (() -> Void)?
-    var onSarchEdit: ((String) -> Void)?
+    var onSearchEdit: ((String) -> Void)?
     
     let table = UITableView()
     let pickerHeaderView = UIView()
-    let crossIcon = UIImageView(image: UIImage(named: "back"),contentMode: .scaleAspectFit, clipsToBounds: true)
+    let backButton = UIImageView(image: UIImage(named: "back"),contentMode: .scaleAspectFit, clipsToBounds: true)
     let chooseNationalityLabel = UILabel(text: "Choose your nationality", font: OpenSans.semiBold, size: 16)
     let nextButton = UIButton(title: "Next", titleColor: Color.appWhite, font: OpenSans.bold, fontSize: 14)
     let lineView = UIView()
@@ -38,10 +38,10 @@ class DIPickerView: UIView {
         addSubview(pickerHeaderView)
         pickerHeaderView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 12, left: 12, bottom: 0, right: 14))
         
-        pickerHeaderView.addSubview(crossIcon)
-        crossIcon.anchor(top: pickerHeaderView.topAnchor, leading: pickerHeaderView.leadingAnchor, bottom: pickerHeaderView.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-        crossIcon.constraintHeight(constant: 30)
-        crossIcon.centerYInSuperview()
+        pickerHeaderView.addSubview(backButton)
+        backButton.anchor(top: pickerHeaderView.topAnchor, leading: pickerHeaderView.leadingAnchor, bottom: pickerHeaderView.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        backButton.constraintHeight(constant: 30)
+        backButton.centerYInSuperview()
         
         pickerHeaderView.addSubview(chooseNationalityLabel)
         chooseNationalityLabel.anchor(top: nil, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
@@ -66,18 +66,19 @@ class DIPickerView: UIView {
         table.backgroundColor = Color.gray900
     }
     
-    let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
-        debugPrint("OK button tapped")
-    }
-    
     private func observeEvents() {
-        let closeTextTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleClose))
-        crossIcon.addGestureRecognizer(closeTextTapGesture)
-        crossIcon.isUserInteractionEnabled = true
+        let backButtonTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleClose))
+        backButton.addGestureRecognizer(backButtonTapGesture)
+        backButton.isUserInteractionEnabled = true
         
         searchBar.onSearchEdit = { [weak self] searchText in
-            self?.onSarchEdit?(searchText)
+            self?.onSearchEdit?(searchText)
         }
+
+        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            debugPrint("OK button tapped")
+        }
+        
         alert.addAction(okAction)
     }
     

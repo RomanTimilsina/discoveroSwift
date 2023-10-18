@@ -9,71 +9,70 @@ import UIKit
 
 class DIPickerVC: UIViewController {
     
-    let pickerView = DIPickerView()
-    var countryModel = [NewCountryModel]()
+    let currentView = DIPickerView()
+    
     var onClosePicker: (() -> Void)?
     var onPicked: ((NewCountryModel) -> Void)?
     var sendLanguageData: (([LanguageModel]) -> Void)?
+    var sendSavedData: (([String]) -> Void)?
     
-    var searchModel = [NewCountryModel]()
+    var countryModel = [NewCountryModel]()
+    var searchCountryModel = [NewCountryModel]()
     var languageModel = [LanguageModel]()
     var searchLanguageModel = [LanguageModel]()
-    var savedData = [String]()
+    var savedLanguageData = [String]()
+    // MARk: used for registrationflow
     var isRegistration: Bool = false
     lazy var languageArray: [String] = []
-    lazy var countSelected = languageArray.count
-    var sendSavedData: (([String]) -> Void)?
-    var firestore = FireStoreDatabaseHelper()
+    lazy var countLanguageSelected = languageArray.count
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTable()
-        observeEvents()
-        searchModel = countryModel
+        observeViewEvents()
         fetchDataFromDefault()
-        savedData = languageArray
+        savedLanguageData = languageArray
         searchLanguageModel = languageModel
+        searchCountryModel = countryModel
+        
     }
     
     override func loadView() {
         super.loadView()
-        view = pickerView
+        view = currentView
     }
     
-    func observeEvents() {
-        pickerView.onCloseClick = { [weak self] in
+    func observeViewEvents() {
+        currentView.onCloseClick = { [weak self] in
             guard let self = self else { return }
             onClosePicker?()
         }
         
-
         //MARK: - need to work on language search
-        pickerView.onSarchEdit = { [weak self] searchText in
+        currentView.onSearchEdit = { [weak self] searchText in
             guard let self else { return }
             if isRegistration  {
                 if searchText.isEmpty {
                     searchLanguageModel = languageModel
                 } else {
-                    searchLanguageModel = languageModel.filter({ $0.language.lowercased().contains(searchText.lowercased())
-                    })
+                    searchLanguageModel = languageModel.filter({ $0.language.lowercased().contains(searchText.lowercased())})
                 }
             } else {
                 if searchText.isEmpty {
-                    searchModel = countryModel
+                    searchCountryModel = countryModel
                 } else {
-                    searchModel = countryModel.filter({ item in
-                        return item.name.lowercased().contains(searchText.lowercased())
-                    })
+                    searchCountryModel = countryModel.filter({ item in
+                        return item.name.lowercased().contains(searchText.lowercased())})
                 }
             }
-            pickerView.table.reloadData()
+            currentView.table.reloadData()
         }
     }
     
     func setupTable() {
-        pickerView.table.register(DIPickerCell.self, forCellReuseIdentifier: DIPickerCell.identifier)
-        pickerView.table.dataSource = self
-        pickerView.table.delegate = self
+        currentView.table.register(DIPickerCell.self, forCellReuseIdentifier: DIPickerCell.identifier)
+        currentView.table.dataSource = self
+        currentView.table.delegate = self
     }
 }
 
@@ -83,14 +82,14 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
         if isRegistration  {
             return searchLanguageModel.count
         } else {
-            return searchModel.count
+            return searchLanguageModel.count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: DIPickerCell.identifier, for: indexPath) as! DIPickerCell
         if !isRegistration {
-            let data = searchModel[indexPath.row]
+            let data = searchCountryModel[indexPath.row]
             cell.configureData(data: data)
             cell.selectionStyle = .none
             return cell
@@ -100,27 +99,27 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
             cell.passCheck = { [weak self] isChecked in
                 guard let self = self else { return }
                 if isChecked {
-                    if countSelected < 3 {
-                        countSelected += 1
+                    if countLanguageSelected < 3 {
+                        countLanguageSelected += 1
                         cell.countryImage.image = UIImage(systemName: "checkmark.square")
                         searchLanguageModel[indexPath.row].isSelected = true
-                        savedData.append(searchLanguageModel[indexPath.row].language)
+                        savedLanguageData.append(searchLanguageModel[indexPath.row].language)
                     } else {
                         cell.isChecked = !cell.isChecked
-                        present(pickerView.alert, animated: true, completion: nil)
+                        present(currentView.alert, animated: true, completion: nil)
                         
                         cell.countryImage.image = UIImage(systemName: "square")
                         searchLanguageModel[indexPath.row].isSelected = false
-
-                        savedData.removeAll {
+                        
+                        savedLanguageData.removeAll {
                             $0 == self.searchLanguageModel[indexPath.row].language
                         }
                     }
                 } else {
-                    countSelected -= 1
+                    countLanguageSelected -= 1
                     searchLanguageModel[indexPath.row].isSelected = false
-
-                    savedData.removeAll {
+                    
+                    savedLanguageData.removeAll {
                         $0 == self.searchLanguageModel[indexPath.row].language
                     }
                     cell.countryImage.image = UIImage(systemName: "square")
@@ -132,7 +131,7 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
                     }
                 }
                 sendLanguageData?(languageModel)
-                sendSavedData?(savedData)
+                sendSavedData?(savedLanguageData)
             }
             cell.configureLanguageData(data: data)
             cell.selectionStyle = .none
@@ -146,24 +145,25 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !isRegistration {
-            let data = searchModel[indexPath.row]
+            let data = searchCountryModel[indexPath.row]
             onPicked?(data)
             debugPrint(data)
             dismiss(animated: true)
         } else {
-//            let data = searchLanguageModel[indexPath.row]
+            //            let data = searchLanguageModel[indexPath.row]
         }
     }
 }
- 
+
 //MARK: Fetch Data Functions
 private extension DIPickerVC {
     func fetchDataFromDefault() {
-        firestore.getUserDataFromDefaults { [weak self] userData in
-            guard let self, let userData else { return }
-            for (language) in userData.languages {
-                languageArray.append(language.replacingOccurrences(of: " ", with: ""))
+        FireStoreDatabaseHelper()
+            .getUserDataFromDefaults { [weak self] userData in
+                guard let self, let userData else { return }
+                for (language) in userData.languages {
+                    languageArray.append(language.replacingOccurrences(of: " ", with: ""))
+                }
             }
-        }
     }
 }

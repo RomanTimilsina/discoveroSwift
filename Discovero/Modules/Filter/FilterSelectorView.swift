@@ -27,15 +27,6 @@ class FilterSelectorView: UIView{
     lazy var buttonStack = HorizontalStackView(arrangedSubViews: [resetButton, searchButton], spacing: 12, distribution: .fillEqually)
     let headerView = DIHeaderView(title: "", hasBack: true, hasBGColor: true)
     
-    let button: UIButton = {
-        let button = UIButton()
-        button.frame = CGRect(x: 100, y: 100, width: 200, height: 40)
-        button.setTitle("Show Menu", for: .normal)
-        button.backgroundColor = UIColor.systemBlue
-        button.setTitleColor(.white, for: .normal)
-        return button
-    }()
-    
     let rangeSlider: MultiSlider = {
         let rangeSlider = MultiSlider()
         rangeSlider.minimumValue = 0
@@ -54,7 +45,7 @@ class FilterSelectorView: UIView{
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
+        setupView()
         resetButton.backgroundColor = Color.gray700
         resetButton.setTitleColor(Color.appWhite, for: .normal)
         backgroundColor = Color.appBlack
@@ -65,7 +56,7 @@ class FilterSelectorView: UIView{
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setup() {
+    func setupView() {
         addSubview(headerView)
         headerView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         headerView.constraintHeight(constant: 40)
@@ -111,7 +102,6 @@ class FilterSelectorView: UIView{
     }
     
     @objc func handleMultiSliderValueChanged() {
-        
         let leftValue  = rangeSlider.value[0]
         let rightValue = rangeSlider.value[1]
         let leftknob   = round(leftValue * 100) / 100
@@ -120,7 +110,6 @@ class FilterSelectorView: UIView{
         priceRange.text = "$\(leftknob) to $\(rightKnob)"
         minCost = "\(leftknob)"
         maxCost = "\(rightKnob)"
-        
     }
     
     func observeEvents() {
@@ -130,23 +119,7 @@ class FilterSelectorView: UIView{
         propertyTypeLabel.propertyCoverButton.menu = addInfoMenu()
         
         searchButton.addTarget(self, action: #selector(handleSearch), for: .touchUpInside)
-        
         resetButton.addTarget(self, action: #selector(resetButtonTapped), for: .touchUpInside)
-    }
-    
-    // Mark: Popup cell with property is tapped and objc functions
-    private func addInfoMenu() -> UIMenu {
-        let Both = UIAction(title: "Any", handler: { _ in
-            self.propertyTypeLabel.subTitle.text = "Any"
-        })
-        let Apartment = UIAction(title: "Apartment", handler: { _ in
-            self.propertyTypeLabel.subTitle.text = "Apartment"
-        })
-        let House = UIAction(title: "House", handler: { _ in
-            self.propertyTypeLabel.subTitle.text = "House"
-        })
-        let infoMenu = UIMenu(title: "", children: [Both, Apartment, House])
-        return infoMenu
     }
     
     @objc func languageTapped() {
@@ -159,5 +132,23 @@ class FilterSelectorView: UIView{
     
     @objc func resetButtonTapped() {
         onResetClick?()
+    }
+}
+
+// Mark: Popup cell when propertyTypeLabel is tapped
+private extension FilterSelectorView {
+    
+    private func addInfoMenu() -> UIMenu {
+        let Both = UIAction(title: "Any", handler: { _ in
+            self.propertyTypeLabel.subTitle.text = "Any"
+        })
+        let Apartment = UIAction(title: "Apartment", handler: { _ in
+            self.propertyTypeLabel.subTitle.text = "Apartment"
+        })
+        let House = UIAction(title: "House", handler: { _ in
+            self.propertyTypeLabel.subTitle.text = "House"
+        })
+        let infoMenu = UIMenu(title: "", children: [Both, Apartment, House])
+        return infoMenu
     }
 }

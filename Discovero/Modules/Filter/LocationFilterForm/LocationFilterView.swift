@@ -9,10 +9,9 @@ import UIKit
 
 class LocationFilterView: UIView {
     
-    var countriesTap: (() -> Void)?
-    var stateTap: (() -> Void)?
-    var stateList: [String] = []
-    var handleSave: ((String, String, String) -> Void)?
+    var onCountriesTap: (() -> Void)?
+    var onStateTap: (() -> Void)?
+    var onSaveClick: ((String, String, String) -> Void)?
     
     let headerView = DIHeaderView(title: " Location Detail")
     let countryLabel = UILabel(text: "Country ", color: Color.appWhite, font:  OpenSans.semiBold, size: 15)
@@ -46,7 +45,7 @@ class LocationFilterView: UIView {
     let saveButton = DIButton(buttonTitle: "Save")
     let lineview = UIView(color: Color.gray500)
     let lineview2 = UIView(color: Color.gray500)
-    let lineview3 = UIView(color: Color.gray400)
+    let lineview3 = UIView(color: Color.gray500)
     let countriesTFCoverButton = UIButton(title: "", titleColor: .clear, font: OpenSans.regular, fontSize: 1)
     let stateTFCoverButton = UIButton(title: "", titleColor: .clear, font: OpenSans.regular, fontSize: 1)
     let alert = UIAlertController(title: "Alert Title", message: "Can't select more than 3 languages", preferredStyle: .alert)
@@ -54,17 +53,16 @@ class LocationFilterView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = Color.appBlack
-        debugPrint(stateList)
-        setupFilter()
+        setupView()
         textFieldAttribute(placeholderText: "Tap Here", placeholderHeight: 15)
-        observeViewEvents()
+        observeEvents()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupFilter(){
+    func setupView(){
         addSubview(headerView)
         headerView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor , padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         headerView.constraintHeight(constant: 40)
@@ -76,6 +74,7 @@ class LocationFilterView: UIView {
         addSubview(countriesTextField)
         countriesTextField.anchor(top: countryLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 10, bottom: 0, right: 10))
         
+        //Need to work on it
         addSubview(countriesTFCoverButton)
         countriesTFCoverButton.anchor(top: countriesTextField.topAnchor, leading: countriesTextField.leadingAnchor, bottom: countriesTextField.bottomAnchor, trailing: countriesTextField.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         
@@ -112,17 +111,17 @@ class LocationFilterView: UIView {
         saveButton.anchor(top: nil, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 12, right: 12))
     }
     
-    let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
-        // Handle OK button tap here
-        print("OK button tapped")
-    }
-    
-    func observeViewEvents() {
-        countriesTFCoverButton.addTarget(self, action: #selector(countriesClick), for: .touchUpInside)
+    func observeEvents() {
+        countriesTFCoverButton.addTarget(self, action: #selector(handleCountriesClick), for: .touchUpInside)
         
-        stateTFCoverButton.addTarget(self, action: #selector(stateClick), for: .touchUpInside)
+        stateTFCoverButton.addTarget(self, action: #selector(handleStateClick), for: .touchUpInside)
         
-        saveButton.addTarget(self, action: #selector(saveTapped), for: .touchUpInside)
+        saveButton.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
+        
+        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            // Handle OK button tap here
+            print("OK button tapped")
+        }
         
         alert.addAction(okAction)
         
@@ -130,19 +129,22 @@ class LocationFilterView: UIView {
         stateTFCoverButton.showsMenuAsPrimaryAction = true
     }
     
-    @objc func countriesClick() {
-        countriesTap?()
+    @objc func handleCountriesClick() {
+        onCountriesTap?()
     }
     
-    @objc func stateClick() {
-        stateTap?()
+    @objc func handleStateClick() {
+        onStateTap?()
     }
     
-    @objc func saveTapped() {
-        handleSave?(countriesTextField.text ?? "", statesTextField.text ?? "", suburbTextField.text ?? "")
+    @objc func handleSave() {
+        onSaveClick?(countriesTextField.text ?? "", statesTextField.text ?? "", suburbTextField.text ?? "")
     }
+}
+
+//MARK: Placeholder attribute set
+private extension LocationFilterView {
     
-    //MARK: Placeholder attribute set
     func textFieldAttribute(placeholderText: String, placeholderHeight: CGFloat) {
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: Color.placeholderGray ?? .gray,
@@ -154,5 +156,5 @@ class LocationFilterView: UIView {
             attributes: attributes
         )
         suburbTextField.attributedPlaceholder = attributedPlaceholder
-    }    
+    }
 }

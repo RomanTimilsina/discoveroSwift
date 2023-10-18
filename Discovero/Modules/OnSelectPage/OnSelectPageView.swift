@@ -85,8 +85,8 @@ class OnSelectPageView: UIView {
     
     func setup() {
         addSubview(headerView)
-        headerView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 20, left: 5, bottom: 0, right: 0))
-        headerView.constraintHeight(constant: 50)
+        headerView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        headerView.constraintHeight(constant: 48)
         
         gapView.constraintHeight(constant: 20)
         

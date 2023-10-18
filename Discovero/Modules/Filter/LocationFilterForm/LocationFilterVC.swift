@@ -9,10 +9,11 @@ import UIKit
 
 class LocationFilterVC: UIViewController {
     
+    var currentView = LocationFilterView()
+    
     var onLocationStateChange: ((String, String, String) -> Void)?
     
     lazy var countryPicker = DIPickerVC()
-    var currentView = LocationFilterView()
     var userData: UserData?
     var firestore = FireStoreDatabaseHelper()
     var countryManager = CountryManager()
@@ -20,20 +21,18 @@ class LocationFilterVC: UIViewController {
     var countryList: [CountryStateModel] = []
     var selectedCountyList: [String] = []
     var selectedCountryName = ""
-    var run = true
     let countries: [CountryModel] = Bundle.main.decode(from: "Countries.json")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         countriesAndState()
+        observeViewEvents()
         
         currentView.suburbTextField.delegate = self
         currentView.countriesTextField.text = userData?.country
         currentView.statesTextField.text = userData?.locationDetail.state
         
         countryPicker.countryModel = countryManager.getData()
-        
-        observeViewEvents()
     }
     
     func countriesAndState() {
@@ -42,7 +41,6 @@ class LocationFilterVC: UIViewController {
             for countryAndStates in countriesAndStates {
                 debugPrint(countryAndStates.name)
                 
-                
                 for (index,_) in countries.enumerated() {
                     if countries[index].name == countryAndStates.name {
                         countryList.append(countryAndStates)
@@ -50,10 +48,6 @@ class LocationFilterVC: UIViewController {
                         let name = countries[index].code.lowercased()
                         if UIImage(named: name) != nil {
                             
-                            if selectedCountryName == countryAndStates.name {
-                                //                                selectedCountryName = userData?.country ?? ""
-                                //                                currentView.stateTFCoverButton.menu = addInfoMenu(selectedCountryName)
-                            }
                             loadMenu()
                             newCountryModel.setData(name: countries[index].name, dialCode: countries[index].dialCode, code: countries[index].code, imageName: countries[index].code)
                         }
@@ -67,7 +61,6 @@ class LocationFilterVC: UIViewController {
         if selectedCountryName == "" {
             selectedCountryName = userData?.country ?? ""
             currentView.stateTFCoverButton.menu = addStateMenu(userData?.country ?? "")
-            //            run = false
         }
     }
     
@@ -77,9 +70,8 @@ class LocationFilterVC: UIViewController {
     }
     
     func observeViewEvents() {
-        currentView.countriesTap = { [weak self] in
+        currentView.onCountriesTap = { [weak self] in
             guard let self else { return }
-            
             openCountryPicker()
         }
         
@@ -99,9 +91,7 @@ class LocationFilterVC: UIViewController {
             selectedCountryName = model.name
             countriesAndState()
             currentView.countriesTextField.text = model.name
-            
             currentView.statesTextField.text = ""
-            
             currentView.stateTFCoverButton.menu = addStateMenu(selectedCountryName)
         }
         
@@ -110,13 +100,13 @@ class LocationFilterVC: UIViewController {
             navigationController?.popViewController(animated: true)
         }
         
-        currentView.handleSave = { [weak self] country, state, suburb in
+        currentView.onSaveClick = { [weak self] country, state, suburb in
             guard let self else { return }
             onLocationStateChange?(country, state, suburb)
             navigationController?.popViewController(animated: true)
         }
         
-        currentView.stateTap = { [weak self] in
+        currentView.onStateTap = { [weak self] in
             guard let self else { return }
             
             loadMenu()
@@ -175,7 +165,7 @@ extension LocationFilterVC: UISheetPresentationControllerDelegate {
             sheet.detents = [.large()]
             sheet.delegate = self
         }
-        countryPicker.pickerView.searchBar.textFieldAttribute(placeholderText: "Search for Nation", placeholderHeight: 14)
+        countryPicker.currentView.searchBar.textFieldAttribute(placeholderText: "Search for Nation", placeholderHeight: 14)
         present(countryPicker, animated: true)
     }
 

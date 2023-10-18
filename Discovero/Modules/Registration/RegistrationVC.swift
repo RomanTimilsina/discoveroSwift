@@ -188,7 +188,7 @@ extension RegistrationVC: UISheetPresentationControllerDelegate {
         }
         
         countryPicker.isRegistration = true
-        countryPicker.pickerView.searchBar.textFieldAttribute(placeholderText: "Search for Language", placeholderHeight: 14)
+        countryPicker.currentView.searchBar.textFieldAttribute(placeholderText: "Search for Language", placeholderHeight: 14)
         present(countryPicker, animated: true)
         
         //        currentView.languagePickerTextField.textField.placeholder = ""

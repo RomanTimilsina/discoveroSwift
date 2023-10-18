@@ -10,22 +10,24 @@ import MultiSlider
 
 class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate {
     
-    var onSearchClick: ((String, String, String, String, [String], String, String, String, String, String) -> Void)?
-    var onReset: (() -> Void)?
-    
     let currentView = FilterSelectorView()
+    
+    var onSearchClick: ((String, String, String, String, [String], String, String, String, String, String) -> Void)?
+    var onResetClick: (() -> Void)?
+
     lazy var countryPicker = DIPickerVC()
     var languageManager = LanguageManager()
-    var selectedLanguage: String?
-    var selectedLanguages: [String] = []
     var firestore = FireStoreDatabaseHelper()
-    var languageArray: [String] = []
+    let locationFilter = LocationFilterVC()
     var usersData: UserData?
     var location = ""
-    let locationFilter = LocationFilterVC()
+    var selectedLanguages: [String] = []
+    var languageArray: [String] = []
+    var selectLanguages: [String] = []
+    var selectedLanguage: String?
     var country, state, suburb, noOfBedroom, noOfBathroom, noOfParking, property: String?
     var countryName, stateName, suburbName, propertyType, noOfBedrooms, noOfBathrooms, noOfParkings, minCost, maxCost: String?
-    var selectLanguages: [String] = []
+    
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +63,6 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
     
     func resetData() {
         setInitialData()
-        
         // bathroom, beddroom and parkings selector reset
         for selector in currentView.selectors {
             for view in selector.viewsArray {
@@ -69,7 +70,6 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
                     if view == selector.viewsArray[0] {
                         label.textColor = Color.appWhite
                         view.backgroundColor = Color.gray400
-                                        
                     } else {
                         label.textColor = Color.gray400
                         view.backgroundColor = Color.gray800
@@ -93,7 +93,7 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
         locationFilter.currentView.countriesTextField.text = usersData?.locationDetail.country ?? ""
         locationFilter.currentView.statesTextField.text = usersData?.locationDetail.state ?? ""
         locationFilter.currentView.suburbTextField.text = usersData?.locationDetail.suburb ?? ""
-        onReset?()
+        onResetClick?()
     }
     
     func setLanguageAndLocationLabel() {
@@ -189,7 +189,7 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
 
             self.propertyType = property
             if !selectedLanguages.isEmpty {
-                self.selectLanguages = countryPicker.savedData
+                self.selectLanguages = countryPicker.savedLanguageData
             }
             
             print(selectLanguages)
@@ -246,7 +246,7 @@ private extension FilterSelectorVC{
         }
         
         countryPicker.isRegistration = true
-        countryPicker.pickerView.searchBar.textFieldAttribute(placeholderText: "Search for Language", placeholderHeight: 14)
+        countryPicker.currentView.searchBar.textFieldAttribute(placeholderText: "Search for Language", placeholderHeight: 14)
         present(countryPicker, animated: true)
         
         countryPicker.sendSavedData = { [weak self] selectedLanguages in
