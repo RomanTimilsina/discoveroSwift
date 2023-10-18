@@ -379,8 +379,8 @@
 		049D3A902AAD8BFD004864E9 /* MyProfile */ = {
 			isa = PBXGroup;
 			children = (
-				049D3A912AAD8C1C004864E9 /* MyProfileView.swift */,
 				049D3A932AAD9379004864E9 /* MyProfileVC.swift */,
+				049D3A912AAD8C1C004864E9 /* MyProfileView.swift */,
 				049D3A952AAD9EE0004864E9 /* MyProfileCell.swift */,
 			);
 			path = MyProfile;

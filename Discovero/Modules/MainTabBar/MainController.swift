@@ -20,7 +20,24 @@ class HomeController: UITabBarController, UITabBarControllerDelegate {
         super.viewDidLoad()
         self.delegate = self
         navigationController?.navigationBar.isHidden = true
+        addDetialInTab()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        itemWidth = tabBar.bounds.width / CGFloat(tabBar.items?.count ?? 1)
         
+        lineView.frame = CGRect(x: xVal, y: tabBar.bounds.minY, width: itemWidth, height: 2)
+        lineView.backgroundColor = Color.primary
+        
+        tabBar.addSubview(lineView)
+    }
+}
+
+// MARK: Navigating, Setting Image and Title
+extension HomeController{
+    
+    func addDetialInTab(){
         let room = UINavigationController(rootViewController: RoomVC())
         let jobs = UINavigationController(rootViewController: RoomWantedVC())
         let sales = UINavigationController(rootViewController: RoomOfferVC())
@@ -47,24 +64,10 @@ class HomeController: UITabBarController, UITabBarControllerDelegate {
         
         setViewControllers([room, jobs, sales, announcements, profile], animated: true)
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        itemWidth = tabBar.bounds.width / CGFloat(tabBar.items?.count ?? 1)
-        
-//        if let tabBarController = tabBarController {
-//            let selectedIndex = tabBarController.selectedIndex
-//        }
-        
-        lineView.frame = CGRect(x: xVal, y: tabBar.bounds.minY, width: itemWidth, height: 2)
-        lineView.backgroundColor = Color.primary
-        
-        tabBar.addSubview(lineView)
-    }
 }
 
 extension HomeController {
+   
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         if let selectedIndex = tabBarController.viewControllers?.firstIndex(of: viewController) {
             xVal = CGFloat(Int(itemWidth) * selectedIndex-1)

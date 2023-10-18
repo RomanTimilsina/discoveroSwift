@@ -17,7 +17,6 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
     var languageManager = LanguageManager()
     var selectedLanguage: String?
     var selectedLanguages: [String] = []
-    lazy var languages = languageManager.getData()
     var firestore = FireStoreDatabaseHelper()
     var languageArray: [String] = []
     var usersData: UserData?
@@ -25,7 +24,7 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
     let locationFilter = LocationFilterVC()
     var country, state, suburb, noOfBedroom, noOfBathroom, noOfParking, property: String?
     var countryName, stateName, suburbName, propertyType, noOfBedrooms, noOfBathrooms, noOfParkings, minCost, maxCost: String?
-    var selLanguages: [String] = []
+    var selectLanguages: [String] = []
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,9 +53,8 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
         countryName = usersData.country
         stateName = usersData.locationDetail.state
         suburbName = usersData.locationDetail.suburb
-        selLanguages = usersData.languages
-        
-        print(selLanguages)
+        selectLanguages = usersData.languages
+        debugPrint(selectLanguages)
     }
     
     func resetData() {
@@ -64,16 +62,16 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
         
         for selector in currentView.selectors {
             for view in selector.viewsArray {
-                                if let label = view.subviews.first as? UILabel {
-                                    if view == selector.viewsArray[0] {
-                                        label.textColor = Color.appWhite
-                                        view.backgroundColor = Color.gray400
+               if let label = view.subviews.first as? UILabel {
+                    if view == selector.viewsArray[0] {
+                        label.textColor = Color.appWhite
+                        view.backgroundColor = Color.gray400
                                         
-                                    } else {
-                                        label.textColor = Color.gray400
-                                        view.backgroundColor = Color.gray800
-                                    }
-                                }
+                    } else {
+                        label.textColor = Color.gray400
+                        view.backgroundColor = Color.gray800
+                    }
+                }
             }
             noOfBedroom = "Any"
             noOfBathroom = "Any"
@@ -90,13 +88,13 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
         
         currentView.locationLabel.subTitle.text = "\(usersData?.country ?? ""), \(usersData?.locationDetail.state ?? "")"
         locationFilter.currentView.countriesTextField.text = usersData?.locationDetail.country ?? ""
-        locationFilter.currentView.statesTextField.text =          usersData?.locationDetail.state ?? ""
+        locationFilter.currentView.statesTextField.text = usersData?.locationDetail.state ?? ""
         locationFilter.currentView.suburbTextField.text = usersData?.locationDetail.suburb ?? ""
     }
     
     func setLanguageAndLocationLabel() {
         guard let usersData else { return }
-        print(usersData)
+        debugPrint(usersData)
 
         for (language) in usersData.languages {
             languageArray.append(language.replacingOccurrences(of: " ", with: ""))
@@ -109,9 +107,7 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
             if index != languageArray.count {
                 currentView.nationalityLabel.subTitle.text! += ", "
             }
-            
             //initial values
-
         }
         currentView.locationLabel.subTitle.text = location
     }
@@ -188,17 +184,17 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
                 self.noOfParkings = noOfParking
             }
             
-            print(selLanguages)
+            print(selectLanguages)
             self.propertyType = property
             if !selectedLanguages.isEmpty {
-                self.selLanguages = countryPicker.savedData
+                self.selectLanguages = countryPicker.savedData
             }
             
-            print(selLanguages)
+            print(selectLanguages)
             self.minCost = minCost
             self.maxCost = maxCost
 
-            handlePop?(countryName ?? "", stateName ?? "", suburbName ?? "", propertyType ?? "Any", selLanguages, noOfBedrooms ?? "Any", noOfBathrooms ?? "Any", noOfParkings ?? "Any", self.minCost ?? "0", self.maxCost ?? "5000")
+            handlePop?(countryName ?? "", stateName ?? "", suburbName ?? "", propertyType ?? "Any", selectLanguages, noOfBedrooms ?? "Any", noOfBathrooms ?? "Any", noOfParkings ?? "Any", self.minCost ?? "0", self.maxCost ?? "5000")
             navigationController?.popViewController(animated: true)
 
         }
@@ -220,10 +216,23 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
     }
     
     func gotoLocationFilterVC() {
-        
         locationFilter.userData = usersData
         navigationController?.pushViewController(locationFilter, animated: true)
     }
+    
+    func setLanguage() {
+        let country: [String] = [
+            "Afar", "Afrikaans", "Albanian", "Amharic", "Arabic", "Aramaic", "Armenian", "Assamese", "Azerbaijani", "Balochi", "Basque", "Belarusian", "Bengali", "Berber", "Bhojpuri", "Bodo", "Bosnian", "Breton", "Bulgarian", "Burmese", "Cantonese", "Catalan", "Cebuano", "Chechen", "Chewa", "Chinese", "Comorian", "Corsican", "Creole", "Croatian", "Czech", "Dakhini", "Danish", "Dogri", "Dutch", "Dzongkha", "English", "Esperanto", "Estonian", "Ewe", "Faroese", "Filipino", "Finnish", "French", "Frisian", "Fulani", "Galician", "Garhwali", "Georgian", "German", "Greek", "Guarani", "Gujarati", "Hakka", "Haryanvi", "Hausa", "Hawaiian", "Hebrew", "Hiligaynon", "Hindi", "Hmong", "Hokkien", "Hungarian", "Icelandic", "Igbo", "Indonesian", "Irish", "Italian", "Jamaican Patois", "Japanese", "Javanese", "Kannada", "Kashmiri", "Kazakh", "Khmer", "Kikongo", "Kinyarwanda", "Kirundi", "Kodava", "Konkani", "Korean", "Kumaoni", "Kurdish", "Kutchi", "Kyrgyz", "Lao", "Latin", "Latvian", "Lingala", "Lithuanian", "Luo", "Luxembourgish", "Macedonian", "Maithili", "Malagasy", "Malay", "Malayalam", "Maltese", "Mandarin", "Maori", "Marathi", "Marwari", "Mayan", "Meitei", "Mongolian", "Montenegrin", "Nahuatl", "Nepali", "Norwegian", "Occitan", "Oriya", "Oromo", "Pahari", "Papiamento", "Pashto", "Persian", "Polish", "Portuguese", "Punjabi", "Quechua", "Rajasthani", "Romanian", "Romansh", "Russian", "Sami", "Sankethi", "Sanskrit", "Santali", "Saurashtra", "Sepedi", "Serbian", "Sesotho", "Setswana", "Sign Language", "Sindhi", "Sinhala", "Slovak", "Slovenian", "Somali", "Spanish", "Swahili", "Swati", "Swedish", "Tagalog", "Taiwanese", "Tajik", "Tamil", "Telugu", "Teochew", "Thai", "Tibetan", "Tigrinya", "Tsonga", "Tulu", "Turkish", "Ukrainian", "Urdu", "Venda", "Vietnamese", "Welsh", "Yiddish", "Yoruba", "Zulu"
+        ]
+        
+        for language in country {
+            languageManager.setData(language: language, isSelected: languageArray.contains(language))
+        }
+    }
+}
+
+// MARK: Calling DIPicker as countryPicker to display the selectedLanguages on Nationality
+private extension FilterSelectorVC{
     
     func openCountryPicker() {
         countryPicker.modalPresentationStyle = .fullScreen
@@ -256,16 +265,5 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
             }
         }
     }
-    
-    func setLanguage() {
-        let country: [String] = [
-            "Afar", "Afrikaans", "Albanian", "Amharic", "Arabic", "Aramaic", "Armenian", "Assamese", "Azerbaijani", "Balochi", "Basque", "Belarusian", "Bengali", "Berber", "Bhojpuri", "Bodo", "Bosnian", "Breton", "Bulgarian", "Burmese", "Cantonese", "Catalan", "Cebuano", "Chechen", "Chewa", "Chinese", "Comorian", "Corsican", "Creole", "Croatian", "Czech", "Dakhini", "Danish", "Dogri", "Dutch", "Dzongkha", "English", "Esperanto", "Estonian", "Ewe", "Faroese", "Filipino", "Finnish", "French", "Frisian", "Fulani", "Galician", "Garhwali", "Georgian", "German", "Greek", "Guarani", "Gujarati", "Hakka", "Haryanvi", "Hausa", "Hawaiian", "Hebrew", "Hiligaynon", "Hindi", "Hmong", "Hokkien", "Hungarian", "Icelandic", "Igbo", "Indonesian", "Irish", "Italian", "Jamaican Patois", "Japanese", "Javanese", "Kannada", "Kashmiri", "Kazakh", "Khmer", "Kikongo", "Kinyarwanda", "Kirundi", "Kodava", "Konkani", "Korean", "Kumaoni", "Kurdish", "Kutchi", "Kyrgyz", "Lao", "Latin", "Latvian", "Lingala", "Lithuanian", "Luo", "Luxembourgish", "Macedonian", "Maithili", "Malagasy", "Malay", "Malayalam", "Maltese", "Mandarin", "Maori", "Marathi", "Marwari", "Mayan", "Meitei", "Mongolian", "Montenegrin", "Nahuatl", "Nepali", "Norwegian", "Occitan", "Oriya", "Oromo", "Pahari", "Papiamento", "Pashto", "Persian", "Polish", "Portuguese", "Punjabi", "Quechua", "Rajasthani", "Romanian", "Romansh", "Russian", "Sami", "Sankethi", "Sanskrit", "Santali", "Saurashtra", "Sepedi", "Serbian", "Sesotho", "Setswana", "Sign Language", "Sindhi", "Sinhala", "Slovak", "Slovenian", "Somali", "Spanish", "Swahili", "Swati", "Swedish", "Tagalog", "Taiwanese", "Tajik", "Tamil", "Telugu", "Teochew", "Thai", "Tibetan", "Tigrinya", "Tsonga", "Tulu", "Turkish", "Ukrainian", "Urdu", "Venda", "Vietnamese", "Welsh", "Yiddish", "Yoruba", "Zulu"
-        ]
-        
-        for language in country {
-            languageManager.setData(language: language, isSelected: languageArray.contains(language))
-        }
-    }
 }
-
 

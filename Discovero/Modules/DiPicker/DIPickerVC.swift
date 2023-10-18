@@ -22,7 +22,6 @@ class DIPickerVC: UIViewController {
     var isRegistration: Bool = false
     lazy var languageArray: [String] = []
     lazy var countSelected = languageArray.count
-    var searchLabel: String?
     var sendSavedData: (([String]) -> Void)?
     var firestore = FireStoreDatabaseHelper()
     
@@ -31,13 +30,7 @@ class DIPickerVC: UIViewController {
         setupTable()
         observeEvents()
         searchModel = countryModel
-        
-        firestore.getUserDataFromDefaults { [weak self] userData in
-            guard let self, let userData else { return }
-            for (language) in userData.languages {
-                languageArray.append(language.replacingOccurrences(of: " ", with: ""))
-            }
-        }
+        fetchDataFromDefault()
         savedData = languageArray
         searchLanguageModel = languageModel
     }
@@ -53,7 +46,7 @@ class DIPickerVC: UIViewController {
             closePicker?()
         }
         
-        //MARK: - need to work on language filter
+        //MARK: - need to work on language search
         pickerView.onSarchEdit = { [weak self] searchText in
             guard let self else { return }
             if isRegistration  {
@@ -83,6 +76,7 @@ class DIPickerVC: UIViewController {
     }
 }
 
+//MARK: Table Delegate
 extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isRegistration  {
@@ -101,7 +95,6 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
             return cell
         } else {
             let data = searchLanguageModel[indexPath.row]
-            
             cell.isSelected = data.isSelected!
             cell.passCheck = { [weak self] isChecked in
                 guard let self = self else { return }
@@ -110,7 +103,6 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
                         countSelected += 1
                         cell.countryImage.image = UIImage(systemName: "checkmark.square")
                         searchLanguageModel[indexPath.row].isSelected = true
-
                         savedData.append(searchLanguageModel[indexPath.row].language)
                     } else {
                         cell.isChecked = !cell.isChecked
@@ -138,11 +130,9 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
                         languageModel[index] = matchingLanguage
                     }
                 }
-                
                 sendLanguageData?(languageModel)
                 sendSavedData?(savedData)
             }
-            
             cell.configureLanguageData(data: data)
             cell.selectionStyle = .none
             return cell
@@ -160,6 +150,18 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
             dismiss(animated: true)
         } else {
 //            let data = searchLanguageModel[indexPath.row]
+        }
+    }
+}
+ 
+//MARK: Fetch Data Functions
+private extension DIPickerVC {
+    func fetchDataFromDefault() {
+        firestore.getUserDataFromDefaults { [weak self] userData in
+            guard let self, let userData else { return }
+            for (language) in userData.languages {
+                languageArray.append(language.replacingOccurrences(of: " ", with: ""))
+            }
         }
     }
 }

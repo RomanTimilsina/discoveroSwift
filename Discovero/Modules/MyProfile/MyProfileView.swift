@@ -13,7 +13,6 @@ class MyProfileView: UIView {
     let view = UIView()
     let scrollView = UIScrollView()
     var profileArray = [DICustomProfileView]()
-    
     let noAvatarImage = UIImageView(image: UIImage(named: "noAvatarImage"),contentMode: .scaleAspectFit, clipsToBounds: true)
     let nameView = DICustomProfileView(titleText: "Full Name", text: "Ankit Chaudhary", show: true)
     let emailView = DICustomProfileView(titleText: "Email Address", text: "Tap here to add email", show: true, isGrey: true)
@@ -50,7 +49,7 @@ class MyProfileView: UIView {
         
         addSubview(header)
         header.anchor(top: view.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-        //        header.constraintHeight(constant: 40)
+        header.constraintHeight(constant: 40)
         
         addSubview(scrollView)
         scrollView.anchor(top: header.bottomAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 30, right: 0))
@@ -65,6 +64,10 @@ class MyProfileView: UIView {
         
         line.constraintHeight(constant: 1)
     }
+}
+
+// MARK: Append Data
+private extension MyProfileView{
     
     func profileArrayFunction() {
         profileArray.append(nameView)

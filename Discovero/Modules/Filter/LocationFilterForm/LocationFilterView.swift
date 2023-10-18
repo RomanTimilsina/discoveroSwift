@@ -54,11 +54,10 @@ class LocationFilterView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = Color.appBlack
-        print(stateList)
+        debugPrint(stateList)
         setupFilter()
         textFieldAttribute(placeholderText: "Tap Here", placeholderHeight: 15)
         observeViewEvents()
-
     }
     
     required init?(coder: NSCoder) {
@@ -89,7 +88,6 @@ class LocationFilterView: UIView {
         
         addSubview(statesTextField)
         statesTextField.anchor(top: stateLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 10, bottom: 0, right: 10))
-        //        constraintHeight(constant: 50)
         
         addSubview(stateTFCoverButton)
         stateTFCoverButton.anchor(top: statesTextField.topAnchor, leading: statesTextField.leadingAnchor, bottom: statesTextField.bottomAnchor, trailing: statesTextField.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
@@ -130,10 +128,7 @@ class LocationFilterView: UIView {
         
         stateTFCoverButton.isEnabled = true
         stateTFCoverButton.showsMenuAsPrimaryAction = true
-//        stateTFCoverButton.menu = addInfoMenu()
     }
-    
-
     
     @objc func countriesClick() {
         countriesTap?()
@@ -159,7 +154,5 @@ class LocationFilterView: UIView {
             attributes: attributes
         )
         suburbTextField.attributedPlaceholder = attributedPlaceholder
-    }
-    
-    
+    }    
 }

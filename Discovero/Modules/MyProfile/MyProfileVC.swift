@@ -9,7 +9,6 @@ import UIKit
 
 class MyProfileVC: UIViewController {
     
-    let profileData = ProfileManager()
     let profileView = MyProfileView()
     let value1 = ["name", "email", "phone number", "address",  "nationality", "gender",]
     let value2 = ["Your name", "Your email", "Your phone number", "Your address", "Your nationality", "Your gender" ]

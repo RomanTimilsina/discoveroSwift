@@ -70,7 +70,7 @@ class LoginView: UIView {
 }
 
 //MARK: for space between phone number
-extension LoginView {
+private extension LoginView {
     @objc func textChanged(_ textField: UITextField) {
         if let enteredText = textField.text {
             let unformattedText = enteredText.replacingOccurrences(of: " ", with: "")

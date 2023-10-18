@@ -29,6 +29,10 @@ class MyProfileCell: UITableViewCell {
         addSubview(stack)
         stack.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
     }
+}
+
+// MARK: Show Hide emptyView Condtion
+extension MyProfileCell{
     
     func configureData(data: ProfileModel){
         emptyView.isHidden = true

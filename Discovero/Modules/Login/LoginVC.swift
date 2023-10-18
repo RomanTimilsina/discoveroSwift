@@ -28,29 +28,9 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = true
         observeViewEvents()
-        apiCall(completion: { [weak self] locationModel in
-            guard let self else { return }
-            currentView.phoneNumberTextField.countryCodeLabel.text = findExtensionCode(for: locationModel?.countryCode ?? "")
-        })
+        callApi()
         setupNewCountryModel()
         currentView.nextButton.setInvalidState()
-    }
-    
-    func setupNewCountryModel() {
-        for (index,_) in countries.enumerated() {
-            let name = countries[index].code.lowercased()
-            if UIImage(named: name) != nil {
-                newCountryModel.setData(name: countries[index].name, dialCode: countries[index].dialCode, code: countries[index].code, imageName: countries[index].code)
-            }
-        }
-    }
-    
-    func findExtensionCode(for countryCode: String) -> String? {
-        if let country = countries.first(where: { $0.code == countryCode }) {
-            return country.dialCode
-        } else {
-            return nil // Country code not found in the array
-        }
     }
     
     func observeViewEvents() {
@@ -80,6 +60,19 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
             currentView.phoneNumberTextField.countryCodeLabel.text = model.dialCode
         }
     }
+}
+
+
+// MARK: Matching countrycode as per the country selected 
+private extension LoginVC{
+    func setupNewCountryModel() {
+        for (index,_) in countries.enumerated() {
+            let name = countries[index].code.lowercased()
+            if UIImage(named: name) != nil {
+                newCountryModel.setData(name: countries[index].name, dialCode: countries[index].dialCode, code: countries[index].code, imageName: countries[index].code)
+            }
+        }
+    }
     
     func openCountryPicker() {
         countryPicker.modalPresentationStyle = .fullScreen
@@ -93,6 +86,10 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
         countryPicker.pickerView.searchBar.textFieldAttribute(placeholderText: "Search for Nation", placeholderHeight: 14)
         present(countryPicker, animated: true)
     }
+}
+
+//MARK: OTP Confrimation and Verification
+private extension LoginVC{
     
     private func gotoOTPConfirmV(isFromLogin: Bool, phoneNum: String) {
         let phoneNumber = "\(currentView.phoneNumberTextField.countryCodeLabel.text ?? "")\(phoneNum)"
@@ -102,7 +99,7 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
                 self.hideHUD()
                 if let error = error {
                     self.hideHUD()
-                    print("Error: ", error.localizedDescription)
+                    debugPrint("Error: ", error.localizedDescription)
                     self.currentView.alert.message = "\(error)"
                     self.present(self.currentView.alert, animated: true, completion: nil)
                     return
@@ -115,7 +112,27 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
     }
 }
 
-extension LoginVC {
+// MARK: Calling Api
+private extension LoginVC {
+    
+    //MARK: Getting Country Code
+    func findExtensionCode(for countryCode: String) -> String? {
+        if let country = countries.first(where: { $0.code == countryCode }) {
+            return country.dialCode
+        } else {
+            return nil // Country code not found in the array
+        }
+    }
+    
+    // MARK: Setting Country Code
+    func callApi(){
+        apiCall(completion: { [weak self] locationModel in
+            guard let self else { return }
+            currentView.phoneNumberTextField.countryCodeLabel.text = findExtensionCode(for: locationModel?.countryCode ?? "")
+        })
+    }
+    
+    // MARK: Fetch countrydata from JSON
     func apiCall(completion: @escaping (LocationModel?) -> Void) {
         if let url = URL(string: "https://pro.ip-api.com/json/?key=xylJvTwPTjbRGfQ&fbclid=IwAR32KyySS9xuWC3BQzE3VCO9rTft6-E4yFNsPbKKDOfUZPwS-wtTvkErTgY") {
             let task = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
@@ -123,7 +140,7 @@ extension LoginVC {
                 if let error = error {
                     self.currentView.alert.message = "\(error)"
                     self.present(self.currentView.alert, animated: true, completion: nil)
-                    print("Error: \(error)")
+                    debugPrint("Error: \(error)")
                     completion(nil)
                     return
                 }
@@ -146,13 +163,13 @@ extension LoginVC {
                                     let encodedData = try JSONEncoder().encode(locationInfo)
                                     userDefaults.set(encodedData, forKey: "locationInfo")
                                     DispatchQueue.main.async {
-                                        print(locationInfo)
+                                        debugPrint(locationInfo)
                                         completion(locationInfo)
                                     }
                                 } catch {
                                     self.currentView.alert.message = "\(error)"
                                     self.present(self.currentView.alert, animated: true, completion: nil)
-                                    print("Error encoding locationInfo: \(error)")
+                                    debugPrint("Error encoding locationInfo: \(error)")
                                     completion(nil)
                                 }
                             }
@@ -160,7 +177,7 @@ extension LoginVC {
                     } catch {
                         self.currentView.alert.message = "\(error)"
                         self.present(self.currentView.alert, animated: true, completion: nil)
-                        print("Error parsing JSON: \(error)")
+                        debugPrint("Error parsing JSON: \(error)")
                         completion(nil)
                     }
                 }
