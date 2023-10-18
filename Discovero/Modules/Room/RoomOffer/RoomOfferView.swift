@@ -12,10 +12,6 @@ class RoomOfferView: UIView {
     var handleRoomRefresh: (() -> Void)?
     
     let refreshControl = UIRefreshControl()
-    var heights = [CGFloat]()
-    var roomOffer = [RoomOffer]()
-    let searchBar = CustomSearchBar()
-    let searchBarBackgroundView = UIView()
     let homeImg = UIImageView(image: UIImage(named: "homeImg"),contentMode: .scaleAspectFit, clipsToBounds: true)
     let createAdLabel = UILabel(text: "Create your first ad", font: OpenSans.semiBold, size: 16, alignment: .center)
     let adDescriptionLabel = UILabel(text: "There seems to be no room available at the moment in your location. ", font: OpenSans.regular, size: 14,numberOfLines: 0, alignment: .center)
@@ -23,21 +19,9 @@ class RoomOfferView: UIView {
     let adView = CustomAdView("Jasper's market", "Check out our best quality", UIImage(named: "rightAdImage"), UIImage(named: "leftAdImage"))
     let line = UIView()
     let addButtonView = UIImageView(image: UIImage(named: "plus") ,contentMode: .scaleAspectFit)
-    
     lazy var emptyStackView = VerticalStackView(arrangedSubViews: [homeImg, createAdLabel,adDescriptionLabel, createAdButton], spacing: 30)
-    
     let filterSection = FilterView()
-    //    let filterCover = UIView(color: .blue)
-    
     let adsTable = UITableView()
-    //    let adsCollectionView: UICollectionView = {
-    //        let layout = UICollectionViewFlowLayout()
-    //        layout.scrollDirection = .vertical
-    //        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-    //        collectionView.translatesAutoresizingMaskIntoConstraints = false
-    //        collectionView.backgroundColor = Color.appBlack
-    //        return collectionView
-    //    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,27 +32,10 @@ class RoomOfferView: UIView {
     }
     
     func setupConstraint() {
-        //        addSubview(searchBar)
-        //        searchBar.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 10, right: 0))
-        //        searchBar.constraintHeight(constant: 0)
-        ////
-        //
-        //        addSubview(searchBarBackgroundView)
-        //        searchBarBackgroundView.anchor(top: topAnchor, leading: leadingAnchor, bottom: searchBar.topAnchor, trailing: trailingAnchor)
-        //        searchBarBackgroundView.backgroundColor = Color.gray900
-        //        searchBarBackgroundView.constraintHeight(constant: 0)
-        //
-        //        addSubview(emptyStackView)
-        //        emptyStackView.centerInSuperview()
-        //        emptyStackView.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 0, right: 12))
-        
         addSubview(filterSection)
         filterSection.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 0, right: 0))
         filterSection.constraintHeight(constant: 40)
         filterSection.constraintWidth(constant: 95)
-        
-        //        addSubview(filterCover)
-        //        filterCover.anchor(top: filterSection.topAnchor, leading: filterSection.leadingAnchor, bottom: filterSection.bottomAnchor, trailing: filterSection.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         
         addSubview(adsTable)
         adsTable.anchor(top: filterSection.bottomAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 70, right: 0))

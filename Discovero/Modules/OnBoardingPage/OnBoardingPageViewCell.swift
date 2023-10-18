@@ -12,19 +12,16 @@ class OnBoardingPageViewCell: UICollectionViewCell {
     let scrollView = UIScrollView()
     let currentContentView = UIView()
     static var identifier = "OnBoardingPageIdentifier"
-    
     let onboardingPageImage : UIImageView = {
         let onboardingPageImage = UIImageView()
         onboardingPageImage.contentMode = .scaleAspectFit
         return onboardingPageImage
     }()
-    
     let icon : UIImageView = {
         let icon = UIImageView()
         icon.contentMode = .scaleAspectFit
         return icon
     }()
-    
     let titleLabel = UILabel(text: "", font: OpenSans.regular, size: 24, alignment: .center)
     let titleDescLabel = UILabel(text:"", font: OpenSans.regular, size: 14, numberOfLines: 0, alignment: .center)
     lazy var onBoardingViewStack = VerticalStackView(arrangedSubViews: [onboardingPageImage, icon, titleLabel,  titleDescLabel, UIView()], spacing: 24, distribution: .fill)

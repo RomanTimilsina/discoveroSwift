@@ -8,7 +8,6 @@
 import UIKit
 
 class WelcomeView: UIView {
-    
     let welcomeLabel = UILabel(text: "", font: OpenSans.semiBold, size: 24)
     let profileReadyLabel = UILabel(text: "Your profile is almost ready", font: OpenSans.regular, size: 14)
     

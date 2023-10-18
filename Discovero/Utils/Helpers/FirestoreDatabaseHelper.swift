@@ -154,7 +154,8 @@ struct FireStoreDatabaseHelper {
                     .whereField("propertyType", isEqualTo: propertyType)
             }
         }
-        
+        roomOffers.removeAll()
+
         fireStoreCollection
             .getDocuments { query, error in
                 guard let query = query else {
@@ -164,7 +165,6 @@ struct FireStoreDatabaseHelper {
                 selectedLanguage = language ?? []
                 if firstTimeRun {
                     // clear room Offers on each run
-                    roomOffers.removeAll()
                     firstTimeRun = false
                 }
                 

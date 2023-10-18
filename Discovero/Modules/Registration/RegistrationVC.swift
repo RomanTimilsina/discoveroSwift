@@ -11,14 +11,10 @@ import FirebaseFirestore
 class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, UITextFieldDelegate {
     let currentView = RegistrationView()
     lazy var countryPicker = DIPickerVC()
-    var country: DIPickerModel?
     var hasName: Bool?
     var isSelected: Bool?
-    var newCountryModel = CountryManager()
     var languageManager = LanguageManager()
-    var sendSavedData = [String]()
     var selectedLanguage: String?
-    
     let phoneNumber: String
     let userId: String
     
@@ -72,63 +68,6 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
                     currentView.signUpButton.setInvalidState()
                 }
             }
-        }
-    }
-    
-    private func gotoWelcomePageVC(nameText: String) {
-        let welcomeVC = WelcomeVC()
-        navigationController?.pushViewController(welcomeVC, animated: true)
-    }
-    
-    private func saveRegisterData() {
-        showHUD()
-        
-        let database = Firestore.firestore()
-        let userDefaults = UserDefaults.standard
-        
-        let languages = selectedLanguage?.components(separatedBy: ",") ?? []
-        if let locationData = userDefaults.data(forKey: "locationInfo") {
-            do {
-                let decoder = JSONDecoder()
-                let location = try decoder.decode(LocationModel.self, from: locationData)
-                let data = [
-                    "country": location.country,
-                    "countryCode": location.countryCode,
-                    "dialCode": findExtensionCode(for: location.countryCode) ?? "",
-                    "displayLocation": location.city,
-                    "languages": languages,
-                    "locationDetail": [
-                        "buildingNo": "",
-                        "country": location.country,
-                        "state": location.regionName,
-                        "streetName": "",
-                        "streetNo": "",
-                        "suburb": location.regionName,
-                    ],
-                    "name": currentView.personalInfoTextField.textField.text ?? "",
-                    "phoneNumber": phoneNumber,
-                    "uid": userId
-                ] as [String : Any]
-                
-                database.collection("Users").addDocument(data: data) { [weak self] error in
-                    guard let self = self else { return }
-                    hideHUD()
-                    if let error = error {
-                        AlertMessage.showBasicAlert(on: self, message: error.localizedDescription)
-                    } else {
-                        print("success")
-                        UserDefaultsHelper.setStringData(value: "set", key: .isLoggedIn)
-                        UserDefaultsHelper.setStringData(value: userId, key: .userId)
-                        gotoWelcomePageVC(nameText: currentView.personalInfoTextField.textField.text ?? "")
-                    }
-                }
-            } catch let error {
-                hideHUD()
-                print("Unable to Decode (\(error))")
-            }
-        } else {
-            hideHUD()
-            print("Error to decode location data")
         }
     }
     
@@ -203,8 +142,8 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
     }
 }
 
+// MARK: - TextField Delegates
 extension RegistrationVC {
-    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField === currentView.languagePickerTextField.textField {
         }
@@ -230,6 +169,69 @@ extension RegistrationVC {
             currentView.signUpButton.setValidState()
         } else {
             currentView.signUpButton.setInvalidState()
+        }
+    }
+}
+
+// MARK: - Nav function
+extension RegistrationVC {
+    private func gotoWelcomePageVC(nameText: String) {
+        let welcomeVC = WelcomeVC()
+        navigationController?.pushViewController(welcomeVC, animated: true)
+    }
+}
+
+// MARK: - save to userDefaults
+extension RegistrationVC {
+    private func saveRegisterData() {
+        showHUD()
+        
+        let database = Firestore.firestore()
+        let userDefaults = UserDefaults.standard
+        
+        let languages = selectedLanguage?.components(separatedBy: ",") ?? []
+        if let locationData = userDefaults.data(forKey: "locationInfo") {
+            do {
+                let decoder = JSONDecoder()
+                let location = try decoder.decode(LocationModel.self, from: locationData)
+                let data = [
+                    "country": location.country,
+                    "countryCode": location.countryCode,
+                    "dialCode": findExtensionCode(for: location.countryCode) ?? "",
+                    "displayLocation": location.city,
+                    "languages": languages,
+                    "locationDetail": [
+                        "buildingNo": "",
+                        "country": location.country,
+                        "state": location.regionName,
+                        "streetName": "",
+                        "streetNo": "",
+                        "suburb": location.regionName,
+                    ],
+                    "name": currentView.personalInfoTextField.textField.text ?? "",
+                    "phoneNumber": phoneNumber,
+                    "uid": userId
+                ] as [String : Any]
+                
+                database.collection("Users").addDocument(data: data) { [weak self] error in
+                    guard let self = self else { return }
+                    hideHUD()
+                    if let error = error {
+                        AlertMessage.showBasicAlert(on: self, message: error.localizedDescription)
+                    } else {
+                        print("success")
+                        UserDefaultsHelper.setStringData(value: "set", key: .isLoggedIn)
+                        UserDefaultsHelper.setStringData(value: userId, key: .userId)
+                        gotoWelcomePageVC(nameText: currentView.personalInfoTextField.textField.text ?? "")
+                    }
+                }
+            } catch let error {
+                hideHUD()
+                print("Unable to Decode (\(error))")
+            }
+        } else {
+            hideHUD()
+            print("Error to decode location data")
         }
     }
 }

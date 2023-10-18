@@ -22,15 +22,13 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
     var countryList: [CountryStateModel] = []
     var selectedCountyList: [String] = []
     var selectedCountryName = ""
-    
+    var run = true
     let countries: [CountryModel] = Bundle.main.decode(from: "Countries.json")
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         countriesAndState()
         
-
         currentView.suburbTextField.delegate = self
         currentView.countriesTextField.text = userData?.country
         currentView.statesTextField.text = userData?.locationDetail.state
@@ -38,6 +36,7 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
         countryPicker.countryModel = countryManager.getData()
 
         observeViewEvents()
+        run = false
     }
     
     func countriesAndState() {
@@ -50,9 +49,10 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
                 for (index,_) in countries.enumerated() {
                     if countries[index].name == countryAndStates.name {
                         countryList.append(countryAndStates)
-
+                        loadMenu()
                         let name = countries[index].code.lowercased()
                         if UIImage(named: name) != nil {
+
                             if selectedCountryName == countryAndStates.name {
 //                                selectedCountryName = userData?.country ?? ""
 //                                currentView.stateTFCoverButton.menu = addInfoMenu(selectedCountryName)
@@ -64,7 +64,18 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
             }
         }
     }
+
+    func loadMenu() {
+        if run {
+            currentView.stateTFCoverButton.menu = addStateMenu(userData?.country ?? "")
+        }
+    }
     
+    func setupNewCountryModel() {
+        
+    }
+    
+
     override func loadView() {
         view = currentView
         navigationController?.navigationBar.isHidden = true
@@ -96,7 +107,7 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
             
             currentView.statesTextField.text = ""
             
-            currentView.stateTFCoverButton.menu = addInfoMenu(selectedCountryName)
+            currentView.stateTFCoverButton.menu = addStateMenu(selectedCountryName)
         }
         
         currentView.headerView.onClose = { [weak self] in
@@ -109,10 +120,17 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
             handlePop?(country, state, suburb)
             navigationController?.popViewController(animated: true)
         }
+        
+        currentView.stateTap = { [weak self] in
+            guard let self else { return }
+
+            loadMenu()
+        }
     }
     
-    //MARK: Confused
-    private func addInfoMenu(_ CountryName: String) -> UIMenu {
+
+    private func addStateMenu(_ CountryName: String) -> UIMenu {
+
         var menuList = [UIMenuElement]()
         for country in countryList {
             if CountryName == country.name {
@@ -127,6 +145,10 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
         
         let infoMenu = UIMenu(title: "", children: menuList)
         return infoMenu
+    }
+    
+    func resetStateMenu() {
+        currentView.stateTFCoverButton.menu = addStateMenu(userData?.country ?? "")
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {

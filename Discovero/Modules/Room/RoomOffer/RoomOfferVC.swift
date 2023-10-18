@@ -11,18 +11,9 @@ class RoomOfferVC: UIViewController {
     
     let roomOfferView = RoomOfferView()
     var roomOffers: [RoomOffer] = []
-    var filterRoomOffers: [RoomOffer] = []
-    var items: [RoomOffer] = []
-    var priceRange: [RoomOffer] = []
-    var numberOfLinesForDescriptions: [Int] = []
     var fireStore = FireStoreDatabaseHelper()
-    var firstTime = true
-    var loadMore = true
-    var timer: Timer?
     var country, state: String?
-    var heights = [CGFloat]()
     let filterVC = FilterSelectorVC()
-    var countryName, stateName, suburbName, property, selectedLanguages, noOfBedroom, noOfBathroom, noOfParking: String?
     var languages: [String] = []
     
     override func viewWillAppear(_ animated: Bool) {

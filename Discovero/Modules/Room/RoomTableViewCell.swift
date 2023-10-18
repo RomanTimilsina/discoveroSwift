@@ -110,7 +110,6 @@ class RoomOfferTableViewCell: UITableViewCell {
         
         addSubview(totalViewStack)
         totalViewStack.anchor(top: nil, leading: nil, bottom: lineView.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 8, right: 12))
-        //        totalViewStack.centerXAnchor.constraint(equalTo: likesStack.centerXAnchor).isActive = true
         viewCount.centerXInSuperview()
         
         currentView.addSubview(circleView)
@@ -163,7 +162,10 @@ class RoomOfferTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+}
+
+// MARK: Cell configuration
+extension RoomOfferTableViewCell {
     func configureData(data: RoomOffer) {
         
         namePrefixLabel.text = "\(namePrefix(name: data.userInfo.name))"
@@ -184,7 +186,11 @@ class RoomOfferTableViewCell: UITableViewCell {
         viewCount.text = "\(data.viewCount < 10 ? " " : "")\(data.viewCount)"
         commentCount.text = "\(data.comments.count)"
     }
-    
+
+}
+
+// MARK: Formatting data
+extension RoomOfferTableViewCell {
     func formatDate(from timestamp: Double) -> String {
         let currentDate = Date()
         let date = Date(timeIntervalSince1970: timestamp / 1000) // Convert milliseconds to seconds

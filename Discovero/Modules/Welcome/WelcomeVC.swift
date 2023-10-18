@@ -22,7 +22,11 @@ class WelcomeVC: UIViewController {
     override func loadView() {
         view = welcomeView
     }
-    
+}
+
+// MARK: -fetch data from users
+extension WelcomeVC {
+
     func fetchUserData() {
         guard let uid else { return }
         self.fireStore.getUserData(uid: uid, completion: { [weak self] userData in

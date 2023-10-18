@@ -67,7 +67,40 @@ class OTPConfirmVC: UIViewController {
             }
         }
     }
-    
+}
+
+// MARK: - resend otp
+extension OTPConfirmVC {
+    func resendOTP( phoneNum: String) {
+        let phoneNumber = phoneNum
+        let timer = CountdownTimer()
+        PhoneAuthProvider.provider()
+            .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] verificationID, error in
+                guard let self = self else { return }
+                self.hideHUD()
+                if let error = error {
+                    self.hideHUD()
+                    print("Error: ", error.localizedDescription)
+                    self.currentView.alert.message = "\(error)"
+                    self.present(self.currentView.alert, animated: true, completion: nil)
+                    return
+                }
+                timer.start(
+                    tickHandler: { [weak self] remainingSeconds in
+                        guard let self = self else { return }
+                        self.currentView.codeNotReceivedLabel.text = "Remaining time for resend otp: \(remainingSeconds)s"
+                    },
+                    completionHandler: { [weak self]  in
+                        guard let self = self else { return }
+                        self.currentView.codeNotReceivedLabel.text = "I didn't receive a code"
+                    }
+                )
+            }
+    }
+}
+
+// MARK: - Nav functions 
+extension OTPConfirmVC {
     private func gotoWelcomePage(uid: String) {
         let welcomeVC = WelcomeVC()
         welcomeVC.uid = uid
@@ -113,35 +146,6 @@ class OTPConfirmVC: UIViewController {
                 }
             }
         }
-    }
-}
-
-extension OTPConfirmVC {
-    func resendOTP( phoneNum: String) {
-        let phoneNumber = phoneNum
-        let timer = CountdownTimer()
-        PhoneAuthProvider.provider()
-            .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] verificationID, error in
-                guard let self = self else { return }
-                self.hideHUD()
-                if let error = error {
-                    self.hideHUD()
-                    print("Error: ", error.localizedDescription)
-                    self.currentView.alert.message = "\(error)"
-                    self.present(self.currentView.alert, animated: true, completion: nil)
-                    return
-                }
-                timer.start(
-                    tickHandler: { [weak self] remainingSeconds in
-                        guard let self = self else { return }
-                        self.currentView.codeNotReceivedLabel.text = "Remaining time for resend otp: \(remainingSeconds)s"
-                    },
-                    completionHandler: { [weak self]  in
-                        guard let self = self else { return }
-                        self.currentView.codeNotReceivedLabel.text = "I didn't receive a code"
-                    }
-                )
-            }
     }
 }
 

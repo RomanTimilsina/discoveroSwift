@@ -96,8 +96,6 @@ class OnSelectPageView: UIView {
         scrollView.addSubview(cellStack)
         cellStack.anchor(top: scrollView.topAnchor, leading: scrollView.leadingAnchor, bottom: scrollView.bottomAnchor, trailing: scrollView.trailingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: -370))
         
-        
-        
         showToggleButton.addTarget(self, action: #selector(showToggle), for: .touchUpInside)
     }
     

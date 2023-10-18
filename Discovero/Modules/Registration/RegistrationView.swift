@@ -11,7 +11,6 @@ class RegistrationView: UIView {
     
     var openPicker: (() -> Void)?
     var handleSignUp: ((String?) -> Void)?
-    var overlayViewTap: ((UITapGestureRecognizer) -> Void)?
     
     let headerView = DIHeaderView(title: "Registration", hasBack: false)
     let headerBackgroundView = UIView()
@@ -72,8 +71,7 @@ class RegistrationView: UIView {
     }
     
     let okAction = UIAlertAction(title: "OK", style: .default) { (_) in
-        // Handle the user's response when they tap the OK button
-        print("OK button tapped")
+        debugPrint("OK button tapped")
     }
     
     func observeEvent() {
@@ -85,22 +83,6 @@ class RegistrationView: UIView {
         
         let overlayViewTap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         overlayView.addGestureRecognizer(overlayViewTap)
-    }
-    
-    func applyColorsAndBold(toLabel label: UILabel, text: String, colorsAndSubstrings: [(color: UIColor?, substring: String)]) {
-        let excludedWords = "and"
-        let attributedText = NSMutableAttributedString(string: text)
-        
-        for (color, substring) in colorsAndSubstrings {
-            let range = (text as NSString).range(of: substring)
-            attributedText.addAttribute(.foregroundColor, value: color ?? UIColor(), range: range)
-            
-            if !excludedWords.contains(substring) {
-                let boldFont = UIFont.boldSystemFont(ofSize: label.font.pointSize)
-                attributedText.addAttribute(.font, value: boldFont, range: range)
-            }
-        }
-        label.attributedText = attributedText
     }
 }
 
@@ -117,5 +99,23 @@ extension RegistrationView {
     
     @objc func dismissKeyboard() {
         personalInfoTextField.textField.resignFirstResponder()
+    }
+}
+
+extension RegistrationView {
+    func applyColorsAndBold(toLabel label: UILabel, text: String, colorsAndSubstrings: [(color: UIColor?, substring: String)]) {
+        let excludedWords = "and"
+        let attributedText = NSMutableAttributedString(string: text)
+        
+        for (color, substring) in colorsAndSubstrings {
+            let range = (text as NSString).range(of: substring)
+            attributedText.addAttribute(.foregroundColor, value: color ?? UIColor(), range: range)
+            
+            if !excludedWords.contains(substring) {
+                let boldFont = UIFont.boldSystemFont(ofSize: label.font.pointSize)
+                attributedText.addAttribute(.font, value: boldFont, range: range)
+            }
+        }
+        label.attributedText = attributedText
     }
 }

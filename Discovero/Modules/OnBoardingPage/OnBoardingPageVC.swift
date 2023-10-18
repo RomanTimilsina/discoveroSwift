@@ -39,14 +39,9 @@ class OnBoardingPageVC: UIViewController {
             gotoLogin(isFromLogin: false)
         }
     }
-    
-    private func gotoLogin(isFromLogin: Bool) {
-        let login = LoginVC()
-        login.isFromLogin = isFromLogin
-        navigationController?.pushViewController(login, animated: true)
-    }
 }
 
+// MARK : Table Delegates
 extension OnBoardingPageVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return manager.getData().count
@@ -78,5 +73,14 @@ extension OnBoardingPageVC: UICollectionViewDelegate, UICollectionViewDataSource
         if let visibleIndexPath = currentView.onboardingCollection.indexPathForItem(at: visiblePoint){
             currentView.indicator.currentPage = visibleIndexPath.row
         }
+    }
+}
+
+//MARK: nav function
+extension OnBoardingPageVC {
+    private func gotoLogin(isFromLogin: Bool) {
+        let login = LoginVC()
+        login.isFromLogin = isFromLogin
+        navigationController?.pushViewController(login, animated: true)
     }
 }

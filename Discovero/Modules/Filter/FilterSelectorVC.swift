@@ -53,13 +53,16 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
         countryName = usersData.country
         stateName = usersData.locationDetail.state
         suburbName = usersData.locationDetail.suburb
+
         selectLanguages = usersData.languages
         debugPrint(selectLanguages)
+
     }
     
     func resetData() {
         setInitialData()
         
+        // bathroom, beddroom and parkings selector reset
         for selector in currentView.selectors {
             for view in selector.viewsArray {
                if let label = view.subviews.first as? UILabel {
@@ -77,38 +80,41 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
             noOfBathroom = "Any"
             noOfParkings = "Any"
         }
-        
+        // range reset
         currentView.rangeSlider.value = [ 0, 5000]
         self.minCost = "0.0"
         self.maxCost = "5000.0"
         currentView.priceRange.text = "$0 to $5000"
-        
+        // property reset
         currentView.propertyTypeLabel.subTitle.text = "Any"
         countryPicker.languageModel = languageManager.getData()
-        
+        // country, state and suburb reset
         currentView.locationLabel.subTitle.text = "\(usersData?.country ?? ""), \(usersData?.locationDetail.state ?? "")"
         locationFilter.currentView.countriesTextField.text = usersData?.locationDetail.country ?? ""
         locationFilter.currentView.statesTextField.text = usersData?.locationDetail.state ?? ""
         locationFilter.currentView.suburbTextField.text = usersData?.locationDetail.suburb ?? ""
+//        locationFilter.resetStateMenu()
     }
     
     func setLanguageAndLocationLabel() {
         guard let usersData else { return }
-        debugPrint(usersData)
+
+        // remove space from languages
+        currentView.nationalityLabel.subTitle.text = ""
 
         for (language) in usersData.languages {
             languageArray.append(language.replacingOccurrences(of: " ", with: ""))
         }
-        location = "\(usersData.locationDetail.country), \(usersData.locationDetail.state)"
-        currentView.nationalityLabel.subTitle.text = ""
-        
+        // add , between languages
         for (index, language) in languageArray.enumerated() {
-            currentView.nationalityLabel.subTitle.text! += "\(language)"
-            if index != languageArray.count {
+            currentView.nationalityLabel.subTitle.text! += " \(language)"
+            if index != languageArray.count - 1 {
                 currentView.nationalityLabel.subTitle.text! += ", "
             }
             //initial values
         }
+        // set country and state
+        location = "\(usersData.locationDetail.country), \(usersData.locationDetail.state)"
         currentView.locationLabel.subTitle.text = location
     }
     
@@ -116,11 +122,6 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
         currentView.nationalityLabel.profileTap = { [weak self] text in
             guard let self = self else { return }
             openCountryPicker()
-        }
-        currentView.propertyTypeLabel.profileTap = { [weak self] text in
-            guard let self else { return }
-            dismiss(animated: true, completion: nil)
-            //uimenu
         }
         
         currentView.locationLabel.profileTap = { [weak self] text in
@@ -159,7 +160,7 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
         
         currentView.handleSearch = { [weak self] property, minCost, maxCost in
             guard let self else { return }
-            
+
             if let country {
                 countryName = country
             }
@@ -185,6 +186,7 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
             }
             
             print(selectLanguages)
+
             self.propertyType = property
             if !selectedLanguages.isEmpty {
                 self.selectLanguages = countryPicker.savedData

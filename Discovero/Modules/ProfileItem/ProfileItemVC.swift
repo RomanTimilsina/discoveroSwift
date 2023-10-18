@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileItemVC: UIViewController, UITextFieldDelegate  {
+class ProfileItemVC: UIViewController  {
     
     var onTitle: String?
     var onPlaceholder: String?
@@ -40,18 +40,6 @@ class ProfileItemVC: UIViewController, UITextFieldDelegate  {
         view = email
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        if let updatedText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) {
-            if updatedText.isEmpty {
-                email.saveButton.setInvalidState()
-            } else {
-                email.saveButton.setValidState()
-            }
-        }
-        return true
-    }
-    
     func loginEvents() {
         email.header.onClose = { [weak self] in
             guard let self = self else { return }
@@ -67,5 +55,21 @@ class ProfileItemVC: UIViewController, UITextFieldDelegate  {
                 email.saveButton.setValidState()
             }
         }
+    }
+}
+
+// MARK: - textfield delegates
+extension ProfileItemVC: UITextFieldDelegate {
+    // MARK: Activate button if textfield has name
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if let updatedText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) {
+            if updatedText.isEmpty {
+                email.saveButton.setInvalidState()
+            } else {
+                email.saveButton.setValidState()
+            }
+        }
+        return true
     }
 }

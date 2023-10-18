@@ -54,12 +54,12 @@ class RoomBodyView: UIView {
         addSubview(emptyStackView)
         emptyStackView.centerInSuperview()
         emptyStackView.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 0, right: 12))
+
+        addSubview(roomWantedView)
+        roomWantedView.anchor(top: topAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
         
         addSubview(roomOfferView)
         roomOfferView.anchor(top: topAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
-        
-        addSubview(roomWantedView)
-        roomWantedView.anchor(top: topAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
     }
         
     required init?(coder: NSCoder) {
