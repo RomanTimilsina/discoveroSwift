@@ -9,7 +9,7 @@ import UIKit
 
 class ProfileItemView: UIView {
     
-    var handleText: ((String) -> Void)?
+    var onClickedText: ((String) -> Void)?
     let header = DIHeaderView(title: "Update Account Details", hasBack: false)
     let view = UIView()
     let Field = DITextField(title: "What's your email",  placholder: "email@example.com", typePad: .default, placeholderHeight: 22, textHeight: 22)
@@ -47,7 +47,7 @@ class ProfileItemView: UIView {
     
     @objc func textEntered(_ textField: UITextField) {
         if let text = textField.text {
-            handleText?(text)
+            onClickedText?(text)
         }
     }
 }

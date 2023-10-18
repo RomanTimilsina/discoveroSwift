@@ -26,7 +26,6 @@ class OnSelectPageVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         navigationController?.navigationBar.isHidden = true
         // onClick show all text otherwise just 200 text
         if currentView.adDescritionText.count < 199 {

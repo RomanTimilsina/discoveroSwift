@@ -46,7 +46,7 @@ class OTPConfirmVC: UIViewController {
             navigationController?.popViewController(animated: true)
         }
         
-        currentView.didNotReceiveCode = { [weak self] in
+        currentView.onCLickedDidNotReceiveCode = { [weak self] in
             guard let self else { return }
             self.showHUD()
             self.resendOTP(phoneNum: self.phoneNumber)

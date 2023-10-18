@@ -22,12 +22,10 @@ class RoomWantedView: UIView {
     let adView = CustomAdView("Jasper's market", "Check out our best quality", UIImage(named: "rightAdImage"), UIImage(named: "leftAdImage"))
     let line = UIView()
     let addButtonView = UIImageView(image: UIImage(named: "plus") ,contentMode: .scaleAspectFit)
-    
-    lazy var emptyStackView = VerticalStackView(arrangedSubViews: [homeImage, createAdLabel,adDescriptionLabel, createAdButton], spacing: 30)
-    
     let filterSection = FilterView()
-    
     let adsTable = UITableView()
+    lazy var emptyStackView = VerticalStackView(arrangedSubViews: [homeImage, createAdLabel,adDescriptionLabel, createAdButton], spacing: 30)
+
     
     override init(frame : CGRect) {
         super.init(frame: frame)

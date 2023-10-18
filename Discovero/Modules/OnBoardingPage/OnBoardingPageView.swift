@@ -9,8 +9,8 @@ import UIKit
 
 class OnBoardingPageView: UIView {
     
-    var handleRegisterClicked: (() -> Void)?
-    var handleLoginClicked: (() -> Void)?
+    var onRegisterClicked: (() -> Void)?
+    var onLoginClicked: (() -> Void)?
     
     let onboardingCollection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -42,11 +42,11 @@ class OnBoardingPageView: UIView {
         addSubview(logInStack)
         logInStack.anchor(top: nil, leading: nil, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 40, right: 0))
         logInStack.centerXInSuperview()
-        logInButton.addTarget(self, action: #selector(login), for: .touchUpInside)
+        logInButton.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         
         addSubview(registerButton)
         registerButton.anchor(top: nil, leading: leadingAnchor, bottom: logInStack.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 19, right: 12))
-        registerButton.addTarget(self, action: #selector(register), for: .touchUpInside)
+        registerButton.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
         
         addSubview(indicator)
         indicator.anchor(top: registerButton.topAnchor, leading: leadingAnchor, bottom: registerButton.topAnchor, trailing: trailingAnchor, padding: .init(top: -33, left: 12, bottom: 20, right: 12))
@@ -64,11 +64,11 @@ class OnBoardingPageView: UIView {
 //MARK: Action function
 private extension OnBoardingPageView {
     
-    @objc func register() {
-        handleRegisterClicked?()
+    @objc func handleRegister() {
+        onRegisterClicked?()
     }
     
-    @objc func login() {
-        handleLoginClicked?()
+    @objc func handleLogin() {
+        onLoginClicked?()
     }
 }

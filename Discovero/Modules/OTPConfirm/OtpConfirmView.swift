@@ -8,7 +8,7 @@
 import UIKit
 
 class OTPConfirmView: UIView {
-    var didNotReceiveCode: (() -> Void)?
+    var onCLickedDidNotReceiveCode: (() -> Void)?
     var onNextClick: ((String) -> Void)?
     
     let headerView = DIHeaderView(title: "Confirm your number", hasBack: true)
@@ -77,6 +77,6 @@ class OTPConfirmView: UIView {
     }
     
     @objc func handleResendCode() {
-        didNotReceiveCode?()
+        onCLickedDidNotReceiveCode?()
     }
 }
