@@ -10,7 +10,8 @@ import MultiSlider
 
 class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate {
     
-    var handlePop: ((String, String, String, String, [String], String, String, String, String, String) -> Void)?
+    var onSearchClick: ((String, String, String, String, [String], String, String, String, String, String) -> Void)?
+    var onReset: (() -> Void)?
     
     let currentView = FilterSelectorView()
     lazy var countryPicker = DIPickerVC()
@@ -56,7 +57,6 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
 
         selectLanguages = usersData.languages
         debugPrint(selectLanguages)
-
     }
     
     func resetData() {
@@ -93,7 +93,7 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
         locationFilter.currentView.countriesTextField.text = usersData?.locationDetail.country ?? ""
         locationFilter.currentView.statesTextField.text = usersData?.locationDetail.state ?? ""
         locationFilter.currentView.suburbTextField.text = usersData?.locationDetail.suburb ?? ""
-//        locationFilter.resetStateMenu()
+        onReset?()
     }
     
     func setLanguageAndLocationLabel() {
@@ -129,7 +129,7 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
             gotoLocationFilterVC()
         }
         
-        countryPicker.closePicker = { [weak self] in
+        countryPicker.onClosePicker = { [weak self] in
             guard let self = self else { return }
             dismiss(animated: true, completion: nil)
         }
@@ -144,7 +144,7 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
             currentView.nationalityLabel.sideTitle.text = model.name
         }
         
-        locationFilter.handlePop = { [weak self] country, state, suburb in
+        locationFilter.onLocationStateChange = { [weak self] country, state, suburb in
             guard let self else { return }
             self.country = country
             self.state = state
@@ -152,13 +152,13 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
             currentView.locationLabel.subTitle.text = "\(country), \(state)"
         }
         
-        currentView.handleReset = { [weak self] in
+        currentView.onResetClick = { [weak self] in
             guard let self else { return }
 
             resetData()
         }
         
-        currentView.handleSearch = { [weak self] property, minCost, maxCost in
+        currentView.onSearchClick = { [weak self] property, minCost, maxCost in
             guard let self else { return }
 
             if let country {
@@ -196,7 +196,7 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
             self.minCost = minCost
             self.maxCost = maxCost
 
-            handlePop?(countryName ?? "", stateName ?? "", suburbName ?? "", propertyType ?? "Any", selectLanguages, noOfBedrooms ?? "Any", noOfBathrooms ?? "Any", noOfParkings ?? "Any", self.minCost ?? "0", self.maxCost ?? "5000")
+            onSearchClick?(countryName ?? "", stateName ?? "", suburbName ?? "", propertyType ?? "Any", selectLanguages, noOfBedrooms ?? "Any", noOfBathrooms ?? "Any", noOfParkings ?? "Any", self.minCost ?? "0", self.maxCost ?? "5000")
             navigationController?.popViewController(animated: true)
 
         }

@@ -11,7 +11,7 @@ class DIPickerVC: UIViewController {
     
     let pickerView = DIPickerView()
     var countryModel = [NewCountryModel]()
-    var closePicker: (() -> Void)?
+    var onClosePicker: (() -> Void)?
     var onPicked: ((NewCountryModel) -> Void)?
     var sendLanguageData: (([LanguageModel]) -> Void)?
     
@@ -43,7 +43,7 @@ class DIPickerVC: UIViewController {
     func observeEvents() {
         pickerView.onCloseClick = { [weak self] in
             guard let self = self else { return }
-            closePicker?()
+            onClosePicker?()
         }
         
 
@@ -148,6 +148,7 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
         if !isRegistration {
             let data = searchModel[indexPath.row]
             onPicked?(data)
+            debugPrint(data)
             dismiss(animated: true)
         } else {
 //            let data = searchLanguageModel[indexPath.row]

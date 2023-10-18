@@ -135,7 +135,7 @@ private extension RoomOfferVC {
         filterVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(filterVC, animated: true)
         
-        filterVC.handlePop = { [weak self] country, state, suburb, property, selectedLanguages, noOfBedroom, noOfBathroom, noOfParking, minCost, maxCost in
+        filterVC.onSearchClick = { [weak self] country, state, suburb, property, selectedLanguages, noOfBedroom, noOfBathroom, noOfParking, minCost, maxCost in
             guard let self else { return }
             debugPrint(property)
             //            self.roomOffers = []

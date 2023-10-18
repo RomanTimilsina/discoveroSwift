@@ -11,7 +11,7 @@ import FirebaseFirestore
 import FirebaseAuth
 import Firebase
 
-class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
+class LoginVC: UIViewController {
     
     let currentView = LoginView()
     var isFromLogin: Bool?
@@ -28,9 +28,29 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = true
         observeViewEvents()
-        callApi()
+        apiCall(completion: { [weak self] locationModel in
+            guard let self else { return }
+            currentView.phoneNumberTextField.countryCodeLabel.text = findExtensionCode(for: locationModel?.countryCode ?? "")
+        })
         setupNewCountryModel()
         currentView.nextButton.setInvalidState()
+    }
+    
+    func setupNewCountryModel() {
+        for (index,_) in countries.enumerated() {
+            let name = countries[index].code.lowercased()
+            if UIImage(named: name) != nil {
+                newCountryModel.setData(name: countries[index].name, dialCode: countries[index].dialCode, code: countries[index].code, imageName: countries[index].code)
+            }
+        }
+    }
+    
+    func findExtensionCode(for countryCode: String) -> String? {
+        if let country = countries.first(where: { $0.code == countryCode }) {
+            return country.dialCode
+        } else {
+            return nil // Country code not found in the array
+        }
     }
     
     func observeViewEvents() {
@@ -45,7 +65,7 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
             gotoOTPConfirmV(isFromLogin: isFromLogin ?? false, phoneNum: phoneNum)
         }
         
-        countryPicker.closePicker = { [weak self] in
+        countryPicker.onClosePicker = { [weak self] in
             guard let self else { return }
             dismiss(animated: true, completion: nil)
         }
@@ -62,77 +82,7 @@ class LoginVC: UIViewController, UISheetPresentationControllerDelegate {
     }
 }
 
-
-// MARK: Matching countrycode as per the country selected 
-private extension LoginVC{
-    func setupNewCountryModel() {
-        for (index,_) in countries.enumerated() {
-            let name = countries[index].code.lowercased()
-            if UIImage(named: name) != nil {
-                newCountryModel.setData(name: countries[index].name, dialCode: countries[index].dialCode, code: countries[index].code, imageName: countries[index].code)
-            }
-        }
-    }
-    
-    func openCountryPicker() {
-        countryPicker.modalPresentationStyle = .fullScreen
-        countryPicker.countryModel = newCountryModel.getData()
-        if let sheet = countryPicker.sheetPresentationController {
-            sheet.prefersGrabberVisible = true
-            sheet.preferredCornerRadius = 30
-            sheet.detents = [.large()]
-            sheet.delegate = self
-        }
-        countryPicker.pickerView.searchBar.textFieldAttribute(placeholderText: "Search for Nation", placeholderHeight: 14)
-        present(countryPicker, animated: true)
-    }
-}
-
-//MARK: OTP Confrimation and Verification
-private extension LoginVC{
-    
-    private func gotoOTPConfirmV(isFromLogin: Bool, phoneNum: String) {
-        let phoneNumber = "\(currentView.phoneNumberTextField.countryCodeLabel.text ?? "")\(phoneNum)"
-        PhoneAuthProvider.provider()
-            .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] verificationID, error in
-                guard let self else { return }
-                self.hideHUD()
-                if let error = error {
-                    self.hideHUD()
-                    debugPrint("Error: ", error.localizedDescription)
-                    self.currentView.alert.message = "\(error)"
-                    self.present(self.currentView.alert, animated: true, completion: nil)
-                    return
-                }
-                let otpConfirmVC = OTPConfirmVC()
-                otpConfirmVC.verificationId = verificationID
-                otpConfirmVC.phoneNumber = "\(self.currentView.phoneNumberTextField.countryCodeLabel.text ?? "")\(phoneNum)"
-                self.navigationController?.pushViewController(otpConfirmVC, animated: true)
-            }
-    }
-}
-
-// MARK: Calling Api
-private extension LoginVC {
-    
-    //MARK: Getting Country Code
-    func findExtensionCode(for countryCode: String) -> String? {
-        if let country = countries.first(where: { $0.code == countryCode }) {
-            return country.dialCode
-        } else {
-            return nil // Country code not found in the array
-        }
-    }
-    
-    // MARK: Setting Country Code
-    func callApi(){
-        apiCall(completion: { [weak self] locationModel in
-            guard let self else { return }
-            currentView.phoneNumberTextField.countryCodeLabel.text = findExtensionCode(for: locationModel?.countryCode ?? "")
-        })
-    }
-    
-    // MARK: Fetch countrydata from JSON
+extension LoginVC {
     func apiCall(completion: @escaping (LocationModel?) -> Void) {
         if let url = URL(string: "https://pro.ip-api.com/json/?key=xylJvTwPTjbRGfQ&fbclid=IwAR32KyySS9xuWC3BQzE3VCO9rTft6-E4yFNsPbKKDOfUZPwS-wtTvkErTgY") {
             let task = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
@@ -140,7 +90,7 @@ private extension LoginVC {
                 if let error = error {
                     self.currentView.alert.message = "\(error)"
                     self.present(self.currentView.alert, animated: true, completion: nil)
-                    debugPrint("Error: \(error)")
+                    print("Error: \(error)")
                     completion(nil)
                     return
                 }
@@ -163,13 +113,13 @@ private extension LoginVC {
                                     let encodedData = try JSONEncoder().encode(locationInfo)
                                     userDefaults.set(encodedData, forKey: "locationInfo")
                                     DispatchQueue.main.async {
-                                        debugPrint(locationInfo)
+                                        print(locationInfo)
                                         completion(locationInfo)
                                     }
                                 } catch {
                                     self.currentView.alert.message = "\(error)"
                                     self.present(self.currentView.alert, animated: true, completion: nil)
-                                    debugPrint("Error encoding locationInfo: \(error)")
+                                    print("Error encoding locationInfo: \(error)")
                                     completion(nil)
                                 }
                             }
@@ -177,7 +127,7 @@ private extension LoginVC {
                     } catch {
                         self.currentView.alert.message = "\(error)"
                         self.present(self.currentView.alert, animated: true, completion: nil)
-                        debugPrint("Error parsing JSON: \(error)")
+                        print("Error parsing JSON: \(error)")
                         completion(nil)
                     }
                 }
@@ -185,4 +135,44 @@ private extension LoginVC {
             task.resume()
         }
     }
+}
+
+//MARK: delegate UISheet
+extension LoginVC: UISheetPresentationControllerDelegate {
+    func openCountryPicker() {
+        countryPicker.modalPresentationStyle = .fullScreen
+        countryPicker.countryModel = newCountryModel.getData()
+        if let sheet = countryPicker.sheetPresentationController {
+            sheet.prefersGrabberVisible = true
+            sheet.preferredCornerRadius = 30
+            sheet.detents = [.large()]
+            sheet.delegate = self
+        }
+        countryPicker.pickerView.searchBar.textFieldAttribute(placeholderText: "Search for Nation", placeholderHeight: 14)
+        present(countryPicker, animated: true)
+    }
+}
+
+// MARK: Nav function
+extension LoginVC {
+    private func gotoOTPConfirmV(isFromLogin: Bool, phoneNum: String) {
+        let phoneNumber = "\(currentView.phoneNumberTextField.countryCodeLabel.text ?? "")\(phoneNum)"
+        PhoneAuthProvider.provider()
+            .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] verificationID, error in
+                guard let self else { return }
+                self.hideHUD()
+                if let error = error {
+                    self.hideHUD()
+                    print("Error: ", error.localizedDescription)
+                    self.currentView.alert.message = "\(error)"
+                    self.present(self.currentView.alert, animated: true, completion: nil)
+                    return
+                }
+                let otpConfirmVC = OTPConfirmVC()
+                otpConfirmVC.verificationId = verificationID
+                otpConfirmVC.phoneNumber = "\(self.currentView.phoneNumberTextField.countryCodeLabel.text ?? "")\(phoneNum)"
+                self.navigationController?.pushViewController(otpConfirmVC, animated: true)
+            }
+    }
+
 }

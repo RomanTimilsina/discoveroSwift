@@ -9,7 +9,7 @@ import UIKit
 
 class RoomOfferView: UIView {
     
-    var handleRoomRefresh: (() -> Void)?
+    var onRoomRefresh: (() -> Void)?
     
     let refreshControl = UIRefreshControl()
     let homeImg = UIImageView(image: UIImage(named: "homeImg"),contentMode: .scaleAspectFit, clipsToBounds: true)
@@ -57,9 +57,9 @@ class RoomOfferView: UIView {
     }
     
     private func observeEvents() {
-        createAdButton.addTarget(self, action: #selector(createAd), for: .touchUpInside)
+        createAdButton.addTarget(self, action: #selector(handleCreateAd), for: .touchUpInside)
         
-        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(handleRefreshData), for: .valueChanged)
         adsTable.addSubview(refreshControl)
     }
     
@@ -75,11 +75,11 @@ class RoomOfferView: UIView {
         emptyStackView.isHidden = true
     }
     
-    @objc func refreshData() {
-        handleRoomRefresh?()
+    @objc func handleRefreshData() {
+        onRoomRefresh?()
     }
     
-    @objc func createAd() {
+    @objc func handleCreateAd() {
         print("Check")
         showTable()
     }

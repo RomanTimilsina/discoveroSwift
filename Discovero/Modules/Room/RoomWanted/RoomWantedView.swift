@@ -10,7 +10,7 @@ import UIKit
 class RoomWantedView: UIView {
     
     
-    var handleRoomRefresh: (() -> Void)?
+    var onRefresh: (() -> Void)?
     
     let refreshControl = UIRefreshControl()
     var heights = [CGFloat]()
@@ -80,7 +80,7 @@ class RoomWantedView: UIView {
     }
     
     @objc func refreshData() {
-        handleRoomRefresh?()
+        onRefresh?()
     }
     
     @objc func createAd() {

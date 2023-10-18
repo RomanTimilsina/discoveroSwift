@@ -138,7 +138,7 @@ private extension RoomWantedVC {
             navigationController?.pushViewController(filterVC, animated: true)
         }
         
-        filterVC.handlePop = { [weak self] country, state, suburb, property, selectedLanguages, noOfBedroom, noOfBathroom, noOfParking, minCost, maxCost in
+        filterVC.onSearchClick = { [weak self] country, state, suburb, property, selectedLanguages, noOfBedroom, noOfBathroom, noOfParking, minCost, maxCost in
             guard let self else { return }
             debugPrint(selectedLanguages)
             self.roomWanted = []

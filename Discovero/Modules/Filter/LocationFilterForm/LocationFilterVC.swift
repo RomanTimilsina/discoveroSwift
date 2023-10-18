@@ -7,17 +7,15 @@
 
 import UIKit
 
-class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentationControllerDelegate {
+class LocationFilterVC: UIViewController {
     
-    var handlePop: ((String, String, String) -> Void)?
+    var onLocationStateChange: ((String, String, String) -> Void)?
     
     lazy var countryPicker = DIPickerVC()
     var currentView = LocationFilterView()
     var userData: UserData?
     var firestore = FireStoreDatabaseHelper()
     var countryManager = CountryManager()
-    var selectedLanguage: String?
-    var isSelected: Bool?
     var newCountryModel = CountryManager()
     var countryList: [CountryStateModel] = []
     var selectedCountyList: [String] = []
@@ -34,9 +32,8 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
         currentView.statesTextField.text = userData?.locationDetail.state
         
         countryPicker.countryModel = countryManager.getData()
-
+        
         observeViewEvents()
-        run = false
     }
     
     func countriesAndState() {
@@ -44,19 +41,20 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
             guard let self else { return }
             for countryAndStates in countriesAndStates {
                 debugPrint(countryAndStates.name)
-
+                
                 
                 for (index,_) in countries.enumerated() {
                     if countries[index].name == countryAndStates.name {
                         countryList.append(countryAndStates)
-                        loadMenu()
+//                        loadMenu()
                         let name = countries[index].code.lowercased()
                         if UIImage(named: name) != nil {
-
+                            
                             if selectedCountryName == countryAndStates.name {
-//                                selectedCountryName = userData?.country ?? ""
-//                                currentView.stateTFCoverButton.menu = addInfoMenu(selectedCountryName)
+                                //                                selectedCountryName = userData?.country ?? ""
+                                //                                currentView.stateTFCoverButton.menu = addInfoMenu(selectedCountryName)
                             }
+                            loadMenu()
                             newCountryModel.setData(name: countries[index].name, dialCode: countries[index].dialCode, code: countries[index].code, imageName: countries[index].code)
                         }
                     }
@@ -64,18 +62,15 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
             }
         }
     }
-
+    
     func loadMenu() {
-        if run {
+        if selectedCountryName == "" {
+            selectedCountryName = userData?.country ?? ""
             currentView.stateTFCoverButton.menu = addStateMenu(userData?.country ?? "")
+            //            run = false
         }
     }
     
-    func setupNewCountryModel() {
-        
-    }
-    
-
     override func loadView() {
         view = currentView
         navigationController?.navigationBar.isHidden = true
@@ -93,7 +88,7 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
             navigationController?.popViewController(animated: true)
         }
         
-        countryPicker.closePicker = { [weak self] in
+        countryPicker.onClosePicker = { [weak self] in
             guard let self else { return }
             dismiss(animated: true, completion: nil)
         }
@@ -117,20 +112,19 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
         
         currentView.handleSave = { [weak self] country, state, suburb in
             guard let self else { return }
-            handlePop?(country, state, suburb)
+            onLocationStateChange?(country, state, suburb)
             navigationController?.popViewController(animated: true)
         }
         
         currentView.stateTap = { [weak self] in
             guard let self else { return }
-
+            
             loadMenu()
         }
     }
     
-
     private func addStateMenu(_ CountryName: String) -> UIMenu {
-
+        
         var menuList = [UIMenuElement]()
         for country in countryList {
             if CountryName == country.name {
@@ -150,7 +144,10 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
     func resetStateMenu() {
         currentView.stateTFCoverButton.menu = addStateMenu(userData?.country ?? "")
     }
-    
+}
+
+// MARK: Textfield delegates
+extension LocationFilterVC: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField == currentView.suburbTextField {
             currentView.lineview3.backgroundColor = Color.primary
@@ -166,7 +163,9 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         view.endEditing(true)
     }
-    
+}
+
+extension LocationFilterVC: UISheetPresentationControllerDelegate {
     func openCountryPicker() {
         countryPicker.modalPresentationStyle = .fullScreen
         countryPicker.countryModel = newCountryModel.getData()
@@ -179,7 +178,7 @@ class LocationFilterVC: UIViewController, UITextFieldDelegate, UISheetPresentati
         countryPicker.pickerView.searchBar.textFieldAttribute(placeholderText: "Search for Nation", placeholderHeight: 14)
         present(countryPicker, animated: true)
     }
-}
 
+}
 
 

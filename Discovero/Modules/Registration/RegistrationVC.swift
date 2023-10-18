@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseFirestore
 
-class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, UITextFieldDelegate {
+class RegistrationVC: UIViewController {
     let currentView = RegistrationView()
     lazy var countryPicker = DIPickerVC()
     var hasName: Bool?
@@ -40,7 +40,7 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
             openCountryPicker()
         }
         
-        countryPicker.closePicker = { [weak self] in
+        countryPicker.onClosePicker = { [weak self] in
             guard let self = self else { return }
             dismiss(animated: true, completion: nil)
         }
@@ -50,7 +50,7 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
             navigationController?.popViewController(animated: true)
         }
         
-        currentView.handleSignUp = { [weak self] nameText in
+        currentView.onSignUp = { [weak self] nameText in
             guard let self = self else { return }
             saveRegisterData()
         }
@@ -71,68 +71,6 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
         }
     }
     
-    func findExtensionCode(for countryCode: String) -> String? {
-        let countries: [CountryModel] = Bundle.main.decode(from: "Countries.json")
-        if let country = countries.first(where: { $0.code == countryCode }) {
-            return country.dialCode
-        } else {
-            return nil // Country code not found in the array
-        }
-    }
-    
-    func setLanguage() {
-        let country: [String] = [
-            "Afar", "Afrikaans", "Albanian", "Amharic", "Arabic", "Aramaic", "Armenian", "Assamese", "Azerbaijani", "Balochi", "Basque", "Belarusian", "Bengali", "Berber", "Bhojpuri", "Bodo", "Bosnian", "Breton", "Bulgarian", "Burmese", "Cantonese", "Catalan", "Cebuano", "Chechen", "Chewa", "Chinese", "Comorian", "Corsican", "Creole", "Croatian", "Czech", "Dakhini", "Danish", "Dogri", "Dutch", "Dzongkha", "English", "Esperanto", "Estonian", "Ewe", "Faroese", "Filipino", "Finnish", "French", "Frisian", "Fulani", "Galician", "Garhwali", "Georgian", "German", "Greek", "Guarani", "Gujarati", "Hakka", "Haryanvi", "Hausa", "Hawaiian", "Hebrew", "Hiligaynon", "Hindi", "Hmong", "Hokkien", "Hungarian", "Icelandic", "Igbo", "Indonesian", "Irish", "Italian", "Jamaican Patois", "Japanese", "Javanese", "Kannada", "Kashmiri", "Kazakh", "Khmer", "Kikongo", "Kinyarwanda", "Kirundi", "Kodava", "Konkani", "Korean", "Kumaoni", "Kurdish", "Kutchi", "Kyrgyz", "Lao", "Latin", "Latvian", "Lingala", "Lithuanian", "Luo", "Luxembourgish", "Macedonian", "Maithili", "Malagasy", "Malay", "Malayalam", "Maltese", "Mandarin", "Maori", "Marathi", "Marwari", "Mayan", "Meitei", "Mongolian", "Montenegrin", "Nahuatl", "Nepali", "Norwegian", "Occitan", "Oriya", "Oromo", "Pahari", "Papiamento", "Pashto", "Persian", "Polish", "Portuguese", "Punjabi", "Quechua", "Rajasthani", "Romanian", "Romansh", "Russian", "Sami", "Sankethi", "Sanskrit", "Santali", "Saurashtra", "Sepedi", "Serbian", "Sesotho", "Setswana", "Sign Language", "Sindhi", "Sinhala", "Slovak", "Slovenian", "Somali", "Spanish", "Swahili", "Swati", "Swedish", "Tagalog", "Taiwanese", "Tajik", "Tamil", "Telugu", "Teochew", "Thai", "Tibetan", "Tigrinya", "Tsonga", "Tulu", "Turkish", "Ukrainian", "Urdu", "Venda", "Vietnamese", "Welsh", "Yiddish", "Yoruba", "Zulu"
-        ]
-        
-        for language in country {
-            languageManager.setData(language: language, isSelected: false)
-        }
-    }
-    
-    func openCountryPicker() {
-        countryPicker.modalPresentationStyle = .fullScreen
-        //        countryPicker.pickerView.searchBar.searchField.text = ""
-        if let sheet = countryPicker.sheetPresentationController {
-            
-            sheet.prefersGrabberVisible = true
-            sheet.preferredCornerRadius = 30
-            sheet.detents = [.large()]
-            sheet.delegate = self
-        }
-        
-        countryPicker.isRegistration = true
-        countryPicker.pickerView.searchBar.textFieldAttribute(placeholderText: "Search for Language", placeholderHeight: 14)
-        present(countryPicker, animated: true)
-        
-        //        currentView.languagePickerTextField.textField.placeholder = ""
-        countryPicker.sendSavedData = { [weak self] selectedLanguages in
-            self?.selectedLanguage = ""
-            guard let self = self else { return }
-            for (index, languages) in selectedLanguages.enumerated() {
-                self.selectedLanguage! +=  index == 0 ? "\(languages)" : ", \(languages)"
-            }
-            
-            isSelected = true
-            if selectedLanguages.isEmpty == true {
-                isSelected = false
-                self.currentView.languagePickerTextField.textField.placeholder = "Tap here to choose"
-                self.currentView.languagePickerTextField.textFieldCoverLabel.text =  ""
-            } else {
-                self.currentView.languagePickerTextField.textField.placeholder = ""
-                self.currentView.languagePickerTextField.textFieldCoverLabel.text =  self.selectedLanguage
-            }
-            
-            if let isSelected, let hasName {
-                if isSelected && hasName {
-                    currentView.signUpButton.setValidState()
-                } else {
-                    currentView.signUpButton.setInvalidState()
-                }
-            }
-        }
-    }
-    
     override func loadView() {
         view = currentView
     }
@@ -143,7 +81,7 @@ class RegistrationVC: UIViewController, UISheetPresentationControllerDelegate, U
 }
 
 // MARK: - TextField Delegates
-extension RegistrationVC {
+extension RegistrationVC: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField === currentView.languagePickerTextField.textField {
         }
@@ -181,7 +119,7 @@ extension RegistrationVC {
     }
 }
 
-// MARK: - save to userDefaults
+// MARK: - save user to userDefaults
 extension RegistrationVC {
     private func saveRegisterData() {
         showHUD()
@@ -234,4 +172,73 @@ extension RegistrationVC {
             print("Error to decode location data")
         }
     }
+}
+
+//MARK: UISheet
+extension RegistrationVC: UISheetPresentationControllerDelegate {
+    func openCountryPicker() {
+        countryPicker.modalPresentationStyle = .fullScreen
+        //        countryPicker.pickerView.searchBar.searchField.text = ""
+        if let sheet = countryPicker.sheetPresentationController {
+            
+            sheet.prefersGrabberVisible = true
+            sheet.preferredCornerRadius = 30
+            sheet.detents = [.large()]
+            sheet.delegate = self
+        }
+        
+        countryPicker.isRegistration = true
+        countryPicker.pickerView.searchBar.textFieldAttribute(placeholderText: "Search for Language", placeholderHeight: 14)
+        present(countryPicker, animated: true)
+        
+        //        currentView.languagePickerTextField.textField.placeholder = ""
+        countryPicker.sendSavedData = { [weak self] selectedLanguages in
+            self?.selectedLanguage = ""
+            guard let self = self else { return }
+            for (index, languages) in selectedLanguages.enumerated() {
+                self.selectedLanguage! +=  index == 0 ? "\(languages)" : ", \(languages)"
+            }
+            
+            isSelected = true
+            if selectedLanguages.isEmpty == true {
+                isSelected = false
+                self.currentView.languagePickerTextField.textField.placeholder = "Tap here to choose"
+                self.currentView.languagePickerTextField.textFieldCoverLabel.text =  ""
+            } else {
+                self.currentView.languagePickerTextField.textField.placeholder = ""
+                self.currentView.languagePickerTextField.textFieldCoverLabel.text =  self.selectedLanguage
+            }
+            
+            if let isSelected, let hasName {
+                if isSelected && hasName {
+                    currentView.signUpButton.setValidState()
+                } else {
+                    currentView.signUpButton.setInvalidState()
+                }
+            }
+        }
+    }
+}
+
+//MARK: Language and extension code
+extension RegistrationVC {
+    func findExtensionCode(for countryCode: String) -> String? {
+        let countries: [CountryModel] = Bundle.main.decode(from: "Countries.json")
+        if let country = countries.first(where: { $0.code == countryCode }) {
+            return country.dialCode
+        } else {
+            return nil // Country code not found in the array
+        }
+    }
+    
+    func setLanguage() {
+        let country: [String] = [
+            "Afar", "Afrikaans", "Albanian", "Amharic", "Arabic", "Aramaic", "Armenian", "Assamese", "Azerbaijani", "Balochi", "Basque", "Belarusian", "Bengali", "Berber", "Bhojpuri", "Bodo", "Bosnian", "Breton", "Bulgarian", "Burmese", "Cantonese", "Catalan", "Cebuano", "Chechen", "Chewa", "Chinese", "Comorian", "Corsican", "Creole", "Croatian", "Czech", "Dakhini", "Danish", "Dogri", "Dutch", "Dzongkha", "English", "Esperanto", "Estonian", "Ewe", "Faroese", "Filipino", "Finnish", "French", "Frisian", "Fulani", "Galician", "Garhwali", "Georgian", "German", "Greek", "Guarani", "Gujarati", "Hakka", "Haryanvi", "Hausa", "Hawaiian", "Hebrew", "Hiligaynon", "Hindi", "Hmong", "Hokkien", "Hungarian", "Icelandic", "Igbo", "Indonesian", "Irish", "Italian", "Jamaican Patois", "Japanese", "Javanese", "Kannada", "Kashmiri", "Kazakh", "Khmer", "Kikongo", "Kinyarwanda", "Kirundi", "Kodava", "Konkani", "Korean", "Kumaoni", "Kurdish", "Kutchi", "Kyrgyz", "Lao", "Latin", "Latvian", "Lingala", "Lithuanian", "Luo", "Luxembourgish", "Macedonian", "Maithili", "Malagasy", "Malay", "Malayalam", "Maltese", "Mandarin", "Maori", "Marathi", "Marwari", "Mayan", "Meitei", "Mongolian", "Montenegrin", "Nahuatl", "Nepali", "Norwegian", "Occitan", "Oriya", "Oromo", "Pahari", "Papiamento", "Pashto", "Persian", "Polish", "Portuguese", "Punjabi", "Quechua", "Rajasthani", "Romanian", "Romansh", "Russian", "Sami", "Sankethi", "Sanskrit", "Santali", "Saurashtra", "Sepedi", "Serbian", "Sesotho", "Setswana", "Sign Language", "Sindhi", "Sinhala", "Slovak", "Slovenian", "Somali", "Spanish", "Swahili", "Swati", "Swedish", "Tagalog", "Taiwanese", "Tajik", "Tamil", "Telugu", "Teochew", "Thai", "Tibetan", "Tigrinya", "Tsonga", "Tulu", "Turkish", "Ukrainian", "Urdu", "Venda", "Vietnamese", "Welsh", "Yiddish", "Yoruba", "Zulu"
+        ]
+        
+        for language in country {
+            languageManager.setData(language: language, isSelected: false)
+        }
+    }
+        
 }

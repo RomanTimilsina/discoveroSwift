@@ -10,7 +10,7 @@ import UIKit
 class RegistrationView: UIView {
     
     var openPicker: (() -> Void)?
-    var handleSignUp: ((String?) -> Void)?
+    var onSignUp: ((String?) -> Void)?
     
     let headerView = DIHeaderView(title: "Registration", hasBack: false)
     let headerBackgroundView = UIView()
@@ -86,7 +86,7 @@ class RegistrationView: UIView {
     }
 }
 
-//Mark: Every handling function
+//MARK: Every handling function
 extension RegistrationView {
     @objc func tapTextfield() {
         openPicker?()
@@ -94,7 +94,7 @@ extension RegistrationView {
     
     @objc func signUp() {
         let enteredText = personalInfoTextField.textField.text
-        handleSignUp?(enteredText)
+        onSignUp?(enteredText)
     }
     
     @objc func dismissKeyboard() {
@@ -102,6 +102,7 @@ extension RegistrationView {
     }
 }
 
+//MARK: text formatting function
 extension RegistrationView {
     func applyColorsAndBold(toLabel label: UILabel, text: String, colorsAndSubstrings: [(color: UIColor?, substring: String)]) {
         let excludedWords = "and"

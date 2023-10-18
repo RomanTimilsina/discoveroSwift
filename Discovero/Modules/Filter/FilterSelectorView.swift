@@ -10,8 +10,8 @@ import MultiSlider
 class FilterSelectorView: UIView{
     
     var openPicker: (() -> Void)?
-    var handleReset: (() -> Void)?
-    var handleSearch: ((String, String, String) -> Void)?
+    var onResetClick: (() -> Void)?
+    var onSearchClick: ((String, String, String) -> Void)?
     
     let locationLabel = DICustomProfileView(titleText: "Location", text: "Select your location", show: true, sideTitleString: "")
     let priceLabel = UILabel(text: "Price", font: OpenSans.semiBold, size: 16)
@@ -129,7 +129,7 @@ class FilterSelectorView: UIView{
         propertyTypeLabel.propertyCoverButton.showsMenuAsPrimaryAction = true
         propertyTypeLabel.propertyCoverButton.menu = addInfoMenu()
         
-        searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
+        searchButton.addTarget(self, action: #selector(handleSearch), for: .touchUpInside)
         
         resetButton.addTarget(self, action: #selector(resetButtonTapped), for: .touchUpInside)
     }
@@ -153,11 +153,11 @@ class FilterSelectorView: UIView{
         openPicker?()
     }
     
-    @objc func searchButtonTapped() {
-        handleSearch?(propertyTypeLabel.subTitle.text ?? "", minCost, maxCost)
+    @objc func handleSearch() {
+        onSearchClick?(propertyTypeLabel.subTitle.text ?? "", minCost, maxCost)
     }
     
     @objc func resetButtonTapped() {
-        handleReset?()
+        onResetClick?()
     }
 }
