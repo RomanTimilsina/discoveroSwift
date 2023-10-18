@@ -31,7 +31,6 @@ class RoomView : UIView{
         bodyView.layer.cornerRadius = 30
         bodyView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
-    
 }
 
 class RoomBodyView: UIView {
@@ -45,21 +44,16 @@ class RoomBodyView: UIView {
     let createAdButton = DIButton(buttonTitle: "Create your first ad",textSize: 14)
     
     lazy var emptyStackView = VerticalStackView(arrangedSubViews: [homeImg, createAdLabel,adDescriptionLabel, createAdButton], spacing: 30)
-
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        backgroundColor = Color.appWhite
         setupView()
-        
     }
     
-    
     func setupView() {
-        
-//        addSubview(emptyStackView)
-//        emptyStackView.centerInSuperview()
-//        emptyStackView.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 0, right: 12))
+        addSubview(emptyStackView)
+        emptyStackView.centerInSuperview()
+        emptyStackView.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 0, right: 12))
         
         addSubview(roomOfferView)
         roomOfferView.anchor(top: topAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
@@ -67,9 +61,7 @@ class RoomBodyView: UIView {
         addSubview(roomWantedView)
         roomWantedView.anchor(top: topAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
     }
-    
-    
-    
+        
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

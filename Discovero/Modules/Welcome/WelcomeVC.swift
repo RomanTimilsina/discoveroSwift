@@ -19,12 +19,16 @@ class WelcomeVC: UIViewController {
         fetchUserData()
     }
     
+    override func loadView() {
+        view = welcomeView
+    }
+    
     func fetchUserData() {
         guard let uid else { return }
-        self.fireStore.getUserData(uid: uid, completion: { [weak self] (dataEntry: UserData) in
+        self.fireStore.getUserData(uid: uid, completion: { [weak self] userData in
             guard let self else { return }
-            self.welcomeView.welcomeLabel.text = "Welcome \(dataEntry.name)"
-            fireStore.saveUserDataToDefault(userData: dataEntry)
+            self.welcomeView.welcomeLabel.text = "Welcome \(userData.name)"
+            fireStore.saveUserDataToDefault(userData: userData)
             
             timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(timerFired), userInfo: nil, repeats: false)
         })
@@ -32,9 +36,5 @@ class WelcomeVC: UIViewController {
     
     @objc func timerFired() {
         navigationController?.pushViewController(HomeController(), animated: true)
-    }
-    
-    override func loadView() {
-        view = welcomeView
     }
 }

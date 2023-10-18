@@ -66,7 +66,6 @@
 		04BA4C682AD3C45800029E5A /* AllUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA4C672AD3C45800029E5A /* AllUserData.swift */; };
 		04C875312ADD580100248A0F /* RoomWantedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C875302ADD580100248A0F /* RoomWantedVC.swift */; };
 		04C875332ADD582900248A0F /* RoomWantedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C875322ADD582900248A0F /* RoomWantedView.swift */; };
-		04C875352ADD584B00248A0F /* RoomWantedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C875342ADD584B00248A0F /* RoomWantedTableViewCell.swift */; };
 		04CA49052AA43FEB00C69767 /* DITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA49042AA43FEB00C69767 /* DITextField.swift */; };
 		04CA490D2AA44D3400C69767 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04CA490C2AA44D2D00C69767 /* OpenSans-Regular.ttf */; };
 		04CA490E2AA44D3600C69767 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04CA490B2AA44D2D00C69767 /* OpenSans-SemiBold.ttf */; };
@@ -181,7 +180,6 @@
 		04BA4C672AD3C45800029E5A /* AllUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllUserData.swift; sourceTree = "<group>"; };
 		04C875302ADD580100248A0F /* RoomWantedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomWantedVC.swift; sourceTree = "<group>"; };
 		04C875322ADD582900248A0F /* RoomWantedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomWantedView.swift; sourceTree = "<group>"; };
-		04C875342ADD584B00248A0F /* RoomWantedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomWantedTableViewCell.swift; sourceTree = "<group>"; };
 		04CA49042AA43FEB00C69767 /* DITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITextField.swift; sourceTree = "<group>"; };
 		04CA490B2AA44D2D00C69767 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		04CA490C2AA44D2D00C69767 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
@@ -366,7 +364,6 @@
 			children = (
 				049CF12E2AA9D4D000FF2F1B /* RoomOfferView.swift */,
 				049CF1302AA9D4ED00FF2F1B /* RoomOfferVC.swift */,
-				04978F862AB81E3C00BCACC5 /* RoomTableViewCell.swift */,
 			);
 			path = RoomOffer;
 			sourceTree = "<group>";
@@ -450,7 +447,6 @@
 			children = (
 				04C875302ADD580100248A0F /* RoomWantedVC.swift */,
 				04C875322ADD582900248A0F /* RoomWantedView.swift */,
-				04C875342ADD584B00248A0F /* RoomWantedTableViewCell.swift */,
 			);
 			path = RoomWanted;
 			sourceTree = "<group>";
@@ -483,6 +479,7 @@
 				04C8752F2ADD57E300248A0F /* RoomWanted */,
 				04A7C7BC2ADE994900146688 /* RoomVC.swift */,
 				04A7C7BE2ADE998B00146688 /* RoomView.swift */,
+				04978F862AB81E3C00BCACC5 /* RoomTableViewCell.swift */,
 			);
 			path = Room;
 			sourceTree = "<group>";
@@ -751,7 +748,6 @@
 				049AB9CA2AC9440D007200A5 /* CustomTimer.swift in Sources */,
 				04B514A52AA71CAA00E99A1B /* OtpConfirmView.swift in Sources */,
 				04996CBF2AA4725300DB618F /* DIButton.swift in Sources */,
-				04C875352ADD584B00248A0F /* RoomWantedTableViewCell.swift in Sources */,
 				04A168B72AA8544F0065F607 /* DIPickerView.swift in Sources */,
 				049D3A9A2AADBE86004864E9 /* DICustomProfileView.swift in Sources */,
 				04967AB32ABAC9F40035B359 /* FilterSelectorVC.swift in Sources */,

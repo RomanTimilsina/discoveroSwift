@@ -67,7 +67,7 @@ class DIPickerView: UIView {
     }
     
     let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
-        print("OK button tapped")
+        debugPrint("OK button tapped")
     }
     
     private func observeEvents() {

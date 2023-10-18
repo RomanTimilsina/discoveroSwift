@@ -50,20 +50,6 @@ class RoomWantedVC: UIViewController{
     }
     
     func observeEvents() {
-        //        roomView.let  = { [weak self] in
-        //
-        //            self?.fireStore.getRoomOffered { [weak self] rooms in
-        //                self?.roomOffers.removeAll()
-        //                guard let self = self else { return }
-        //                self.roomOffers.append(contentsOf: rooms)
-        //
-        //                DispatchQueue.main.async {
-        //                    self.roomView.adsTable.reloadData()
-        //                }
-        //                roomView.refreshControl.endRefreshing()
-        //            }
-        //        }
-        
         roomWantedView.filterSection.handleFilter = { [weak self] in
             guard let self else { return }
             filterVC.hidesBottomBarWhenPushed = true
@@ -87,7 +73,6 @@ class RoomWantedVC: UIViewController{
                                      max: Double(maxCost)
             ) { [weak self] roomOffersModel in
                 guard let self else { return }
-//                self.filterRoomOffers.append(contentsOf: roomOffersModel)
                 DispatchQueue.main.async {
                     self.roomWanted.append(contentsOf: roomOffersModel)
                        self.roomWantedView.adsTable.reloadData()
@@ -96,11 +81,6 @@ class RoomWantedVC: UIViewController{
                 }
         }
     }
-    
-    
-    
-    
-    
 }
 
 extension RoomWantedVC: UITableViewDelegate, UITableViewDataSource  {
@@ -147,12 +127,6 @@ extension RoomWantedVC: UITableViewDelegate, UITableViewDataSource  {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        //        let data = roomOffers[indexPath.row]
-        //        let approximateHeightOfFont = 30
-        //        let approximateNoOfLetters = 40
-        //        let heightOfEmptyTable = 245
-        //        let labelHeight = (((data.description.count)/approximateNoOfLetters) * approximateHeightOfFont) + heightOfEmptyTable
         return 254
     }
     

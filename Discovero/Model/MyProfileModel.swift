@@ -24,7 +24,6 @@ struct ProfileManager {
         data.append(ProfileModel(title: "Gender", value: "Male"))
         data.append(ProfileModel(title: "", value: ""))
         data.append(ProfileModel(title: "a", value: "a"))
-        
     }
     
     func getData () -> [ProfileModel] {

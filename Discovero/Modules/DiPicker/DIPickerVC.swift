@@ -53,7 +53,7 @@ class DIPickerVC: UIViewController {
             closePicker?()
         }
         
-        //MARK: - need to work on languag filter
+        //MARK: - need to work on language filter
         pickerView.onSarchEdit = { [weak self] searchText in
             guard let self else { return }
             if isRegistration  {
@@ -100,7 +100,6 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = .none
             return cell
         } else {
-            
             let data = searchLanguageModel[indexPath.row]
             
             cell.isSelected = data.isSelected!
@@ -111,7 +110,7 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
                         countSelected += 1
                         cell.countryImage.image = UIImage(systemName: "checkmark.square")
                         searchLanguageModel[indexPath.row].isSelected = true
-//                        !searchLanguageModel[indexPath.row].isSelected!
+
                         savedData.append(searchLanguageModel[indexPath.row].language)
                     } else {
                         cell.isChecked = !cell.isChecked
@@ -119,7 +118,7 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
                         
                         cell.countryImage.image = UIImage(systemName: "square")
                         searchLanguageModel[indexPath.row].isSelected = false
-//                        !searchLanguageModel[indexPath.row].isSelected!
+
                         savedData.removeAll {
                             $0 == self.searchLanguageModel[indexPath.row].language
                         }
@@ -127,12 +126,11 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
                 } else {
                     countSelected -= 1
                     searchLanguageModel[indexPath.row].isSelected = false
-//                    !searchLanguageModel[indexPath.row].isSelected!
+
                     savedData.removeAll {
                         $0 == self.searchLanguageModel[indexPath.row].language
                     }
                     cell.countryImage.image = UIImage(systemName: "square")
-                    
                 }
                 
                 for (index, language) in languageModel.enumerated() {

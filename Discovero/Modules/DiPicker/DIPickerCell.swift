@@ -18,7 +18,6 @@ class DIPickerCell: UITableViewCell {
         backgroundColor = Color.gray900
         setupConstraints()
         observeConstraints()
-        
         check()
     }
     
@@ -46,7 +45,6 @@ class DIPickerCell: UITableViewCell {
     
     @objc func check() {
         passpass?()
-        
     }
     
     @objc func checkManage() {

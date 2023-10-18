@@ -13,16 +13,7 @@ class RoomVC : UIViewController{
     let currentView = RoomView()
     var roomOfferVC: RoomOfferVC?
     var roomWantedVC : RoomWantedVC?
-    
-    
-//    init() {
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         self.currentView.bodyView.roomOfferView.isHidden = false
         self.currentView.bodyView.roomWantedView.isHidden = true
@@ -42,9 +33,7 @@ class RoomVC : UIViewController{
     }
     
     private func setupChildController(){
-        
         roomOfferVC = RoomOfferVC()
-        
         guard let roomOfferVC = roomOfferVC else { return }
         add(roomOfferVC, innerView: currentView.bodyView.roomOfferView)
         roomOfferVC.view.fillSuperview()
@@ -61,7 +50,6 @@ class RoomVC : UIViewController{
             self.currentView.bodyView.roomOfferView.isHidden = false
             self.currentView.bodyView.roomWantedView.isHidden = true
             self.currentView.bodyView.emptyStackView.isHidden = true
-
         }
         
         currentView.headerTab.handleWanted = { [weak self] in
