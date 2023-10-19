@@ -35,10 +35,10 @@ class OnBoardingPageView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = Color.gray900
-        setupUI()
+        setupView()
     }
     
-    func setupUI() {
+    func setupView() {
         addSubview(logInStack)
         logInStack.anchor(top: nil, leading: nil, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 40, right: 0))
         logInStack.centerXInSuperview()

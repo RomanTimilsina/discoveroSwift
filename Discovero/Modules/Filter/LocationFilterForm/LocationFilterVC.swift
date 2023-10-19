@@ -26,13 +26,14 @@ class LocationFilterVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         countriesAndState()
-        observeViewEvents()
         
         currentView.suburbTextField.delegate = self
         currentView.countriesTextField.text = userData?.country
         currentView.statesTextField.text = userData?.locationDetail.state
         
         countryPicker.countryModel = countryManager.getData()
+        observeViewEvents()
+
     }
     
     func countriesAndState() {
@@ -146,6 +147,8 @@ extension LocationFilterVC: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField == currentView.suburbTextField {
+//            currentView.lineview.backgroundColor  = Color.gray400
+//            currentView.lineview2.backgroundColor = Color.gray400
             currentView.lineview3.backgroundColor = Color.gray400
         }
     }

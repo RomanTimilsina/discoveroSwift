@@ -17,22 +17,16 @@ class ProfileItemVC: UIViewController  {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        email.Field.titleLabel.text = "What's your \(onTitle ?? "")"
-        email.Field.textField.placeholder = onPlaceholder ?? ""
-        email.Field.textField.text = ""
-        email.Field.textField.delegate = self
+        email.emailTextField.titleLabel.text = "What's your \(onTitle ?? "")"
+        email.emailTextField.textField.placeholder = onPlaceholder ?? ""
+        email.emailTextField.textField.text = ""
+        email.emailTextField.textField.delegate = self
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
-        if let text = email.Field.textField.text {
-            if text.isEmpty {
-                email.saveButton.setInvalidState()
-            } else {
-                email.saveButton.setValidState()
-            }
-        }
+        checkAndUpdateSaveButtonState()
         loginEvents()
     }
     
@@ -48,7 +42,7 @@ class ProfileItemVC: UIViewController  {
     }
     
     private func checkAndUpdateSaveButtonState() {
-        if let text = email.Field.textField.text {
+        if let text = email.emailTextField.textField.text {
             if text.isEmpty {
                 email.saveButton.setInvalidState()
             } else {
@@ -58,7 +52,7 @@ class ProfileItemVC: UIViewController  {
     }
 }
 
-// MARK: - textfield delegates
+// MARK: - Textfield delegates
 extension ProfileItemVC: UITextFieldDelegate {
     // MARK: Activate button if textfield has name
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

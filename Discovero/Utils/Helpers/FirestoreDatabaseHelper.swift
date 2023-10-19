@@ -371,26 +371,25 @@ struct FireStoreDatabaseHelper {
     
     func saveUserDataToDefault(userData: UserData?) {
         if let userData = userData {
-            let encoder = JSONEncoder()
-            if let encoded = try? encoder.encode(userData) {
-                let defaults = UserDefaults.standard
-                defaults.set(encoded, forKey: "userProfile")
-            }
+            UserDefaultsHelper.setmodel(value: userData, key: .userData)
         }
     }
     
     func getUserDataFromDefaults(completion: @escaping (UserData?) -> Void) {
-        let defaults = UserDefaults.standard
-        if let savedProfile = defaults.object(forKey: "userProfile") as? Data {
-            let decoder = JSONDecoder()
-            if let userData = try? decoder.decode(UserData.self, from: savedProfile) {
-                completion(userData)
-            } else {
-                completion(nil)
-            }
-        } else {
-            completion(nil)
-        }
+        
+        completion(UserDefaultsHelper.getModelData(.userData))
+        
+//        let defaults = UserDefaults.standard
+//        if let savedProfile = defaults.object(forKey: "userProfile") as? Data {
+//            let decoder = JSONDecoder()
+//            if let userData = try? decoder.decode(UserData.self, from: savedProfile) {
+//                completion(userData)
+//            } else {
+//                completion(nil)
+//            }
+//        } else {
+//            completion(nil)
+//        }
     }
     
     func getCountryWithState(completion: @escaping ([CountryStateModel]) -> Void) {

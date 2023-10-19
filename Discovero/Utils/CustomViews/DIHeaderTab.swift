@@ -9,8 +9,8 @@ import UIKit
 
 class DIHeaderTab: UIView {
     
-    var handleOffer: (() -> Void)?
-    var handleWanted: (() -> Void)?
+    var onOfferClicked: (() -> Void)?
+    var onWantedClicked: (() -> Void)?
 
     let offerView = UIView()
     let wantedView = UIView()
@@ -56,25 +56,25 @@ class DIHeaderTab: UIView {
     }
     
     private func observeEvents() {
-        let offerTabTap = UITapGestureRecognizer(target: self, action: #selector(offerViewTap))
+        let offerTabTap = UITapGestureRecognizer(target: self, action: #selector(handleOfferViewTap))
         offerVStack.addGestureRecognizer(offerTabTap)
         offerVStack.isUserInteractionEnabled = true
         
-        let wantedTabTap = UITapGestureRecognizer(target: self, action: #selector(wantedViewTap))
+        let wantedTabTap = UITapGestureRecognizer(target: self, action: #selector(handleWantedViewTap))
         wantedVStack.addGestureRecognizer(wantedTabTap)
         wantedVStack.isUserInteractionEnabled = true
     }
     
-    @objc func offerViewTap() {
+    @objc func handleOfferViewTap() {
         offerView.backgroundColor = Color.primary
         wantedView.backgroundColor = Color.gray900
-        handleOffer?()
+        onOfferClicked?()
     }
     
-    @objc func wantedViewTap() {
+    @objc func handleWantedViewTap() {
         wantedView.backgroundColor = Color.primary
         offerView.backgroundColor = Color.gray900
-        handleWanted?()
+        onWantedClicked?()
     }
 }
 

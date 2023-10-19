@@ -35,7 +35,6 @@ class RoomView : UIView{
 
 class RoomBodyView: UIView {
     
-    let line = UIView()
     let roomOfferView = UIView()
     let roomWantedView = UIView()
     let homeImg = UIImageView(image: UIImage(named: "homeImg"),contentMode: .scaleAspectFit, clipsToBounds: true)

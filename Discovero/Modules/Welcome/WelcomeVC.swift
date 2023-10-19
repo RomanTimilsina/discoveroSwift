@@ -9,7 +9,8 @@ import UIKit
 
 class WelcomeVC: UIViewController {
     
-    let welcomeView = WelcomeView()
+    let currentView = WelcomeView()
+    
     var uid: String?
     var timer: Timer?
     var fireStore = FireStoreDatabaseHelper()
@@ -20,18 +21,17 @@ class WelcomeVC: UIViewController {
     }
     
     override func loadView() {
-        view = welcomeView
+        view = currentView
     }
 }
 
 // MARK: -fetch data from users
 extension WelcomeVC {
-
     func fetchUserData() {
         guard let uid else { return }
         self.fireStore.getUserData(uid: uid, completion: { [weak self] userData in
             guard let self else { return }
-            self.welcomeView.welcomeLabel.text = "Welcome \(userData.name)"
+            self.currentView.welcomeLabel.text = "Welcome \(userData.name)"
             fireStore.saveUserDataToDefault(userData: userData)
             
             timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(timerFired), userInfo: nil, repeats: false)

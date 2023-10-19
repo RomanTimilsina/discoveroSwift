@@ -8,6 +8,7 @@
 import UIKit
 
 class OTPConfirmView: UIView {
+    
     var onCLickedDidNotReceiveCode: (() -> Void)?
     var onNextClick: ((String) -> Void)?
     
@@ -23,7 +24,7 @@ class OTPConfirmView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = Color.gray900
-        setupUI()
+        setupView()
         observeEvents()
     }
     
@@ -31,7 +32,7 @@ class OTPConfirmView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupUI() {
+    func setupView() {
         addSubview(headerView)
         headerView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 13, left: 0, bottom: 0, right: 0))
         headerView.constraintHeight(constant: 40)
@@ -57,11 +58,6 @@ class OTPConfirmView: UIView {
         codeNotReceivedLabel.centerXInSuperview()
     }
     
-    let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
-        // Handle OK button tap here
-        print("OK button tapped")
-    }
-    
     private func observeEvents() {
         let resendCode = UITapGestureRecognizer(target: self, action: #selector(handleResendCode))
         codeNotReceivedLabel.addGestureRecognizer(resendCode)
@@ -69,6 +65,10 @@ class OTPConfirmView: UIView {
         
         nextButton.addTarget(self, action: #selector(handleNextButton), for: .touchUpInside)
         
+        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            // Handle OK button tap here
+            print("OK button tapped")
+        }
         alert.addAction(okAction)
     }
     

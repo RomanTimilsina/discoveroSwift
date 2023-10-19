@@ -17,19 +17,17 @@ class LocationFilterView: UIView {
     let countryLabel = UILabel(text: "Country ", color: Color.appWhite, font:  OpenSans.semiBold, size: 15)
     var countriesTextField: UITextField = {
         let textfield = UITextField(color: Color.appBlack)
-        textfield.text = ""
+        textfield.text = ""        
         textfield.isUserInteractionEnabled = false
         textfield.textColor = Color.appWhite
-        textfield.borderStyle = .line
         return textfield
     }()
     let stateLabel = UILabel(text: "State", color: Color.appWhite, font: OpenSans.semiBold, size: 15)
     let statesTextField: UITextField = {
         let textfield = UITextField(color: Color.appBlack)
-        textfield.text = "rtyrtt"
+        textfield.text = ""
         textfield.isUserInteractionEnabled = false
         textfield.textColor = Color.appWhite
-        textfield.borderStyle = .line
         return textfield
     }()
     let suburbLabel = UILabel(text: "Suburb ", font: OpenSans.semiBold, size: 15)
@@ -39,13 +37,12 @@ class LocationFilterView: UIView {
         textfield.placeholder = "Tap Here"
         textfield.isUserInteractionEnabled = false
         textfield.textColor = Color.appWhite
-        textfield.borderStyle = .line
         return textfield
     }()
     let saveButton = DIButton(buttonTitle: "Save")
-    let lineview = UIView(color: Color.gray500)
-    let lineview2 = UIView(color: Color.gray500)
-    let lineview3 = UIView(color: Color.gray500)
+    let lineview  = UIView(color: Color.placeholderGray)
+    let lineview2 = UIView(color: Color.placeholderGray)
+    let lineview3 = UIView(color: Color.placeholderGray)
     let countriesTFCoverButton = UIButton(title: "", titleColor: .clear, font: OpenSans.regular, fontSize: 1)
     let stateTFCoverButton = UIButton(title: "", titleColor: .clear, font: OpenSans.regular, fontSize: 1)
     let alert = UIAlertController(title: "Alert Title", message: "Can't select more than 3 languages", preferredStyle: .alert)
@@ -80,7 +77,7 @@ class LocationFilterView: UIView {
         
         addSubview(lineview)
         lineview.anchor(top: countriesTextField.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top:  0, left: 10, bottom: 0, right: 10))
-        lineview.constraintHeight(constant: 0.5)
+        lineview.constraintHeight(constant: 1)
         
         addSubview(stateLabel)
         stateLabel.anchor(top: lineview.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 20, left: 10, bottom: 0, right: 10))
@@ -92,8 +89,8 @@ class LocationFilterView: UIView {
         stateTFCoverButton.anchor(top: statesTextField.topAnchor, leading: statesTextField.leadingAnchor, bottom: statesTextField.bottomAnchor, trailing: statesTextField.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         
         addSubview(lineview2)
-        lineview2.anchor(top: statesTextField.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top:  0, left: 0, bottom: 0, right: 0))
-        lineview2.constraintHeight(constant: 0.5)
+        lineview2.anchor(top: statesTextField.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top:  0, left: 10, bottom: 0, right: 10))
+        lineview2.constraintHeight(constant: 1)
         
         addSubview(suburbLabel)
         suburbLabel.anchor(top: lineview2.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 20 , left: 10, bottom: 0, right: 10))

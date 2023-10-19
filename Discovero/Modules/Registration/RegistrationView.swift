@@ -44,6 +44,8 @@ class RegistrationView: UIView {
         
         addSubview(headerView)
         headerView.anchor(top:  safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
+        //MARK: Registration has no cancel button
+        headerView.cancelLabel.isHidden = true
         
         addSubview(headerBackgroundView)
         headerBackgroundView.anchor(top: topAnchor, leading: leadingAnchor, bottom: headerView.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0 ))
@@ -79,7 +81,7 @@ class RegistrationView: UIView {
         languagePickerTextField.addGestureRecognizer(pickerTextFieldTapGesture)
         languagePickerTextField.isUserInteractionEnabled = true
         
-        signUpButton.addTarget(self, action: #selector(signUp), for: .touchUpInside)
+        signUpButton.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
         
         let overlayViewTap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         overlayView.addGestureRecognizer(overlayViewTap)
@@ -92,7 +94,7 @@ extension RegistrationView {
         openPicker?()
     }
     
-    @objc func signUp() {
+    @objc func handleSignUp() {
         let enteredText = personalInfoTextField.textField.text
         onSignUp?(enteredText)
     }

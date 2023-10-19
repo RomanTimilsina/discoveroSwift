@@ -7,9 +7,9 @@
 
 import UIKit
 
-class OnSelectPageVC: UIViewController {
+class CommentsPageVC: UIViewController {
     
-    let currentView = OnSelectPageView()
+    let currentView = CommentsPageView()
     
     override func viewWillAppear(_ animated: Bool) {
         currentView.handleToggleButtonTap = { [weak self] isShowLess, adsHeight in
@@ -27,11 +27,15 @@ class OnSelectPageVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
-        // onClick show all text otherwise just 200 text
+        showMore()
+        observeEvents()
+    }
+    
+    // MARK: onClick show all text otherwise just 200 text
+    func showMore() {
         if currentView.adDescritionText.count < 199 {
             currentView.showToggleButton.isHidden = true
         }
-        observeEvents()
     }
     
     func observeEvents(){

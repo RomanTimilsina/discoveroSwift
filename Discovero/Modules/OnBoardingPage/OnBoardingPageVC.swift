@@ -76,7 +76,7 @@ extension OnBoardingPageVC: UICollectionViewDelegate, UICollectionViewDataSource
     }
 }
 
-//MARK: nav function
+//MARK: Navigation function
 extension OnBoardingPageVC {
     private func gotoLogin(isFromLogin: Bool) {
         let login = LoginVC()

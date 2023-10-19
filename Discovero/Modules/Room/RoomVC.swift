@@ -11,6 +11,7 @@ import Combine
 class RoomVC : UIViewController{
     
     let currentView = RoomView()
+    
     var roomOfferVC: RoomOfferVC?
     var roomWantedVC : RoomWantedVC?
 
@@ -45,14 +46,14 @@ class RoomVC : UIViewController{
     }
     
     func observeViewEvents() {
-        currentView.headerTab.handleOffer = { [weak self] in
+        currentView.headerTab.onOfferClicked = { [weak self] in
             guard let self else { return }
             self.currentView.bodyView.roomOfferView.isHidden = false
             self.currentView.bodyView.roomWantedView.isHidden = true
             self.currentView.bodyView.emptyStackView.isHidden = true
         }
         
-        currentView.headerTab.handleWanted = { [weak self] in
+        currentView.headerTab.onWantedClicked = { [weak self] in
             guard let self else { return }
             self.currentView.bodyView.emptyStackView.isHidden = true
             self.currentView.bodyView.roomOfferView.isHidden = true

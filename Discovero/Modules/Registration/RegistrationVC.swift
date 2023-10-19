@@ -9,11 +9,13 @@ import UIKit
 import FirebaseFirestore
 
 class RegistrationVC: UIViewController {
+    
     let currentView = RegistrationView()
+    
     lazy var countryPicker = DIPickerVC()
+    var languageManager = LanguageManager()
     var hasName: Bool?
     var isSelected: Bool?
-    var languageManager = LanguageManager()
     var selectedLanguage: String?
     let phoneNumber: String
     let userId: String
@@ -43,11 +45,6 @@ class RegistrationVC: UIViewController {
         countryPicker.onClosePicker = { [weak self] in
             guard let self = self else { return }
             dismiss(animated: true, completion: nil)
-        }
-        
-        currentView.headerView.onClose = { [weak self] in
-            guard let self = self else { return }
-            navigationController?.popViewController(animated: true)
         }
         
         currentView.onSignUp = { [weak self] nameText in
@@ -180,7 +177,6 @@ extension RegistrationVC: UISheetPresentationControllerDelegate {
         countryPicker.modalPresentationStyle = .fullScreen
         //        countryPicker.pickerView.searchBar.searchField.text = ""
         if let sheet = countryPicker.sheetPresentationController {
-            
             sheet.prefersGrabberVisible = true
             sheet.preferredCornerRadius = 30
             sheet.detents = [.large()]
@@ -190,7 +186,6 @@ extension RegistrationVC: UISheetPresentationControllerDelegate {
         countryPicker.isRegistration = true
         countryPicker.currentView.searchBar.textFieldAttribute(placeholderText: "Search for Language", placeholderHeight: 14)
         present(countryPicker, animated: true)
-        
         //        currentView.languagePickerTextField.textField.placeholder = ""
         countryPicker.sendSavedData = { [weak self] selectedLanguages in
             self?.selectedLanguage = ""
@@ -240,5 +235,4 @@ extension RegistrationVC {
             languageManager.setData(language: language, isSelected: false)
         }
     }
-        
 }

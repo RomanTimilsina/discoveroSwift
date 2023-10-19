@@ -14,10 +14,10 @@ import Firebase
 class OTPConfirmVC: UIViewController {
     
     let currentView = OTPConfirmView()
+    
     var verificationId: String?
     let countries: [CountryModel] = Bundle.main.decode(from: "Countries.json")
     var phoneNumber = ""
-    var fireStore =  FireStoreDatabaseHelper()
     
     override func loadView() {
         super.loadView()
@@ -114,6 +114,7 @@ extension OTPConfirmVC {
     
     private func gotoRegisterPage(uid: String) {
         let register = RegistrationVC(phoneNumber: self.phoneNumber, userId: uid)
+//        register.countryPicker.countLanguageSelected = 0
         self.navigationController?.pushViewController(register, animated: true)
     }
     
@@ -134,9 +135,10 @@ extension OTPConfirmVC {
             }
             
             if let uid = authResult?.user.uid {
-                self.fireStore.checkAuthentication(uid: uid, phone: phoneNumber) { name, uid in
-                    self.gotoWelcomePage(uid: uid)
+                FireStoreDatabaseHelper().checkAuthentication(uid: uid, phone: phoneNumber) { name, uid in
+//
                     if !name.isEmpty {
+                        self.gotoWelcomePage(uid: uid)
                         //                        self.gotoHomePage()
                         UserDefaultsHelper.setStringData(value: uid, key: .userId)
                         UserDefaultsHelper.setStringData(value: "set", key: .isLoggedIn)

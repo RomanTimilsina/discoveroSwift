@@ -11,21 +11,19 @@ class NoConnectionView: UIView {
     
     let imageLabel = UIImageView(image: UIImage(named: "no-internet"),contentMode: .scaleAspectFit, clipsToBounds: true)
     let noConnectinLabel = UILabel(text: "No Connection", font: OpenSans.bold, size: 24)
-    let errMessage = UILabel(text: "Oops! The internet connection apperars to be offline. Please try again.", font: OpenSans.regular, size: 14,
-                             numberOfLines: 0, alignment: .center)
+    let errMessage = UILabel(text: "Oops! The internet connection apperars to be offline. Please try again.", font: OpenSans.regular, size: 14, numberOfLines: 0, alignment: .center)
     let tryAgainButton = DIButton(buttonTitle: "Try Again", textSize: 14)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        setupConstraint()
+        setupView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupConstraint() {
+    func setupView() {
         addSubview(noConnectinLabel)
         noConnectinLabel.centerInSuperview()
         

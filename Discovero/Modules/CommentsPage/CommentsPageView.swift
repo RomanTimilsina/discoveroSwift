@@ -7,7 +7,7 @@
 
 import UIKit
 
-class OnSelectPageView: UIView {
+class CommentsPageView: UIView {
     
     var handleToggleButtonTap: ((Bool, CGFloat) -> Void)?
     

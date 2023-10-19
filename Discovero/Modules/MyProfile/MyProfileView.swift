@@ -33,16 +33,15 @@ class MyProfileView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .black
-        
-        setupConstraint()
-        profileArrayFunction()
+        setupView()
+        profileArrayAppendFunction()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupConstraint () {
+    func setupView () {
         addSubview(view)
         view.anchor(top: topAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0 ))
         view.backgroundColor = Color.gray900
@@ -69,7 +68,7 @@ class MyProfileView: UIView {
 // MARK: Append Data
 private extension MyProfileView{
     
-    func profileArrayFunction() {
+    func profileArrayAppendFunction() {
         profileArray.append(nameView)
         profileArray.append(emailView)
         profileArray.append(phoneView)

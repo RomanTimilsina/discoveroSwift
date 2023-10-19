@@ -9,10 +9,10 @@ import UIKit
 
 class RoomOfferTableViewCell: UITableViewCell {
     
-    var handleLike: (() -> Void)?
-    var handleCall: (() -> Void)?
-    var handleMessage: (() -> Void)?
-    var handleComments: (() -> Void)?
+    var onLikeClicked: (() -> Void)?
+    var onCallClicked: (() -> Void)?
+    var onMessageClicked: (() -> Void)?
+    var onCommentsClicked: (() -> Void)?
     
     let gapView = UIView()
     let identifier = "RoomTableCell"
@@ -122,41 +122,41 @@ class RoomOfferTableViewCell: UITableViewCell {
     }
     
     private func observeEvents() {
-        let likeButtonTap = UITapGestureRecognizer(target: self, action: #selector(likeTap))
+        let likeButtonTap = UITapGestureRecognizer(target: self, action: #selector(handleLikeTap))
         likesStack.addGestureRecognizer(likeButtonTap)
         likesStack.isUserInteractionEnabled = true
         
-        let callButtonTap = UITapGestureRecognizer(target: self, action: #selector(callTap))
+        let callButtonTap = UITapGestureRecognizer(target: self, action: #selector(handleCallTap))
         callStack.addGestureRecognizer(callButtonTap)
         callStack.isUserInteractionEnabled = true
         
-        let messageButtonTap = UITapGestureRecognizer(target: self, action: #selector(messageTap))
+        let messageButtonTap = UITapGestureRecognizer(target: self, action: #selector(handleMessageTap))
         messageStack.addGestureRecognizer(messageButtonTap)
         messageStack.isUserInteractionEnabled = true
         
-        let commentButtonTap = UITapGestureRecognizer(target: self, action: #selector(commentsTap))
+        let commentButtonTap = UITapGestureRecognizer(target: self, action: #selector(handleCommentsTap))
         commentsStack.addGestureRecognizer(commentButtonTap)
         commentsStack.isUserInteractionEnabled = true
     }
     
-    @objc func likeTap() {
+    @objc func handleLikeTap() {
         print("like")
-        handleLike?()
+        onLikeClicked?()
     }
     
-    @objc func callTap() {
+    @objc func handleCallTap() {
         print("call")
-        handleCall?()
+        onCallClicked?()
     }
     
-    @objc func messageTap() {
+    @objc func handleMessageTap() {
         print("message")
-        handleMessage?()
+        onMessageClicked?()
     }
     
-    @objc func commentsTap() {
+    @objc func handleCommentsTap() {
         print("comments")
-        handleComments?()
+        onCommentsClicked?()
     }
     
     required init?(coder: NSCoder) {
