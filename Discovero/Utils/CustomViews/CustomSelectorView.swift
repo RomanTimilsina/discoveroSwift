@@ -9,7 +9,7 @@ import UIKit
 
 class CustomSelectorView: UIView {
     
-    var handleTap: ((String) -> Void)?
+    var onTap: ((Int) -> Void)?
     let titleLabel = UILabel(text: "", font: OpenSans.semiBold, size: 16)
     let outerView = UIView()
     var viewsArray = [UIView]()
@@ -75,12 +75,13 @@ class CustomSelectorView: UIView {
         guard let selectedView = gesture.view
         else { return }
         
-        for (_, view) in viewsArray.enumerated() {
+        for (index, view) in viewsArray.enumerated() {
             if let label = view.subviews.first as? UILabel {
                 if view == selectedView {
                     label.textColor = Color.appWhite
                     view.backgroundColor = Color.gray400
-                    handleTap?(label.text?.replacingOccurrences(of: "+", with: "") ?? "")
+//                    onTap?(label.text?.replacingOccurrences(of: "+", with: "") ?? "")
+                    onTap?(index)
                 } else {
                     label.textColor = Color.gray400
                     view.backgroundColor = Color.gray800

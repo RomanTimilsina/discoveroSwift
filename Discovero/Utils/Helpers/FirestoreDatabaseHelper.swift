@@ -36,6 +36,7 @@ struct UsersInfoList {
 }
 
 var roomOffers: [RoomOffer] = []
+var roomWanted: [RoomOffer] = []
 var lastDocument: DocumentSnapshot?
 var next: Query?
 var batchSize = 33
@@ -117,44 +118,72 @@ struct FireStoreDatabaseHelper {
         }
     }
     
+    func saveUserDataToDefault(userData: UserData?) {
+        if let userData = userData {
+            UserDefaultsHelper.setmodel(value: userData, key: .userData)
+        }
+    }
+    
+    func getUserDataFromDefaults(completion: @escaping (UserData?) -> Void) {
+        completion(UserDefaultsHelper.getModelData(.userData))
+    }
+    
     func getRoomOffered(isRoomOffer: Bool,
-                        country: String,
-                        state: String,
-                        noOfBedroom: Int? = nil,
-                        noOfBathRoom: Int? = nil,
-                        noOfParking: Int? = nil,
-                        propertyType: String? = nil,
-                        language: [String]? = nil,
-                        min: Double? = nil,
-                        max: Double? = nil,
+                        filterModel: FilterModel,
                         completion: @escaping ([RoomOffer]) -> Void) {
         
         var fireStoreCollection =  Firestore.firestore().collection(isRoomOffer ? "RoomOffer" : "RoomWanted")
-            .whereField("location.state", isEqualTo: state)
-            .whereField("location.country", isEqualTo: country)
+            .whereField("location.state", isEqualTo: filterModel.stateName ?? "")
+            .whereField("location.country", isEqualTo: filterModel.countryName ?? "")
         
-        if noOfBedroom ?? 0 > 0 {
+        if filterModel.noOfBedrooms ?? 0 > 0 {
             fireStoreCollection = fireStoreCollection
-                .whereField("noOfBedrooms", isEqualTo: noOfBedroom ?? "")
+                .whereField("noOfBedrooms", isEqualTo: filterModel.noOfBedrooms ?? 0)
         }
         
-        if noOfParking ?? 0 > 0 {
+        if filterModel.noOfParkings ?? 0 > 0 {
             fireStoreCollection = fireStoreCollection
-                .whereField("noOfParkings", isEqualTo: noOfParking ?? "")
+                .whereField("noOfParkings", isEqualTo: filterModel.noOfParkings ?? 0)
         }
         
-        if noOfBathRoom ?? 0 > 0 {
+        if filterModel.noOfBathrooms ?? 0 > 0 {
             fireStoreCollection = fireStoreCollection
-                .whereField("noOfBathrooms", isEqualTo: noOfBathRoom ?? "")
+                .whereField("noOfBathrooms", isEqualTo: filterModel.noOfBathrooms ?? 0)
         }
         
-        if let propertyType {
-            if propertyType != "Any" {
+        if let propertyType = filterModel.propertyType {
                 fireStoreCollection = fireStoreCollection
                     .whereField("propertyType", isEqualTo: propertyType)
-            }
         }
+        
+        if let languageArray = filterModel.languageArray {
+            fireStoreCollection = fireStoreCollection
+                .whereField("userInfo.languagesSpeaks", arrayContainsAny: languageArray )
+        }
+        
+        if let minCost = filterModel.minCost{
+            fireStoreCollection = fireStoreCollection
+                .whereField("price", isGreaterThanOrEqualTo: minCost)
+        }
+        
+        if let maxCost = filterModel.maxCost {
+            fireStoreCollection = fireStoreCollection
+                .whereField("price", isLessThanOrEqualTo: maxCost)
+        }
+        
+        if let countryName = filterModel.countryName {
+            fireStoreCollection = fireStoreCollection
+                .whereField("location.country", isEqualTo: countryName)
+        }
+        
+        if let stateName = filterModel.stateName {
+            fireStoreCollection = fireStoreCollection
+                .whereField("location.state", isEqualTo: stateName)
+        }
+        
+        
         roomOffers.removeAll()
+        roomWanted.removeAll()
 
         fireStoreCollection
             .getDocuments { query, error in
@@ -162,12 +191,6 @@ struct FireStoreDatabaseHelper {
                     debugPrint("Error retreving cities: \(error.debugDescription)")
                     return
                 }
-                selectedLanguage = language ?? []
-                if firstTimeRun {
-                    // clear room Offers on each run
-                    firstTimeRun = false
-                }
-                
                 for (_, document) in query.documents.enumerated() {
                     let data = document.data()
                     let id = data["id"] as? String
@@ -213,183 +236,33 @@ struct FireStoreDatabaseHelper {
                         streetNo: locationStreetNo ?? "",
                         suburb: locationSuburb ?? ""
                     )
-                    if let price {
-                        if price > min ?? 0 && price < max ?? 5000 {
-                            if selectedLanguage.isEmpty {
-                                let roomOffer = RoomOffer(
-                                    id: id ?? "",
-                                    title: title ?? "",
-                                    description: description ?? "",
-                                    propertyType: propertyType ?? "",
-                                    price: price,
-                                    noOfBedroom: bedrooms ?? 0,
-                                    noOfBathroom: bathrooms ?? 0,
-                                    noOfParkings: parkings ?? 0,
-                                    viewCount: viewCount ?? 0,
-                                    commentCount: commentCount ?? 0,
-                                    timestamp: timestamp ?? 0,
-                                    isAnonymous: isAnonymous ?? false,
-                                    userInfo: userInfo,
-                                    location: location,
-                                    comments: comments ?? [],
-                                    favorites: favorites ?? []
-                                )
-                                roomOffers.append(roomOffer)
-                            } else {
-                                for language in selectedLanguage {
-                                    guard let userInfoLanguagesSpeaks else { return }
-                                    debugPrint(userInfoLanguagesSpeaks)
-                                    if userInfoLanguagesSpeaks.contains(language) {
-                                        // loop once for multilingual user
-                                        if loopOnce {
-                                            let roomOffer = RoomOffer(
-                                                id: id ?? "",
-                                                title: title ?? "",
-                                                description: description ?? "",
-                                                propertyType: propertyType ?? "",
-                                                price: price ,
-                                                noOfBedroom: bedrooms ?? 0,
-                                                noOfBathroom: bathrooms ?? 0,
-                                                noOfParkings: parkings ?? 0,
-                                                viewCount: viewCount ?? 0,
-                                                commentCount: commentCount ?? 0,
-                                                timestamp: timestamp ?? 0,
-                                                isAnonymous: isAnonymous ?? false,
-                                                userInfo: userInfo,
-                                                location: location,
-                                                comments: comments ?? [],
-                                                favorites: favorites ?? []
-                                            )
-                                            roomOffers.append(roomOffer)
-                                            loopOnce = false
-                                        }
-                                    }
-                                }
-                                loopOnce = true
-                            }
-                        }
+                    
+                    let roomOffer = RoomOffer(
+                        id: id ?? "",
+                        title: title ?? "",
+                        description: description ?? "",
+                        propertyType: propertyType ?? "",
+                        price: price ?? 0 ,
+                        noOfBedroom: bedrooms ?? 0,
+                        noOfBathroom: bathrooms ?? 0,
+                        noOfParkings: parkings ?? 0,
+                        viewCount: viewCount ?? 0,
+                        commentCount: commentCount ?? 0,
+                        timestamp: timestamp ?? 0,
+                        isAnonymous: isAnonymous ?? false,
+                        userInfo: userInfo,
+                        location: location,
+                        comments: comments ?? [],
+                        favorites: favorites ?? []
+                    )
+                    if isRoomOffer {
+                        roomOffers.append(roomOffer)
+                    } else {
+                        roomWanted.append(roomOffer)
                     }
                 }
-                firstTimeRun = true
-                completion((roomOffers))
+                completion(isRoomOffer ? roomOffers : roomWanted)
             }
-    }
-    
-    //    func getMoreRooms(completion: @escaping ([RoomOffer], Bool) -> Void) {
-    //        if let lastDocument {
-    //            next = first
-    //                .start(afterDocument: lastDocument)
-    //        } else {
-    //            if firstTimeRun {
-    //                next = first
-    //                firstTimeRun = false
-    //            }
-    //
-    //        }
-    //
-    //        next?.getDocuments { query, error in
-    //
-    //            guard let query = query else { return }
-    //            lastDocument = query.documents.last
-    //
-    //            for (_, document) in query.documents.enumerated() {
-    //                lastDocument = document
-    //
-    //                let data = document.data()
-    //                let id = data["id"] as? String
-    //                let title = data["title"] as? String
-    //                let description = data["description"] as? String
-    //                let price = data["price"] as? Double
-    //                let bedrooms = data["noOfBedrooms"] as? Int
-    //                let bathrooms = data["noOfBathrooms"] as? Int
-    //                let parkings = data["noOfParkings"] as? Int
-    //                let propertyType = data["propertyType"] as? String
-    //                let timestamp = data["timestamp"] as? TimeInterval
-    //                let viewCount = data["viewCount"] as? Int
-    //                let commentCount = data["commentCount"] as? Int
-    //                let isAnonymous = data["isAnonymous"] as? Bool
-    //                let userInfoData = data["userInfo"] as? [String: Any]
-    //                let locationData = data["location"] as? [String: String]
-    //                let comments = data["comments"] as? [String]
-    //                let favorites = data["favorites"] as? [String]
-    //
-    //                let userInfoName = userInfoData?["name"] as? String
-    //                let userInfoPhoneNo = userInfoData?["phoneNo"] as? String
-    //                let userInfoLanguagesSpeaks = userInfoData?["languagesSpeaks"] as? [String]
-    //                let userInfoUid = userInfoData?["uid"] as? [String]
-    //                let locationBuildingNo = locationData?["buildingNo"]
-    //                let locationCountry = locationData?["country"]
-    //                let locationState = locationData?["state"]
-    //                let locationStreetName = locationData?["streetName"]
-    //                let locationStreetNo = locationData?["streetNo"]
-    //                let locationSuburb = locationData?["suburb"]
-    //
-    //                let userInfo = UserInfo(
-    //                    name: userInfoName ?? "",
-    //                    phoneNo: userInfoPhoneNo ?? "",
-    //                    languagesSpeaks: userInfoLanguagesSpeaks ?? [],
-    //                    uid: userInfoUid ?? []
-    //                )
-    //
-    //                let location = Location(
-    //                    buildingNo: locationBuildingNo ?? "",
-    //                    country: locationCountry ?? "",
-    //                    state: locationState ?? "",
-    //                    streetName: locationStreetName ?? "",
-    //                    streetNo: locationStreetNo ?? "",
-    //                    suburb: locationSuburb ?? ""
-    //                )
-    //
-    //                let roomOffer = RoomOffer(
-    //                    id: id ?? "",
-    //                    title: title ?? "",
-    //                    description: description ?? "",
-    //                    propertyType: propertyType ?? "",
-    //                    price: price ?? 0,
-    //                    noOfBedroom: bedrooms ?? 0,
-    //                    noOfBathroom: bathrooms ?? 0,
-    //                    noOfParkings: parkings ?? 0,
-    //                    viewCount: viewCount ?? 0,
-    //                    commentCount: commentCount ?? 0,
-    //                    timestamp: timestamp ?? 0,
-    //                    isAnonymous: isAnonymous ?? false,
-    //                    userInfo: userInfo,
-    //                    location: location,
-    //                    comments: comments ?? [],
-    //                    favorites: favorites ?? []
-    //                )
-    //                    roomOffers.append(roomOffer)
-    //            }
-    //            isFirst = false
-    //            if lastDocument != nil {
-    //                completion(roomOffers, false)
-    //            } else {
-    //                completion(roomOffers, false)
-    //            }
-    //        }
-    //    }
-    
-    func saveUserDataToDefault(userData: UserData?) {
-        if let userData = userData {
-            UserDefaultsHelper.setmodel(value: userData, key: .userData)
-        }
-    }
-    
-    func getUserDataFromDefaults(completion: @escaping (UserData?) -> Void) {
-        
-        completion(UserDefaultsHelper.getModelData(.userData))
-        
-//        let defaults = UserDefaults.standard
-//        if let savedProfile = defaults.object(forKey: "userProfile") as? Data {
-//            let decoder = JSONDecoder()
-//            if let userData = try? decoder.decode(UserData.self, from: savedProfile) {
-//                completion(userData)
-//            } else {
-//                completion(nil)
-//            }
-//        } else {
-//            completion(nil)
-//        }
     }
     
     func getCountryWithState(completion: @escaping ([CountryStateModel]) -> Void) {
@@ -412,10 +285,9 @@ struct FireStoreDatabaseHelper {
                             states.append(state)
                         }
                     }
-                    
                     country = CountryStateModel(name: countryName, state: states)
                     countries.append(country)
-                    states = []
+//                    states = []
                 }
                 completion(countries)
             }

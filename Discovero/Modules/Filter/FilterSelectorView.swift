@@ -11,13 +11,13 @@ class FilterSelectorView: UIView{
     
     var openPicker: (() -> Void)?
     var onResetClick: (() -> Void)?
-    var onSearchClick: ((String, String, String) -> Void)?
+    var onSearchClick: ((FilterModel?) -> Void)?
     
     let locationLabel = DICustomProfileView(titleText: "Location", text: "Select your location", show: true, sideTitleString: "")
     let priceLabel = UILabel(text: "Price", font: OpenSans.semiBold, size: 16)
     let priceRange = UILabel(text: "$0.0 to $5000.0",color: .white, font: OpenSans.semiBold, size: 16)
-    let propertyTypeLabel = DICustomProfileView(titleText: "Property Type", text: "Apartment", show: true, sideTitleString: "Tap here")
-    let nationalityLabel = DICustomProfileView(titleText: "Nationality", text: "Nepal", show: true, sideTitleString: "")
+    let propertyTypeLabel = DICustomProfileView(titleText: "Property Type", text: "", show: true, sideTitleString: "Tap here")
+    let languageLabel = DICustomProfileView(titleText: "Language", text: "Tap to select", show: true, sideTitleString: "")
     let bedroomSelector = CustomSelectorView("Bedroom")
     let bathroomSelector = CustomSelectorView("Bathroom")
     let parkingSelector = CustomSelectorView("Number of parkings")
@@ -40,8 +40,11 @@ class FilterSelectorView: UIView{
         rangeSlider.trackWidth = 5
         return rangeSlider
     }()
-    var minCost: String = ""
-    var maxCost: String = ""
+    
+    var countryName, stateName, suburbName, propertyType: String?
+    var noOfBedrooms, noOfBathrooms, noOfParkings: Int?
+    var minCost, maxCost: Double?
+    var languageArray: [String]?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -87,15 +90,9 @@ class FilterSelectorView: UIView{
         addSubview(propertyTypeLabel)
         propertyTypeLabel.anchor(top: parkingSelector.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 30, left: 12, bottom: 0, right: 12))
         
-        if let sideTitle = propertyTypeLabel.subTitle.text {
-            propertyTypeLabel.sideTitle.text = ""
-        } else {
-            propertyTypeLabel.sideTitle.text = "Tap here"
-        }
-        
-        addSubview(nationalityLabel)
-        nationalityLabel.anchor(top: propertyTypeLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 30, left: 12, bottom: 0, right: 12))
-        nationalityLabel.constraintHeight(constant: 44)
+        addSubview(languageLabel)
+        languageLabel.anchor(top: propertyTypeLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 30, left: 12, bottom: 0, right: 12))
+        languageLabel.constraintHeight(constant: 44)
         
         addSubview(buttonStack)
         buttonStack.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 70, right: 12))
@@ -108,8 +105,8 @@ class FilterSelectorView: UIView{
         let rightKnob  = round(rightValue * 100) / 100
         
         priceRange.text = "$\(leftknob) to $\(rightKnob)"
-        minCost = "\(leftknob)"
-        maxCost = "\(rightKnob)"
+        minCost = leftknob
+        maxCost = rightKnob
     }
     
     func observeEvents() {
@@ -120,6 +117,21 @@ class FilterSelectorView: UIView{
         
         searchButton.addTarget(self, action: #selector(handleSearch), for: .touchUpInside)
         resetButton.addTarget(self, action: #selector(resetButtonTapped), for: .touchUpInside)
+        
+        bedroomSelector.onTap = { [weak self] noOfBedroom in
+            guard let self = self else { return }
+            noOfBedrooms = noOfBedroom == 0 ? nil : noOfBedroom
+        }
+       
+        bathroomSelector.onTap = { [weak self] noOfBathroom in
+            guard let self = self else { return }
+            noOfBathrooms = noOfBathroom == 0 ? nil : noOfBathroom
+        }
+        
+        parkingSelector.onTap = { [weak self] noOfParking in
+            guard let self = self else { return }
+            noOfParkings = noOfParking == 0 ? nil : noOfParking
+        }
     }
     
     @objc func languageTapped() {
@@ -127,7 +139,20 @@ class FilterSelectorView: UIView{
     }
     
     @objc func handleSearch() {
-        onSearchClick?(propertyTypeLabel.subTitle.text ?? "", minCost, maxCost)
+        if propertyTypeLabel.sideTitle.text == "Any" || propertyTypeLabel.sideTitle.text == "Tap Here" {
+            propertyType = nil
+        } else {
+            propertyType = propertyTypeLabel.sideTitle.text ?? nil
+        }
+
+        onSearchClick?(FilterModel(countryName: countryName ?? "",
+                                   stateName: stateName ?? "",
+                                   propertyType: propertyType,
+                                   noOfBedrooms: noOfBedrooms,
+                                   noOfBathrooms: noOfBathrooms,
+                                   noOfParkings: noOfParkings,
+                                   minCost: minCost, maxCost: maxCost,
+                                   languageArray: languageArray))
     }
     
     @objc func resetButtonTapped() {
@@ -139,16 +164,57 @@ class FilterSelectorView: UIView{
 private extension FilterSelectorView {
     
     private func addInfoMenu() -> UIMenu {
-        let Both = UIAction(title: "Any", handler: { _ in
-            self.propertyTypeLabel.subTitle.text = "Any"
+        let both = UIAction(title: "Any", handler: { _ in
+            self.propertyTypeLabel.sideTitle.text = "Any"
         })
-        let Apartment = UIAction(title: "Apartment", handler: { _ in
-            self.propertyTypeLabel.subTitle.text = "Apartment"
+        
+        let apartment = UIAction(title: "Apartment", handler: { _ in
+            self.propertyTypeLabel.sideTitle.text = "Apartment"
         })
-        let House = UIAction(title: "House", handler: { _ in
-            self.propertyTypeLabel.subTitle.text = "House"
+        
+        let house = UIAction(title: "House", handler: { _ in
+            self.propertyTypeLabel.sideTitle.text = "House"
         })
-        let infoMenu = UIMenu(title: "", children: [Both, Apartment, House])
+        
+        let infoMenu = UIMenu(title: "", children: [both, apartment, house])
         return infoMenu
+    }
+}
+
+extension FilterSelectorView {
+    
+    func configView(model: FilterModel) {
+        countryName = model.countryName
+        stateName = model.stateName
+        locationLabel.subTitle.text = "\(model.countryName ?? ""), \(model.stateName ?? "")"
+        if model.propertyType == nil {
+            propertyTypeLabel.sideTitle.text = "Tap Here"
+        }
+        
+        if model.languageArray?.isEmpty == true {
+            languageLabel.subTitle.text =  "Tap to select"
+        }
+    }
+    
+    func resetView(usersData: UserData?) {
+        rangeSlider.value = [0, 5000]
+        priceRange.text = "$0 to $5000"
+        propertyTypeLabel.sideTitle.text = "Tap Here"
+        languageLabel.subTitle.text =  "Tap to select"
+        locationLabel.subTitle.text = "\(usersData?.country ?? ""), \(usersData?.locationDetail.state ?? "")"
+        
+        for selector in selectors {
+            for view in selector.viewsArray {
+               if let label = view.subviews.first as? UILabel {
+                    if view == selector.viewsArray[0] {
+                        label.textColor = Color.appWhite
+                        view.backgroundColor = Color.gray400
+                    } else {
+                        label.textColor = Color.gray400
+                        view.backgroundColor = Color.gray800
+                    }
+                }
+            }
+        }        
     }
 }

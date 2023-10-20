@@ -5,19 +5,20 @@
 //  Created by Wishuv on 11/10/2023.
 //
 
+
 import UIKit
 
 class LocationFilterView: UIView {
     
     var onCountriesTap: (() -> Void)?
     var onStateTap: (() -> Void)?
-    var onSaveClick: ((String, String, String) -> Void)?
+    var onSaveClick: ((LocationFilterModel) -> Void)?
     
     let headerView = DIHeaderView(title: " Location Detail")
     let countryLabel = UILabel(text: "Country ", color: Color.appWhite, font:  OpenSans.semiBold, size: 15)
     var countriesTextField: UITextField = {
         let textfield = UITextField(color: Color.appBlack)
-        textfield.text = ""        
+        textfield.text = ""
         textfield.isUserInteractionEnabled = false
         textfield.textColor = Color.appWhite
         return textfield
@@ -124,6 +125,7 @@ class LocationFilterView: UIView {
         
         stateTFCoverButton.isEnabled = true
         stateTFCoverButton.showsMenuAsPrimaryAction = true
+        
     }
     
     @objc func handleCountriesClick() {
@@ -135,7 +137,7 @@ class LocationFilterView: UIView {
     }
     
     @objc func handleSave() {
-        onSaveClick?(countriesTextField.text ?? "", statesTextField.text ?? "", suburbTextField.text ?? "")
+        onSaveClick?(LocationFilterModel(countryName: countriesTextField.text, stateName: statesTextField.text))
     }
 }
 

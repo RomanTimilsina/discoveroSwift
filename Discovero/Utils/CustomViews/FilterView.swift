@@ -7,15 +7,15 @@
 import UIKit
 
 class FilterView: UIView {
-    var handleFilter: (() -> Void)?
+    var ontFilterClick: (() -> Void)?
     
     let view = UIView()
     let imageView = UIImageView(image: UIImage(named: "filterImage"),contentMode: .scaleAspectFit, clipsToBounds: true)
     let filtersLabel = UILabel(text: "Filters", font: OpenSans.semiBold, size: 15)
     //    let filtersLabel = UIButton(title: "Filters", titleColor: Color.appWhite, font: OpenSans.semiBold, fontSize: 15)
     let circleView = UIView(color: Color.primary, cornerRadius: 10)
-    let filterNumber = UILabel(text: "6", color: Color.appBlack, font: OpenSans.regular, size: 12)
-    let numberOfOffers = UILabel(text: "\(29) Offers", font: OpenSans.semiBold, size: 12)
+    let filterNumber = UILabel(text: "1", color: Color.appBlack, font: OpenSans.regular, size: 12)
+    let numberOfOffers = UILabel(text: "\(0) Offers", font: OpenSans.semiBold, size: 12)
     
     lazy var filterStack = HorizontalStackView(arrangedSubViews: [imageView, filtersLabel, circleView], spacing: 6)
     let filterContainerView = UIView(color: Color.gray700, cornerRadius: 15)
@@ -23,8 +23,9 @@ class FilterView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupFilter()
-        observeEvents() 
+        observeEvents()
     }
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -57,14 +58,14 @@ class FilterView: UIView {
     }
     
     private func observeEvents() {
-        let filterTap = UITapGestureRecognizer(target: self, action: #selector(tapFilter))
+        let filterTap = UITapGestureRecognizer(target: self, action: #selector(handleFilter))
         filterStack.addGestureRecognizer(filterTap)
         filterStack.isUserInteractionEnabled = true
         //        filtersLabel.addTarget(self, action: #selector(tapFilter), for: .touchUpInside)
     }
     
-    @objc func tapFilter() {
-        handleFilter?()
+    @objc func handleFilter() {
+        ontFilterClick?()
         print("filter")
     }
 }

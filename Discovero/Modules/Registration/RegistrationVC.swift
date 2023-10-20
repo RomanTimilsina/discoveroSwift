@@ -52,7 +52,7 @@ class RegistrationVC: UIViewController {
             saveRegisterData()
         }
         
-        countryPicker.onPicked = { [weak self] model in
+        countryPicker.onCountryPicked = { [weak self] model in
             guard let self = self else { return }
             currentView.languagePickerTextField.textField.placeholder = ""
             currentView.languagePickerTextField.textFieldCoverLabel.text = model.name

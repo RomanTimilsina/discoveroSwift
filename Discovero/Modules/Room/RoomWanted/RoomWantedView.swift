@@ -9,12 +9,9 @@ import UIKit
 
 class RoomWantedView: UIView {
     
-    
     var onRefresh: (() -> Void)?
     
     let refreshControl = UIRefreshControl()
-    var heights = [CGFloat]()
-    var roomOffer = [RoomOffer]()
     let homeImage = UIImageView(image: UIImage(named: "homeImg"), contentMode: .scaleAspectFit, clipsToBounds: true)
     let createAdLabel = UILabel(text: "Create your first ad", font: OpenSans.semiBold, size: 16, alignment: .center)
     let adDescriptionLabel = UILabel(text: "There seems to be no room available at the moment in your location. ", font: OpenSans.regular, size: 14,numberOfLines: 0, alignment: .center)
@@ -22,11 +19,10 @@ class RoomWantedView: UIView {
     let adView = CustomAdView("Jasper's market", "Check out our best quality", UIImage(named: "rightAdImage"), UIImage(named: "leftAdImage"))
     let line = UIView()
     let addButtonView = UIImageView(image: UIImage(named: "plus") ,contentMode: .scaleAspectFit)
+    lazy var emptyStackView = VerticalStackView(arrangedSubViews: [homeImage, createAdLabel,adDescriptionLabel, createAdButton], spacing: 30)
     let filterSection = FilterView()
     let adsTable = UITableView()
-    lazy var emptyStackView = VerticalStackView(arrangedSubViews: [homeImage, createAdLabel,adDescriptionLabel, createAdButton], spacing: 30)
-
-    
+     
     override init(frame : CGRect) {
         super.init(frame: frame)
         setupConstraint()

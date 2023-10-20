@@ -73,7 +73,7 @@ class LoginVC: UIViewController {
             self.openCountryPicker()
         }
         
-        countryPicker.onPicked = { [weak self] model in
+        countryPicker.onCountryPicked = { [weak self] model in
             guard let self = self else { return }
             currentView.phoneNumberTextField.countryCodeLabel.text = model.dialCode
         }

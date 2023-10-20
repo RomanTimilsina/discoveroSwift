@@ -70,6 +70,7 @@
 		04CA490D2AA44D3400C69767 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04CA490C2AA44D2D00C69767 /* OpenSans-Regular.ttf */; };
 		04CA490E2AA44D3600C69767 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04CA490B2AA44D2D00C69767 /* OpenSans-SemiBold.ttf */; };
 		04CA49102AA4530F00C69767 /* OnBoardingPageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA490F2AA4530F00C69767 /* OnBoardingPageViewCell.swift */; };
+		8587D3452AE15FA900AED0DA /* FilterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8587D3442AE15FA900AED0DA /* FilterModel.swift */; };
 		E003B8862AB311AC0090EC9D /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E003B8852AB311AC0090EC9D /* FirebaseAnalytics */; };
 		E003B8882AB311AC0090EC9D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E003B8872AB311AC0090EC9D /* FirebaseAuth */; };
 		E003B88A2AB311AC0090EC9D /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = E003B8892AB311AC0090EC9D /* FirebaseCrashlytics */; };
@@ -184,6 +185,7 @@
 		04CA490B2AA44D2D00C69767 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		04CA490C2AA44D2D00C69767 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		04CA490F2AA4530F00C69767 /* OnBoardingPageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingPageViewCell.swift; sourceTree = "<group>"; };
+		8587D3442AE15FA900AED0DA /* FilterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterModel.swift; sourceTree = "<group>"; };
 		E003B88F2AB311C50090EC9D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E003B8912AB313240090EC9D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E0C26D242AC3233700E1073F /* Discovero.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Discovero.entitlements; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 				04A91E752AD7BD290037920D /* LocationFilterForm */,
 				04967AB22ABAC9F40035B359 /* FilterSelectorVC.swift */,
 				04967AB02ABAC9E40035B359 /* FilterSelectorView.swift */,
+				8587D3442AE15FA900AED0DA /* FilterModel.swift */,
 			);
 			path = Filter;
 			sourceTree = "<group>";
@@ -726,6 +729,7 @@
 				E0FE06432AA43D1B001DBDF5 /* UserDefaultsHelper.swift in Sources */,
 				049D3A922AAD8C1C004864E9 /* MyProfileView.swift in Sources */,
 				E0FE061D2AA43D1B001DBDF5 /* Validator.swift in Sources */,
+				8587D3452AE15FA900AED0DA /* FilterModel.swift in Sources */,
 				049CF12C2AA9AA4B00FF2F1B /* CustomSearchBar.swift in Sources */,
 				E0FE06252AA43D1B001DBDF5 /* VerticalStackView.swift in Sources */,
 				04CA49052AA43FEB00C69767 /* DITextField.swift in Sources */,

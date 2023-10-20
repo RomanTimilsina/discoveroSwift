@@ -12,8 +12,8 @@ class DIPickerVC: UIViewController {
     let currentView = DIPickerView()
     
     var onClosePicker: (() -> Void)?
-    var onPicked: ((NewCountryModel) -> Void)?
-    var sendLanguageData: (([LanguageModel]) -> Void)?
+    var onCountryPicked: ((NewCountryModel) -> Void)?
+    var onLanguagePicked: (([LanguageModel]) -> Void)?
     var sendSavedData: (([String]) -> Void)?
     
     var countryModel = [NewCountryModel]()
@@ -22,6 +22,7 @@ class DIPickerVC: UIViewController {
     var searchLanguageModel = [LanguageModel]()
 //    var savedata = [String]()
     var savedLanguageData = [String]()
+    
     // MARK: used for registrationflow
     var isRegistration: Bool = false
     lazy var languageArray: [String] = []
@@ -31,17 +32,14 @@ class DIPickerVC: UIViewController {
         super.viewDidLoad()
         setupTable()
         observeViewEvents()
-        fetchDataFromDefault()
+//        fetchDataFromDefault()
         savedLanguageData = languageArray
         searchLanguageModel = languageModel
         searchCountryModel = countryModel
-        
     }
-//    override func viewWillAppear(_ animated: Bool) {
-//        searchCountryModel = countryModel
-//    }
+    
+
     override func loadView() {
-//        super.loadView()
         view = currentView
     }
     
@@ -49,6 +47,8 @@ class DIPickerVC: UIViewController {
         currentView.onCloseClick = { [weak self] in
             guard let self = self else { return }
             onClosePicker?()
+            onLanguagePicked?(languageModel)
+            sendSavedData?(savedLanguageData)
         }
         
         //MARK: - need to work on language search
@@ -133,7 +133,7 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
                         languageModel[index] = matchingLanguage
                     }
                 }
-                sendLanguageData?(languageModel)
+                onLanguagePicked?(languageModel)
                 sendSavedData?(savedLanguageData)
             }
             cell.configureLanguageData(data: data)
@@ -149,8 +149,7 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !isRegistration {
             let data = searchCountryModel[indexPath.row]
-            onPicked?(data)
-            debugPrint(data)
+            onCountryPicked?(data)
             dismiss(animated: true)
         } else {
             //            let data = searchLanguageModel[indexPath.row]
@@ -160,15 +159,15 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
 
 //MARK: Fetch Data Functions
 private extension DIPickerVC {
-    func fetchDataFromDefault() {
-        FireStoreDatabaseHelper()
-            .getUserDataFromDefaults { [weak self] userData in
-                guard let self, let userData else { return }
-                for (language) in userData.languages {
-                    languageArray.append(language.replacingOccurrences(of: " ", with: ""))
-                }
-            }
-    }
+//    func fetchDataFromDefault() {
+//        FireStoreDatabaseHelper()
+//            .getUserDataFromDefaults { [weak self] userData in
+//                guard let self, let userData else { return }
+//                for (language) in userData.languages {
+//                    languageArray.append(language.replacingOccurrences(of: " ", with: ""))
+//                }
+//            }
+//    }
 }
 
 //import UIKit

@@ -11,7 +11,7 @@ class LocationFilterVC: UIViewController {
     
     var currentView = LocationFilterView()
     
-    var onLocationStateChange: ((String, String, String) -> Void)?
+    var onSaveClick: ((LocationFilterModel) -> Void)?
     
     lazy var countryPicker = DIPickerVC()
     var userData: UserData?
@@ -49,7 +49,7 @@ class LocationFilterVC: UIViewController {
                         let name = countries[index].code.lowercased()
                         if UIImage(named: name) != nil {
                             
-                            loadMenu()
+//                            loadMenu()
                             newCountryModel.setData(name: countries[index].name, dialCode: countries[index].dialCode, code: countries[index].code, imageName: countries[index].code)
                         }
                     }
@@ -73,7 +73,7 @@ class LocationFilterVC: UIViewController {
     func observeViewEvents() {
         currentView.onCountriesTap = { [weak self] in
             guard let self else { return }
-            openCountryPicker()
+//            openCountryPicker()
         }
         
         currentView.headerView.onClose = { [weak self] in
@@ -86,14 +86,14 @@ class LocationFilterVC: UIViewController {
             dismiss(animated: true, completion: nil)
         }
         
-        countryPicker.onPicked = { [weak self] model in
+        countryPicker.onCountryPicked = { [weak self] model in
             guard let self = self else { return }
             debugPrint(model.name)
             selectedCountryName = model.name
             countriesAndState()
             currentView.countriesTextField.text = model.name
             currentView.statesTextField.text = ""
-            currentView.stateTFCoverButton.menu = addStateMenu(selectedCountryName)
+            currentView.stateTFCoverButton.menu = addStateMenu(model.name)
         }
         
         currentView.headerView.onClose = { [weak self] in
@@ -101,29 +101,29 @@ class LocationFilterVC: UIViewController {
             navigationController?.popViewController(animated: true)
         }
         
-        currentView.onSaveClick = { [weak self] country, state, suburb in
+        currentView.onSaveClick = { [weak self] locationFilterModel in
             guard let self else { return }
-            onLocationStateChange?(country, state, suburb)
+            onSaveClick?(locationFilterModel)
             navigationController?.popViewController(animated: true)
         }
         
         currentView.onStateTap = { [weak self] in
             guard let self else { return }
             
-            loadMenu()
+//            loadMenu()
         }
     }
     
-    private func addStateMenu(_ CountryName: String) -> UIMenu {
+    private func addStateMenu(_ countryName: String) -> UIMenu {
         
         var menuList = [UIMenuElement]()
         for country in countryList {
-            if CountryName == country.name {
+            if countryName == country.name {
                 let states = UIAction(title: country.state[0].name, handler: { _ in
                     self.currentView.statesTextField.text = country.state[0].name
                 })
                 menuList.append(states)
-                selectedCountyList.append(CountryName)
+                selectedCountyList.append(countryName)
             }
         }
         countryList = []

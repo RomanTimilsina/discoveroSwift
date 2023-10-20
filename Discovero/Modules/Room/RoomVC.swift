@@ -15,6 +15,9 @@ class RoomVC : UIViewController{
     var roomOfferVC: RoomOfferVC?
     var roomWantedVC : RoomWantedVC?
 
+    var roomOfferCount: Int?
+    var roomWantedCount: Int?
+    
     override func viewWillAppear(_ animated: Bool) {
         self.currentView.bodyView.roomOfferView.isHidden = false
         self.currentView.bodyView.roomWantedView.isHidden = true

@@ -13,16 +13,14 @@ class RoomOfferVC: UIViewController {
     
     var roomOffers: [RoomOffer] = []
     var fireStore = FireStoreDatabaseHelper()
+    
     let filterVC = FilterSelectorVC()
-    var isLoading = false
-    var firstTime = true
-    var country, state: String?
-//    var languages: [String] = []
+    
+    var onSearchSuccess: ((Int) -> Void)?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
-        debugPrint(self.roomOffers)
     }
     
     override func viewDidLoad() {
@@ -58,7 +56,7 @@ class RoomOfferVC: UIViewController {
         //            }
         //        }
         
-        currentView.filterSection.handleFilter = { [weak self] in
+        currentView.filterSection.ontFilterClick = { [weak self] in
             guard let self else { return }
             goToFilterPage()
         }
@@ -70,13 +68,14 @@ private extension RoomOfferVC {
     func getUsersDataFromDefaults() {
         fireStore.getUserDataFromDefaults { [weak self] userData in
             guard let self, let userData else { return }
-            fetchRoomOfferedData(country: userData.country, state: userData.locationDetail.state)
+            fetchRoomOfferedData(filterModel: FilterModel(countryName: userData.country, stateName: userData.locationDetail.state))
         }
     }
     
-    func fetchRoomOfferedData(country: String, state: String) {
+    func fetchRoomOfferedData(filterModel: FilterModel) {
         showHUD()
-        fireStore.getRoomOffered(isRoomOffer: true, country: country, state: state) { [weak self] roomOffersModel in
+        self.roomOffers.removeAll()
+        fireStore.getRoomOffered(isRoomOffer: true, filterModel: filterModel) { [weak self] roomOffersModel in
             guard let self else { return }
             self.roomOffers.append(contentsOf: roomOffersModel)
             self.hideHUD()
@@ -98,14 +97,7 @@ extension RoomOfferVC: UITableViewDelegate, UITableViewDataSource  {
         
         let data = roomOffers[indexPath.row]
         cell.configureData(data: data)
-        
-        if firstTime {
-            cell.gapView.isHidden = true
-            cell.gapView.constraintHeight(constant: 0)
-            firstTime = false
-        }
-        debugPrint(data)
-        cell.configureData(data: data)
+ 
         cell.onLikeClicked = { [weak self] in
             guard let self else { return}
             //on like clicked
@@ -145,30 +137,24 @@ private extension RoomOfferVC {
         filterVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(filterVC, animated: true)
         
-        filterVC.onSearchClick = { [weak self] country, state, suburb, property, selectedLanguages, noOfBedroom, noOfBathroom, noOfParking, minCost, maxCost in
+        filterVC.onSearchClick = { [weak self] filterModel in
             guard let self else { return }
-            debugPrint(property)
             self.roomOffers.removeAll()
-            self.currentView.adsTable.reloadData()
+//            self.currentView.adsTable.reloadData()
+            self.showHUD()
             
-            fireStore.getRoomOffered(isRoomOffer: true,
-                                     country: country,
-                                     state: state,
-                                     noOfBedroom: Int(noOfBedroom),
-                                     noOfBathRoom: Int(noOfBathroom),
-                                     noOfParking: Int(noOfParking),
-                                     propertyType: property,
-                                     language: selectedLanguages,
-                                     min: Double(minCost),
-                                     max: Double(maxCost)) 
+            fireStore.getRoomOffered(isRoomOffer: true, filterModel: filterModel)
             { [weak self] roomOffersModel in
                 guard let self else { return }
                 DispatchQueue.main.async {
                     self.roomOffers.append(contentsOf: roomOffersModel)
+                    self.hideHUD()
                     self.currentView.adsTable.reloadData()
                     self.currentView.filterSection.numberOfOffers.text = "\(self.roomOffers.count) offers"
                 }
                 self.hideHUD()
+                self.currentView.filterSection.filterNumber.text = "\(filterModel.filterCount ?? 0)"
+                onSearchSuccess?(self.roomOffers.count)
             }
         }
     }
