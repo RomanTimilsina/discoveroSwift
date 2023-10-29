@@ -7,13 +7,14 @@
 
 import UIKit
 
-class RoomOfferVC: UIViewController {
+class RoomOfferVC: UIViewController, UISheetPresentationControllerDelegate {
     
     let currentView = RoomOfferView()
     
     var roomOffers: [RoomOffer] = []
     var fireStore = FireStoreDatabaseHelper()
     
+    let addPicker = DiPickerAddVC()
     let filterVC = FilterSelectorVC()
     
     var onSearchSuccess: ((Int) -> Void)?
@@ -60,11 +61,28 @@ class RoomOfferVC: UIViewController {
             guard let self else { return }
             goToFilterPage()
         }
+        
+        currentView.onCLickedAdd = { [weak self] in
+            guard let self else { return }
+            openAddPicker()
+        }
     }
 }
 
 //MARK: Fetch data from firestore
 private extension RoomOfferVC {
+    
+    func openAddPicker(){
+        addPicker.modalPresentationStyle = .automatic
+        if let sheet = addPicker.sheetPresentationController {
+            sheet.prefersGrabberVisible = true
+            sheet.preferredCornerRadius = 30
+            sheet.detents = [.medium(), .custom { _ in return 200}]
+            sheet.delegate = self
+        }
+        present(addPicker, animated: true, completion: nil)
+    }
+    
     func getUsersDataFromDefaults() {
         fireStore.getUserDataFromDefaults { [weak self] userData in
             guard let self, let userData else { return }
@@ -117,6 +135,7 @@ extension RoomOfferVC: UITableViewDelegate, UITableViewDataSource  {
             guard let self else { return}
             self.goToCommentSection()
         }
+        
         return cell
     }
     

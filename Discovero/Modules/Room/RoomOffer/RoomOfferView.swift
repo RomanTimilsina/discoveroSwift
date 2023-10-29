@@ -10,6 +10,7 @@ import UIKit
 class RoomOfferView: UIView {
     
     var onRoomRefresh: (() -> Void)?
+    var onCLickedAdd: (() -> Void)?
     
     let refreshControl = UIRefreshControl()
     let homeImg = UIImageView(image: UIImage(named: "homeImg"),contentMode: .scaleAspectFit, clipsToBounds: true)
@@ -61,6 +62,10 @@ class RoomOfferView: UIView {
         
         refreshControl.addTarget(self, action: #selector(handleRefreshData), for: .valueChanged)
         adsTable.addSubview(refreshControl)
+        
+        let addButtonTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleAdd))
+        addButtonView.addGestureRecognizer(addButtonTapGesture)
+        addButtonView.isUserInteractionEnabled = true
     }
     
     func hideTable() {
@@ -73,6 +78,10 @@ class RoomOfferView: UIView {
         adsTable.isHidden = false
         filterSection.isHidden = false
         emptyStackView.isHidden = true
+    }
+    
+    @objc func handleAdd(){
+        onCLickedAdd?()
     }
     
     @objc func handleRefreshData() {

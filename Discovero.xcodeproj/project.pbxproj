@@ -70,6 +70,11 @@
 		04CA490D2AA44D3400C69767 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04CA490C2AA44D2D00C69767 /* OpenSans-Regular.ttf */; };
 		04CA490E2AA44D3600C69767 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04CA490B2AA44D2D00C69767 /* OpenSans-SemiBold.ttf */; };
 		04CA49102AA4530F00C69767 /* OnBoardingPageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA490F2AA4530F00C69767 /* OnBoardingPageViewCell.swift */; };
+		8496C4DD2AEE22A80017CC0A /* DiPickerAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496C4DC2AEE22A80017CC0A /* DiPickerAddView.swift */; };
+		8496C4DF2AEE22DB0017CC0A /* DiPickerAddVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496C4DE2AEE22DB0017CC0A /* DiPickerAddVC.swift */; };
+		8496C4E12AEE5E0A0017CC0A /* CustomNumberSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496C4E02AEE5E0A0017CC0A /* CustomNumberSelector.swift */; };
+		8496C4E42AEE6EB70017CC0A /* BottomSheetPickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496C4E32AEE6EB70017CC0A /* BottomSheetPickerVC.swift */; };
+		8496C4E62AEE6ED60017CC0A /* BottomSheetPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496C4E52AEE6ED60017CC0A /* BottomSheetPickerView.swift */; };
 		8587D3452AE15FA900AED0DA /* FilterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8587D3442AE15FA900AED0DA /* FilterModel.swift */; };
 		E003B8862AB311AC0090EC9D /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E003B8852AB311AC0090EC9D /* FirebaseAnalytics */; };
 		E003B8882AB311AC0090EC9D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E003B8872AB311AC0090EC9D /* FirebaseAuth */; };
@@ -185,6 +190,11 @@
 		04CA490B2AA44D2D00C69767 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		04CA490C2AA44D2D00C69767 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		04CA490F2AA4530F00C69767 /* OnBoardingPageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingPageViewCell.swift; sourceTree = "<group>"; };
+		8496C4DC2AEE22A80017CC0A /* DiPickerAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiPickerAddView.swift; sourceTree = "<group>"; };
+		8496C4DE2AEE22DB0017CC0A /* DiPickerAddVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiPickerAddVC.swift; sourceTree = "<group>"; };
+		8496C4E02AEE5E0A0017CC0A /* CustomNumberSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNumberSelector.swift; sourceTree = "<group>"; };
+		8496C4E32AEE6EB70017CC0A /* BottomSheetPickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetPickerVC.swift; sourceTree = "<group>"; };
+		8496C4E52AEE6ED60017CC0A /* BottomSheetPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetPickerView.swift; sourceTree = "<group>"; };
 		8587D3442AE15FA900AED0DA /* FilterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterModel.swift; sourceTree = "<group>"; };
 		E003B88F2AB311C50090EC9D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E003B8912AB313240090EC9D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -303,6 +313,8 @@
 		04996CB82AA46E5E00DB618F /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				8496C4E22AEE6E530017CC0A /* BottomSheetPicker */,
+				8496C4DB2AEE226A0017CC0A /* DiPickerAdd */,
 				04A168B32AA854260065F607 /* DiPicker */,
 				04967AAF2ABAC9CF0035B359 /* Filter */,
 				049BEF652AA5B08D00ED2B58 /* Login */,
@@ -336,6 +348,7 @@
 				04775C442AB96E65005F9B4C /* CustomComments.swift */,
 				04967AB62ABAD9BB0035B359 /* CustomSelectorView.swift */,
 				049AB9C92AC9440D007200A5 /* CustomTimer.swift */,
+				8496C4E02AEE5E0A0017CC0A /* CustomNumberSelector.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -473,6 +486,24 @@
 				04CA490F2AA4530F00C69767 /* OnBoardingPageViewCell.swift */,
 			);
 			path = OnBoardingPage;
+			sourceTree = "<group>";
+		};
+		8496C4DB2AEE226A0017CC0A /* DiPickerAdd */ = {
+			isa = PBXGroup;
+			children = (
+				8496C4DE2AEE22DB0017CC0A /* DiPickerAddVC.swift */,
+				8496C4DC2AEE22A80017CC0A /* DiPickerAddView.swift */,
+			);
+			path = DiPickerAdd;
+			sourceTree = "<group>";
+		};
+		8496C4E22AEE6E530017CC0A /* BottomSheetPicker */ = {
+			isa = PBXGroup;
+			children = (
+				8496C4E32AEE6EB70017CC0A /* BottomSheetPickerVC.swift */,
+				8496C4E52AEE6ED60017CC0A /* BottomSheetPickerView.swift */,
+			);
+			path = BottomSheetPicker;
 			sourceTree = "<group>";
 		};
 		8527159C2ADD842400394D85 /* Room */ = {
@@ -749,11 +780,13 @@
 				E0FE06352AA43D1B001DBDF5 /* UIView+Ext.swift in Sources */,
 				049CF1312AA9D4ED00FF2F1B /* RoomOfferVC.swift in Sources */,
 				E0FE06212AA43D1B001DBDF5 /* FontConstants.swift in Sources */,
+				8496C4DD2AEE22A80017CC0A /* DiPickerAddView.swift in Sources */,
 				049AB9CA2AC9440D007200A5 /* CustomTimer.swift in Sources */,
 				04B514A52AA71CAA00E99A1B /* OtpConfirmView.swift in Sources */,
 				04996CBF2AA4725300DB618F /* DIButton.swift in Sources */,
 				04A168B72AA8544F0065F607 /* DIPickerView.swift in Sources */,
 				049D3A9A2AADBE86004864E9 /* DICustomProfileView.swift in Sources */,
+				8496C4E42AEE6EB70017CC0A /* BottomSheetPickerVC.swift in Sources */,
 				04967AB32ABAC9F40035B359 /* FilterSelectorVC.swift in Sources */,
 				E0FE06472AA43D1B001DBDF5 /* EnvironmentHelper.swift in Sources */,
 				E0FE06202AA43D1B001DBDF5 /* ColorConstants.swift in Sources */,
@@ -792,15 +825,18 @@
 				E0FE06482AA43D1B001DBDF5 /* DateConverterHelper.swift in Sources */,
 				E0FE06292AA43D1B001DBDF5 /* Gradient+Ext.swift in Sources */,
 				E0FE062C2AA43D1B001DBDF5 /* UITextField+Ext.swift in Sources */,
+				8496C4DF2AEE22DB0017CC0A /* DiPickerAddVC.swift in Sources */,
 				04A168A82AA83B6C0065F607 /* WelcomeVC.swift in Sources */,
 				04CA49102AA4530F00C69767 /* OnBoardingPageViewCell.swift in Sources */,
 				04956D2E2AB06F4900540F44 /* ProfileItemVC.swift in Sources */,
 				E0FE06232AA43D1B001DBDF5 /* BaseViewController.swift in Sources */,
 				04C875312ADD580100248A0F /* RoomWantedVC.swift in Sources */,
 				049AF2AD2AB70A600033EF2F /* FilterView.swift in Sources */,
+				8496C4E62AEE6ED60017CC0A /* BottomSheetPickerView.swift in Sources */,
 				04775C432AB96106005F9B4C /* CommentsPageView.swift in Sources */,
 				049D3A962AAD9EE0004864E9 /* MyProfileCell.swift in Sources */,
 				E0FE06262AA43D1B001DBDF5 /* UILabel+Ext.swift in Sources */,
+				8496C4E12AEE5E0A0017CC0A /* CustomNumberSelector.swift in Sources */,
 				04A91E792AD7BDB80037920D /* LocationFilterVC.swift in Sources */,
 				E0FE05C32AA439C1001DBDF5 /* AppDelegate.swift in Sources */,
 				04967AB12ABAC9E40035B359 /* FilterSelectorView.swift in Sources */,
