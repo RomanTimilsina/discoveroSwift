@@ -9,15 +9,17 @@ import UIKit
 
 class DiPickerAddView: UIView {
     
-    var onCloseClick:  (() -> Void)?
-    var onClickedRoom: (() -> Void)?
+    var onCloseClick:        (() -> Void)?
+    var onRoomCLick:         (() -> Void)?
+    var onJobClick:          (() -> Void)?
+    var onBuyAndSellClick:   (() -> Void)?
+    var onAnnouncementClick: (() -> Void)?
     
     let pickerHeaderView = UIView()
     let backButton = UIImageView(image: UIImage(named: "back"),contentMode: .scaleAspectFit, clipsToBounds: true)
     let title = UILabel(text: "Create New Post", font: OpenSans.semiBold, size: 16)
     let lineView = UIView()
     let roomImage = UIImageView(image: UIImage(named: "roomImage"), contentMode: .scaleAspectFit, clipsToBounds: true )
-    
     let roomLabel = UILabel(text: "Room", font: OpenSans.semiBold, size: 14)
     lazy var roomStack = HorizontalStackView(arrangedSubViews: [roomImage , roomLabel, UIView()], spacing: 10)
     let jobImage = UIImageView(image: UIImage(named: "jobsImage"), contentMode: .scaleAspectFit, clipsToBounds:  true )
@@ -57,20 +59,44 @@ class DiPickerAddView: UIView {
     }
     
     private func observeEvents() {
-        let backButtonTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleClose))
+        let backButtonTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleCloseTap))
         backButton.addGestureRecognizer(backButtonTapGesture)
         backButton.isUserInteractionEnabled = true
         
         let roomStackTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleRoomTap))
         roomStack.addGestureRecognizer(roomStackTapGesture)
         roomStack.isUserInteractionEnabled = true
+        
+        let jobStackTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleJobTap))
+        jobStack.addGestureRecognizer(jobStackTapGesture)
+        jobStack.isUserInteractionEnabled = true
+        
+        let buyAndSellStackTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleBuyAndSellTap))
+        buyAnsSellStack.addGestureRecognizer(buyAndSellStackTapGesture)
+        buyAnsSellStack.isUserInteractionEnabled = true
+        
+        let announcmentStackTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleAnnouncementTap))
+        announcementStack.addGestureRecognizer(announcmentStackTapGesture)
+        announcementStack.isUserInteractionEnabled = true
     }
     
-    @objc func handleClose() {
+    @objc func handleCloseTap() {
         onCloseClick?()
     }
     
     @objc func handleRoomTap() {
-        onClickedRoom?()
+        onRoomCLick?()
+    }
+    
+    @objc func handleJobTap() {
+        onJobClick?()
+    }
+    
+    @objc func handleBuyAndSellTap() {
+        onBuyAndSellClick?()
+    }
+    
+    @objc func handleAnnouncementTap() {
+        onAnnouncementClick?()
     }
 }

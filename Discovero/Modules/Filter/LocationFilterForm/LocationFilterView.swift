@@ -47,6 +47,7 @@ class LocationFilterView: UIView {
     let countriesTFCoverButton = UIButton(title: "", titleColor: .clear, font: OpenSans.regular, fontSize: 1)
     let stateTFCoverButton = UIButton(title: "", titleColor: .clear, font: OpenSans.regular, fontSize: 1)
     let alert = UIAlertController(title: "Alert Title", message: "Can't select more than 3 languages", preferredStyle: .alert)
+    var number = CustomNumberSelector(title: "number")
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -104,6 +105,9 @@ class LocationFilterView: UIView {
         addSubview(lineview3)
         lineview3.anchor(top: suburbTextField.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top:  0, left: 10, bottom: 0, right: 10))
         lineview3.constraintHeight(constant: 1)
+        
+        addSubview(number)
+        number.anchor(top: lineview3.bottomAnchor, leading: leadingAnchor, bottom: nil , trailing: nil, padding: .init(top: 10, left: 10, bottom: 0, right: 10))
         
         addSubview(saveButton)
         saveButton.anchor(top: nil, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 12, right: 12))

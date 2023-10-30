@@ -19,13 +19,16 @@ class BottomSheetPickerVC : UIViewController {
     }
     
     func observeViewEvents() {
-        currentView.onCloseClick = { [weak self] in
+//        currentView.onCloseClick = { [weak self] in
+//            guard let self = self else { return }
+//            onClosePicker?()
+//        }
+        currentView.onOfferClick = { [weak self] in
             guard let self = self else { return }
-            onClosePicker?()
+            navigationController?.pushViewController(CreateAdsVC(), animated: true)
         }
     }
     override func loadView() {
         view = currentView
     }
-    
 }

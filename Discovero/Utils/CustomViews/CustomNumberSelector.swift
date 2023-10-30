@@ -9,12 +9,11 @@ import UIKit
 
 class CustomNumberSelector: UIView {
     
-    private let titleLabel = UILabel(text: "", font: OpenSans.semiBold, size: 16 )
-    private var number = UILabel()
-    let viewsArray = [UIView]()
-    private let minusButton = DIButton(buttonTitle: "-")
-    private let plusButton = DIButton(buttonTitle: "+")
-
+    let titleLabel = UILabel(text: "", font: OpenSans.semiBold, size: 16 )
+    var number = UILabel(text: "", color: Color.appWhite, font: OpenSans.semiBold, size: 14)
+    let minusButton = DIButton(buttonTitle: "-")
+    let plusButton = UIImageView(image: UIImage(named: "plus") ,contentMode: .scaleAspectFit)
+    let selectorView = UIView()
     
     var minValue: Int = 0
     var maxValue: Int = 100
@@ -35,6 +34,7 @@ class CustomNumberSelector: UIView {
         super.init(frame: .zero)
         titleLabel.text = title
         setupUI()
+        observeEvent()
     }
     
     required init?(coder: NSCoder) {
@@ -43,29 +43,58 @@ class CustomNumberSelector: UIView {
     
     private func setupUI() {
         
-        addSubview(titleLabel)
+        addSubview(selectorView)
+        selectorView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 12, left: 12, bottom: 0, right: 14))
+        selectorView.constraintHeight(constant: 30)
+
+        selectorView.addSubview(titleLabel)
         titleLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        titleLabel.centerYInSuperview()
+                
+        selectorView.addSubview(minusButton)
+        minusButton.anchor(top: topAnchor, leading: titleLabel.trailingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 200, bottom: 0, right: 0))
+        minusButton.constraintHeight(constant: 10)
+        minusButton.constraintHeight(constant: 20)
+        minusButton.centerYInSuperview()
+        minusButton.layer.cornerRadius = 20
+
         
-        addSubview(minusButton)
-        minusButton.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: number.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-        
-        addSubview(number)
-        number.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: plusButton.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        selectorView.addSubview(number)
+        number.anchor(top: topAnchor, leading: minusButton.trailingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 10, bottom: 0, right: 0))
+        number.centerYInSuperview()
         number.text = "\(currentValue)"
 
-        addSubview(plusButton)
-        plusButton.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-        
-        // Set an initial scale for the buttons
-        minusButton.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-        plusButton.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        selectorView.addSubview(plusButton)
+        plusButton.anchor(top: topAnchor, leading: number.trailingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 10, bottom: 0, right: 0))
+        plusButton.constraintHeight(constant: 40)
+        plusButton.constraintWidth(constant: 40)
+        plusButton.centerYInSuperview()
+//        plusButton.layer.cornerRadius = 10
+
     }
     
-    func observeEvent() {
-        plusButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
-        
-        minusButton.addTarget(self, action: #selector(minusButtonTapped), for: .touchUpInside)
-
+  func observeEvent() {
+      let minusButtonTapgesture = UITapGestureRecognizer(target: self, action: #selector(handleMinusButtonTap))
+      minusButton.addGestureRecognizer(minusButtonTapgesture)
+      minusButton.isUserInteractionEnabled = true
+      
+      let plusButtonTapgesture = UITapGestureRecognizer(target: self, action: #selector(handlePlusButtonTap))
+      plusButton.addGestureRecognizer(plusButtonTapgesture)
+      plusButton.isUserInteractionEnabled = true
+    }
+    
+    @objc func handleMinusButtonTap() {
+        currentValue -= currentValue
+        updateLabelWithAnimation()
+        animateButtonPress(minusButton)
+        delegate?.customSelector(self, didChangeValue: currentValue)
+    }
+    
+    @objc func handlePlusButtonTap() {
+        currentValue += currentValue
+        updateLabelWithAnimation()
+//        animateButtonPress(plusButton)
+        delegate?.customSelector(self, didChangeValue: currentValue)
     }
     
     @objc private func animateButtonPress(_ button: UIButton) {
@@ -78,20 +107,6 @@ class CustomNumberSelector: UIView {
         }
     }
     
-    @objc private func minusButtonTapped() {
-        currentValue -= Int(stepSize)
-        updateLabelWithAnimation()
-        animateButtonPress(minusButton)
-        delegate?.customSelector(self, didChangeValue: currentValue)
-    }
-    
-    @objc private func plusButtonTapped() {
-        currentValue += Int(stepSize)
-        updateLabelWithAnimation()
-        animateButtonPress(plusButton)
-        delegate?.customSelector(self, didChangeValue: currentValue)
-    }
-    
     private func updateLabelWithAnimation() {
         let labelX = CGFloat(currentValue - minValue) * stepSize
         UIView.animate(withDuration: 0.2) {
@@ -99,6 +114,8 @@ class CustomNumberSelector: UIView {
         }
     }
 }
+
+
 
 protocol CustomSelectorDelegate: AnyObject {
     func customSelector(_ customSelector: CustomNumberSelector, didChangeValue value: Int)

@@ -11,10 +11,10 @@ import MultiSlider
 class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate {
     
     let currentView = FilterSelectorView()
-    let languagePicker = DIPickerVC()
     
     var onSearchClick: ((FilterModel) -> Void)?
     
+    let languagePicker = DIPickerVC()
     var languageManager = LanguageManager()
     var usersData: UserData?
     var selectedLanguageArray: [String] = []

@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        UserDefaultsHelper.removeAllData()
         let isLoggedIn = !UserDefaultsHelper.getStringData(forKey: .isLoggedIn).isEmpty
         if isLoggedIn {
-            let navController = UINavigationController(rootViewController: HomeController())
+            let navController = UINavigationController(rootViewController: CreateAdsVC())
             window?.rootViewController = navController
         } else {
             let navController = UINavigationController(rootViewController: OnBoardingPageVC())

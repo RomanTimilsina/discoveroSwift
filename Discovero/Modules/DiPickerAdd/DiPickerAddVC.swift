@@ -21,28 +21,75 @@ class DiPickerAddVC: UIViewController, UISheetPresentationControllerDelegate {
     }
     
     func observeViewEvents() {
-//        currentView.onCloseClick = { [weak self] in
-//            guard let self = self else { return }
-//            onClosePicker?()
-//        }
+        //        currentView.onCloseClick = { [weak self] in
+        //            guard let self = self else { return }
+        //            onClosePicker?()
+        //        }
         
-        currentView.onClickedRoom = { [weak self] in
+        currentView.onRoomCLick = { [weak self] in
             guard let self else { return }
-            openBottomPicker()
+            openRoomPicker()
         }
-    
-    func openBottomPicker(){
-        bottomPicker.modalPresentationStyle = .automatic
-        if let sheet = bottomPicker.sheetPresentationController {
-            sheet.prefersGrabberVisible = true
-            sheet.preferredCornerRadius = 30
-            sheet.detents = [.large(), .custom { _ in return 200}]
-            sheet.delegate = self
+        
+        currentView.onJobClick = { [weak self] in
+            guard let self else { return }
+            openJobPicker()
         }
-        present(bottomPicker, animated: true, completion: nil)
+        
+        currentView.onBuyAndSellClick = { [weak self] in
+            guard let self else { return }
+            openBuyAndSellPicker()
+        }
+        
+        bottomPicker.onClosePicker = { [weak self] in
+            guard let self = self else { return }
+            dismiss(animated: true, completion: nil)
+        }
+        
+        func openRoomPicker(){
+            bottomPicker.modalPresentationStyle = .automatic
+            
+            bottomPicker.currentView.setLabel(offerText: "Offer a Room", lookingText: "Looking For Room")
+            
+            if let sheet = bottomPicker.sheetPresentationController {
+                sheet.prefersGrabberVisible = true
+                sheet.preferredCornerRadius = 30
+                sheet.detents = [.large(), .custom { _ in return 150}]
+                sheet.delegate = self
+            }
+            present(bottomPicker, animated: true, completion: nil)
+        }
+        
+        
+        func openJobPicker(){
+            bottomPicker.modalPresentationStyle = .automatic
+            
+            bottomPicker.currentView.setLabel(offerText: "Offer a Job", lookingText: "Looking For Job")
+            
+            if let sheet = bottomPicker.sheetPresentationController {
+                sheet.prefersGrabberVisible = true
+                sheet.preferredCornerRadius = 30
+                sheet.detents = [.large(), .custom { _ in return 150}]
+                sheet.delegate = self
+            }
+            present(bottomPicker, animated: true, completion: nil)
+        }
+        
+        func openBuyAndSellPicker(){
+            bottomPicker.modalPresentationStyle = .automatic
+            
+            bottomPicker.currentView.setLabel(offerText: "Sell Something", lookingText: "Looking For Something")
+            
+            if let sheet = bottomPicker.sheetPresentationController {
+                sheet.prefersGrabberVisible = true
+                sheet.preferredCornerRadius = 30
+                sheet.detents = [.large(), .custom { _ in return 150}]
+                sheet.delegate = self
+            }
+            present(bottomPicker, animated: true, completion: nil)
+        }
     }
         
-    }
     override func loadView() {
         view = currentView
     }

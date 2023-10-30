@@ -75,6 +75,8 @@
 		8496C4E12AEE5E0A0017CC0A /* CustomNumberSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496C4E02AEE5E0A0017CC0A /* CustomNumberSelector.swift */; };
 		8496C4E42AEE6EB70017CC0A /* BottomSheetPickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496C4E32AEE6EB70017CC0A /* BottomSheetPickerVC.swift */; };
 		8496C4E62AEE6ED60017CC0A /* BottomSheetPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496C4E52AEE6ED60017CC0A /* BottomSheetPickerView.swift */; };
+		849B565C2AEFB66B00C91F81 /* CreateAdsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B565B2AEFB66B00C91F81 /* CreateAdsView.swift */; };
+		849B565E2AEFB68500C91F81 /* CreateAdsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B565D2AEFB68500C91F81 /* CreateAdsVC.swift */; };
 		8587D3452AE15FA900AED0DA /* FilterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8587D3442AE15FA900AED0DA /* FilterModel.swift */; };
 		E003B8862AB311AC0090EC9D /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E003B8852AB311AC0090EC9D /* FirebaseAnalytics */; };
 		E003B8882AB311AC0090EC9D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E003B8872AB311AC0090EC9D /* FirebaseAuth */; };
@@ -195,6 +197,8 @@
 		8496C4E02AEE5E0A0017CC0A /* CustomNumberSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNumberSelector.swift; sourceTree = "<group>"; };
 		8496C4E32AEE6EB70017CC0A /* BottomSheetPickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetPickerVC.swift; sourceTree = "<group>"; };
 		8496C4E52AEE6ED60017CC0A /* BottomSheetPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetPickerView.swift; sourceTree = "<group>"; };
+		849B565B2AEFB66B00C91F81 /* CreateAdsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAdsView.swift; sourceTree = "<group>"; };
+		849B565D2AEFB68500C91F81 /* CreateAdsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAdsVC.swift; sourceTree = "<group>"; };
 		8587D3442AE15FA900AED0DA /* FilterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterModel.swift; sourceTree = "<group>"; };
 		E003B88F2AB311C50090EC9D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E003B8912AB313240090EC9D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -313,6 +317,7 @@
 		04996CB82AA46E5E00DB618F /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				849B565A2AEFB64C00C91F81 /* CreateAds */,
 				8496C4E22AEE6E530017CC0A /* BottomSheetPicker */,
 				8496C4DB2AEE226A0017CC0A /* DiPickerAdd */,
 				04A168B32AA854260065F607 /* DiPicker */,
@@ -504,6 +509,15 @@
 				8496C4E52AEE6ED60017CC0A /* BottomSheetPickerView.swift */,
 			);
 			path = BottomSheetPicker;
+			sourceTree = "<group>";
+		};
+		849B565A2AEFB64C00C91F81 /* CreateAds */ = {
+			isa = PBXGroup;
+			children = (
+				849B565B2AEFB66B00C91F81 /* CreateAdsView.swift */,
+				849B565D2AEFB68500C91F81 /* CreateAdsVC.swift */,
+			);
+			path = CreateAds;
 			sourceTree = "<group>";
 		};
 		8527159C2ADD842400394D85 /* Room */ = {
@@ -854,9 +868,11 @@
 				04978F872AB81E3C00BCACC5 /* RoomTableViewCell.swift in Sources */,
 				04775C452AB96E65005F9B4C /* CustomComments.swift in Sources */,
 				049D3A942AAD9379004864E9 /* MyProfileVC.swift in Sources */,
+				849B565C2AEFB66B00C91F81 /* CreateAdsView.swift in Sources */,
 				E0FE06282AA43D1B001DBDF5 /* UIControl+Ext.swift in Sources */,
 				E0FE06342AA43D1B001DBDF5 /* UIViewController+Ext.swift in Sources */,
 				047954252AC16C6F002BB17B /* LocationModel.swift in Sources */,
+				849B565E2AEFB68500C91F81 /* CreateAdsVC.swift in Sources */,
 				0493593F2AC441DB009B6673 /* LanguageModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

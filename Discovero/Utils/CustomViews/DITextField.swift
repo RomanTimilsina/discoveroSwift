@@ -31,23 +31,39 @@ class DITextField: UIView {
     let flagImageView = UIImageView(contentMode: .scaleAspectFit, clipsToBounds: true)
     let countryCodeLabel = UILabel(text: "", color: Color.primary, font: OpenSans.regular, size: 32)
     var searchText: String = "Search for country"
+    var button = UIButton(title: "", titleColor: .clear, font: OpenSans.regular, fontSize: 0)
+    var textfieldFontSize = 32
     
     lazy var textCover = HorizontalStackView(arrangedSubViews: [textFieldCoverLabel, flagImageView], spacing: 5, distribution: .equalCentering)
-    
+    let lineView = UIView()
     let otpTextfield = DIOTPField()
     
-    init(title: String, placholder: String, isPrimaryColor: Bool = false, typePad: UIKeyboardType, isOtpTextField: Bool = true, contentHeight: CGFloat = 74, placeholderHeight: CGFloat = 32, textHeight: CGFloat = 24, countryCode: String = "", searchLabel: String = "Search for country") {
+    init(title: String,
+         placholder: String,
+         isPrimaryColor: Bool = false,
+         typePad: UIKeyboardType,
+         isOtpTextField: Bool = true,
+         contentHeight: CGFloat = 74,
+         placeholderHeight: CGFloat = 32,
+         textHeight: CGFloat = 24,
+         countryCode: String = "",
+         searchLabel: String = "Search for country",
+         lineColor: UIColor = .clear,
+         isButton: Bool = false
+    ) {
+        lineView.backgroundColor = lineColor
         titleLabel.text = title
         titleLabel.textColor = Color.appWhite
         textField.placeholder = placholder
         textField.textColor = isPrimaryColor ? Color.primary : Color.appWhite
         textField.tintColor = Color.appWhite
         textField.keyboardType = typePad
-        textField.font = UIFont.font(with: 32, family: OpenSans.regular)
+        textField.font = UIFont.font(with: CGFloat(textfieldFontSize), family: OpenSans.regular)
         titleLabel.font = UIFont.font(with: textHeight, family: OpenSans.regular)
         otpTextfield.isHidden = isOtpTextField
         textField.isHidden = !isOtpTextField
         contentVeiw.constraintHeight(constant: contentHeight)
+
         super.init(frame: .zero)
         textFieldAttribute(placeholderText: placholder, placeholderHeight: placeholderHeight)
         countryCodeLabel.text = countryCode
@@ -60,6 +76,11 @@ class DITextField: UIView {
         searchText = searchLabel
         
         observeEvents()
+        textField.isEnabled = true
+        if isButton {
+            addSubview(button)
+            button.fillSuperview()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -77,8 +98,9 @@ class DITextField: UIView {
         countryCodeLabel.anchor(top: titleLabel.bottomAnchor, leading: contentVeiw.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 2, left: 0, bottom: 0, right: 0))
         
         contentVeiw.addSubview(textField)
-        textField.anchor(top: titleLabel.bottomAnchor, leading: countryCodeLabel.trailingAnchor, bottom: nil, trailing: nil, padding: .init(top: 2, left: 12, bottom: 0, right: 0))
+        textField.anchor(top: titleLabel.bottomAnchor, leading: countryCodeLabel.trailingAnchor, bottom: nil, trailing: nil, padding: .init(top: 2, left: 0, bottom: 0, right: 0))
         countryCodeLabel.centerYAnchor.constraint(equalTo: textField.centerYAnchor).isActive = true
+        textField.constraintHeight(constant: 30)
         
         contentVeiw.addSubview(textCover)
         textCover.anchor(top: titleLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 2, left: 0, bottom: 0, right: 0))
@@ -89,6 +111,11 @@ class DITextField: UIView {
         otpTextfield.anchor(top: titleLabel.bottomAnchor, leading: contentVeiw.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 2, left: 0, bottom: 0, right: 0))
         otpTextfield.constraintWidth(constant: 237)
         otpTextfield.constraintHeight(constant: 46)
+        
+        addSubview(lineView)
+        lineView.anchor(top: contentVeiw.bottomAnchor, leading: contentVeiw.leadingAnchor, bottom: nil, trailing: contentVeiw.trailingAnchor, padding: .init(top: 20, left: 0, bottom: 0, right: 0))
+        lineView.constraintHeight(constant: 2)
+        lineView.backgroundColor = Color.gray800
     }
     
     func observeEvents() {
