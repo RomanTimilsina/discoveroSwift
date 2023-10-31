@@ -25,9 +25,32 @@ class BottomSheetPickerVC : UIViewController {
 //        }
         currentView.onOfferClick = { [weak self] in
             guard let self = self else { return }
-            navigationController?.pushViewController(CreateAdsVC(), animated: true)
+            openCreateAdsOffer()
+//            navigationController?.pushViewController(CreateAdsVC(), animated: true)
+        }
+        
+        currentView.onLookingClick = { [weak self] in
+            guard let self = self else { return }
+            openCreateAdsLooking()
         }
     }
+    
+    private func openCreateAdsOffer() {
+        let vc = CreateAdsVC()
+        let navigationController = UINavigationController(rootViewController: vc)
+
+        vc.currentView.setLabel(label: "Price per week")
+        vc.modalPresentationStyle = .overFullScreen
+        present(navigationController, animated: true)
+    }
+    
+    private func openCreateAdsLooking() {
+        let vc = CreateAdsVC()
+        vc.currentView.setLabel(label: "Budget per week")
+        vc.modalPresentationStyle = .overFullScreen
+        present(vc, animated: true)
+    }
+    
     override func loadView() {
         view = currentView
     }

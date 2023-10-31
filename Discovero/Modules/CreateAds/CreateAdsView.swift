@@ -9,11 +9,28 @@ import UIKit
 
 class CreateAdsView : UIView {
     
+    var onNextClick : (()-> Void)?
+    
     let headerView = DIHeaderView(title: "Create Offer a Room Ads", hasBack: true)
-    let titleView = DITextField(title: "Add title for your ads",  placholder: "Type here", typePad: .default, placeholderHeight: 15, textHeight: 15)
-    let descriptionsView = DITextField(title: "Add some descriptions",  placholder: "Type here", typePad: .default, placeholderHeight: 15, textHeight: 15)
+    let titleView = DITextField(title: "Add title for your ads",  placholder: "Type here", typePad: .default, contentHeight: 50, placeholderHeight: 15, textHeight: 15, hasLine: false)
+    let descriptionsView = DITextField(title: "Add some descriptions",  placholder: "Type here", typePad: .default,
+        contentHeight: 50, placeholderHeight: 15, textHeight: 15, hasLine: false)
+    let priceLabel = UILabel(text: "Price Per Week", font: OpenSans.semiBold, size: 16)
+    let dollarLabel = UILabel(text: "$", font: OpenSans.semiBold, size: 16)
+    var priceTextField : UITextField = {
+        let textfield = UITextField()
+        textfield.textColor = Color.appWhite
+        textfield.keyboardType = .numberPad
+        textfield.placeholder = "Type Here"
+        textfield.backgroundColor = .black
+        return textfield
+    }()
+    let lineView = UIView()
     let locationLabel = DICustomProfileView(titleText: "Location", text: "Select your location")
-    let propertyTypeLabel = DICustomProfileView(titleText: "Property Type", text: "", show: true, sideTitleString: "Tap here")
+    let noOfBedrooms  = CustomNumberSelector("No of Bedrooms",  1)
+    let noOfBathrooms = CustomNumberSelector("No of Bathrooms", 1)
+    let noOfParkings  = CustomNumberSelector("Parking Available For",  0)
+    let propertyTypeLabel = DICustomProfileView(titleText: "Property Type", text: "", show: true, sideTitleString: "Tap to Choose")
 
     let nextButton = DIButton(buttonTitle: "Next", height: 30)
     
@@ -22,14 +39,16 @@ class CreateAdsView : UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = Color.appBlack
         setup()
         observeEvents()
+        
+        textFieldAttribute(placeholderText: " \(priceTextField.placeholder ?? "")", placeholderHeight: 15)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     func setup() {
         
@@ -37,41 +56,85 @@ class CreateAdsView : UIView {
         headerView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         headerView.constraintHeight(constant: 50)
         headerView.cancelLabel.isHidden = true
-//        headerView.centerInSuperview()
         
         addSubview(titleView)
         titleView.anchor(top: headerView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 30, left: 12, bottom: 0, right: 12))
         titleView.textField.tintColor = Color.primary
         titleView.titleLabel.font = UIFont.font(with: 15, family: OpenSans.semiBold)
         titleView.textField.font = UIFont.font(with: 15, family: OpenSans.semiBold)
-        titleView.lineView.backgroundColor = .clear
+        titleView.lineView.removeFromSuperview()
         
         addSubview(descriptionsView)
-        descriptionsView.anchor(top: titleView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 0, right: 12))
+        descriptionsView.anchor(top: titleView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 12, bottom: 0, right: 12))
         descriptionsView.textField.tintColor = Color.primary
         descriptionsView.titleLabel.font = UIFont.font(with: 15, family: OpenSans.semiBold)
         descriptionsView.textField.font = UIFont.font(with: 15, family: OpenSans.semiBold)
-        descriptionsView.lineView.backgroundColor = .clear
+        
+        addSubview(priceLabel)
+        priceLabel.anchor(top: descriptionsView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 12, bottom: 0, right: 12))
+        
+        addSubview(priceTextField)
+        priceTextField.anchor(top: priceLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 6, left: 24, bottom: 0, right: 12))
 
+        priceTextField.addSubview(dollarLabel)
+        dollarLabel.anchor(top: dollarLabel.topAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 12, bottom: 0, right: 0))
+        
+        addSubview(lineView)
+        lineView.anchor(top: priceTextField.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top:  5, left: 12, bottom: 0, right: 12))
+        lineView.constraintHeight(constant: 2)
+        lineView.backgroundColor = Color.gray800
+        
         addSubview(locationLabel)
-        locationLabel.anchor(top: descriptionsView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 0, right: 12))
+        locationLabel.anchor(top: lineView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 12, bottom: 0, right: 12))
+        
+        addSubview(noOfBedrooms)
+        noOfBedrooms.anchor(top: locationLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 20, left: 12, bottom: 0, right: 12))
+        noOfBedrooms.constraintHeight(constant: 50)
+        
+        addSubview(noOfBathrooms)
+        noOfBathrooms.anchor(top: noOfBedrooms.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 20, left: 12, bottom: 0, right: 12))
+        noOfBathrooms.constraintHeight(constant: 50)
+        
+        addSubview(noOfParkings)
+        noOfParkings.anchor(top: noOfBathrooms.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 20, left: 12, bottom: 0, right: 12))
+        noOfParkings.constraintHeight(constant: 50)
         
         addSubview(propertyTypeLabel)
-        propertyTypeLabel.anchor(top: locationLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 30, left: 12, bottom: 0, right: 12))
+        propertyTypeLabel.anchor(top: noOfParkings.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 20, left: 12, bottom: 0, right: 12))
         
         addSubview(nextButton)
         nextButton.anchor(top: nil, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 30, right: 12))
-        nextButton.layer.cornerRadius = 10
+        nextButton.layer.cornerRadius = 5
     }
     
     func observeEvents() {
+        nextButton.addTarget(self, action: #selector(handleNextButtonTap), for: .touchUpInside)
+        
         propertyTypeLabel.propertyCoverButton.showsMenuAsPrimaryAction = true
         propertyTypeLabel.propertyCoverButton.isEnabled = true
         propertyTypeLabel.propertyCoverButton.menu = addInfoMenu()
     }
+    
+    @objc func handleNextButtonTap() {
+        onNextClick?()
+    }
 }
 
 extension CreateAdsView {
+    
+    func setLabel(label: String) {
+        priceLabel.text = label
+    }
+    
+    func removeConstraint(from view: UIView, with attribute: NSLayoutConstraint.Attribute, in constraints: inout [NSLayoutConstraint]) {
+        for (index, constraint) in constraints.enumerated() {
+            if constraint.firstItem === view && constraint.firstAttribute == attribute {
+                constraints.remove(at: index)
+                constraint.isActive = false
+                return
+            }
+        }
+    }
     
     func configView(model: FilterModel) {
         countryName = model.countryName
@@ -96,5 +159,18 @@ extension CreateAdsView {
         
         let infoMenu = UIMenu(title: "", children: [apartment, house])
         return infoMenu
+    }
+    
+    func textFieldAttribute(placeholderText: String, placeholderHeight: CGFloat) {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: Color.placeholderGray ?? .gray,
+            .font: UIFont.font(with: placeholderHeight, family: OpenSans.semiBold)
+        ]
+        
+        let attributedPlaceholder = NSAttributedString(
+            string: placeholderText,
+            attributes: attributes
+        )
+        priceTextField.attributedPlaceholder = attributedPlaceholder
     }
 }

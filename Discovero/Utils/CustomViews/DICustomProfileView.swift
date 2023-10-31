@@ -10,6 +10,7 @@ import UIKit
 class DICustomProfileView: UIView {
     
     var profileTap: ((String?) -> Void)?
+    var onClick: (() -> Void)?
     
     let title = UILabel(text: "",color: Color.appWhite, font: OpenSans.semiBold, size: 14)
     let propertyCoverButton = UIButton(title: "", titleColor: .clear, font: OpenSans.regular, fontSize: 1)
@@ -22,8 +23,15 @@ class DICustomProfileView: UIView {
     let sideTitle = UILabel(text: "select your location",color: Color.appWhite, font: OpenSans.regular, size: 14)
     let lineView = UIView(color: Color.gray800)
     lazy var mainStack = HorizontalStackView(arrangedSubViews: [nameStack, UIView(), sideTitle, rightArrowImage], spacing: 8)
+    let button = UIButton()
     
-    init(titleText: String, text: String, nation: UIImage? = nil, show:Bool? = false, isGrey: Bool? = false, sideTitleString: String = "") {
+    init(hasButtonProperty: Bool = false,
+        titleText: String,
+         text: String,
+         nation: UIImage? = nil,
+         show:Bool? = false,
+         isGrey: Bool? = false,
+         sideTitleString: String = "") {
         super.init(frame: .zero)
         title.text = titleText
         subTitle.text = text
@@ -35,6 +43,7 @@ class DICustomProfileView: UIView {
             title.textColor = Color.gray400
             subTitle.textColor = Color.gray500
         }
+        
         if text.isEmpty  {
             title.font = UIFont.font(with: 16, family: OpenSans.semiBold)
             subTitle.isHidden = true
@@ -43,7 +52,13 @@ class DICustomProfileView: UIView {
         if show == true {
             rightArrowImage.image = UIImage(named: "rightArrow")
         }
+        
         setupConstraints()
+        
+        if hasButtonProperty {
+            addSubview(button)
+            button.fillSuperview()
+        }
     }
     
     func setupConstraints () {
@@ -76,3 +91,4 @@ class DICustomProfileView: UIView {
         print("Open tap")
     }
 }
+

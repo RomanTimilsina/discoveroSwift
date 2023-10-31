@@ -6,13 +6,22 @@
 //
 
 
+
+//  LoacationFilterView.swift
+//  Discovero
+//
+//  Created by Wishuv on 11/10/2023.
+//
+
 import UIKit
 
 class LocationFilterView: UIView {
     
-    var onCountriesTap: (() -> Void)?
-    var onStateTap: (() -> Void)?
-    var onSaveClick: ((LocationFilterModel) -> Void)?
+    var onTableViewClick: ((Bool) -> Void)?
+    var countriesTap: (() -> Void)?
+    var stateTap: (() -> Void)?
+    var stateList: [String] = []
+    var handleSave: ((String, String, String) -> Void)?
     
     let headerView = DIHeaderView(title: " Location Detail")
     let countryLabel = UILabel(text: "Country ", color: Color.appWhite, font:  OpenSans.semiBold, size: 15)
@@ -21,14 +30,16 @@ class LocationFilterView: UIView {
         textfield.text = ""
         textfield.isUserInteractionEnabled = false
         textfield.textColor = Color.appWhite
+        textfield.borderStyle = .line
         return textfield
     }()
     let stateLabel = UILabel(text: "State", color: Color.appWhite, font: OpenSans.semiBold, size: 15)
     let statesTextField: UITextField = {
         let textfield = UITextField(color: Color.appBlack)
-        textfield.text = ""
+        textfield.text = "rtyrtt"
         textfield.isUserInteractionEnabled = false
         textfield.textColor = Color.appWhite
+        textfield.borderStyle = .line
         return textfield
     }()
     let suburbLabel = UILabel(text: "Suburb ", font: OpenSans.semiBold, size: 15)
@@ -38,116 +49,168 @@ class LocationFilterView: UIView {
         textfield.placeholder = "Tap Here"
         textfield.isUserInteractionEnabled = false
         textfield.textColor = Color.appWhite
+        textfield.borderStyle = .line
         return textfield
     }()
     let saveButton = DIButton(buttonTitle: "Save")
-    let lineview  = UIView(color: Color.placeholderGray)
-    let lineview2 = UIView(color: Color.placeholderGray)
-    let lineview3 = UIView(color: Color.placeholderGray)
+    let lineview = UIView(color: Color.gray500)
+    let lineview2 = UIView(color: Color.gray500)
+    let lineview3 = UIView(color: Color.gray400)
     let countriesTFCoverButton = UIButton(title: "", titleColor: .clear, font: OpenSans.regular, fontSize: 1)
     let stateTFCoverButton = UIButton(title: "", titleColor: .clear, font: OpenSans.regular, fontSize: 1)
     let alert = UIAlertController(title: "Alert Title", message: "Can't select more than 3 languages", preferredStyle: .alert)
-    var number = CustomNumberSelector(title: "number")
     
+    let countryView = DICustomProfileView(hasButtonProperty: true ,titleText: "Country", text: "Choose country")
+    
+    let stateView = DICustomProfileView(hasButtonProperty: true ,titleText: "State", text: "Choose state")
+    
+    let suburbView = DITextField(title: "Suburb",  placholder: "Type here", typePad: .default, placeholderHeight: 15, textHeight: 15)
+    
+    let streetNameView = DITextField(title: "Street Name",  placholder: "Type here", typePad: .default,contentHeight: 15, placeholderHeight: 15, textHeight: 15)
+
+    let streetNumView = DITextField(title: "Street No.",  placholder: "Type here", typePad: .default, placeholderHeight: 15, textHeight: 15)
+    
+    let buldingNumView = DITextField(title: "Building No.",  placholder: "Type here", typePad: .default, placeholderHeight: 15, textHeight: 15)
+
+    let tableView = UITableView()
+    let transpaårentView = UIView()
+    var hideTable = true
+    let overlayView = UIView()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = Color.appBlack
-        setupView()
+        debugPrint(stateList)
+        setupFilter()
         textFieldAttribute(placeholderText: "Tap Here", placeholderHeight: 15)
-        observeEvents()
+        observeViewEvents()
+        tableView.isHidden = true
+
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupView(){
+    func setupFilter(){
         addSubview(headerView)
         headerView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor , padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         headerView.constraintHeight(constant: 40)
         headerView.cancelLabel.isHidden = true
         
-        addSubview(countryLabel)
-        countryLabel.anchor(top: headerView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil , padding: .init(top: 30, left: 10, bottom: 0, right: 10))
+        addSubview(countryView)
+        countryView.anchor(top: headerView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 20, left: 0, bottom: 0, right: 0))
+        countryView.constraintHeight(constant: 44)
         
-        addSubview(countriesTextField)
-        countriesTextField.anchor(top: countryLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 10, bottom: 0, right: 10))
+        addSubview(stateView)
+        stateView.anchor(top: countryView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 30, left: 0, bottom: 0, right: 0))
+        stateView.constraintHeight(constant: 44)
         
-        //Need to work on it
-        addSubview(countriesTFCoverButton)
-        countriesTFCoverButton.anchor(top: countriesTextField.topAnchor, leading: countriesTextField.leadingAnchor, bottom: countriesTextField.bottomAnchor, trailing: countriesTextField.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+//        tableView.constraintHeight(constant: 0)
         
-        addSubview(lineview)
-        lineview.anchor(top: countriesTextField.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top:  0, left: 10, bottom: 0, right: 10))
-        lineview.constraintHeight(constant: 1)
+        addSubview(suburbView)
+        suburbView.anchor(top: stateView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 30, left: 0, bottom: 0, right: 0))
+        suburbView.constraintHeight(constant: 44)
+        suburbView.textField.tintColor = Color.primary
+        suburbView.titleLabel.font = UIFont.font(with: 15, family: OpenSans.semiBold)
+        suburbView.textField.font = UIFont.font(with: 15, family: OpenSans.semiBold)
         
-        addSubview(stateLabel)
-        stateLabel.anchor(top: lineview.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 20, left: 10, bottom: 0, right: 10))
-        
-        addSubview(statesTextField)
-        statesTextField.anchor(top: stateLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 10, bottom: 0, right: 10))
-        
-        addSubview(stateTFCoverButton)
-        stateTFCoverButton.anchor(top: statesTextField.topAnchor, leading: statesTextField.leadingAnchor, bottom: statesTextField.bottomAnchor, trailing: statesTextField.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-        
-        addSubview(lineview2)
-        lineview2.anchor(top: statesTextField.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top:  0, left: 10, bottom: 0, right: 10))
-        lineview2.constraintHeight(constant: 1)
-        
-        addSubview(suburbLabel)
-        suburbLabel.anchor(top: lineview2.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 20 , left: 10, bottom: 0, right: 10))
-        
-        addSubview(suburbTextField)
-        suburbTextField.anchor(top: suburbLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 10, bottom: 0, right: 10))
-        suburbTextField.isUserInteractionEnabled = true
-        suburbTextField.tintColor = Color.primary
-        
-        addSubview(lineview3)
-        lineview3.anchor(top: suburbTextField.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top:  0, left: 10, bottom: 0, right: 10))
-        lineview3.constraintHeight(constant: 1)
-        
-        addSubview(number)
-        number.anchor(top: lineview3.bottomAnchor, leading: leadingAnchor, bottom: nil , trailing: nil, padding: .init(top: 10, left: 10, bottom: 0, right: 10))
+        addSubview(streetNameView)
+        streetNameView.anchor(top: suburbView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 30, left: 0, bottom: 0, right: 0))
+        streetNameView.constraintHeight(constant: 44)
+        streetNameView.textField.tintColor = Color.primary
+        streetNameView.titleLabel.font = UIFont.font(with: 15, family: OpenSans.semiBold)
+        streetNameView.textField.font = UIFont.font(with: 15, family: OpenSans.semiBold)
+
+        addSubview(streetNumView)
+        streetNumView.anchor(top: streetNameView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 30, left: 0, bottom: 0, right: 0))
+        streetNumView.constraintHeight(constant: 44)
+        streetNumView.textField.tintColor = Color.primary
+        streetNumView.titleLabel.font = UIFont.font(with: 15, family: OpenSans.semiBold)
+        streetNumView.textField.font = UIFont.font(with: 15, family: OpenSans.semiBold)
+
+        addSubview(buldingNumView)
+        buldingNumView.anchor(top: streetNumView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 30, left: 0, bottom: 0, right: 0))
+        buldingNumView.constraintHeight(constant: 44)
+        buldingNumView.textField.tintColor = Color.primary
+        buldingNumView.titleLabel.font = UIFont.font(with: 15, family: OpenSans.semiBold)
+        buldingNumView.textField.font = UIFont.font(with: 15, family: OpenSans.semiBold)
+
+//        stateView.propertyCoverButton.isEnabled = false
+//        stateView.propertyCoverButton.isHidden = true
+
         
         addSubview(saveButton)
         saveButton.anchor(top: nil, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 12, right: 12))
+        
+        addSubview(overlayView)
+        overlayView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: safeAreaLayoutGuide.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        
+        addSubview(tableView)
+        tableView.anchor(top: stateView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 50, bottom: 0, right: 80))
+        tableView.constraintHeight(constant: 120)
+        tableView.backgroundColor = .clear
+        tableView.layer.cornerRadius = 5
     }
     
-    func observeEvents() {
-        countriesTFCoverButton.addTarget(self, action: #selector(handleCountriesClick), for: .touchUpInside)
+    let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+        // Handle OK button tap here
+        print("OK button tapped")
+    }
+    
+    func observeViewEvents() {
+        countryView.button.addTarget(self, action: #selector(countriesClick), for: .touchUpInside)
         
-        stateTFCoverButton.addTarget(self, action: #selector(handleStateClick), for: .touchUpInside)
-        
-        saveButton.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
-        
-        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
-            // Handle OK button tap here
-            print("OK button tapped")
-        }
+        saveButton.addTarget(self, action: #selector(saveTapped), for: .touchUpInside)
         
         alert.addAction(okAction)
         
-        stateTFCoverButton.isEnabled = true
-        stateTFCoverButton.showsMenuAsPrimaryAction = true
+        stateView.button.isEnabled = true
+        stateView.button.addTarget(self, action: #selector(handleTableDisplay), for: .touchUpInside)
+        
+        let overlayViewGesture = UITapGestureRecognizer(target: self, action: #selector(handleOverlayView))
+        overlayView.addGestureRecognizer(overlayViewGesture)
+        overlayView.isUserInteractionEnabled = false
+        
+//        let tableTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTableTap))
+//        tableView.addGestureRecognizer(tableTapGesture)
         
     }
     
-    @objc func handleCountriesClick() {
-        onCountriesTap?()
+    @objc func handleOverlayView() {
+        tableView.isHidden = true
+        hideTable = true
+        overlayView.isUserInteractionEnabled = false
     }
     
-    @objc func handleStateClick() {
-        onStateTap?()
+//    @objc func handleTableTap(sender: UITapGestureRecognizer) {
+//        if sender.state == .ended {
+//            let location = sender.location(in: tableView)
+//            if tableView.indexPathForRow(at: location) == nil {
+//                tableView.isHidden = true
+//                hideTable = true
+//                overlayView.isUserInteractionEnabled = false
+//            }
+//
+//        }
+//
+//    }
+    
+    @objc func countriesClick() {
+        countriesTap?()
     }
     
-    @objc func handleSave() {
-        onSaveClick?(LocationFilterModel(countryName: countriesTextField.text, stateName: statesTextField.text))
+    @objc func saveTapped() {
+        handleSave?(countryView.subTitle.text ?? "", stateView.subTitle.text ?? "", suburbView.textField.text ?? "")
     }
-}
+    
+    @objc func handleTableDisplay() {
+        hideTable = !hideTable
+        onTableViewClick?(hideTable)
 
-//MARK: Placeholder attribute set
-private extension LocationFilterView {
+    }
     
+    //MARK: Placeholder attribute set
     func textFieldAttribute(placeholderText: String, placeholderHeight: CGFloat) {
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: Color.placeholderGray ?? .gray,
@@ -161,3 +224,4 @@ private extension LocationFilterView {
         suburbTextField.attributedPlaceholder = attributedPlaceholder
     }
 }
+

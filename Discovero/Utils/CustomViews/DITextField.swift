@@ -33,10 +33,12 @@ class DITextField: UIView {
     var searchText: String = "Search for country"
     var button = UIButton(title: "", titleColor: .clear, font: OpenSans.regular, fontSize: 0)
     var textfieldFontSize = 32
+    var myConstraints: [NSLayoutConstraint] = []
     
     lazy var textCover = HorizontalStackView(arrangedSubViews: [textFieldCoverLabel, flagImageView], spacing: 5, distribution: .equalCentering)
     let lineView = UIView()
     let otpTextfield = DIOTPField()
+    var lineBool = true
     
     init(title: String,
          placholder: String,
@@ -49,8 +51,10 @@ class DITextField: UIView {
          countryCode: String = "",
          searchLabel: String = "Search for country",
          lineColor: UIColor = .clear,
-         isButton: Bool = false
+         isButton: Bool = false,
+         hasLine: Bool = true
     ) {
+        lineBool = hasLine
         lineView.backgroundColor = lineColor
         titleLabel.text = title
         titleLabel.textColor = Color.appWhite
@@ -63,7 +67,7 @@ class DITextField: UIView {
         otpTextfield.isHidden = isOtpTextField
         textField.isHidden = !isOtpTextField
         contentVeiw.constraintHeight(constant: contentHeight)
-
+        
         super.init(frame: .zero)
         textFieldAttribute(placeholderText: placholder, placeholderHeight: placeholderHeight)
         countryCodeLabel.text = countryCode
@@ -112,10 +116,13 @@ class DITextField: UIView {
         otpTextfield.constraintWidth(constant: 237)
         otpTextfield.constraintHeight(constant: 46)
         
-        addSubview(lineView)
-        lineView.anchor(top: contentVeiw.bottomAnchor, leading: contentVeiw.leadingAnchor, bottom: nil, trailing: contentVeiw.trailingAnchor, padding: .init(top: 20, left: 0, bottom: 0, right: 0))
-        lineView.constraintHeight(constant: 2)
-        lineView.backgroundColor = Color.gray800
+        if lineBool {
+            addSubview(lineView)
+            let constraint = lineView.anchor(top: contentVeiw.bottomAnchor, leading: contentVeiw.leadingAnchor, bottom: nil, trailing: contentVeiw.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+            lineView.constraintHeight(constant: 2)
+            lineView.backgroundColor = Color.gray800
+        }
+        
     }
     
     func observeEvents() {

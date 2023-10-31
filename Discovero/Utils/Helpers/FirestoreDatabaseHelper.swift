@@ -287,7 +287,7 @@ struct FireStoreDatabaseHelper {
                     }
                     country = CountryStateModel(name: countryName, state: states)
                     countries.append(country)
-//                    states = []
+                    states = []
                 }
                 completion(countries)
             }

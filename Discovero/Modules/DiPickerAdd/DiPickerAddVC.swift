@@ -46,11 +46,11 @@ class DiPickerAddVC: UIViewController, UISheetPresentationControllerDelegate {
             dismiss(animated: true, completion: nil)
         }
         
-        func openRoomPicker(){
-            bottomPicker.modalPresentationStyle = .automatic
+        func openRoomPicker() {
+            let bottomPicker = BottomSheetPickerVC()
             
             bottomPicker.currentView.setLabel(offerText: "Offer a Room", lookingText: "Looking For Room")
-            
+            bottomPicker.modalPresentationStyle = .automatic
             if let sheet = bottomPicker.sheetPresentationController {
                 sheet.prefersGrabberVisible = true
                 sheet.preferredCornerRadius = 30

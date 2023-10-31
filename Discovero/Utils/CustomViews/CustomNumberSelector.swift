@@ -9,114 +9,109 @@ import UIKit
 
 class CustomNumberSelector: UIView {
     
-    let titleLabel = UILabel(text: "", font: OpenSans.semiBold, size: 16 )
-    var number = UILabel(text: "", color: Color.appWhite, font: OpenSans.semiBold, size: 14)
-    let minusButton = DIButton(buttonTitle: "-")
-    let plusButton = UIImageView(image: UIImage(named: "plus") ,contentMode: .scaleAspectFit)
-    let selectorView = UIView()
+     let titleLabel = UILabel(text: "", font: OpenSans.semiBold, size: 16 )
+     let minusView = UIView(color: Color.appWhite)
+     let numberLabel = UILabel(text: "0 ", font: OpenSans.semiBold, size: 15)
+     let plusView = UIView(color: Color.appWhite)
+     var count: Int = 0
+     lazy var clickerStack = HorizontalStackView(arrangedSubViews: [titleLabel, UIView() ,minusView, numberLabel, plusView], spacing: 20)
+     let minusBlackCircle = UIView(color: Color.appBlack)
+     let minusLabel = UILabel(text: "-", font: OpenSans.regular, size: 15)
+     let plusBlackCircle = UIView(color: Color.appBlack)
+     let plusLabel = UILabel(text: "+", font: OpenSans.regular, size: 15)
+    var min = 0
+     var topConstraint: NSLayoutConstraint!
+    private var isAnimating = false
     
-    var minValue: Int = 0
-    var maxValue: Int = 100
-    var stepSize: CGFloat = 1
-    var currentValue: Int = 0 {
-        didSet {
-            if currentValue < minValue {
-                currentValue = minValue
-            } else if currentValue > maxValue {
-                currentValue = maxValue
-            }
-        }
-    }
-    
-    weak var delegate: CustomSelectorDelegate?
-    
-    init(title: String = "") {
+    init(_ text: String ,_ minimum: Int) {
         super.init(frame: .zero)
-        titleLabel.text = title
-        setupUI()
-        observeEvent()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupUI() {
+        titleLabel.text = text
+        numberLabel.text = "\(minimum)"
+        min = minimum
+        count = minimum
+       setupViewConstraints()
+       observeEvents()
+     }
+     func setupViewConstraints() {
+       addSubview(clickerStack)
+       clickerStack.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+
+       minusView.constraintWidth(constant: 50)
+       minusView.constraintHeight(constant: 50)
+       minusView.layer.cornerRadius = 25
+         
+       minusView.addSubview(minusBlackCircle)
+       minusBlackCircle.centerInSuperview(size: CGSize(width: 48, height: 48))
+         minusBlackCircle.layer.cornerRadius = 24
+         
+       minusBlackCircle.addSubview(minusLabel)
+       minusLabel.centerInSuperview()
+         
+       plusView.constraintWidth(constant: 50)
+       plusView.constraintHeight(constant: 50)
+       plusView.layer.cornerRadius = 25
         
-        addSubview(selectorView)
-        selectorView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 12, left: 12, bottom: 0, right: 14))
-        selectorView.constraintHeight(constant: 30)
+       plusView.addSubview(plusBlackCircle)
+         plusBlackCircle.centerInSuperview(size: CGSize(width: 48, height: 48))
+         plusBlackCircle.layer.cornerRadius = 24
+         
+       plusBlackCircle.addSubview(plusLabel)
+       plusLabel.centerInSuperview()
+     }
+     func observeEvents() {
+       minusBlackCircle.isUserInteractionEnabled = false
+       minusLabel.isUserInteractionEnabled = false
+       let subtractGesture = UITapGestureRecognizer(target: self, action: #selector(handleMinus))
+       minusBlackCircle.addGestureRecognizer(subtractGesture)
+       minusBlackCircle.isUserInteractionEnabled = true
+       plusBlackCircle.isUserInteractionEnabled = false
+       plusLabel.isUserInteractionEnabled = false
+       let addGesture = UITapGestureRecognizer(target: self, action: #selector(handlePlus))
+       plusBlackCircle.addGestureRecognizer(addGesture)
+       plusBlackCircle.isUserInteractionEnabled = true
+     }
 
-        selectorView.addSubview(titleLabel)
-        titleLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-        titleLabel.centerYInSuperview()
-                
-        selectorView.addSubview(minusButton)
-        minusButton.anchor(top: topAnchor, leading: titleLabel.trailingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 200, bottom: 0, right: 0))
-        minusButton.constraintHeight(constant: 10)
-        minusButton.constraintHeight(constant: 20)
-        minusButton.centerYInSuperview()
-        minusButton.layer.cornerRadius = 20
+     @objc func handleMinus() {
+         if count > min {
+             if isAnimating {
+                 return
+             }
+             isAnimating = true
+             let updatedCount = count - 1
+             animateLabelRollUp(fromCount: count, toCount: updatedCount)
+             count = updatedCount
+         } else {
+             count = min
+         }
+     }
+     @objc func handlePlus() {
+         if isAnimating {
+                   return
+               }
+               isAnimating = true
+               let updatedCount = count + 1
+               animateLabelRollUp(fromCount: count, toCount: updatedCount)
+               count = updatedCount
+     }
+    private func animateLabelRollUp(fromCount: Int, toCount: Int) {
+        let animation = CATransition()
+        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        animation.type = .push
+        animation.subtype = fromCount < toCount ? .fromTop : .fromBottom
+        animation.duration = 0.2
 
+        numberLabel.layer.add(animation, forKey: nil)
+        numberLabel.text = "\(toCount)"
         
-        selectorView.addSubview(number)
-        number.anchor(top: topAnchor, leading: minusButton.trailingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 10, bottom: 0, right: 0))
-        number.centerYInSuperview()
-        number.text = "\(currentValue)"
+        // You may need to update your constraints here if necessary
 
-        selectorView.addSubview(plusButton)
-        plusButton.anchor(top: topAnchor, leading: number.trailingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 10, bottom: 0, right: 0))
-        plusButton.constraintHeight(constant: 40)
-        plusButton.constraintWidth(constant: 40)
-        plusButton.centerYInSuperview()
-//        plusButton.layer.cornerRadius = 10
-
-    }
-    
-  func observeEvent() {
-      let minusButtonTapgesture = UITapGestureRecognizer(target: self, action: #selector(handleMinusButtonTap))
-      minusButton.addGestureRecognizer(minusButtonTapgesture)
-      minusButton.isUserInteractionEnabled = true
-      
-      let plusButtonTapgesture = UITapGestureRecognizer(target: self, action: #selector(handlePlusButtonTap))
-      plusButton.addGestureRecognizer(plusButtonTapgesture)
-      plusButton.isUserInteractionEnabled = true
-    }
-    
-    @objc func handleMinusButtonTap() {
-        currentValue -= currentValue
-        updateLabelWithAnimation()
-        animateButtonPress(minusButton)
-        delegate?.customSelector(self, didChangeValue: currentValue)
-    }
-    
-    @objc func handlePlusButtonTap() {
-        currentValue += currentValue
-        updateLabelWithAnimation()
-//        animateButtonPress(plusButton)
-        delegate?.customSelector(self, didChangeValue: currentValue)
-    }
-    
-    @objc private func animateButtonPress(_ button: UIButton) {
-        UIView.animate(withDuration: 0.1, animations: {
-            button.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
-        }) { _ in
-            UIView.animate(withDuration: 0.1) {
-                button.transform = CGAffineTransform.identity
-            }
+        DispatchQueue.main.asyncAfter(deadline: .now() + animation.duration) {
+            self.isAnimating = false
         }
     }
-    
-    private func updateLabelWithAnimation() {
-        let labelX = CGFloat(currentValue - minValue) * stepSize
-        UIView.animate(withDuration: 0.2) {
-            self.number.transform = CGAffineTransform(translationX: labelX, y: 0)
-        }
-    }
-}
-
-
-
-protocol CustomSelectorDelegate: AnyObject {
-    func customSelector(_ customSelector: CustomNumberSelector, didChangeValue value: Int)
-}
+   
+ 
+     required init?(coder: NSCoder) {
+       fatalError("init(coder:) has not been implemented")
+     }
+   }

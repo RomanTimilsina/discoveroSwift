@@ -86,11 +86,11 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
         
         navigationController?.pushViewController(locationFilterVC, animated: true)
         
-        locationFilterVC.onSaveClick = { [weak self] locationFilterModel in
+        locationFilterVC.onSaveClick = { [weak self] country, state, suburb in
             guard let self else { return }
-            currentView.locationLabel.subTitle.text = "\(locationFilterModel.countryName ?? ""), \(locationFilterModel.stateName ?? "")"
-            currentView.countryName = locationFilterModel.countryName
-            currentView.stateName = locationFilterModel.stateName
+            currentView.locationLabel.subTitle.text = "\(country ?? ""), \(state ?? "")"
+            currentView.countryName = country
+            currentView.stateName = state
         }
     }
 }
