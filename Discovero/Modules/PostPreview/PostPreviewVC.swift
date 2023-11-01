@@ -16,6 +16,13 @@ class PostPreviewVC: UIViewController {
         navigationController?.navigationBar.isHidden = true
     }
     
+    func observeViewEvents() {
+        currentView.headerView.onClose = { [ weak self ] in
+            guard let self = self else { return }
+            navigationController?.popViewController(animated: true)
+        }
+    }
+    
     override func loadView() {
         super.loadView()
         view = currentView

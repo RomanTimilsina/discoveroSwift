@@ -47,12 +47,12 @@ class PostPreviewView : UIView{
     
     @objc func toggleFunction() {
         if toggleSwitch.isOn {
+            postView.nameLabel.text = "Anonymous"
 
         } else {
-         
+            postView.nameLabel.text = "Anonymous"
         }
     }
-    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

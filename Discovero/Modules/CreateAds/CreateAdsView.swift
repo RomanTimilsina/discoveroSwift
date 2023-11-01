@@ -11,13 +11,24 @@ class CreateAdsView : UIView {
     
     var onNextClick : (()-> Void)?
     
-    let headerView = DIHeaderView(title: "Create Offer a Room Ads", hasBack: true)
+    let headerView = DIHeaderView(title: "", hasBack: true)
+    let coverButton = UIButton(title: "", titleColor: .clear, font: OpenSans.regular, fontSize: 1)
     let titleView = DITextField(title: "Add title for your ads",  placholder: "Type here", typePad: .default, contentHeight: 50, placeholderHeight: 15, textHeight: 15, hasLine: false)
     let descriptionsView = DITextField(title: "Add some descriptions",  placholder: "Type here", typePad: .default,
         contentHeight: 50, placeholderHeight: 15, textHeight: 15, hasLine: false)
     let priceLabel = UILabel(text: "Price Per Week", font: OpenSans.semiBold, size: 16)
     let dollarLabel = UILabel(text: "$", font: OpenSans.semiBold, size: 16)
     var priceTextField : UITextField = {
+        let textfield = UITextField()
+        textfield.textColor = Color.appWhite
+        textfield.keyboardType = .numberPad
+        textfield.placeholder = "Type Here"
+        textfield.backgroundColor = .black
+        return textfield
+    }()
+    lazy var priceStack = HorizontalStackView( arrangedSubViews: [dollarLabel, priceTextField ], spacing: 8 )
+    let salaryLabel = UILabel(text: "Salary", font: OpenSans.semiBold, size: 16)
+    var salaryTextField : UITextField = {
         let textfield = UITextField()
         textfield.textColor = Color.appWhite
         textfield.keyboardType = .numberPad
@@ -44,6 +55,7 @@ class CreateAdsView : UIView {
         observeEvents()
         
         textFieldAttribute(placeholderText: " \(priceTextField.placeholder ?? "")", placeholderHeight: 15)
+
     }
     
     required init?(coder: NSCoder) {
@@ -71,16 +83,14 @@ class CreateAdsView : UIView {
         descriptionsView.textField.font = UIFont.font(with: 15, family: OpenSans.semiBold)
         
         addSubview(priceLabel)
-        priceLabel.anchor(top: descriptionsView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 12, bottom: 0, right: 12))
-        
-        addSubview(priceTextField)
-        priceTextField.anchor(top: priceLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 6, left: 24, bottom: 0, right: 12))
-
-        priceTextField.addSubview(dollarLabel)
-        dollarLabel.anchor(top: dollarLabel.topAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 12, bottom: 0, right: 0))
+        priceLabel.anchor(top: descriptionsView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 10, left: 12, bottom: 0, right: 12))
+      
+//        addSubview(coverButton)
+        /*coverButton.*/addSubview(priceStack)
+        priceStack.anchor(top: priceLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 6, left: 12, bottom: 0, right: 12))
         
         addSubview(lineView)
-        lineView.anchor(top: priceTextField.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top:  5, left: 12, bottom: 0, right: 12))
+        lineView.anchor(top: priceStack.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 5, left: 12, bottom: 0, right: 12))
         lineView.constraintHeight(constant: 2)
         lineView.backgroundColor = Color.gray800
         
@@ -113,6 +123,7 @@ class CreateAdsView : UIView {
         propertyTypeLabel.propertyCoverButton.showsMenuAsPrimaryAction = true
         propertyTypeLabel.propertyCoverButton.isEnabled = true
         propertyTypeLabel.propertyCoverButton.menu = addInfoMenu()
+        
     }
     
     @objc func handleNextButtonTap() {
@@ -122,8 +133,9 @@ class CreateAdsView : UIView {
 
 extension CreateAdsView {
     
-    func setLabel(label: String) {
+    func setLabel(label: String, headerText : String) {
         priceLabel.text = label
+        headerView.textLabel.text = headerText
     }
     
     func removeConstraint(from view: UIView, with attribute: NSLayoutConstraint.Attribute, in constraints: inout [NSLayoutConstraint]) {
@@ -143,11 +155,8 @@ extension CreateAdsView {
         if model.propertyType == nil {
             propertyTypeLabel.sideTitle.text = "Tap Here"
         }
-        
-//        if model.languageArray?.isEmpty == true {
-//            languageLabel.subTitle.text =  "Tap to select"
-//        }
     }
+    
     private func addInfoMenu() -> UIMenu {
         let apartment = UIAction(title: "Apartment", handler: { _ in
             self.propertyTypeLabel.sideTitle.text = "Apartment"

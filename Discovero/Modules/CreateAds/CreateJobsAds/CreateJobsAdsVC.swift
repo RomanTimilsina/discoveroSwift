@@ -1,18 +1,19 @@
 //
-//  CreateAdsVC.swift
+//  CreateJobsAdsVC.swift
 //  Discovero
 //
-//  Created by admin on 30/10/2023.
+//  Created by admin on 01/11/2023.
 //
 
 import UIKit
 
-class CreateAdsVC: UIViewController {
+class CreateJobsAdsVC: UIViewController {
     
-    let currentView = CreateAdsView()
+    let currentView = CreateJobsAdsView()
     
     var usersData: UserData?
-    
+    let postPreview = PostPreviewVC()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
@@ -25,9 +26,8 @@ class CreateAdsVC: UIViewController {
             gotoLocationFilterVC()
         }
         
-        currentView.onNextClick = { [weak self] in
+        currentView.onNextClick = { [weak self]  in
             guard let self = self else { return }
-            
             gotoPostPreviewVC()
         }
         
@@ -37,11 +37,19 @@ class CreateAdsVC: UIViewController {
         }
         
         func gotoPostPreviewVC() {
-            let postPreview = PostPreviewVC()
-            let postModel = PostModel(name: "", country: currentView.countryName ?? "", state: currentView.stateName ?? "", suburb: currentView.suburbName ?? "",caption: currentView.titleView.textField.text ?? "", description: currentView.descriptionsView.textField.text ?? "", propertyType: currentView.propertyTypeLabel.sideTitle.text ?? "", price: Double(currentView.priceTextField.text ?? "0.0") ?? 0.0, noOfBedroom: currentView.noOfBedrooms.count, noOfBathroom: currentView.noOfBathrooms.count, noOfParkings: currentView.noOfParkings.count, isAnonymous: false)
-            postPreview.currentView.postView.configureData(roomData: postModel, jobData: nil, buyAndSellData: nil)
+            if let isItJob = currentView.coverButton as? UIButton{
+                let jobModel = JobModel(adsTitle: currentView.titleView.textField.text ?? "", description: currentView.descriptionsView.textField.text ?? "", salary: Double(currentView.salaryTextField.text ?? "0.0") ?? 0.0, country: currentView.countryName ?? "", state: currentView.stateName ?? "", suburb: currentView.suburbName ?? "", noOfPostion: currentView.selector.count, jobType: currentView.JobTypeLabel.sideTitle.text ?? "")
+                postPreview.currentView.postView.configureData( roomData: nil, jobData: jobModel, buyAndSellData: nil)
 
+
+            } else {
+                let buyAndSell = BuySellModel(adsTitle: currentView.titleView.textField.text ?? "", description: currentView.descriptionsView.textField.text ?? "", price:  Double(currentView.salaryTextField.text ?? "0.0") ?? 0.0, country: currentView.countryName ?? "", state: currentView.stateName ?? "", suburb: currentView.suburbName ?? "", noOfItems: currentView.selector.count, productTypeLabel: currentView.productTypeLabel.sideTitle.text ?? "")
+                postPreview.currentView.postView.configureData( roomData: nil, jobData: nil, buyAndSellData: buyAndSell)
+
+            }
+            
             navigationController?.pushViewController(postPreview, animated: true)
+
         }
         
         func gotoLocationFilterVC() {

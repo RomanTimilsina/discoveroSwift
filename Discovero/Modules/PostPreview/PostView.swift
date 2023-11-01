@@ -56,7 +56,7 @@ class PostView: UIView {
     let location = UILabel(text: "", font: OpenSans.regular, size: 14)
     lazy var locationStack = HorizontalStackView(arrangedSubViews: [placeImage, location, UIView()], spacing: 6)
     
-    let bedroomImage =  UIImageView(image:UIImage(named: "bedroomImage") ,contentMode: .scaleAspectFit, clipsToBounds: true)
+    var bedroomImage =  UIImageView(image:UIImage(named: "bedroomImage") ,contentMode: .scaleAspectFit, clipsToBounds: true)
     let bedroomNumberLabel = UILabel(text: "", font: OpenSans.regular, size: 14)
     let tubImage =  UIImageView(image:UIImage(named: "tub") ,contentMode: .scaleAspectFit, clipsToBounds: true)
     let tubNumberLabel = UILabel(text: "", font: OpenSans.regular, size: 14)
@@ -137,25 +137,48 @@ extension PostView {
         }
     }
     
-    func configureData(data: PostModel) {
+    func configureData(roomData: PostModel?, jobData: JobModel?, buyAndSellData: BuySellModel?) {
+        if let roomData {
+            namePrefixLabel.text = "\(namePrefix(name: usersData?.name ?? ""))"
+            profileImageView.isHidden = true
+            nameLabel.text = usersData?.name
+            countryFlageImage.image = UIImage(named: roomData.country)
+            stateLabel.text = roomData.state
+            adLabel.text = roomData.description
+            priceAmountLabel.text = "$\(String(format: "%.2f", roomData.price))"
+            location.text = roomData.state + ", " + roomData.country
+            propertyTypeLabel.text = roomData.propertyType
+            bedroomNumberLabel.text = "\(roomData.noOfBedroom)"
+            tubNumberLabel.text = "\(roomData.noOfBathroom)"
+            garageNumberLabel.text = "\(roomData.noOfParkings)"
+        }
         
-        namePrefixLabel.text = "\(namePrefix(name: usersData?.name ?? ""))"
-        profileImageView.isHidden = true
-        nameLabel.text = usersData?.name
-        countryFlageImage.image = UIImage(named: data.country)
-        stateLabel.text = data.state
+        if let jobData {
+            namePrefixLabel.text = "\(namePrefix(name: usersData?.name ?? ""))"
+            profileImageView.isHidden = true
+            nameLabel.text = usersData?.name
+            countryFlageImage.image = UIImage(named: jobData.country)
+            stateLabel.text = jobData.state
+            adLabel.text = jobData.description
+            priceAmountLabel.text = "$\(String(format: "%.2f", jobData.salary))"
+            location.text = jobData.state + ", " + jobData.country
+            propertyTypeLabel.text = jobData.jobType
+            bedroomNumberLabel.text = "\(jobData.noOfPostion)"
+        }
         
-        // Configure likes count
-        //        noOfLikes.text = "\(data.likesCount)"
-        adLabel.text = data.description
-        priceAmountLabel.text = "$\(String(format: "%.2f", data.price))"
-        location.text = data.state + ", " + data.country
-        propertyTypeLabel.text = data.propertyType
-        bedroomNumberLabel.text = "\(data.noOfBedroom)"
-        tubNumberLabel.text = "\(data.noOfBathroom)"
-        garageNumberLabel.text = "\(data.noOfParkings)"
+        if let buyAndSellData {
+            namePrefixLabel.text = "\(namePrefix(name: usersData?.name ?? ""))"
+            profileImageView.isHidden = true
+            nameLabel.text = usersData?.name
+            countryFlageImage.image = UIImage(named: buyAndSellData.country)
+            stateLabel.text = buyAndSellData.state
+            adLabel.text = buyAndSellData.description
+            priceAmountLabel.text = "$\(String(format: "%.2f", buyAndSellData.price))"
+            location.text = buyAndSellData.state + ", " + buyAndSellData.country
+            propertyTypeLabel.text = buyAndSellData.productTypeLabel
+            bedroomNumberLabel.text = "\(buyAndSellData.noOfItems)"
+        }
     }
-
 }
 
 // MARK: Formatting data
