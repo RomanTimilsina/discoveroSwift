@@ -15,15 +15,21 @@ class PostPreviewView : UIView{
     let nextButton = DIButton(buttonTitle: "Next")
     let toggleSwitch = UISwitch()
     lazy var anonymousStack = HorizontalStackView(arrangedSubViews: [anonymousLabel, UIView(), toggleSwitch])
+    var userName: String?
+    var grad = GradientRectangleView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = Color.appBlack
+        
+        userName = postView.nameLabel.text ?? ""
+        
         toggleSwitch.isOn = false
         toggleSwitch.thumbTintColor = Color.primary
         toggleSwitch.onTintColor = Color.primary?.withAlphaComponent(0.5)
         
         setup()
+        observeEvents()
     }
     
     func setup() {
@@ -32,10 +38,10 @@ class PostPreviewView : UIView{
         headerView.constraintHeight(constant: 50)
         
         addSubview(postView)
-        postView.anchor(top: headerView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding:  .init(top: 10, left: 8, bottom: 0, right: 8))
+        postView.anchor(top: headerView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding:  .init(top: 0, left: 0, bottom: 0, right: 0))
         
         addSubview(anonymousStack)
-        anonymousStack.anchor(top: postView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding:  .init(top: 30, left: 8, bottom: 0, right: 8))
+        anonymousStack.anchor(top: postView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding:  .init(top: 30, left: 12, bottom: 0, right: 12))
         
         addSubview(nextButton)
         nextButton.anchor(top: nil, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor,padding: .init(top: 0, left: 12, bottom: 30, right: 12))
@@ -48,9 +54,11 @@ class PostPreviewView : UIView{
     @objc func toggleFunction() {
         if toggleSwitch.isOn {
             postView.nameLabel.text = "Anonymous"
-
+            postView.textView = grad
         } else {
-            postView.nameLabel.text = "Anonymous"
+            postView.nameLabel.text = userName
+            grad = postView.textView 
+
         }
     }
     

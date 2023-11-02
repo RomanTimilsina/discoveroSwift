@@ -20,7 +20,7 @@ class PostView: UIView {
     let countryFlageImage = UIImageView(image: UIImage(named: ""), contentMode: .scaleAspectFit)
     let uploadedTime = UILabel(text: "0 seconds ago", font: OpenSans.regular, size: 12)
     let dot = UIImageView(image: UIImage(named: "dot"), contentMode: .scaleAspectFit, clipsToBounds: true)
-    let stateLabel = UILabel(text: "", font: OpenSans.semiBold, size: 14)
+    let stateLabel = UILabel(text: "New South Wales", font: OpenSans.semiBold, size: 14)
     let likeButton = UIImageView(image: UIImage(named: "heart"), contentMode: .scaleAspectFit, clipsToBounds: true)
     let noOfLikes = UILabel(text: "", font: OpenSans.semiBold, size: 12)
     lazy var titleStack = HorizontalStackView(arrangedSubViews: [nameLabel, countryFlageImage], spacing: 5)
@@ -40,10 +40,9 @@ class PostView: UIView {
     
     let commentsImageView = UIImageView(image: UIImage(named: "comments"), contentMode: .scaleAspectFit, clipsToBounds: true)
     let commentsLabel = UILabel(text: "Comments", font: OpenSans.semiBold, size: 14)
-    let commentCount = UILabel(text: "6", color: Color.appBlack, font: OpenSans.semiBold, size: 12)
-    let circleView = UIView(color: Color.primary, cornerRadius: 7)
     lazy var commentsStack = HorizontalStackView(arrangedSubViews: [commentsImageView, commentsLabel, UIView()], spacing: 10)
-    lazy var adFooterStack = HorizontalStackView(arrangedSubViews: [callStack, messageStack, commentsStack], distribution: .fillEqually)
+    let announcmentLikeButton = UIImageView(image: UIImage(named: "heart"), contentMode: .scaleAspectFit, clipsToBounds: true)
+    lazy var adFooterStack = HorizontalStackView(arrangedSubViews: [callStack, announcmentLikeButton, messageStack, commentsStack], distribution: .fillEqually)
     
     // Ads middle part
     let adLabel = UILabel(text: "", font: OpenSans.semiBold, size: 16, numberOfLines: 0, alignment: .left)
@@ -70,12 +69,13 @@ class PostView: UIView {
     lazy var apartmentDescriptionStack = HorizontalStackView(arrangedSubViews: [bedroomImage, bedroomNumberLabel, tubImage, tubNumberLabel, garageImage, garageNumberLabel, line, propertyTypeLabel, UIView()], spacing: 8)
     let lineView = UIView(color: Color.gray600)
     lazy var middleAdStack = VerticalStackView(arrangedSubViews: [adLabel, priceStack, locationStack, apartmentDescriptionStack], spacing: 8)
-    lazy var cellStack = VerticalStackView(arrangedSubViews: [adHeaderStack, middleAdStack, lineView, adFooterStack], spacing: 19)
-    let currentView = UIView()
+    lazy var cellStack = VerticalStackView(arrangedSubViews: [adHeaderStack, middleAdStack, textView, lineView, adFooterStack], spacing: 19)
+    let view = UIView()
+    let announcementlabel = UILabel(text: "", color: Color.appBlack, font: OpenSans.regular, size: 18)
+    var textView = GradientRectangleView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setupView()
         fetchUserData()
         backgroundColor = Color.gray900
@@ -86,8 +86,8 @@ class PostView: UIView {
     }
     
     func setupView() {
-        addSubview(currentView)
-        currentView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0 ))
+        addSubview(view)
+        view.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0 ))
         
         addSubview(gapView)
         gapView.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
@@ -112,13 +112,11 @@ class PostView: UIView {
         totalViewStack.anchor(top: nil, leading: nil, bottom: lineView.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 8, right: 12))
         viewCount.centerXInSuperview()
         
-        currentView.addSubview(circleView)
-        circleView.anchor(top: nil, leading: commentsLabel.trailingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 5, bottom: 0, right: 5))
-        circleView.centerYAnchor.constraint(equalTo: commentsLabel.centerYAnchor).isActive = true
-        circleView.constraintWidth(constant: 14)
-        circleView.constraintHeight(constant: 14)
-        circleView.addSubview(commentCount)
-        commentCount.centerInSuperview()
+        textView.constraintHeight(constant: 200)
+//        textView.applyGradient(withColours: [.white,.black], gradientOrientation: GradientOrientation.horizontal)
+        
+        textView.addSubview(announcementlabel)
+        announcementlabel.centerInSuperview()
     }
     
     required init?(coder: NSCoder) {

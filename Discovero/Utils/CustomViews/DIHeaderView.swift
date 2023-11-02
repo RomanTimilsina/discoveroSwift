@@ -9,9 +9,6 @@ import UIKit
 
 class DIHeaderView: UIView {
     
-    //    let view = UIView()
-    //    let anotherView = UIView()
-    
     var onClose: (() -> Void)?
     
     let textLabel = UILabel(text: "",color: Color.appWhite, font: OpenSans.semiBold, size: 16, alignment: .center)
@@ -19,7 +16,7 @@ class DIHeaderView: UIView {
     let backImage = UIImageView(image: UIImage(named: "backButtonIcon"), contentMode: .scaleAspectFit)
     let cancelLabel = UILabel(text: "Cancel", font: OpenSans.regular, size: 14)
     lazy var backButtonStack = HorizontalStackView(arrangedSubViews: [backImage, backLabel], spacing: 6)
-    lazy var mainStack = HorizontalStackView(arrangedSubViews: [backButtonStack, UIView(), cancelLabel], spacing: 6)
+    lazy var mainStack = HorizontalStackView(arrangedSubViews: [backButtonStack, UIView(), textLabel, UIView(), cancelLabel], spacing: 6)
     
     let line : UIView = {
         let line = UIView()
@@ -44,18 +41,16 @@ class DIHeaderView: UIView {
         addSubview(mainStack)
         mainStack.constraintHeight(constant: 20)
         
-        addSubview(textLabel)
-        textLabel.anchor(top: topAnchor, leading: nil, bottom: bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 10, right: 0))
-        textLabel.centerInSuperview()
+        textLabel.centerXInSuperview()
         
         mainStack.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 14, bottom: 0, right: 14))
         mainStack.centerYInSuperview()
         
-        let backButtonStackTapGesture = UITapGestureRecognizer(target: self, action: #selector(close))
+        let backButtonStackTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleClose))
         backButtonStack.addGestureRecognizer(backButtonStackTapGesture)
         backButtonStack.isUserInteractionEnabled = true
         
-        let cancelLabelTapGesture = UITapGestureRecognizer(target: self, action: #selector(close))
+        let cancelLabelTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleClose))
         cancelLabel.addGestureRecognizer(cancelLabelTapGesture)
         cancelLabel.isUserInteractionEnabled = true
         
@@ -65,7 +60,7 @@ class DIHeaderView: UIView {
         line.anchor(top: bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor , padding: .init(top: -1, left: 0, bottom: 0, right:  0))
     }
     
-    @objc func close() {
+    @objc func handleClose() {
         onClose?()
     }
 }

@@ -118,7 +118,7 @@ class DITextField: UIView {
         
         if lineBool {
             addSubview(lineView)
-            let constraint = lineView.anchor(top: contentVeiw.bottomAnchor, leading: contentVeiw.leadingAnchor, bottom: nil, trailing: contentVeiw.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+            let constraint = lineView.anchor(top: contentVeiw.bottomAnchor, leading: contentVeiw.leadingAnchor, bottom: nil, trailing: contentVeiw.trailingAnchor, padding: .init(top: 5, left: 0, bottom: 0, right: 0))
             lineView.constraintHeight(constant: 2)
             lineView.backgroundColor = Color.gray800
         }

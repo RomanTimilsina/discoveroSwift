@@ -11,9 +11,6 @@ class BottomSheetPickerVC : UIViewController {
     
     let currentView = BottomSheetPickerView()
     
-    var onClosePicker: (() -> Void)?
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         observeViewEvents()
@@ -22,13 +19,12 @@ class BottomSheetPickerVC : UIViewController {
     func observeViewEvents() {
         currentView.onCloseClick = { [weak self] in
             guard let self = self else { return }
-            onClosePicker?()
+            dismiss(animated: true, completion: nil)
         }
         currentView.onOfferClick = { [weak self] in
             guard let self = self else { return }
             openCreateAdsOffer()
         }
-        
         currentView.onLookingClick = { [weak self] in
             guard let self = self else { return }
             openCreateAdsLooking()
@@ -41,16 +37,19 @@ class BottomSheetPickerVC : UIViewController {
             let vc = CreateAdsVC()
             vc.currentView.setLabel(label: "Price per week", headerText: "Create Offer a Room Ads")
             gotoVC(vc: vc)
+            vc.postPreview.currentView.postView.textView.removeFromSuperview()
+
         } else if currentView.offerLabel.text == "Offer a Job" {
             let vc = CreateJobsAdsVC()
-            vc.currentView.productTypeLabel.removeFromSuperview()
             vc.currentView.setLabel(label: "Salary", headerText: "Create Offer a Job Ads")
+            vc.currentView.productTypeLabel.removeFromSuperview()
             
+            vc.postPreview.currentView.postView.bedroomImage = UIImageView(image: UIImage(named: "jobsImage"), contentMode: .scaleAspectFit, clipsToBounds: true)
             vc.postPreview.currentView.postView.tubImage.isHidden = true
             vc.postPreview.currentView.postView.tubNumberLabel.isHidden = true
             vc.postPreview.currentView.postView.garageImage.removeFromSuperview()
             vc.postPreview.currentView.postView.garageNumberLabel.removeFromSuperview()
-            vc.postPreview.currentView.postView.bedroomImage = UIImageView(image: UIImage(named: "jobsImage"), contentMode: .scaleAspectFit, clipsToBounds: true)
+            vc.postPreview.currentView.postView.textView.removeFromSuperview()
             
             gotoVC(vc: vc)
         } else if currentView.offerLabel.text == "Sell Something" {
@@ -65,6 +64,7 @@ class BottomSheetPickerVC : UIViewController {
             vc.postPreview.currentView.postView.tubNumberLabel.removeFromSuperview()
             vc.postPreview.currentView.postView.garageImage.removeFromSuperview()
             vc.postPreview.currentView.postView.garageNumberLabel.removeFromSuperview()
+            vc.postPreview.currentView.postView.textView.removeFromSuperview()
 
             gotoVC(vc: vc)
         }
@@ -76,18 +76,23 @@ class BottomSheetPickerVC : UIViewController {
             let vc = CreateAdsVC()
             vc.currentView.setLabel(label: "Budget per week", headerText: "Create Looking a Room Ads")
             vc.currentView.propertyTypeLabel.isHidden = true
+            
+            vc.postPreview.currentView.postView.textView.removeFromSuperview()
             gotoVC(vc: vc)
         } else if currentView.lookingLabel.text == "Looking For Job" {
             let vc = CreateJobsAdsVC()
+            vc.currentView.setLabel(label: "Expected Salary", headerText: "Create Looking a Job Ads")
             vc.currentView.productTypeLabel.removeFromSuperview()
             vc.currentView.selector.isHidden = true
             vc.currentView.selector.constraintHeight(constant: 0)
-            vc.currentView.setLabel(label: "Expected Salary", headerText: "Create Looking a Job Ads")
+            
+            vc.postPreview.currentView.postView.bedroomImage = UIImageView(image: UIImage(named: "jobsImage"), contentMode: .scaleAspectFit, clipsToBounds: true)
             vc.postPreview.currentView.postView.tubImage.isHidden = true
             vc.postPreview.currentView.postView.tubNumberLabel.isHidden = true
             vc.postPreview.currentView.postView.garageImage.removeFromSuperview()
             vc.postPreview.currentView.postView.garageNumberLabel.removeFromSuperview()
-            vc.postPreview.currentView.postView.bedroomImage = UIImageView(image: UIImage(named: "jobsImage"), contentMode: .scaleAspectFit, clipsToBounds: true)
+            vc.postPreview.currentView.postView.textView.removeFromSuperview()
+            
             gotoVC(vc: vc)
         }else if currentView.lookingLabel.text == "Looking For Something" {
             let vc = CreateJobsAdsVC()
@@ -96,11 +101,11 @@ class BottomSheetPickerVC : UIViewController {
             vc.currentView.coverButton.removeFromSuperview()
 
             vc.postPreview.currentView.postView.bedroomImage.image = UIImage(named: "salesImage")
-
             vc.postPreview.currentView.postView.tubImage.removeFromSuperview()
             vc.postPreview.currentView.postView.tubNumberLabel.removeFromSuperview()
             vc.postPreview.currentView.postView.garageImage.removeFromSuperview()
             vc.postPreview.currentView.postView.garageNumberLabel.removeFromSuperview()
+            vc.postPreview.currentView.postView.textView.removeFromSuperview()
             
             gotoVC(vc: vc)
         }

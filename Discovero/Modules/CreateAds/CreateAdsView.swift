@@ -43,7 +43,7 @@ class CreateAdsView : UIView {
     let noOfParkings  = CustomNumberSelector("Parking Available For",  0)
     let propertyTypeLabel = DICustomProfileView(titleText: "Property Type", text: "", show: true, sideTitleString: "Tap to Choose")
 
-    let nextButton = DIButton(buttonTitle: "Next", height: 30)
+    let nextButton = DIButton(buttonTitle: "Next")
     
     var countryName, stateName, suburbName, propertyType: String?
     
@@ -55,7 +55,6 @@ class CreateAdsView : UIView {
         observeEvents()
         
         textFieldAttribute(placeholderText: " \(priceTextField.placeholder ?? "")", placeholderHeight: 15)
-
     }
     
     required init?(coder: NSCoder) {
@@ -85,8 +84,7 @@ class CreateAdsView : UIView {
         addSubview(priceLabel)
         priceLabel.anchor(top: descriptionsView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 10, left: 12, bottom: 0, right: 12))
       
-//        addSubview(coverButton)
-        /*coverButton.*/addSubview(priceStack)
+        addSubview(priceStack)
         priceStack.anchor(top: priceLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 6, left: 12, bottom: 0, right: 12))
         
         addSubview(lineView)
@@ -115,6 +113,7 @@ class CreateAdsView : UIView {
         addSubview(nextButton)
         nextButton.anchor(top: nil, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 30, right: 12))
         nextButton.layer.cornerRadius = 5
+        nextButton.constraintHeight(constant: 50)
     }
     
     func observeEvents() {

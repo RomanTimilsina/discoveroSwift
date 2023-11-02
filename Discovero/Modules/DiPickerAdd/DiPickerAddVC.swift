@@ -41,9 +41,9 @@ class DiPickerAddVC: UIViewController, UISheetPresentationControllerDelegate {
             openBuyAndSellPicker()
         }
         
-        bottomPicker.onClosePicker = { [weak self] in
-            guard let self = self else { return }
-            dismiss(animated: true, completion: nil)
+        currentView.onAnnouncementClick = { [weak self] in
+            guard let self else { return }
+            gotoCreateAnnouncement()
         }
         
         func openRoomPicker() {
@@ -88,6 +88,18 @@ class DiPickerAddVC: UIViewController, UISheetPresentationControllerDelegate {
             }
             present(bottomPicker, animated: true, completion: nil)
         }
+    }
+    
+    
+    func gotoCreateAnnouncement() {
+        let vc = CreateAnnouncmentVC()
+        
+        let navigationController = UINavigationController(rootViewController: vc)
+        vc.modalPresentationStyle = .overFullScreen
+        
+        vc.postPreview.currentView.postView.callStack.removeFromSuperview()
+        vc.postPreview.currentView.postView.likeButton.removeFromSuperview()
+        present(navigationController, animated: true)
     }
         
     override func loadView() {

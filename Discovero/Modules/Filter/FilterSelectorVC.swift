@@ -84,6 +84,10 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
         let locationFilterVC = LocationFilterVC()
         locationFilterVC.userData = usersData
         
+        locationFilterVC.currentView.streetNameView.removeFromSuperview()
+        locationFilterVC.currentView.streetNumView.removeFromSuperview()
+        locationFilterVC.currentView.buldingNumView.removeFromSuperview()
+    
         navigationController?.pushViewController(locationFilterVC, animated: true)
         
         locationFilterVC.onSaveClick = { [weak self] country, state, suburb in

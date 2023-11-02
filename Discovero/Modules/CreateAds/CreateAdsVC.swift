@@ -13,6 +13,8 @@ class CreateAdsVC: UIViewController {
     
     var usersData: UserData?
     
+    let postPreview = PostPreviewVC()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
@@ -37,7 +39,7 @@ class CreateAdsVC: UIViewController {
         }
         
         func gotoPostPreviewVC() {
-            let postPreview = PostPreviewVC()
+            
             let postModel = PostModel(name: "", country: currentView.countryName ?? "", state: currentView.stateName ?? "", suburb: currentView.suburbName ?? "",caption: currentView.titleView.textField.text ?? "", description: currentView.descriptionsView.textField.text ?? "", propertyType: currentView.propertyTypeLabel.sideTitle.text ?? "", price: Double(currentView.priceTextField.text ?? "0.0") ?? 0.0, noOfBedroom: currentView.noOfBedrooms.count, noOfBathroom: currentView.noOfBathrooms.count, noOfParkings: currentView.noOfParkings.count, isAnonymous: false)
             postPreview.currentView.postView.configureData(roomData: postModel, jobData: nil, buyAndSellData: nil)
 

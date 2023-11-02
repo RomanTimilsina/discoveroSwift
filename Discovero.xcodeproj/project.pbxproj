@@ -81,6 +81,9 @@
 		84AEDBD62AF0E36C00ED121C /* PostPreviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AEDBD52AF0E36C00ED121C /* PostPreviewVC.swift */; };
 		84AEDBD82AF1069100ED121C /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AEDBD72AF1069100ED121C /* PostView.swift */; };
 		84AEDBDA2AF111F600ED121C /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AEDBD92AF111F600ED121C /* PostModel.swift */; };
+		84C422112AF3588B00091FD0 /* CreateAnnouncmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C422102AF3588B00091FD0 /* CreateAnnouncmentView.swift */; };
+		84C422132AF3589700091FD0 /* CreateAnnouncmentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C422122AF3589700091FD0 /* CreateAnnouncmentVC.swift */; };
+		84C422152AF39F9200091FD0 /* GradientRectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C422142AF39F9200091FD0 /* GradientRectangleView.swift */; };
 		84DE17F82AF2296900B87358 /* CreateJobsAdsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DE17F72AF2296900B87358 /* CreateJobsAdsView.swift */; };
 		84DE17FA2AF2297400B87358 /* CreateJobsAdsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DE17F92AF2297400B87358 /* CreateJobsAdsVC.swift */; };
 		84DE17FC2AF2451A00B87358 /* JobModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DE17FB2AF2451A00B87358 /* JobModel.swift */; };
@@ -210,6 +213,9 @@
 		84AEDBD52AF0E36C00ED121C /* PostPreviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPreviewVC.swift; sourceTree = "<group>"; };
 		84AEDBD72AF1069100ED121C /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		84AEDBD92AF111F600ED121C /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
+		84C422102AF3588B00091FD0 /* CreateAnnouncmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAnnouncmentView.swift; sourceTree = "<group>"; };
+		84C422122AF3589700091FD0 /* CreateAnnouncmentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAnnouncmentVC.swift; sourceTree = "<group>"; };
+		84C422142AF39F9200091FD0 /* GradientRectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientRectangleView.swift; sourceTree = "<group>"; };
 		84DE17F72AF2296900B87358 /* CreateJobsAdsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateJobsAdsView.swift; sourceTree = "<group>"; };
 		84DE17F92AF2297400B87358 /* CreateJobsAdsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateJobsAdsVC.swift; sourceTree = "<group>"; };
 		84DE17FB2AF2451A00B87358 /* JobModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobModel.swift; sourceTree = "<group>"; };
@@ -331,7 +337,6 @@
 		04996CB82AA46E5E00DB618F /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				84DE17F52AF2050C00B87358 /* CreateAnnouncementView */,
 				84AEDBD22AF0E32100ED121C /* PostPreview */,
 				849B565A2AEFB64C00C91F81 /* CreateAds */,
 				8496C4E22AEE6E530017CC0A /* BottomSheetPicker */,
@@ -370,6 +375,7 @@
 				04967AB62ABAD9BB0035B359 /* CustomSelectorView.swift */,
 				049AB9C92AC9440D007200A5 /* CustomTimer.swift */,
 				8496C4E02AEE5E0A0017CC0A /* CustomNumberSelector.swift */,
+				84C422142AF39F9200091FD0 /* GradientRectangleView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -532,6 +538,7 @@
 		849B565A2AEFB64C00C91F81 /* CreateAds */ = {
 			isa = PBXGroup;
 			children = (
+				84DE17F52AF2050C00B87358 /* CreateAnnouncementView */,
 				84DE17F62AF228E500B87358 /* CreateJobsAds */,
 				849B565B2AEFB66B00C91F81 /* CreateAdsView.swift */,
 				849B565D2AEFB68500C91F81 /* CreateAdsVC.swift */,
@@ -552,6 +559,8 @@
 		84DE17F52AF2050C00B87358 /* CreateAnnouncementView */ = {
 			isa = PBXGroup;
 			children = (
+				84C422102AF3588B00091FD0 /* CreateAnnouncmentView.swift */,
+				84C422122AF3589700091FD0 /* CreateAnnouncmentVC.swift */,
 			);
 			path = CreateAnnouncementView;
 			sourceTree = "<group>";
@@ -823,6 +832,7 @@
 				8587D3452AE15FA900AED0DA /* FilterModel.swift in Sources */,
 				049CF12C2AA9AA4B00FF2F1B /* CustomSearchBar.swift in Sources */,
 				E0FE06252AA43D1B001DBDF5 /* VerticalStackView.swift in Sources */,
+				84C422132AF3589700091FD0 /* CreateAnnouncmentVC.swift in Sources */,
 				04CA49052AA43FEB00C69767 /* DITextField.swift in Sources */,
 				049BEF692AA5B0C800ED2B58 /* LoginView.swift in Sources */,
 				84AEDBD82AF1069100ED121C /* PostView.swift in Sources */,
@@ -845,6 +855,7 @@
 				049AB9CA2AC9440D007200A5 /* CustomTimer.swift in Sources */,
 				04B514A52AA71CAA00E99A1B /* OtpConfirmView.swift in Sources */,
 				04996CBF2AA4725300DB618F /* DIButton.swift in Sources */,
+				84C422112AF3588B00091FD0 /* CreateAnnouncmentView.swift in Sources */,
 				04A168B72AA8544F0065F607 /* DIPickerView.swift in Sources */,
 				049D3A9A2AADBE86004864E9 /* DICustomProfileView.swift in Sources */,
 				8496C4E42AEE6EB70017CC0A /* BottomSheetPickerVC.swift in Sources */,
@@ -886,6 +897,7 @@
 				04775C412AB960E0005F9B4C /* CommentsPageVC.swift in Sources */,
 				04A168B22AA840E20065F607 /* RegistrationVC.swift in Sources */,
 				E0FE062B2AA43D1B001DBDF5 /* Double+Ext.swift in Sources */,
+				84C422152AF39F9200091FD0 /* GradientRectangleView.swift in Sources */,
 				04996CC42AA4A10200DB618F /* OnBoardingCollectionModel.swift in Sources */,
 				049AF2AB2AB6D3800033EF2F /* DIHeaderTab.swift in Sources */,
 				E0FE06482AA43D1B001DBDF5 /* DateConverterHelper.swift in Sources */,

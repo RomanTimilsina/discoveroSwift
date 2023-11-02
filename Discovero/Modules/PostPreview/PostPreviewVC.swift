@@ -14,6 +14,8 @@ class PostPreviewVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
+        
+        observeViewEvents()
     }
     
     func observeViewEvents() {
@@ -21,6 +23,8 @@ class PostPreviewVC: UIViewController {
             guard let self = self else { return }
             navigationController?.popViewController(animated: true)
         }
+        
+        
     }
     
     override func loadView() {
