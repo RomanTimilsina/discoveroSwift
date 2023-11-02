@@ -21,11 +21,6 @@ class DiPickerAddVC: UIViewController, UISheetPresentationControllerDelegate {
     }
     
     func observeViewEvents() {
-        //        currentView.onCloseClick = { [weak self] in
-        //            guard let self = self else { return }
-        //            onClosePicker?()
-        //        }
-        
         currentView.onRoomCLick = { [weak self] in
             guard let self else { return }
             openRoomPicker()
@@ -75,7 +70,7 @@ class DiPickerAddVC: UIViewController, UISheetPresentationControllerDelegate {
             present(bottomPicker, animated: true, completion: nil)
         }
         
-        func openBuyAndSellPicker(){
+        func openBuyAndSellPicker() {
             bottomPicker.modalPresentationStyle = .automatic
             
             bottomPicker.currentView.setLabel(offerText: "Sell Something", lookingText: "Looking For Something")
@@ -89,7 +84,6 @@ class DiPickerAddVC: UIViewController, UISheetPresentationControllerDelegate {
             present(bottomPicker, animated: true, completion: nil)
         }
     }
-    
     
     func gotoCreateAnnouncement() {
         let vc = CreateAnnouncmentVC()
