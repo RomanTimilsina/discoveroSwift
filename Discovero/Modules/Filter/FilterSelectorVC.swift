@@ -45,12 +45,17 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
         //MARK: Reset View
         currentView.resetView(usersData: usersData)
         
-        filterModel.noOfBedrooms = nil
-        filterModel.noOfBathrooms = nil
-        filterModel.noOfParkings = nil
-        filterModel.maxCost = nil
-        filterModel.minCost = nil
+        currentView.countryName = usersData?.country ?? ""
+        currentView.stateName = usersData?.locationDetail.state ?? ""
+        filterModel.propertyType = nil
+        currentView.noOfBedrooms = 0
+        currentView.noOfBathrooms = 0
+        currentView.noOfParkings = 0
+        currentView.maxCost = nil
+        currentView.minCost = nil
+        currentView.languageArray = usersData?.languages
     }
+
     
     func observeViewEvents() {
         currentView.headerView.onClose = { [weak self] in
