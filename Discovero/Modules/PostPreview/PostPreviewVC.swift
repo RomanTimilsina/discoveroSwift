@@ -23,8 +23,6 @@ class PostPreviewVC: UIViewController {
             guard let self = self else { return }
             navigationController?.popViewController(animated: true)
         }
-        
-        
     }
     
     override func loadView() {

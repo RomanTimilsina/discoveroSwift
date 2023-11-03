@@ -7,16 +7,6 @@
 
 import UIKit
 
-
-enum AdsPage {
-    case offerRoom
-    case offerJob
-    case sellSomething
-    case lookingForRoom
-    case lookingForJob
-    case lookingForSomething 
-}
-
 class BottomSheetPickerVC : UIViewController {
     
     let currentView = BottomSheetPickerView()
@@ -31,38 +21,51 @@ class BottomSheetPickerVC : UIViewController {
             guard let self = self else { return }
             dismiss(animated: true, completion: nil)
         }
-        currentView.onOfferClick = { [weak self] in
+        currentView.onOfferRoomClick = { [weak self] in
             guard let self = self else { return }
-            openCreateAdsOffer()
-        }
-        currentView.onLookingClick = { [weak self] in
-            guard let self = self else { return }
-            openCreateAdsLooking()
-        }
-    }
-    
-    private func openCreateAdsOffer() {
-        if currentView.offerLabel.text == "Offer a Room" {
             offerRoom()
-        } else if currentView.offerLabel.text == "Offer a Job" {
-            offerJob()
-        } else if currentView.offerLabel.text == "Sell Something" {
-           sellStuff()
         }
-    }
-    
-    private func openCreateAdsLooking() {
         
-        if currentView.lookingLabel.text == "Looking For Room" {
+        currentView.onOfferJobClick = { [weak self] in
+            guard let self = self else { return }
+            offerJob()
+        }
+        
+        currentView.onOfferSellClick = { [weak self] in
+            guard let self = self else { return }
+            sellStuff()
+        }
+        
+        currentView.onLookingRoomClick = { [weak self] in
+            guard let self = self else { return }
             lookingForRoom()
-        } else if currentView.lookingLabel.text == "Looking For Job" {
+        }
+        
+        currentView.onLookingJobClick = { [weak self] in
+            guard let self = self else { return }
             lookingForJob()
-        }else if currentView.lookingLabel.text == "Looking For Something" {
-          buySomething()
+        }
+        
+        currentView.onLookingBuyClick = { [weak self] in
+            guard let self = self else { return }
+            buySomething()
         }
     }
+
     
+    func gotoVC(vc: UIViewController) {
+        let navigationController = UINavigationController(rootViewController: vc)
+        vc.modalPresentationStyle = .overFullScreen
+        present(navigationController, animated: true)
+    }
     
+    override func loadView() {
+        view = currentView
+    }
+}
+
+// MARK: - push to pages
+extension BottomSheetPickerVC {
     func lookingForRoom() {
         let vc = CreateAdsVC()
         vc.currentView.setLabel(label: "Budget per week", headerText: "Create Looking a Room Ads")
@@ -143,16 +146,6 @@ class BottomSheetPickerVC : UIViewController {
         vc.postPreview.currentView.postView.textView.removeFromSuperview()
 
         gotoVC(vc: vc)
-    }
-    
-    func gotoVC(vc: UIViewController) {
-        let navigationController = UINavigationController(rootViewController: vc)
-        vc.modalPresentationStyle = .overFullScreen
-        present(navigationController, animated: true)
-    }
-    
-    override func loadView() {
-        view = currentView
     }
 }
 

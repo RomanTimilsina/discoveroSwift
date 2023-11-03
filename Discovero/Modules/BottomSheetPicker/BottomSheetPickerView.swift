@@ -7,11 +7,26 @@
 
 import UIKit
 
+enum AdsOfferPage: String {
+    case offerRoom = "Offer a Room"
+    case offerJob = "Offer a Job"
+    case sellSomething = "Sell Something"
+}
+
+enum AdsLookingPage: String {
+    case lookingForRoom = "Looking For Room"
+    case lookingForJob = "Looking For Job"
+    case lookingForSomething = "Looking For Something"
+}
 class BottomSheetPickerView : UIView {
     
     var onCloseClick:   (()-> Void)?
-    var onOfferClick:   (()-> Void)?
-    var onLookingClick: (() ->Void)?
+    var onOfferRoomClick:   (()-> Void)?
+    var onOfferJobClick:   (()-> Void)?
+    var onOfferSellClick:   (()-> Void)?
+    var onLookingRoomClick:   (()-> Void)?
+    var onLookingJobClick:   (()-> Void)?
+    var onLookingBuyClick:   (()-> Void)?
     
     let pickerHeaderView = UIView()
     let backButton = UIImageView(image: UIImage(named: "back"),contentMode: .scaleAspectFit, clipsToBounds: true)
@@ -40,11 +55,11 @@ class BottomSheetPickerView : UIView {
         backButton.anchor(top: pickerHeaderView.topAnchor, leading: pickerHeaderView.leadingAnchor, bottom: pickerHeaderView.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         backButton.constraintHeight(constant: 30)
         backButton.centerYInSuperview()
-
+        
         pickerHeaderView.addSubview(title)
         title.anchor(top: nil, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         title.centerInSuperview()
-    
+        
         addSubview(tableStack)
         tableStack.anchor(top: pickerHeaderView.bottomAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 20, left: 10, bottom: 10, right: 0))
         tableStack.backgroundColor = Color.gray900
@@ -65,19 +80,39 @@ class BottomSheetPickerView : UIView {
     }
     
     @objc func handleCloseTap() {
+        
         onCloseClick?()
     }
     
     @objc func handleOfferTap() {
-        onOfferClick?()
+        if let page = AdsOfferPage(rawValue: offerLabel.text ?? "") {
+            switch page {
+            case .offerRoom:
+                onOfferRoomClick?()
+            case .offerJob:
+                onOfferJobClick?()
+            case .sellSomething:
+                onOfferSellClick?()
+            }
+        }
     }
     
     @objc func handleLookingTap() {
-        onLookingClick?()
+        if let page = AdsLookingPage(rawValue: lookingLabel.text ?? "") {
+            switch page {
+            case .lookingForRoom:
+                onLookingRoomClick?()
+            case .lookingForJob:
+                onLookingJobClick?()
+            case .lookingForSomething:
+                onLookingBuyClick?()
+            }
+        }
     }
-    
-    func setLabel(offerText: String, lookingText: String) {
-        offerLabel.text = offerText
-        lookingLabel.text = lookingText
+        
+        func setLabel(offerText: String, lookingText: String) {
+            offerLabel.text = offerText
+            lookingLabel.text = lookingText
+        }
     }
-}
+

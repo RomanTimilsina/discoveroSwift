@@ -9,6 +9,8 @@ import UIKit
 
 class PostPreviewView : UIView{
     
+    
+    var onChangeGradient: (() -> Void)?
     let postView = PostView()
     let headerView = DIHeaderView(title: "Post Preview", hasBack: true, hasBGColor: true )
     let anonymousLabel  = UILabel(text: "Post as anonymous", font: OpenSans.semiBold, size: 14)
@@ -16,7 +18,6 @@ class PostPreviewView : UIView{
     let toggleSwitch = UISwitch()
     lazy var anonymousStack = HorizontalStackView(arrangedSubViews: [anonymousLabel, UIView(), toggleSwitch])
     var userName: String?
-    var grad = GradientRectangleView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -54,12 +55,14 @@ class PostPreviewView : UIView{
     @objc func toggleFunction() {
         if toggleSwitch.isOn {
             postView.nameLabel.text = "Anonymous"
-            postView.textView = grad
         } else {
             postView.nameLabel.text = userName
-            grad = postView.textView 
-
         }
+         
+        let gradient = GradientRectangleView()
+        postView.textView.addSubview(gradient)
+        gradient.fillSuperview()
+
     }
     
     required init?(coder: NSCoder) {

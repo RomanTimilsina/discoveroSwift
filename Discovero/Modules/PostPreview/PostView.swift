@@ -69,10 +69,10 @@ class PostView: UIView {
     lazy var apartmentDescriptionStack = HorizontalStackView(arrangedSubViews: [bedroomImage, bedroomNumberLabel, tubImage, tubNumberLabel, garageImage, garageNumberLabel, line, propertyTypeLabel, UIView()], spacing: 8)
     let lineView = UIView(color: Color.gray600)
     lazy var middleAdStack = VerticalStackView(arrangedSubViews: [adLabel, priceStack, locationStack, apartmentDescriptionStack], spacing: 8)
+    var textView = GradientRectangleView()
     lazy var cellStack = VerticalStackView(arrangedSubViews: [adHeaderStack, middleAdStack, textView, lineView, adFooterStack], spacing: 19)
     let view = UIView()
     let announcementlabel = UILabel(text: "", color: Color.appBlack, font: OpenSans.regular, size: 18)
-    var textView = GradientRectangleView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -83,6 +83,8 @@ class PostView: UIView {
         namePrefixLabel.text = "\(namePrefix(name: usersData?.name ?? ""))"
         profileImageView.isHidden = true
         nameLabel.text = usersData?.name
+        
+        
     }
     
     func setupView() {
@@ -118,7 +120,7 @@ class PostView: UIView {
         textView.addSubview(announcementlabel)
         announcementlabel.centerInSuperview()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

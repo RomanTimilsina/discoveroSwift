@@ -11,6 +11,9 @@ class GradientRectangleView: UIView {
   override class var layerClass: AnyClass {
     return CAGradientLayer.self
   }
+    
+
+
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupGradient()
@@ -18,17 +21,21 @@ class GradientRectangleView: UIView {
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
     setupGradient()
+
   }
   private func setupGradient() {
-    if let gradientLayer = self.layer as? CAGradientLayer {
       let startColor = randomColor()
       let endColor = randomColor()
+    if let gradientLayer = self.layer as? CAGradientLayer {
+      
       gradientLayer.colors = [startColor.cgColor, endColor.cgColor]
         gradientLayer.locations = [0.0, 1.0]
         gradientLayer.startPoint = CGPoint(x: 0, y: 0.5) // Left edge
                 gradientLayer.endPoint = CGPoint(x: 1, y: 0.5)
     }
   }
+    
+
     
     private func randomColor() -> UIColor {
         let red = CGFloat.random(in: 0...1)

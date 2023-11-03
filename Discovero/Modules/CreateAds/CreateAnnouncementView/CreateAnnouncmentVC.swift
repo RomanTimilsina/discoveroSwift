@@ -36,7 +36,6 @@ class CreateAnnouncmentVC: UIViewController {
         postPreview.currentView.postView.announcementlabel.text = currentView.announcement.textField.text
         postPreview.currentView.postView.middleAdStack.removeFromSuperview()
         postPreview.currentView.postView.eyeImage.removeFromSuperview()
-        postPreview.currentView.postView.textView = GradientRectangleView()
         
         navigationController?.pushViewController(postPreview, animated: true)
     }
