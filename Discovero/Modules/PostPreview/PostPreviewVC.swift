@@ -28,6 +28,5 @@ class PostPreviewVC: UIViewController {
     override func loadView() {
         super.loadView()
         view = currentView
-        
     }
 }

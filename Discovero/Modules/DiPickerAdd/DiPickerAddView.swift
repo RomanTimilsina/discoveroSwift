@@ -57,7 +57,10 @@ class DiPickerAddView: UIView {
         tableStack.anchor(top: pickerHeaderView.bottomAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 20, left: 10, bottom: 10, right: 0))
         tableStack.backgroundColor = Color.gray900
     }
-    
+}
+
+// MARK: View Events
+extension DiPickerAddView {
     private func observeEvents() {
         let backButtonTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleCloseTap))
         backButton.addGestureRecognizer(backButtonTapGesture)

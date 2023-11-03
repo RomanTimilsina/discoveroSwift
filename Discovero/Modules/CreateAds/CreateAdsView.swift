@@ -131,7 +131,6 @@ class CreateAdsView : UIView {
 }
 
 extension CreateAdsView {
-    
     func setLabel(label: String, headerText : String) {
         priceLabel.text = label
         headerView.textLabel.text = headerText

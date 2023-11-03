@@ -22,14 +22,16 @@ class LocationFilterVC: UIViewController {
   var runOnce = true
   let countries: [CountryModel] = Bundle.main.decode(from: "Countries.json")
   weak var filterSelectorVC: FilterSelectorVC?
+    
   override func viewWillAppear(_ animated: Bool) {
     currentView.tableView.reloadData()
       currentView.tableView.canCancelContentTouches = false
   }
+    
   override func viewDidLoad() {
     super.viewDidLoad()
-//    resetStateMenu()
-    currentView.stateView.propertyCoverButton.isEnabled = false
+
+      currentView.stateView.propertyCoverButton.isEnabled = false
     setupTable()
     countriesAndState()
     currentView.suburbView.textField.delegate = self
@@ -39,8 +41,8 @@ class LocationFilterVC: UIViewController {
     currentView.countryView.subTitle.text = userData?.country
     currentView.stateView.subTitle.text = userData?.locationDetail.state
     countryPicker.countryModel = countryManager.getData()
-//    clickProgrammatically()
-    observeViewEvents()
+
+      observeViewEvents()
   }
   func countriesAndState() {
     firestore.getCountryWithState() { [weak self] countriesAndStates in
@@ -65,6 +67,7 @@ class LocationFilterVC: UIViewController {
       }
     }
   }
+    
   func setState(countryName: String) {
     debugPrint(countryName)
     for country in countryList {

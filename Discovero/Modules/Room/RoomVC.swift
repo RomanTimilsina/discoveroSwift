@@ -18,12 +18,6 @@ class RoomVC : UIViewController{
     var roomOfferCount: Int?
     var roomWantedCount: Int?
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.currentView.bodyView.roomOfferView.isHidden = false
-        self.currentView.bodyView.roomWantedView.isHidden = true
-        self.currentView.bodyView.emptyStackView.isHidden = true
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true

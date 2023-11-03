@@ -83,8 +83,6 @@ class PostView: UIView {
         namePrefixLabel.text = "\(namePrefix(name: usersData?.name ?? ""))"
         profileImageView.isHidden = true
         nameLabel.text = usersData?.name
-        
-        
     }
     
     func setupView() {
@@ -115,8 +113,6 @@ class PostView: UIView {
         viewCount.centerXInSuperview()
         
         textView.constraintHeight(constant: 200)
-//        textView.applyGradient(withColours: [.white,.black], gradientOrientation: GradientOrientation.horizontal)
-        
         textView.addSubview(announcementlabel)
         announcementlabel.centerInSuperview()
     }

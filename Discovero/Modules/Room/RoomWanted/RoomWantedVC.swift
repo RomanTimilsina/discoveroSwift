@@ -45,6 +45,9 @@ class RoomWantedVC: UIViewController{
         currentView.filterSection.ontFilterClick = { [weak self] in
             guard let self else { return }
             goToFilterPage()
+            
+            filterVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(filterVC, animated: true)
         }
     }
 }

@@ -7,26 +7,11 @@
 
 import UIKit
 
-enum AdsOfferPage: String {
-    case offerRoom = "Offer a Room"
-    case offerJob = "Offer a Job"
-    case sellSomething = "Sell Something"
-}
-
-enum AdsLookingPage: String {
-    case lookingForRoom = "Looking For Room"
-    case lookingForJob = "Looking For Job"
-    case lookingForSomething = "Looking For Something"
-}
 class BottomSheetPickerView : UIView {
     
-    var onCloseClick:   (()-> Void)?
-    var onOfferRoomClick:   (()-> Void)?
-    var onOfferJobClick:   (()-> Void)?
-    var onOfferSellClick:   (()-> Void)?
-    var onLookingRoomClick:   (()-> Void)?
-    var onLookingJobClick:   (()-> Void)?
-    var onLookingBuyClick:   (()-> Void)?
+    var onCloseClick: (()-> Void)?
+    var onOfferClick: (()-> Void)?
+    var onLookingClick: (()-> Void)?
     
     let pickerHeaderView = UIView()
     let backButton = UIImageView(image: UIImage(named: "back"),contentMode: .scaleAspectFit, clipsToBounds: true)
@@ -34,7 +19,6 @@ class BottomSheetPickerView : UIView {
     var offerLabel = UILabel(text: "", font: OpenSans.semiBold, size: 14)
     var lookingLabel = UILabel(text: "", font: OpenSans.semiBold, size: 14)
     lazy var tableStack = VerticalStackView(arrangedSubViews: [offerLabel, lookingLabel], spacing: 10)
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -80,34 +64,15 @@ class BottomSheetPickerView : UIView {
     }
     
     @objc func handleCloseTap() {
-        
         onCloseClick?()
     }
     
     @objc func handleOfferTap() {
-        if let page = AdsOfferPage(rawValue: offerLabel.text ?? "") {
-            switch page {
-            case .offerRoom:
-                onOfferRoomClick?()
-            case .offerJob:
-                onOfferJobClick?()
-            case .sellSomething:
-                onOfferSellClick?()
-            }
-        }
+        onOfferClick?()
     }
     
     @objc func handleLookingTap() {
-        if let page = AdsLookingPage(rawValue: lookingLabel.text ?? "") {
-            switch page {
-            case .lookingForRoom:
-                onLookingRoomClick?()
-            case .lookingForJob:
-                onLookingJobClick?()
-            case .lookingForSomething:
-                onLookingBuyClick?()
-            }
-        }
+        onLookingClick?()
     }
         
         func setLabel(offerText: String, lookingText: String) {

@@ -53,16 +53,22 @@ class PostPreviewView : UIView{
     }
     
     @objc func toggleFunction() {
+        let gradient = GradientRectangleView()
+        let nameText = UILabel(text: "", color: Color.appBlack, font: OpenSans.regular, size: 14)
+
         if toggleSwitch.isOn {
             postView.nameLabel.text = "Anonymous"
+            nameText.text = "Anonymous"
         } else {
             postView.nameLabel.text = userName
+            nameText.text = userName
         }
-         
-        let gradient = GradientRectangleView()
+        
         postView.textView.addSubview(gradient)
         gradient.fillSuperview()
-
+        
+        gradient.addSubview(nameText)
+        nameText.centerInSuperview()
     }
     
     required init?(coder: NSCoder) {

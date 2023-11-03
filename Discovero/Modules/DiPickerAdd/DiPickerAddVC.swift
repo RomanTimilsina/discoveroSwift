@@ -6,14 +6,51 @@
 //
 
 import UIKit
+import Foundation
+
+enum AdsOfferPage {
+    case offerRoom
+    case offerJob
+    case sellSomething
+    
+    var title: String {
+        switch self {
+        case .offerRoom: return "Offer a Room"
+        case .offerJob: return "Offer a Job"
+        case .sellSomething: return "Sell Something"
+        }
+    }
+}
+
+enum AdsLookingPage {
+    case lookingForRoom
+    case lookingForJob
+    case buySomething
+    
+    var title: String {
+        switch self {
+        case .lookingForRoom: return "Looking For Room"
+        case .lookingForJob: return "Looking For Job"
+        case .buySomething: return "Looking For Something"
+        }
+    }
+}
+
+class DataContainer {
+    static let shared = DataContainer()
+    
+    var selectedAdsOfferPage: AdsOfferPage?
+    var selectedAdsLookingPage: AdsLookingPage?
+
+    private init() { }
+}
 
 class DiPickerAddVC: UIViewController, UISheetPresentationControllerDelegate {
     
     let currentView = DiPickerAddView()
-    
-    var onClosePicker: (() -> Void)?
-    
     let bottomPicker = BottomSheetPickerVC()
+
+    var onClosePicker: (() -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,49 +77,64 @@ class DiPickerAddVC: UIViewController, UISheetPresentationControllerDelegate {
             guard let self else { return }
             gotoCreateAnnouncement()
         }
+    }
+    
+    override func loadView() {
+        view = currentView
+    }
+}
+
+// MARK: - Open respective pages once clicked
+extension DiPickerAddVC {
+    func openRoomPicker() {
+        let bottomPicker = BottomSheetPickerVC()
+        DataContainer.shared.selectedAdsOfferPage = .offerRoom
+        DataContainer.shared.selectedAdsLookingPage = .lookingForRoom
+
+        bottomPicker.currentView.setLabel(offerText: DataContainer.shared.selectedAdsOfferPage?.title ?? "", lookingText: DataContainer.shared.selectedAdsLookingPage?.title ?? "")
+        bottomPicker.modalPresentationStyle = .automatic
+        if let sheet = bottomPicker.sheetPresentationController {
+            sheet.prefersGrabberVisible = true
+            sheet.preferredCornerRadius = 30
+            sheet.detents = [.large(), .custom { _ in return 150}]
+            sheet.delegate = self
+        }
+        present(bottomPicker, animated: true, completion: nil)
+    }
+    
+    func openJobPicker() {
+        bottomPicker.modalPresentationStyle = .automatic
         
-        func openRoomPicker() {
-            let bottomPicker = BottomSheetPickerVC()
-            
-            bottomPicker.currentView.setLabel(offerText: "Offer a Room", lookingText: "Looking For Room")
-            bottomPicker.modalPresentationStyle = .automatic
-            if let sheet = bottomPicker.sheetPresentationController {
-                sheet.prefersGrabberVisible = true
-                sheet.preferredCornerRadius = 30
-                sheet.detents = [.large(), .custom { _ in return 150}]
-                sheet.delegate = self
-            }
-            present(bottomPicker, animated: true, completion: nil)
+        DataContainer.shared.selectedAdsOfferPage = .offerJob
+        DataContainer.shared.selectedAdsLookingPage = .lookingForJob
+        
+        bottomPicker.currentView.setLabel(offerText: DataContainer.shared.selectedAdsOfferPage?.title ?? "", lookingText: DataContainer.shared.selectedAdsLookingPage?.title ?? "")
+
+        if let sheet = bottomPicker.sheetPresentationController {
+            sheet.prefersGrabberVisible = true
+            sheet.preferredCornerRadius = 30
+            sheet.detents = [.large(), .custom { _ in return 150}]
+            sheet.delegate = self
+        }
+        present(bottomPicker, animated: true, completion: nil)
+    }
+    
+    func openBuyAndSellPicker() {
+        bottomPicker.modalPresentationStyle = .automatic
+        
+        DataContainer.shared.selectedAdsOfferPage = .sellSomething
+        DataContainer.shared.selectedAdsLookingPage = .buySomething
+        
+        bottomPicker.currentView.setLabel(offerText: DataContainer.shared.selectedAdsOfferPage?.title ?? "", lookingText: DataContainer.shared.selectedAdsLookingPage?.title ?? "")
+
+        if let sheet = bottomPicker.sheetPresentationController {
+            sheet.prefersGrabberVisible = true
+            sheet.preferredCornerRadius = 30
+            sheet.detents = [.large(), .custom { _ in return 150}]
+            sheet.delegate = self
         }
         
-        
-        func openJobPicker(){
-            bottomPicker.modalPresentationStyle = .automatic
-            
-            bottomPicker.currentView.setLabel(offerText: "Offer a Job", lookingText: "Looking For Job")
-            
-            if let sheet = bottomPicker.sheetPresentationController {
-                sheet.prefersGrabberVisible = true
-                sheet.preferredCornerRadius = 30
-                sheet.detents = [.large(), .custom { _ in return 150}]
-                sheet.delegate = self
-            }
-            present(bottomPicker, animated: true, completion: nil)
-        }
-        
-        func openBuyAndSellPicker() {
-            bottomPicker.modalPresentationStyle = .automatic
-            
-            bottomPicker.currentView.setLabel(offerText: "Sell Something", lookingText: "Looking For Something")
-            
-            if let sheet = bottomPicker.sheetPresentationController {
-                sheet.prefersGrabberVisible = true
-                sheet.preferredCornerRadius = 30
-                sheet.detents = [.large(), .custom { _ in return 150}]
-                sheet.delegate = self
-            }
-            present(bottomPicker, animated: true, completion: nil)
-        }
+        present(bottomPicker, animated: true, completion: nil)
     }
     
     func gotoCreateAnnouncement() {
@@ -94,9 +146,5 @@ class DiPickerAddVC: UIViewController, UISheetPresentationControllerDelegate {
         vc.postPreview.currentView.postView.callStack.removeFromSuperview()
         vc.postPreview.currentView.postView.likeButton.removeFromSuperview()
         present(navigationController, animated: true)
-    }
-        
-    override func loadView() {
-        view = currentView
     }
 }
