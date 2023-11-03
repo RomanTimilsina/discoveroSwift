@@ -31,7 +31,7 @@ class CreateJobsAdsView : UIView {
     lazy var sideStack = HorizontalStackView(arrangedSubViews: [UIView(), sideTitle, rightArrowImage],spacing: 8)
     let sideTitle = UILabel(text: "",color: Color.appWhite, font: OpenSans.semiBold, size: 14)
     let lineView = UIView()
-    let locationLabel = DICustomProfileView(titleText: "Location", text: "Select your location")
+    let locationLabel = DICustomProfileView(titleText: "Location", text: "Select your location", isInFilter: true)
     let selector  = CustomNumberSelector("No of Position ", 1)
     let JobTypeLabel = DICustomProfileView(titleText: "Job Type", text: "", show: true, sideTitleString: "Tap to Choose")
     let productTypeLabel = DICustomProfileView(titleText: "Category of Product", text: "", show: true, sideTitleString: "Tap to Choose")
@@ -134,7 +134,7 @@ class CreateJobsAdsView : UIView {
 
 extension CreateJobsAdsView {
     
-    func setLabel(label: String, headerText: String, selectorLabel: String = "no of Positions") {
+    func setLabel(label: String, headerText: String, selectorLabel: String = "No of Positions") {
         salaryLabel.text = label
         headerView.textLabel.text = headerText
         selector.titleLabel.text = selectorLabel

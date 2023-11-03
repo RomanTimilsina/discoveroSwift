@@ -37,7 +37,7 @@ class CreateAdsView : UIView {
         return textfield
     }()
     let lineView = UIView()
-    let locationLabel = DICustomProfileView(titleText: "Location", text: "Select your location")
+    let locationLabel = DICustomProfileView(titleText: "Location", text: "Select your location", isInFilter: true)
     let noOfBedrooms  = CustomNumberSelector("No of Bedrooms",  1)
     let noOfBathrooms = CustomNumberSelector("No of Bathrooms", 1)
     let noOfParkings  = CustomNumberSelector("Parking Available For",  0)

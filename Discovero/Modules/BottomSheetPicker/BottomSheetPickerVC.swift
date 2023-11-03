@@ -25,9 +25,9 @@ class BottomSheetPickerVC : UIViewController {
         currentView.onOfferClick = { [weak self] in
             guard let self = self else { return }
 
-            if let selectedPage = DataContainer.shared.selectedAdsOfferPage {
-                switch selectedPage {
-                case .offerRoom: 
+            if let selectedOfferPage = DataContainer.shared.selectedAdsOfferPage {
+                switch selectedOfferPage {
+                case .offerRoom:
                     offerRoom()
                 case .offerJob:
                     offerJob()
@@ -40,8 +40,8 @@ class BottomSheetPickerVC : UIViewController {
         currentView.onLookingClick = { [weak self] in
             guard let self = self else { return }
 
-            if let selectedPage = DataContainer.shared.selectedAdsLookingPage {
-                switch selectedPage {
+            if let selectedLookingForPage = DataContainer.shared.selectedAdsLookingPage {
+                switch selectedLookingForPage {
                 case .lookingForRoom:
                         lookingForRoom()
                 case .lookingForJob:

@@ -31,7 +31,7 @@ class LocationFilterVC: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-      currentView.stateView.propertyCoverButton.isEnabled = false
+    currentView.stateView.propertyCoverButton.isEnabled = false
     setupTable()
     countriesAndState()
     currentView.suburbView.textField.delegate = self
@@ -42,7 +42,7 @@ class LocationFilterVC: UIViewController {
     currentView.stateView.subTitle.text = userData?.locationDetail.state
     countryPicker.countryModel = countryManager.getData()
 
-      observeViewEvents()
+    observeViewEvents()
   }
   func countriesAndState() {
     firestore.getCountryWithState() { [weak self] countriesAndStates in

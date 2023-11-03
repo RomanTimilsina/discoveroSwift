@@ -31,7 +31,9 @@ class DICustomProfileView: UIView {
          nation: UIImage? = nil,
          show:Bool? = false,
          isGrey: Bool? = false,
-         sideTitleString: String = "") {
+         sideTitleString: String = "",
+         isInFilter: Bool = false
+    ) {
         super.init(frame: .zero)
         title.text = titleText
         subTitle.text = text
@@ -42,6 +44,12 @@ class DICustomProfileView: UIView {
         if isGrey == true {
             title.textColor = Color.gray400
             subTitle.textColor = Color.gray500
+        }
+        
+        if isInFilter {
+            subTitle.text == "Select your location" ? (subTitle.textColor = .clear) : (subTitle.textColor = Color.appWhite)
+            subTitle.font = UIFont.font(with: 16, family: OpenSans.regular)
+            title.font = UIFont.font(with: 16, family: OpenSans.semiBold)
         }
         
         if text.isEmpty  {
