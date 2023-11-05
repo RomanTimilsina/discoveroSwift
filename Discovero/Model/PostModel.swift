@@ -15,7 +15,7 @@ struct PostModel {
   let noOfBedroom, noOfBathroom, noOfParkings: Int
   let isAnonymous: Bool
     
-    public init(name: String, country: String, state: String, suburb: String, caption: String, description: String, propertyType: String, price: Double, noOfBedroom: Int, noOfBathroom: Int, noOfParkings: Int, isAnonymous: Bool) {
+    public init(name: String = "", country: String = "", state: String = "", suburb: String = "", caption: String = "", description: String = "", propertyType: String = "", price: Double = 0.0, noOfBedroom: Int = 1, noOfBathroom: Int = 1, noOfParkings: Int = 0, isAnonymous: Bool = false) {
         self.name = name
         self.country = country
         self.state = state

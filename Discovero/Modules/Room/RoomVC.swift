@@ -14,9 +14,6 @@ class RoomVC : UIViewController{
     
     var roomOfferVC: RoomOfferVC?
     var roomWantedVC : RoomWantedVC?
-
-    var roomOfferCount: Int?
-    var roomWantedCount: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +32,7 @@ class RoomVC : UIViewController{
         guard let roomOfferVC = roomOfferVC else { return }
         add(roomOfferVC, innerView: currentView.bodyView.roomOfferView)
         roomOfferVC.view.fillSuperview()
-        
+
         roomWantedVC = RoomWantedVC()
         guard let roomWantedVC = roomWantedVC else { return }
         add(roomWantedVC, innerView: currentView.bodyView.roomWantedView)

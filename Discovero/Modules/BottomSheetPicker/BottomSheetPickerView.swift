@@ -23,7 +23,7 @@ class BottomSheetPickerView : UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = Color.gray900
-        setup()
+        setUpConstraints()
         observeEvents()
     }
     
@@ -31,7 +31,7 @@ class BottomSheetPickerView : UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setup() {
+    func setUpConstraints() {
         addSubview(pickerHeaderView)
         pickerHeaderView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 12, left: 12, bottom: 0, right: 14))
         
@@ -74,10 +74,10 @@ class BottomSheetPickerView : UIView {
     @objc func handleLookingTap() {
         onLookingClick?()
     }
-        
-        func setLabel(offerText: String, lookingText: String) {
-            offerLabel.text = offerText
-            lookingLabel.text = lookingText
-        }
+    
+    func setLabel(offerText: String, lookingText: String) {
+        offerLabel.text = offerText
+        lookingLabel.text = lookingText
     }
+}
 

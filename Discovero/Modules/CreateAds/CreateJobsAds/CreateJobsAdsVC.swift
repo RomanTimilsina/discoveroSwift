@@ -10,9 +10,10 @@ import UIKit
 class CreateJobsAdsVC: UIViewController {
     
     let currentView = CreateJobsAdsView()
-    
-    var usersData: UserData?
     let postPreview = PostPreviewVC()
+
+    var usersData: UserData?
+    var isItJob: Bool?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,15 +38,13 @@ class CreateJobsAdsVC: UIViewController {
         }
         
         func gotoPostPreviewVC() {
-            if let isItJob = currentView.coverButton as? UIButton{
+            guard let isItJob else { return }
+            if isItJob {
                 let jobModel = JobModel(adsTitle: currentView.titleView.textField.text ?? "", description: currentView.descriptionsView.textField.text ?? "", salary: Double(currentView.salaryTextField.text ?? "0.0") ?? 0.0, country: currentView.countryName ?? "", state: currentView.stateName ?? "", suburb: currentView.suburbName ?? "", noOfPostion: currentView.selector.count, jobType: currentView.JobTypeLabel.sideTitle.text ?? "")
                 postPreview.currentView.postView.configureData( roomData: nil, jobData: jobModel, buyAndSellData: nil)
-
-
             } else {
                 let buyAndSell = BuySellModel(adsTitle: currentView.titleView.textField.text ?? "", description: currentView.descriptionsView.textField.text ?? "", price:  Double(currentView.salaryTextField.text ?? "0.0") ?? 0.0, country: currentView.countryName ?? "", state: currentView.stateName ?? "", suburb: currentView.suburbName ?? "", noOfItems: currentView.selector.count, productTypeLabel: currentView.productTypeLabel.sideTitle.text ?? "")
                 postPreview.currentView.postView.configureData( roomData: nil, jobData: nil, buyAndSellData: buyAndSell)
-
             }
             
             navigationController?.pushViewController(postPreview, animated: true)

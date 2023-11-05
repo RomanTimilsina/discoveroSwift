@@ -120,7 +120,6 @@ class CreateJobsAdsView : UIView {
         coverButton.showsMenuAsPrimaryAction = true
         coverButton.isEnabled = true
         coverButton.menu = addInfoForSalary()
-        
     }
     
     @objc func handleNextButtonTap() {

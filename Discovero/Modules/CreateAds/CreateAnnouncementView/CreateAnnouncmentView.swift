@@ -13,7 +13,7 @@ class CreateAnnouncmentView: UIView {
     
   let header = DIHeaderView(title: "Create Announcement Ads", hasBack: true, hasBGColor: true)
   let view = UIView()
-  let announcement  = DITextField(title: "Add your announcement ", placholder: "Type Here", typePad: .default, placeholderHeight: 22, textHeight: 22)
+  let announcement  = DITextField(title: "Add your announcement", placholder: "Type Here", typePad: .default, placeholderHeight: 22, textHeight: 22)
   let nextButton = DIButton(buttonTitle: "Next")
     
     override init(frame: CGRect) {

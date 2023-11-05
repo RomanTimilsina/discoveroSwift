@@ -9,7 +9,7 @@ import UIKit
 
 class CreateAdsView : UIView {
     
-    var onNextClick : (()-> Void)?
+    var onNextClick : ((PostModel)-> Void)?
     
     let headerView = DIHeaderView(title: "", hasBack: true)
     let coverButton = UIButton(title: "", titleColor: .clear, font: OpenSans.regular, fontSize: 1)
@@ -24,6 +24,7 @@ class CreateAdsView : UIView {
         textfield.keyboardType = .numberPad
         textfield.placeholder = "Type Here"
         textfield.backgroundColor = .black
+        textfield.tintColor = Color.primary
         return textfield
     }()
     lazy var priceStack = HorizontalStackView( arrangedSubViews: [dollarLabel, priceTextField ], spacing: 8 )
@@ -34,19 +35,17 @@ class CreateAdsView : UIView {
         textfield.keyboardType = .numberPad
         textfield.placeholder = "Type Here"
         textfield.backgroundColor = .black
+        textfield.tintColor = Color.primary
         return textfield
     }()
     let lineView = UIView()
-    let locationLabel = DICustomProfileView(titleText: "Location", text: "Select your location", isInFilter: true)
+    let locationLabel = DICustomProfileView(titleText: "Location", text: "location", isInFilter: true)
     let noOfBedrooms  = CustomNumberSelector("No of Bedrooms",  1)
     let noOfBathrooms = CustomNumberSelector("No of Bathrooms", 1)
     let noOfParkings  = CustomNumberSelector("Parking Available For",  0)
     let propertyTypeLabel = DICustomProfileView(titleText: "Property Type", text: "", show: true, sideTitleString: "Tap to Choose")
-
     let nextButton = DIButton(buttonTitle: "Next")
-    
     var countryName, stateName, suburbName, propertyType: String?
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -62,7 +61,6 @@ class CreateAdsView : UIView {
     }
     
     func setup() {
-        
         addSubview(headerView)
         headerView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         headerView.constraintHeight(constant: 50)
@@ -122,11 +120,23 @@ class CreateAdsView : UIView {
         propertyTypeLabel.propertyCoverButton.showsMenuAsPrimaryAction = true
         propertyTypeLabel.propertyCoverButton.isEnabled = true
         propertyTypeLabel.propertyCoverButton.menu = addInfoMenu()
-        
     }
     
     @objc func handleNextButtonTap() {
-        onNextClick?()
+        let postModel = PostModel(name: "",
+                                  country: countryName ?? "",
+                                  state: stateName ?? "",
+                                  suburb: suburbName ?? "",
+                                  caption: titleView.textField.text ?? "",
+                                  description: descriptionsView.textField.text ?? "",
+                                  propertyType: propertyTypeLabel.sideTitle.text ?? "",
+                                  price: Double(priceTextField.text ?? "0.0") ?? 0.0,
+                                  noOfBedroom: noOfBedrooms.count,
+                                  noOfBathroom: noOfBathrooms.count,
+                                  noOfParkings: noOfParkings.count,
+                                  isAnonymous: false
+        )
+        onNextClick?(postModel)
     }
 }
 
@@ -150,6 +160,7 @@ extension CreateAdsView {
         countryName = model.countryName
         stateName = model.stateName
         locationLabel.subTitle.text = "\(model.countryName ?? ""), \(model.stateName ?? "")"
+        locationLabel.subTitle.textColor = Color.appWhite
         if model.propertyType == nil {
             propertyTypeLabel.sideTitle.text = "Tap Here"
         }

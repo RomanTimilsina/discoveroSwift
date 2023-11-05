@@ -39,9 +39,9 @@ extension HomeController{
     
     func addDetialInTab(){
         let room = UINavigationController(rootViewController: RoomVC())
-        let jobs = UINavigationController(rootViewController: RoomWantedVC())
-        let sales = UINavigationController(rootViewController: RoomOfferVC())
-        let announcements = UINavigationController(rootViewController: RoomOfferVC())
+        let jobs = UINavigationController(rootViewController: MyProfileVC())
+        let sales = UINavigationController(rootViewController: MyProfileVC())
+        let announcements = UINavigationController(rootViewController: MyProfileVC())
         //        let matches = UINavigationController(rootViewController: RoomVC())
         let profile = UINavigationController(rootViewController: MyProfileVC())
         

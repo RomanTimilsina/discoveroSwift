@@ -27,7 +27,7 @@ class RoomView : UIView{
         headerTab.constraintHeight(constant: 48)
         
         addSubview(bodyView)
-        bodyView.anchor(top: headerTab.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        bodyView.anchor(top: headerTab.bottomAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 50, right: 0))
         bodyView.layer.cornerRadius = 30
         bodyView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }

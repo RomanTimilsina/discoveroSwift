@@ -69,7 +69,6 @@ class LocationFilterVC: UIViewController {
   }
     
   func setState(countryName: String) {
-    debugPrint(countryName)
     for country in countryList {
       if countryName == country.name {
         for state in country.state {

@@ -337,19 +337,19 @@
 		04996CB82AA46E5E00DB618F /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				84AEDBD22AF0E32100ED121C /* PostPreview */,
-				849B565A2AEFB64C00C91F81 /* CreateAds */,
 				8496C4E22AEE6E530017CC0A /* BottomSheetPicker */,
-				8496C4DB2AEE226A0017CC0A /* DiPickerAdd */,
+				04775C3F2AB96085005F9B4C /* CommentsPage */,
+				849B565A2AEFB64C00C91F81 /* CreateAds */,
 				04A168B32AA854260065F607 /* DiPicker */,
+				8496C4DB2AEE226A0017CC0A /* DiPickerAdd */,
 				04967AAF2ABAC9CF0035B359 /* Filter */,
 				049BEF652AA5B08D00ED2B58 /* Login */,
 				049CF1322AA9DC3D00FF2F1B /* MainTabBar */,
 				049D3A902AAD8BFD004864E9 /* MyProfile */,
 				04A168A92AA83FF80065F607 /* NoConnection */,
 				04CA49112AA45E1600C69767 /* OnBoardingPage */,
-				04775C3F2AB96085005F9B4C /* CommentsPage */,
 				04B514A32AA71C8400E99A1B /* OTPConfirm */,
+				84AEDBD22AF0E32100ED121C /* PostPreview */,
 				04956D2C2AB06F2000540F44 /* ProfileItem */,
 				04A168AE2AA840990065F607 /* Registration */,
 				8527159C2ADD842400394D85 /* Room */,
@@ -568,8 +568,8 @@
 		84DE17F62AF228E500B87358 /* CreateJobsAds */ = {
 			isa = PBXGroup;
 			children = (
-				84DE17F72AF2296900B87358 /* CreateJobsAdsView.swift */,
 				84DE17F92AF2297400B87358 /* CreateJobsAdsVC.swift */,
+				84DE17F72AF2296900B87358 /* CreateJobsAdsView.swift */,
 			);
 			path = CreateJobsAds;
 			sourceTree = "<group>";

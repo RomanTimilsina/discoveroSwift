@@ -20,7 +20,7 @@ class DICustomProfileView: UIView {
     lazy var nameStack = VerticalStackView(arrangedSubViews: [title, subStack], spacing: 0)
     
     let rightArrowImage = UIImageView(contentMode: .scaleAspectFit, clipsToBounds: true)
-    let sideTitle = UILabel(text: "select your location",color: Color.appWhite, font: OpenSans.regular, size: 14)
+    let sideTitle = UILabel(text: "Select your location",color: Color.appWhite, font: OpenSans.regular, size: 14)
     let lineView = UIView(color: Color.gray800)
     lazy var mainStack = HorizontalStackView(arrangedSubViews: [nameStack, UIView(), sideTitle, rightArrowImage], spacing: 8)
     let button = UIButton()
@@ -36,7 +36,6 @@ class DICustomProfileView: UIView {
     ) {
         super.init(frame: .zero)
         title.text = titleText
-        subTitle.text = text
         subTitle.textColor = Color.appWhite
         nationImageView.image = nation
         sideTitle.text = sideTitleString
@@ -47,14 +46,13 @@ class DICustomProfileView: UIView {
         }
         
         if isInFilter {
-            subTitle.text == "Select your location" ? (subTitle.textColor = .clear) : (subTitle.textColor = Color.appWhite)
+            subTitle.constraintHeight(constant: 30)
             subTitle.font = UIFont.font(with: 16, family: OpenSans.regular)
             title.font = UIFont.font(with: 16, family: OpenSans.semiBold)
         }
         
         if text.isEmpty  {
             title.font = UIFont.font(with: 16, family: OpenSans.semiBold)
-            subTitle.isHidden = true
         }
         
         if show == true {

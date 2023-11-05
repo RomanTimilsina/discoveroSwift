@@ -24,30 +24,30 @@ class BottomSheetPickerVC : UIViewController {
         
         currentView.onOfferClick = { [weak self] in
             guard let self = self else { return }
-
+            
             if let selectedOfferPage = DataContainer.shared.selectedAdsOfferPage {
                 switch selectedOfferPage {
                 case .offerRoom:
-                    offerRoom()
+                    openOfferRoom()
                 case .offerJob:
-                    offerJob()
+                    openOfferJob()
                 case .sellSomething:
-                    sellStuff()
+                    openSellStuff()
                 }
             }
         }
         
         currentView.onLookingClick = { [weak self] in
             guard let self = self else { return }
-
+            
             if let selectedLookingForPage = DataContainer.shared.selectedAdsLookingPage {
                 switch selectedLookingForPage {
                 case .lookingForRoom:
-                        lookingForRoom()
+                    openLookingForRoom()
                 case .lookingForJob:
-                    lookingForJob()
+                    openLookingForJob()
                 case .buySomething:
-                    buySomething()
+                    openBuySomething()
                 }
             }
         }
@@ -67,16 +67,15 @@ extension BottomSheetPickerVC {
         present(navigationController, animated: true)
     }
     
-    func lookingForRoom() {
+    func openLookingForRoom() {
         let vc = CreateAdsVC()
         vc.currentView.setLabel(label: "Budget per week", headerText: "Create Looking a Room Ads")
-        vc.currentView.propertyTypeLabel.isHidden = true
-        vc.postPreview.currentView.postView.textView.removeFromSuperview()
-        
+        vc.postPreviewVC.currentView.postView.textView.removeFromSuperview()
+        vc.postPreviewVC.currentView.postView.announcmentLikeButton.removeFromSuperview()
         gotoVC(vc: vc)
     }
     
-    func lookingForJob() {
+    func openLookingForJob() {
         let vc = CreateJobsAdsVC()
         vc.currentView.setLabel(label: "Expected Salary", headerText: "Create Looking a Job Ads")
         vc.currentView.productTypeLabel.removeFromSuperview()
@@ -89,35 +88,42 @@ extension BottomSheetPickerVC {
         vc.postPreview.currentView.postView.garageImage.removeFromSuperview()
         vc.postPreview.currentView.postView.garageNumberLabel.removeFromSuperview()
         vc.postPreview.currentView.postView.textView.removeFromSuperview()
+        vc.postPreview.currentView.postView.announcmentLikeButton.removeFromSuperview()
+        
+        vc.isItJob = true
         
         gotoVC(vc: vc)
     }
     
-    func buySomething() {
+    func openBuySomething() {
         let vc = CreateJobsAdsVC()
         vc.currentView.setLabel(label: " Budget Price per item", headerText: "Create Looking For Something Ads", selectorLabel: "No of items")
         vc.currentView.JobTypeLabel.removeFromSuperview()
         vc.currentView.coverButton.removeFromSuperview()
-
+        
         vc.postPreview.currentView.postView.bedroomImage.image = UIImage(named: "salesImage")
         vc.postPreview.currentView.postView.tubImage.removeFromSuperview()
         vc.postPreview.currentView.postView.tubNumberLabel.removeFromSuperview()
         vc.postPreview.currentView.postView.garageImage.removeFromSuperview()
         vc.postPreview.currentView.postView.garageNumberLabel.removeFromSuperview()
         vc.postPreview.currentView.postView.textView.removeFromSuperview()
+        vc.postPreview.currentView.postView.announcmentLikeButton.removeFromSuperview()
+        
+        vc.isItJob = false
         
         gotoVC(vc: vc)
     }
     
-
-    func offerRoom() {
+    
+    func openOfferRoom() {
         let vc = CreateAdsVC()
         vc.currentView.setLabel(label: "Price per week", headerText: "Create Offer a Room Ads")
+        vc.postPreviewVC.currentView.postView.textView.removeFromSuperview()
+        vc.postPreviewVC.currentView.postView.announcmentLikeButton.removeFromSuperview()
         gotoVC(vc: vc)
-        vc.postPreview.currentView.postView.textView.removeFromSuperview()
     }
     
-    func offerJob() {
+    func openOfferJob() {
         let vc = CreateJobsAdsVC()
         vc.currentView.setLabel(label: "Salary", headerText: "Create Offer a Job Ads")
         vc.currentView.productTypeLabel.removeFromSuperview()
@@ -128,24 +134,29 @@ extension BottomSheetPickerVC {
         vc.postPreview.currentView.postView.garageImage.removeFromSuperview()
         vc.postPreview.currentView.postView.garageNumberLabel.removeFromSuperview()
         vc.postPreview.currentView.postView.textView.removeFromSuperview()
+        vc.postPreview.currentView.postView.announcmentLikeButton.removeFromSuperview()
         
+        vc.isItJob = true
         gotoVC(vc: vc)
     }
     
-    func sellStuff() {
+    func openSellStuff() {
         let vc = CreateJobsAdsVC()
         vc.currentView.setLabel(label: "Price per item", headerText: " Create Sell Something Ads", selectorLabel: "No of Items")
         vc.currentView.JobTypeLabel.removeFromSuperview()
         vc.currentView.coverButton.removeFromSuperview()
         
         vc.postPreview.currentView.postView.bedroomImage.image = UIImage(named: "salesImage")
-
+        
         vc.postPreview.currentView.postView.tubImage.removeFromSuperview()
         vc.postPreview.currentView.postView.tubNumberLabel.removeFromSuperview()
         vc.postPreview.currentView.postView.garageImage.removeFromSuperview()
         vc.postPreview.currentView.postView.garageNumberLabel.removeFromSuperview()
         vc.postPreview.currentView.postView.textView.removeFromSuperview()
+        vc.postPreview.currentView.postView.announcmentLikeButton.removeFromSuperview()
 
+        vc.isItJob = false
+        
         gotoVC(vc: vc)
     }
 }
