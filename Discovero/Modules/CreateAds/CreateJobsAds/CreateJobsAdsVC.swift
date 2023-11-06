@@ -11,13 +11,14 @@ class CreateJobsAdsVC: UIViewController {
     
     let currentView = CreateJobsAdsView()
     let postPreview = PostPreviewVC()
-
+    
     var usersData: UserData?
     var isItJob: Bool?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
+        
         observeViewEvents()
     }
     
@@ -41,14 +42,13 @@ class CreateJobsAdsVC: UIViewController {
             guard let isItJob else { return }
             if isItJob {
                 let jobModel = JobModel(adsTitle: currentView.titleView.textField.text ?? "", description: currentView.descriptionsView.textField.text ?? "", salary: Double(currentView.salaryTextField.text ?? "0.0") ?? 0.0, country: currentView.countryName ?? "", state: currentView.stateName ?? "", suburb: currentView.suburbName ?? "", noOfPostion: currentView.selector.count, jobType: currentView.JobTypeLabel.sideTitle.text ?? "")
-                postPreview.currentView.postView.configureData( roomData: nil, jobData: jobModel, buyAndSellData: nil)
+                postPreview.currentView.postView.configureData( jobData: jobModel)
             } else {
                 let buyAndSell = BuySellModel(adsTitle: currentView.titleView.textField.text ?? "", description: currentView.descriptionsView.textField.text ?? "", price:  Double(currentView.salaryTextField.text ?? "0.0") ?? 0.0, country: currentView.countryName ?? "", state: currentView.stateName ?? "", suburb: currentView.suburbName ?? "", noOfItems: currentView.selector.count, productTypeLabel: currentView.productTypeLabel.sideTitle.text ?? "")
-                postPreview.currentView.postView.configureData( roomData: nil, jobData: nil, buyAndSellData: buyAndSell)
+                postPreview.currentView.postView.configureData( buyAndSellData: buyAndSell)
             }
             
             navigationController?.pushViewController(postPreview, animated: true)
-
         }
         
         func gotoLocationFilterVC() {

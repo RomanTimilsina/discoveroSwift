@@ -33,7 +33,7 @@ class RoomWantedView: UIView {
     
     func setupConstraint() {
         addSubview(filterSection)
-        filterSection.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 0, right: 0))
+        filterSection.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 0, right: 0))
         filterSection.constraintHeight(constant: 40)
         filterSection.constraintWidth(constant: 95)
         
@@ -51,7 +51,7 @@ class RoomWantedView: UIView {
         line.backgroundColor = Color.gray700
         
         addSubview(addButtonView)
-        addButtonView.anchor(top: nil, leading: nil, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 80, right: 18))
+        addButtonView.anchor(top: nil, leading: nil, bottom: adView.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 80, right: 18))
         addButtonView.constraintHeight(constant: 50)
         addButtonView.constraintWidth(constant: 50)
     }
@@ -61,6 +61,8 @@ class RoomWantedView: UIView {
         
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         adsTable.addSubview(refreshControl)
+        
+        adsTable.canCancelContentTouches = false
     }
     
     func hideTable() {

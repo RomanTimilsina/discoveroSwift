@@ -113,6 +113,7 @@ struct FireStoreDatabaseHelper {
                     dialCode: dialCode,
                     languages: languages
                 )
+                CurrentUser.user.data = userData
                 completion(userData)
             }
         }
@@ -124,8 +125,8 @@ struct FireStoreDatabaseHelper {
         }
     }
     
-    func getUserDataFromDefaults(completion: @escaping (UserData?) -> Void) {
-        completion(UserDefaultsHelper.getModelData(.userData))
+    func getUserDataFromDefaults() {
+        CurrentUser.user.data = UserDefaultsHelper.getModelData(.userData)
     }
     
     func getRoomOffered(isRoomOffer: Bool,

@@ -18,6 +18,9 @@ class RoomVC : UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
+        
+        FireStoreDatabaseHelper().getUserDataFromDefaults()
+        
         setupChildController()
         observeViewEvents()
     }
@@ -31,7 +34,9 @@ class RoomVC : UIViewController{
         roomOfferVC = RoomOfferVC()
         guard let roomOfferVC = roomOfferVC else { return }
         add(roomOfferVC, innerView: currentView.bodyView.roomOfferView)
-        roomOfferVC.view.fillSuperview()
+//        roomOfferVC.view.fillSuperview(padding: UIEdgeInsets(top: 0, left: 0, bottom: 80, right: 0))
+                roomOfferVC.view.fillSuperview()
+
 
         roomWantedVC = RoomWantedVC()
         guard let roomWantedVC = roomWantedVC else { return }

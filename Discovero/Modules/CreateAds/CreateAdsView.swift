@@ -15,7 +15,7 @@ class CreateAdsView : UIView {
     let coverButton = UIButton(title: "", titleColor: .clear, font: OpenSans.regular, fontSize: 1)
     let titleView = DITextField(title: "Add title for your ads",  placholder: "Type here", typePad: .default, contentHeight: 50, placeholderHeight: 15, textHeight: 15, hasLine: false)
     let descriptionsView = DITextField(title: "Add some descriptions",  placholder: "Type here", typePad: .default,
-        contentHeight: 50, placeholderHeight: 15, textHeight: 15, hasLine: false)
+                                       contentHeight: 50, placeholderHeight: 15, textHeight: 15, hasLine: false)
     let priceLabel = UILabel(text: "Price Per Week", font: OpenSans.semiBold, size: 16)
     let dollarLabel = UILabel(text: "$", font: OpenSans.semiBold, size: 16)
     var priceTextField : UITextField = {
@@ -81,7 +81,7 @@ class CreateAdsView : UIView {
         
         addSubview(priceLabel)
         priceLabel.anchor(top: descriptionsView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 10, left: 12, bottom: 0, right: 12))
-      
+        
         addSubview(priceStack)
         priceStack.anchor(top: priceLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 6, left: 12, bottom: 0, right: 12))
         

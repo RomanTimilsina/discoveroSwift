@@ -34,12 +34,12 @@ class RoomOfferView: UIView {
     
     func setupConstraint() {
         addSubview(filterSection)
-        filterSection.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 0, right: 0))
+        filterSection.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 0, right: 0))
         filterSection.constraintHeight(constant: 40)
         filterSection.constraintWidth(constant: 95)
         
         addSubview(adsTable)
-        adsTable.anchor(top: filterSection.bottomAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 70, right: 0))
+        adsTable.anchor(top: filterSection.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 70, right: 0))
         adsTable.backgroundColor = Color.appBlack
         
         addSubview(adView)
@@ -52,7 +52,7 @@ class RoomOfferView: UIView {
         line.backgroundColor = Color.gray700
         
         addSubview(addButtonView)
-        addButtonView.anchor(top: nil, leading: nil, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 80, right: 18))
+        addButtonView.anchor(top: nil, leading: nil, bottom: adView.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 80, right: 18))
         addButtonView.constraintHeight(constant: 50)
         addButtonView.constraintWidth(constant: 50)
     }

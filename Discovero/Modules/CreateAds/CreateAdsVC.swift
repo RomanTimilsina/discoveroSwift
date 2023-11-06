@@ -7,6 +7,79 @@
 
 import UIKit
 
+class CreateAdsVC: UIViewController {
+    
+    var postModel = PostModel()
+    let postPreviewVC = PostPreviewVC()
+    let currentView = CreateAdsView()
+    var timer: Timer?
+
+    var usersData: UserData?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationController?.navigationBar.isHidden = true
+        observeViewEvents()
+    }
+    
+    func observeViewEvents() {
+        currentView.locationLabel.profileTap = { [weak self] text in
+            guard let self = self else { return }
+            gotoLocationFilterVC()
+        }
+        
+        currentView.onNextClick = { [weak self] postModel in
+            guard let self = self else { return }
+            checkValidation(postModel: postModel)
+            postPreviewVC.currentView.postView.configureData(roomData: postModel)
+        }
+        
+        currentView.headerView.onClose = { [weak self] in
+            guard let self = self else { return }
+            self.dismiss(animated: true)
+        }
+    }
+    
+    override func loadView() {
+        view = currentView
+    }
+    
+    func checkValidation(postModel: PostModel) {
+        let validationOffer = OfferPageValidation(caption: postModel.caption, description: postModel.description, price: postModel.price, country: postModel.country, state: postModel.state, property: postModel.propertyType)
+        
+        switch validationOffer {
+        case .captionError, .descriptionError, .priceError, .countryError, .stateError, .propertyError:
+            let alertController = UIAlertController(title: "Errors Alert", message: validationOffer.title, preferredStyle: .alert)
+            
+            let action = UIAlertAction(title: "OK", style: .default) { (action) in
+            }
+            alertController.addAction(action)
+            present(alertController, animated: true, completion: nil)
+        case .noError:
+            navigationController?.pushViewController(postPreviewVC, animated: true)
+        }
+    }
+}
+
+// MARK: push to VC
+extension CreateAdsVC {
+    func gotoLocationFilterVC() {
+        let locationFilterVC = LocationFilterVC()
+        locationFilterVC.userData = usersData
+        
+        navigationController?.pushViewController(locationFilterVC, animated: true)
+        
+        locationFilterVC.onSaveClick = { [weak self] country, state, suburb in
+            guard let self else { return }
+            currentView.locationLabel.subTitle.text = "\(country ), \(state ), \(suburb )"
+            currentView.countryName = country
+            currentView.stateName = state
+            currentView.suburbName = suburb
+        }
+    }
+}
+
+
 enum OfferPageValidation {
     case captionError
     case descriptionError
@@ -48,76 +121,3 @@ enum OfferPageValidation {
         }
     }
 }
-
-class CreateAdsVC: UIViewController {
-    
-    var postModel = PostModel()
-    let postPreviewVC = PostPreviewVC()
-    let currentView = CreateAdsView()
-    
-    var usersData: UserData?
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        navigationController?.navigationBar.isHidden = true
-        observeViewEvents()
-        
-    }
-    
-    func observeViewEvents() {
-        currentView.locationLabel.profileTap = { [weak self] text in
-            guard let self = self else { return }
-            gotoLocationFilterVC()
-        }
-        
-        currentView.onNextClick = { [weak self] postModel in
-            guard let self = self else { return }
-            checkValidation(postModel: postModel)
-            postPreviewVC.currentView.postView.configureData(roomData: postModel, jobData: nil, buyAndSellData: nil)
-        }
-        
-        currentView.headerView.onClose = { [weak self] in
-            guard let self = self else { return }
-            dismiss(animated: true)
-        }
-    }
-    
-    override func loadView() {
-        view = currentView
-    }
-        
-    func checkValidation(postModel: PostModel) {
-        let validationOffer = OfferPageValidation(caption: postModel.caption, description: postModel.description, price: postModel.price, country: postModel.country, state: postModel.state, property: postModel.propertyType)
-        
-        switch validationOffer {
-        case .captionError, .descriptionError, .priceError, .countryError, .stateError, .propertyError:
-            let alertController = UIAlertController(title: "Errors Alert", message: validationOffer.title, preferredStyle: .alert)
-            
-            let action = UIAlertAction(title: "OK", style: .default) { (action) in
-            }
-            alertController.addAction(action)
-            present(alertController, animated: true, completion: nil)
-        case .noError:
-            navigationController?.pushViewController(postPreviewVC, animated: true)
-        }
-    }
-}
-
-// MARK: push to VC
-extension CreateAdsVC {
-    func gotoLocationFilterVC() {
-        let locationFilterVC = LocationFilterVC()
-        locationFilterVC.userData = usersData
-        
-        navigationController?.pushViewController(locationFilterVC, animated: true)
-        
-        locationFilterVC.onSaveClick = { [weak self] country, state, suburb in
-            guard let self else { return }
-            currentView.locationLabel.subTitle.text = "\(country ), \(state ), \(suburb )"
-            currentView.countryName = country
-            currentView.stateName = state
-            currentView.suburbName = suburb
-        }
-    }
-}
-

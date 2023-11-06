@@ -55,10 +55,8 @@ class RoomWantedVC: UIViewController{
 //MARK: Fetch data from firestore
  extension RoomWantedVC {
     func getUsersDataFromDefaults() {
-        fireStore.getUserDataFromDefaults { [weak self] userData in
-            guard let self, let userData else { return }
-            fetchRoomOfferedData(country: userData.country, state: userData.locationDetail.state)
-        }
+
+            fetchRoomOfferedData(country: CurrentUser.user.data?.country ?? "", state: CurrentUser.user.data?.locationDetail.state ?? "")
     }
    
     func fetchRoomOfferedData(country: String, state: String) {

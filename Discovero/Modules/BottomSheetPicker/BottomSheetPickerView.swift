@@ -22,7 +22,7 @@ class BottomSheetPickerView : UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = Color.gray900
+        backgroundColor = Color.gray800
         setUpConstraints()
         observeEvents()
     }
@@ -45,8 +45,8 @@ class BottomSheetPickerView : UIView {
         title.centerInSuperview()
         
         addSubview(tableStack)
-        tableStack.anchor(top: pickerHeaderView.bottomAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 20, left: 10, bottom: 10, right: 0))
-        tableStack.backgroundColor = Color.gray900
+        tableStack.anchor(top: pickerHeaderView.bottomAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 20, left: 10, bottom: 40, right: 0))
+        tableStack.backgroundColor = Color.gray800
     }
     
     private func observeEvents() {

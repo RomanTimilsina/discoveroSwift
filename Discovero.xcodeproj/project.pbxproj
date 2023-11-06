@@ -44,6 +44,8 @@
 		049D3A962AAD9EE0004864E9 /* MyProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049D3A952AAD9EE0004864E9 /* MyProfileCell.swift */; };
 		049D3A982AADA382004864E9 /* MyProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049D3A972AADA382004864E9 /* MyProfileModel.swift */; };
 		049D3A9A2AADBE86004864E9 /* DICustomProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049D3A992AADBE86004864E9 /* DICustomProfileView.swift */; };
+		049D94F52AF89E9C0007795B /* CustmPushPopTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049D94F42AF89E9C0007795B /* CustmPushPopTransition.swift */; };
+		049D94F82AF8A7C70007795B /* SharedUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049D94F72AF8A7C70007795B /* SharedUserData.swift */; };
 		04A168A22AA835380065F607 /* DIOTPField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A168A12AA835380065F607 /* DIOTPField.swift */; };
 		04A168A52AA839600065F607 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A168A42AA839600065F607 /* WelcomeView.swift */; };
 		04A168A82AA83B6C0065F607 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A168A72AA83B6C0065F607 /* WelcomeVC.swift */; };
@@ -176,6 +178,8 @@
 		049D3A952AAD9EE0004864E9 /* MyProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileCell.swift; sourceTree = "<group>"; };
 		049D3A972AADA382004864E9 /* MyProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileModel.swift; sourceTree = "<group>"; };
 		049D3A992AADBE86004864E9 /* DICustomProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DICustomProfileView.swift; sourceTree = "<group>"; };
+		049D94F42AF89E9C0007795B /* CustmPushPopTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustmPushPopTransition.swift; sourceTree = "<group>"; };
+		049D94F72AF8A7C70007795B /* SharedUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedUserData.swift; sourceTree = "<group>"; };
 		04A168A12AA835380065F607 /* DIOTPField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIOTPField.swift; sourceTree = "<group>"; };
 		04A168A42AA839600065F607 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		04A168A62AA839EB0065F607 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
@@ -376,6 +380,7 @@
 				049AB9C92AC9440D007200A5 /* CustomTimer.swift */,
 				8496C4E02AEE5E0A0017CC0A /* CustomNumberSelector.swift */,
 				84C422142AF39F9200091FD0 /* GradientRectangleView.swift */,
+				049D94F42AF89E9C0007795B /* CustmPushPopTransition.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -429,6 +434,14 @@
 				049D3A952AAD9EE0004864E9 /* MyProfileCell.swift */,
 			);
 			path = MyProfile;
+			sourceTree = "<group>";
+		};
+		049D94F62AF8A79F0007795B /* SharedData */ = {
+			isa = PBXGroup;
+			children = (
+				049D94F72AF8A7C70007795B /* SharedUserData.swift */,
+			);
+			path = SharedData;
 			sourceTree = "<group>";
 		};
 		04A168A32AA8394B0065F607 /* Welcome */ = {
@@ -605,6 +618,7 @@
 		E0FE05C12AA439C1001DBDF5 /* Discovero */ = {
 			isa = PBXGroup;
 			children = (
+				049D94F62AF8A79F0007795B /* SharedData */,
 				E0C26D242AC3233700E1073F /* Discovero.entitlements */,
 				04996CC22AA4A0C800DB618F /* Model */,
 				04996CB82AA46E5E00DB618F /* Modules */,
@@ -846,6 +860,7 @@
 				04A91E7B2AD7EF4E0037920D /* CountryStateModel.swift in Sources */,
 				04A91E772AD7BD610037920D /* LocationFilterView.swift in Sources */,
 				E0FE06422AA43D1B001DBDF5 /* AlertHelper.swift in Sources */,
+				049D94F52AF89E9C0007795B /* CustmPushPopTransition.swift in Sources */,
 				04C875332ADD582900248A0F /* RoomWantedView.swift in Sources */,
 				E0FE062A2AA43D1B001DBDF5 /* UICollectionView+Ext.swift in Sources */,
 				E0FE06352AA43D1B001DBDF5 /* UIView+Ext.swift in Sources */,
@@ -855,6 +870,7 @@
 				049AB9CA2AC9440D007200A5 /* CustomTimer.swift in Sources */,
 				04B514A52AA71CAA00E99A1B /* OtpConfirmView.swift in Sources */,
 				04996CBF2AA4725300DB618F /* DIButton.swift in Sources */,
+				049D94F82AF8A7C70007795B /* SharedUserData.swift in Sources */,
 				84C422112AF3588B00091FD0 /* CreateAnnouncmentView.swift in Sources */,
 				04A168B72AA8544F0065F607 /* DIPickerView.swift in Sources */,
 				049D3A9A2AADBE86004864E9 /* DICustomProfileView.swift in Sources */,

@@ -10,7 +10,6 @@ import UIKit
 class CreateAnnouncmentVC: UIViewController {
     
     var currentView = CreateAnnouncmentView()
-    
     let postPreview = PostPreviewVC()
     
     override func viewDidLoad() {
@@ -18,6 +17,9 @@ class CreateAnnouncmentVC: UIViewController {
         navigationController?.navigationBar.isHidden = true
         
         observeViewEvents()
+        currentView.announcement.textField.delegate = self
+        
+        currentView.nextButton.setInvalidState()
     }
     
     func observeViewEvents() {
@@ -45,3 +47,20 @@ class CreateAnnouncmentVC: UIViewController {
         view = currentView
     }
 }
+
+// MARK: - Textfield delegates
+extension CreateAnnouncmentVC: UITextFieldDelegate {
+    // MARK: Activate button if textfield has name
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if let updatedText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) {
+            if updatedText.isEmpty {
+                currentView.nextButton.setInvalidState()
+            } else {
+                currentView.nextButton.setValidState()
+            }
+        }
+        return true
+    }
+}
+

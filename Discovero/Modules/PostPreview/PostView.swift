@@ -126,14 +126,12 @@ class PostView: UIView {
 extension PostView {
     
     private func fetchUserData() {
-        FireStoreDatabaseHelper().getUserDataFromDefaults { [weak self] userData in
-            guard let self, let userData else { return }
-            usersData = userData
-            debugPrint(userData)
-        }
+
+            usersData = CurrentUser.user.data
+
     }
     
-    func configureData(roomData: PostModel?, jobData: JobModel?, buyAndSellData: BuySellModel?) {
+    func configureData(roomData: PostModel? = nil, jobData: JobModel? = nil, buyAndSellData: BuySellModel? = nil) {
         if let roomData {
             namePrefixLabel.text = "\(namePrefix(name: usersData?.name ?? ""))"
             profileImageView.isHidden = true

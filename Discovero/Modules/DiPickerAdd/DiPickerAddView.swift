@@ -19,27 +19,33 @@ class DiPickerAddView: UIView {
 //    let backButton = UIImageView(image: UIImage(named: "back"),contentMode: .scaleAspectFit, clipsToBounds: true)
     let title = UILabel(text: "Create New Post", font: OpenSans.semiBold, size: 16)
     let lineView = UIView()
-    let roomImage = UIImageView(image: UIImage(named: "roomImage"), contentMode: .scaleAspectFit, clipsToBounds: true )
+    let roomImage = UIImageView(image: UIImage(named: "roomImage"), contentMode: .scaleAspectFit, clipsToBounds: false)
     let roomLabel = UILabel(text: "Room", font: OpenSans.semiBold, size: 14)
-    lazy var roomStack = HorizontalStackView(arrangedSubViews: [roomImage , roomLabel, UIView()], spacing: 10)
+    lazy var roomStack = HorizontalStackView(arrangedSubViews: [roomCircle , roomLabel, UIView()], spacing: 10)
     
-    let jobImage = UIImageView(image: UIImage(named: "jobsImage"), contentMode: .scaleAspectFit, clipsToBounds:  true )
+    let jobImage = UIImageView(image: UIImage(named: "jobsImage"), contentMode: .scaleAspectFit, clipsToBounds:  false )
     let jobLabel = UILabel(text: "Jobs", font: OpenSans.semiBold, size: 14)
-    lazy var jobStack = HorizontalStackView(arrangedSubViews: [jobImage , jobLabel, UIView()], spacing: 10)
+    lazy var jobStack = HorizontalStackView(arrangedSubViews: [jobsCircle , jobLabel, UIView()], spacing: 10)
     
-    let buyAndSellImage = UIImageView(image: UIImage(named: "salesImage"), contentMode: .scaleAspectFit, clipsToBounds:  true )
+    let buyAndSellImage = UIImageView(image: UIImage(named: "salesImage"), contentMode: .scaleAspectFit, clipsToBounds:  false )
     let buyAndSellLabel = UILabel(text: "Buy/Sell", font: OpenSans.semiBold, size: 14)
-    lazy var buyAnsSellStack = HorizontalStackView(arrangedSubViews: [ buyAndSellImage , buyAndSellLabel, UIView()], spacing: 10)
+    lazy var buyAnsSellStack = HorizontalStackView(arrangedSubViews: [ tradeCircle , buyAndSellLabel, UIView()], spacing: 10)
     
-    let announcementImage = UIImageView(image: UIImage(named: "announcementsImage"), contentMode: .scaleAspectFit, clipsToBounds:  true )
+    let announcementImage = UIImageView(image: UIImage(named: "announcementsImage"), contentMode: .scaleAspectFit, clipsToBounds:  false )
     let announcementLabel = UILabel(text: "Announcement", font: OpenSans.semiBold, size: 14)
-    lazy var announcementStack = HorizontalStackView(arrangedSubViews: [announcementImage , announcementLabel, UIView()], spacing: 10)
+    lazy var announcementStack = HorizontalStackView(arrangedSubViews: [announcementCircle , announcementLabel, UIView()], spacing: 10)
     
     lazy var tableStack = VerticalStackView(arrangedSubViews: [roomStack, jobStack, buyAnsSellStack, announcementStack, UIView()], spacing: 10)
     
+    let roomCircle = UIView(color: Color.gray500, cornerRadius: 12.5)
+    let jobsCircle = UIView(color: Color.gray500, cornerRadius: 12.5)
+    let tradeCircle = UIView(color: Color.gray500, cornerRadius: 12.5)
+    let announcementCircle = UIView(color: Color.gray500, cornerRadius: 12.5)
+
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = Color.gray900
+        backgroundColor = Color.gray800
         setUpConstraints()
         observeEvents()
     }
@@ -58,8 +64,28 @@ class DiPickerAddView: UIView {
         title.centerInSuperview()
         
         addSubview(tableStack)
-        tableStack.anchor(top: pickerHeaderView.bottomAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 20, left: 10, bottom: 10, right: 0))
-        tableStack.backgroundColor = Color.gray900
+        tableStack.anchor(top: pickerHeaderView.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 20, left: 20, bottom: 0, right: 0))
+        tableStack.backgroundColor = Color.gray800
+        
+//        roomImage.image?.withTintColor(.white, renderingMode: .alwaysTemplate)
+        jobImage.image?.withTintColor(.white, renderingMode: .alwaysTemplate)
+//        buyAndSellImage.image?.withTintColor(.white, renderingMode: .alwaysTemplate)
+//        announcementImage.image?.withTintColor(.white, renderingMode: .alwaysTemplate)
+        
+        let circleArray = [roomCircle, jobsCircle, tradeCircle, announcementCircle]
+        let imageArray = [roomImage, jobImage, buyAndSellImage, announcementImage]
+        
+        for (view, image) in zip(circleArray, imageArray) {
+            if let changedImage = changeImageColor(image.image!, color: Color.appWhite) {
+                let imageView = UIImageView()
+                imageView.image = changedImage
+                view.constraintHeight(constant: 25)
+                view.constraintWidth(constant: 25)
+                view.addSubview(imageView)
+                imageView.centerInSuperview()
+            }
+
+        }
     }
 }
 
@@ -105,5 +131,21 @@ extension DiPickerAddView {
     
     @objc func handleAnnouncementTap() {
         onAnnouncementClick?()
+    }
+}
+
+extension DiPickerAddView {
+    func changeImageColor(_ image: UIImage, color: UIColor) -> UIImage? {
+        
+        UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        color.setFill()
+        let imageRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
+        context.fill(imageRect)
+        image.draw(in: imageRect, blendMode: .destinationIn, alpha: 1.0)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage
     }
 }

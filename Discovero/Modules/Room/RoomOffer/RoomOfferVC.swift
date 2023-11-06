@@ -77,7 +77,7 @@ private extension RoomOfferVC {
         if let sheet = addPicker.sheetPresentationController {
             sheet.prefersGrabberVisible = true
             sheet.preferredCornerRadius = 30
-            sheet.detents = [.medium(), .custom { _ in return 200}]
+            sheet.detents = [.custom { _ in return 220}]
             sheet.delegate = self
         }
 //        let navigationController = UINavigationController(rootViewController: addPicker)
@@ -85,10 +85,14 @@ private extension RoomOfferVC {
     }
     
     func getUsersDataFromDefaults() {
-        fireStore.getUserDataFromDefaults { [weak self] userData in
-            guard let self, let userData else { return }
-            fetchRoomOfferedData(filterModel: FilterModel(countryName: userData.country, stateName: userData.locationDetail.state))
-        }
+//        fireStore.getUserDataFromDefaults { [weak self] userData in
+//            guard let self, let userData else { return }
+//            fetchRoomOfferedData(filterModel: FilterModel(countryName: userData.country, stateName: userData.locationDetail.state))
+//        }
+        //MARK: - user data is stored in CurrentUser.user.data inside fireStore.getUserDataFromDefaults
+        let users = CurrentUser.user.data
+        fetchRoomOfferedData(filterModel: FilterModel(countryName: users?.country, stateName: users?.locationDetail.state))
+
     }
     
     func fetchRoomOfferedData(filterModel: FilterModel) {
