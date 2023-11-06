@@ -61,7 +61,7 @@ extension DiPickerAddVC {
         if let sheet = bottomPickerVC.sheetPresentationController {
             sheet.prefersGrabberVisible = true
             sheet.preferredCornerRadius = 30
-            sheet.detents = [.large(), .custom { _ in return 180}]
+            sheet.detents = [.custom { _ in return 180}]
             sheet.delegate = self
         }
         present(bottomPickerVC, animated: true, completion: nil)
