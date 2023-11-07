@@ -57,7 +57,7 @@ class PostView: UIView {
     
     var bedroomImage =  UIImageView(image:UIImage(named: "bedroomImage") ,contentMode: .scaleAspectFit, clipsToBounds: true)
     let bedroomNumberLabel = UILabel(text: "", font: OpenSans.regular, size: 14)
-    let tubImage =  UIImageView(image:UIImage(named: "tub") ,contentMode: .scaleAspectFit, clipsToBounds: true)
+    var tubImage =  UIImageView(image:UIImage(named: "tub") ,contentMode: .scaleAspectFit, clipsToBounds: true)
     let tubNumberLabel = UILabel(text: "", font: OpenSans.regular, size: 14)
     let garageImage =  UIImageView(image:UIImage(named: "garage") ,contentMode: .scaleAspectFit, clipsToBounds: true)
     let garageNumberLabel = UILabel(text: "", font: OpenSans.regular, size: 14)
@@ -158,6 +158,8 @@ extension PostView {
             location.text = jobData.state + ", " + jobData.country
             propertyTypeLabel.text = jobData.jobType
             bedroomNumberLabel.text = "\(jobData.noOfPostion)"
+            durationLabel.text = "\(jobData.salarySideTitle)"
+            bedroomImage.image = UIImage(named: "jobsImage")
         }
         
         if let buyAndSellData {
@@ -171,6 +173,7 @@ extension PostView {
             location.text = buyAndSellData.state + ", " + buyAndSellData.country
             propertyTypeLabel.text = buyAndSellData.productTypeLabel
             bedroomNumberLabel.text = "\(buyAndSellData.noOfItems)"
+            bedroomImage.image = UIImage(named: "salesImage")
         }
     }
 }

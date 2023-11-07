@@ -91,7 +91,6 @@ extension BottomSheetPickerVC {
         let label = isLooking ? "Expected Salary" : "Salary"
         
         vc.currentView.productTypeLabel.removeFromSuperview()
-        vc.postPreview.currentView.postView.bedroomImage = UIImageView(image: UIImage(named: "jobsImage"), contentMode: .scaleAspectFit, clipsToBounds: true)
         vc.postPreview.currentView.postView.tubImage.isHidden = true
         vc.postPreview.currentView.postView.tubNumberLabel.isHidden = true
         vc.postPreview.currentView.postView.garageImage.removeFromSuperview()
@@ -104,7 +103,9 @@ extension BottomSheetPickerVC {
             vc.currentView.selector.constraintHeight(constant: 0)
         }
         
-        vc.isItJob = !isLooking
+        vc.isItJob = true
+        debugPrint(vc.isItJob)
+
         vc.currentView.setLabel(label: label, headerText: headerText)
         gotoVC(vc:vc)
     }
@@ -117,7 +118,6 @@ extension BottomSheetPickerVC {
         vc.currentView.JobTypeLabel.removeFromSuperview()
         vc.currentView.coverButton.removeFromSuperview()
         
-        vc.postPreview.currentView.postView.bedroomImage.image = UIImage(named: "salesImage")
         vc.postPreview.currentView.postView.tubImage.removeFromSuperview()
         vc.postPreview.currentView.postView.tubNumberLabel.removeFromSuperview()
         vc.postPreview.currentView.postView.garageImage.removeFromSuperview()
@@ -126,8 +126,8 @@ extension BottomSheetPickerVC {
         vc.postPreview.currentView.postView.announcmentLikeButton.removeFromSuperview()
         
         vc.currentView.setLabel(label: label, headerText: headerText)
-        vc.isItJob = !isLooking
-        
+        vc.isItJob = false
+        debugPrint(vc.isItJob)
         gotoVC(vc:vc)
     }
     

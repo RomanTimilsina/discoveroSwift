@@ -12,6 +12,7 @@ class RoomView : UIView{
     let headerTab = DIHeaderTab()
     let bodyView = RoomBodyView()
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()

@@ -28,27 +28,52 @@ class CreateJobsAdsVC: UIViewController {
             gotoLocationFilterVC()
         }
         
-        currentView.onNextClick = { [weak self]  in
+        currentView.onNextClick = { [weak self] jobModel, buyAndSell  in
             guard let self = self else { return }
-            gotoPostPreviewVC()
+            guard let isItJob else { return }
+            if isItJob {
+                postPreview.currentView.postView.configureData(jobData: jobModel)
+            }else{
+                postPreview.currentView.postView.configureData(buyAndSellData: buyAndSell)
+            }
+            gotoPostPreviewVC(jobModel: jobModel, buyAndSell: buyAndSell)
+
         }
         
         currentView.headerView.onClose = { [weak self] in
             guard let self = self else { return }
             dismiss(animated: true)
         }
-        
-        func gotoPostPreviewVC() {
+        func gotoPostPreviewVC(jobModel: JobModel, buyAndSell: BuySellModel) {
             guard let isItJob else { return }
             if isItJob {
-                let jobModel = JobModel(adsTitle: currentView.titleView.textField.text ?? "", description: currentView.descriptionsView.textField.text ?? "", salary: Double(currentView.salaryTextField.text ?? "0.0") ?? 0.0, country: currentView.countryName ?? "", state: currentView.stateName ?? "", suburb: currentView.suburbName ?? "", noOfPostion: currentView.selector.count, jobType: currentView.JobTypeLabel.sideTitle.text ?? "")
-                postPreview.currentView.postView.configureData( jobData: jobModel)
-            } else {
-                let buyAndSell = BuySellModel(adsTitle: currentView.titleView.textField.text ?? "", description: currentView.descriptionsView.textField.text ?? "", price:  Double(currentView.salaryTextField.text ?? "0.0") ?? 0.0, country: currentView.countryName ?? "", state: currentView.stateName ?? "", suburb: currentView.suburbName ?? "", noOfItems: currentView.selector.count, productTypeLabel: currentView.productTypeLabel.sideTitle.text ?? "")
-                postPreview.currentView.postView.configureData( buyAndSellData: buyAndSell)
+                let checkValidiationJob = checkValidationJobs(title: jobModel.adsTitle, description: jobModel.description, salary: jobModel.salary, salaryType: jobModel.salarySideTitle, country: jobModel.country, state: jobModel.state, jobType: jobModel.jobType)
+                
+                switch checkValidiationJob{
+                case .title, .description,.salary, .salarytype, .country, .state, .jobType:
+                    let alertController = UIAlertController(title: "Errors Alert", message: checkValidiationJob.errorMessages, preferredStyle: .alert)
+                    let action = UIAlertAction(title: "OK", style: .default) { (action) in
+                    }
+                    alertController.addAction(action)
+                    present(alertController, animated: true, completion: nil)
+                case .allfieldfill:
+                    navigationController?.pushViewController(postPreview, animated: true)
+                }
+          } else {
+              let checkValidiationBuySell = checkValidationBuyAndSell(title: buyAndSell.adsTitle, description: buyAndSell.description, price: buyAndSell.price, country: buyAndSell.country, state: buyAndSell.state, productType: buyAndSell.productTypeLabel)
+              
+              switch checkValidiationBuySell{
+              case .title, .description,.price, .country, .state, .productType:
+                  let alertController = UIAlertController(title: "Errors Alert", message: checkValidiationBuySell.errorMessages, preferredStyle: .alert)
+                  let action = UIAlertAction(title: "OK", style: .default) { (action) in
+                  }
+                  alertController.addAction(action)
+                  present(alertController, animated: true, completion: nil)
+              case .allfieldfill:
+                  navigationController?.pushViewController(postPreview, animated: true)
+              }
+
             }
-            
-            navigationController?.pushViewController(postPreview, animated: true)
         }
         
         func gotoLocationFilterVC() {
@@ -69,5 +94,76 @@ class CreateJobsAdsVC: UIViewController {
     
     override func loadView() {
         view = currentView
+    }
+}
+
+enum checkValidationJobs {
+    case title
+    case description
+    case salary
+    case salarytype
+    case country
+    case state
+    case jobType
+    case allfieldfill
+    
+    var errorMessages: String {
+        switch self {
+        case .title: return "Title can't be empty"
+        case .description: return "Description can't be empty"
+        case .salary: return "Salary can't be empty"
+        case .salarytype: return "Salary basis can't be empty"
+        case .country: return "Country can't be empty"
+        case .state: return "States can't be empty"
+        case .jobType: return "Choose Job type"
+        case .allfieldfill: return ""
+        }
+    }
+    
+    init(title: String, description: String, salary: Double, salaryType: String, country: String, state: String, jobType: String){
+        switch true{
+        case title.isEmpty: self = .title
+        case description.isEmpty: self = .description
+        case salary == 0.0: self = .salary
+        case salaryType.isEmpty: self = .salarytype
+        case country.isEmpty: self = .country
+        case state.isEmpty: self = .state
+        case jobType == AppConstants.tapToChoose: self = .jobType
+        default: self = .allfieldfill
+        }
+    }
+}
+
+enum checkValidationBuyAndSell{
+    case title
+    case description
+    case price
+    case country
+    case state
+    case productType
+    case allfieldfill
+    
+    var errorMessages: String {
+        switch self {
+        case .title: return "Title can't be empty"
+        case .description: return "Description can't be empty"
+        case .price: return "Price can't be empty"
+        case .country: return "Country can't be empty"
+        case .state: return "States can't be empty"
+        case .productType: return "Choose Product type"
+        case .allfieldfill: return ""
+        }
+    }
+    
+    init(title: String, description: String, price: Double, country: String, state: String, productType: String){
+        switch true{
+        case title.isEmpty: self = .title
+        case description.isEmpty: self = .description
+        case price == 0.0: self = .price
+        case country.isEmpty: self = .country
+        case state.isEmpty: self = .state
+        case productType == AppConstants.tapToChoose : self = .productType
+        default: self = .allfieldfill
+        }
     }
 }

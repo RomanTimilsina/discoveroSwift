@@ -29,6 +29,12 @@ class RoomOfferVC: UIViewController, UISheetPresentationControllerDelegate {
         setupTable()
         observeEvents()
         getUsersDataFromDefaults()
+//        
+//        currentView.popupView.handleClose = {[weak self] in
+//            guard let self else {return}
+//            currentView.popupView.isHidden = true
+//        }
+
     }
     
     override func loadView() {

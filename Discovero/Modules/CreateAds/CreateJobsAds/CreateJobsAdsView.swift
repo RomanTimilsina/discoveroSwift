@@ -9,8 +9,8 @@ import UIKit
 
 class CreateJobsAdsView : UIView {
     
-    var onNextClick : (()-> Void)?
-    
+    var onNextClick : ((JobModel, BuySellModel)-> Void)?
+
     let headerView = DIHeaderView(title: "", hasBack: true)
     let coverButton = UIButton(title: "", titleColor: .clear, font: OpenSans.regular, fontSize: 1)
     let titleView = DITextField(title: "Add title for your ads",  placholder: "Type here", typePad: .default, contentHeight: 50, placeholderHeight: 15, textHeight: 15, hasLine: false)
@@ -28,8 +28,9 @@ class CreateJobsAdsView : UIView {
         return textfield
     }()
     lazy var salaryStack = HorizontalStackView( arrangedSubViews: [dollarLabel, salaryTextField, UIView()], spacing: 8 )
-    lazy var sideStack = HorizontalStackView(arrangedSubViews: [UIView(), sideTitle, rightArrowImage],spacing: 8)
-    let sideTitle = UILabel(text: "",color: Color.appWhite, font: OpenSans.semiBold, size: 14)
+    lazy var sideStack = HorizontalStackView(arrangedSubViews: [UIView(), salarySideTitle, rightArrowImage],spacing: 8)
+    let salarySideTitle = UILabel(text: "",color: Color.appWhite, font: OpenSans.semiBold, size: 14)
+
     let lineView = UIView()
     let locationLabel = DICustomProfileView(titleText: "Location", text: "Select your location", isInFilter: true)
     let selector  = CustomNumberSelector("No of Position ", 1)
@@ -123,7 +124,26 @@ class CreateJobsAdsView : UIView {
     }
     
     @objc func handleNextButtonTap() {
-        onNextClick?()
+        let jobModel = JobModel(adsTitle: titleView.textField.text ?? "",
+                                    description: descriptionsView.textField.text ?? "",
+                                    salary: Double(salaryTextField.text ?? "0.0") ?? 0.0,
+                                    salarySideTitle: salarySideTitle.text ?? "",
+                                    country: countryName ?? "",
+                                    state: stateName ?? "",
+                                    suburb: suburbName ?? "",
+                                    noOfPostion: selector.count,
+                                    jobType: JobTypeLabel.sideTitle.text ?? ""
+        )
+        let buyAndSell = BuySellModel(adsTitle: titleView.textField.text ?? "",
+                                      description: descriptionsView.textField.text ?? "",
+                                      price:  Double(salaryTextField.text ?? "0.0") ?? 0.0,
+                                      country: countryName ?? "",
+                                      state: stateName ?? "",
+                                      suburb: suburbName ?? "",
+                                      noOfItems: selector.count,
+                                      productTypeLabel: productTypeLabel.sideTitle.text ?? ""
+        )
+        onNextClick?(jobModel, buyAndSell)
     }
     
     required init?(coder: NSCoder) {
@@ -181,15 +201,15 @@ extension CreateJobsAdsView {
     
     private func addInfoForSalary() -> UIMenu {
         let annually = UIAction(title: "Annually", handler: { _ in
-            self.sideTitle.text = "Annually"
+            self.salarySideTitle.text = "Annually"
         })
         
         let monthly = UIAction(title: "Monthly", handler: { _ in
-            self.sideTitle.text = "Monthly"
+            self.salarySideTitle.text = "Monthly"
         })
         
         let perHr = UIAction(title: "Per hr" , handler: { _ in
-            self.sideTitle.text = " Per hr"
+            self.salarySideTitle.text = " Per hr"
         })
         
         let infoMenu = UIMenu(title: "", children: [annually, monthly, perHr])
@@ -198,19 +218,19 @@ extension CreateJobsAdsView {
     
     private func addInfoForSellAndBuy() -> UIMenu {
         let other = UIAction(title: "Other", handler: { _ in
-            self.JobTypeLabel.sideTitle.text = "Other"
+            self.productTypeLabel.sideTitle.text = "Other"
         })
         
         let goods = UIAction(title: "Goods", handler: { _ in
-            self.JobTypeLabel.sideTitle.text = "Goods"
+            self.productTypeLabel.sideTitle.text = "Goods"
         })
         
         let furniture = UIAction(title: "Furniture", handler: { _ in
-            self.JobTypeLabel.sideTitle.text = "Furniture"
+            self.productTypeLabel.sideTitle.text = "Furniture"
         })
         
         let vechicles = UIAction(title: "Vechicles", handler: { _ in
-            self.JobTypeLabel.sideTitle.text = "Vechicles"
+            self.productTypeLabel.sideTitle.text = "Vechicles"
         })
         
         let infoMenu = UIMenu(title: "", children: [other, goods, furniture , vechicles])
