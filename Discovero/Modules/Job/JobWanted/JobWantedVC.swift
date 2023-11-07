@@ -1,24 +1,24 @@
-
-//  RoomWantedVC.swift
+//
+//  JobWantedVC.swift
 //  Discovero
 //
-//  Created by admin on 16/10/2023.
+//  Created by admin on 03/11/2023.
 //
 
 import UIKit
 
-class RoomWantedVC: UIViewController, UISheetPresentationControllerDelegate{
+class JobWantedVC: UIViewController, UISheetPresentationControllerDelegate{
     
-    let currentView = RoomWantedView()
+    let currentView = JobWantedView()
     
-    var roomWanted: [RoomOffer] = []
+    var jobWanted: [RoomOffer] = []
     var fireStore = FireStoreDatabaseHelper()
     
-    let addPicker = DiPickerAddVC()
     let filterVC = FilterSelectorVC()
+    let addPicker = DiPickerAddVC()
     
     var onSearchSuccess: ((Int) -> Void)?
-
+    
     override func viewDidAppear(_ animated: Bool ) {
         super.viewDidAppear(animated)
         navigationController?.navigationBar.isHidden = true
@@ -37,7 +37,7 @@ class RoomWantedVC: UIViewController, UISheetPresentationControllerDelegate{
     }
     
     func setupTable() {
-        currentView.adsTable.register(RoomOfferTableViewCell.self, forCellReuseIdentifier: RoomOfferTableViewCell().identifier)
+        currentView.adsTable.register(JobTableViewCell.self, forCellReuseIdentifier: JobTableViewCell().identifier)
         currentView.adsTable.delegate = self
         currentView.adsTable.dataSource = self
     }
@@ -50,48 +50,48 @@ class RoomWantedVC: UIViewController, UISheetPresentationControllerDelegate{
         
         currentView.onCLickedAdd = { [weak self] in
             guard let self else { return }
-            openAddPicker()
+            openpicker()
         }
     }
 }
 
 //MARK: Fetch data from firestore
- extension RoomWantedVC {
-     func openAddPicker(){
-         addPicker.modalPresentationStyle = .automatic
-         if let sheet = addPicker.sheetPresentationController {
-             sheet.prefersGrabberVisible = true
-             sheet.preferredCornerRadius = 30
-             sheet.detents = [.custom { _ in return 220}]
-             sheet.delegate = self
-         }
-         present(addPicker, animated: true, completion: nil)
-     }
-     
-    func getUsersDataFromDefaults() {
-        fetchRoomOfferedData(country: CurrentUser.user.data?.country ?? "", state: CurrentUser.user.data?.locationDetail.state ?? "")
+extension JobWantedVC {
+    func openpicker() {
+        addPicker.modalPresentationStyle = .automatic
+        if let sheet = addPicker.sheetPresentationController {
+            sheet.prefersGrabberVisible = true
+            sheet.preferredCornerRadius = 30
+            sheet.detents = [.custom { _ in return 220}]
+            sheet.delegate = self
+        }
+        present(addPicker, animated: true, completion: nil)
     }
-   
-    func fetchRoomOfferedData(country: String, state: String) {
+    
+    func getUsersDataFromDefaults() {
+        fetchJobOfferedData(country: CurrentUser.user.data?.country ?? "", state: CurrentUser.user.data?.locationDetail.state ?? "")
+    }
+    
+    func fetchJobOfferedData(country: String, state: String) {
         showHUD()
         fireStore.getRoomOffered(isRoomOffer: false, filterModel: FilterModel(countryName: country, stateName: state)) { [weak self] roomOffersModel in
             guard let self else { return }
-            self.roomWanted.append(contentsOf: roomOffersModel)
+            self.jobWanted.append(contentsOf: roomOffersModel)
             self.hideHUD()
             self.currentView.adsTable.reloadData()
-            self.currentView.filterSection.numberOfOffers.text = "\(self.roomWanted.count) wanted"
+            self.currentView.filterSection.numberOfOffers.text = "\(self.jobWanted.count) wanted"
         }
     }
 }
 
 //MARK: Table Delegates
-extension RoomWantedVC: UITableViewDelegate, UITableViewDataSource  {
+extension JobWantedVC: UITableViewDelegate, UITableViewDataSource  {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return roomWanted.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: RoomOfferTableViewCell().identifier, for: indexPath) as! RoomOfferTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: JobTableViewCell().identifier, for: indexPath) as! JobTableViewCell
         cell.selectionStyle = .none
         
         let data = roomWanted[indexPath.row]
@@ -125,42 +125,43 @@ extension RoomWantedVC: UITableViewDelegate, UITableViewDataSource  {
 }
 
 //MARK: Navigation function
-private extension RoomWantedVC {
+private extension JobWantedVC {
     func goToCommentSection() {
         let commentVC = CommentsPageVC()
         navigationController?.pushViewController(commentVC, animated: true)
     }
     
     func goToFilterPage() {
-        filterVC.filterChoice = .room
+        filterVC.filterChoice = .job
+        
         filterVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(filterVC, animated: true)
-        
+    
         
         filterVC.onSearchClick = { [weak self] filterModel in
             guard let self else { return }
-            self.roomWanted.removeAll()
-//            self.currentView.adsTable.reloadData()
+            self.jobWanted.removeAll()
+            //            self.currentView.adsTable.reloadData()
             self.showHUD()
             
             fireStore.getRoomOffered(isRoomOffer: false, filterModel: filterModel)
             { [weak self] roomOffersModel in
                 guard let self else { return }
                 DispatchQueue.main.async {
-                    self.roomWanted.append(contentsOf: roomOffersModel)
+                    self.jobWanted.append(contentsOf: roomOffersModel)
                     self.hideHUD()
                     self.currentView.adsTable.reloadData()
-                    self.currentView.filterSection.numberOfOffers.text = "\(self.roomWanted.count) offers"
+                    self.currentView.filterSection.numberOfOffers.text = "\(self.jobWanted.count) offers"
                 }
                 self.hideHUD()
                 self.currentView.filterSection.filterNumber.text = "\(filterModel.filterCount ?? 0)"
-                onSearchSuccess?(self.roomWanted.count)
+                onSearchSuccess?(self.jobWanted.count)
             }
         }
     }
 }
 
-extension RoomWantedVC{
+extension JobWantedVC{
     func scrollViewDidScroll(_ scrollView: UIScrollView)  {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height

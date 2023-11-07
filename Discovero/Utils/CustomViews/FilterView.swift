@@ -24,6 +24,12 @@ class FilterView: UIView {
         super.init(frame: frame)
         setupFilter()
         observeEvents()
+        
+//        CurrentFilter.filter.choice = "job"
+//        
+//        if CurrentFilter.filter.choice == "job" {
+//            
+//        }
     }
     
     

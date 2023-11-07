@@ -17,6 +17,8 @@ class FilterSelectorView: UIView{
     let priceLabel = UILabel(text: "Price", font: OpenSans.semiBold, size: 16)
     let priceRange = UILabel(text: "$0.0 to $5000.0",color: .white, font: OpenSans.semiBold, size: 16)
     let propertyTypeLabel = DICustomProfileView(titleText: "Property Type", text: "", show: true, sideTitleString: "Tap here")
+    let paymentTypeLabel = DICustomProfileView(titleText: "Payment Type", text: "", show: true, sideTitleString: "Tap here")
+    let jobTypeLabel = DICustomProfileView(titleText: "Job Type", text: "", show: true, sideTitleString: "Tap here")
     let languageLabel = DICustomProfileView(titleText: "Language", text: "Tap to select", show: true, sideTitleString: "")
     let bedroomSelector = CustomSelectorView("Bedroom")
     let bathroomSelector = CustomSelectorView("Bathroom")
@@ -35,13 +37,16 @@ class FilterSelectorView: UIView{
         rangeSlider.isVertical = false
         rangeSlider.outerTrackColor = .lightGray
         rangeSlider.valueLabelColor = .white
-        rangeSlider.valueLabelFont = .boldSystemFont(ofSize: 16)
+        rangeSlider.valueLabelFont = .boldSystemFont(ofSize: 5)
         rangeSlider.tintColor = .white
         rangeSlider.trackWidth = 5
+//        rangeSlider.frame.size = CGSize(width: 14, height: 14)
+        rangeSlider.keepsDistanceBetweenThumbs = true
+//        rangeSlider.thumbImage = UIImage(named: "room")
         return rangeSlider
     }()
     
-    var countryName, stateName, suburbName, propertyType: String?
+    var countryName, stateName, suburbName, propertyType, paymentType, jobType: String?
     var noOfBedrooms, noOfBathrooms, noOfParkings: Int?
     var minCost, maxCost: Double?
     var languageArray: [String]?
@@ -90,6 +95,13 @@ class FilterSelectorView: UIView{
         addSubview(propertyTypeLabel)
         propertyTypeLabel.anchor(top: parkingSelector.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 30, left: 12, bottom: 0, right: 12))
         
+        addSubview(paymentTypeLabel)
+        paymentTypeLabel.anchor(top: rangeSlider.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 20, left: 12, bottom: 0, right: 12))
+        
+        addSubview(jobTypeLabel)
+        jobTypeLabel.anchor(top: paymentTypeLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 30, left: 12, bottom: 0, right: 12))
+
+        
         addSubview(languageLabel)
         languageLabel.anchor(top: propertyTypeLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 30, left: 12, bottom: 0, right: 12))
         languageLabel.constraintHeight(constant: 44)
@@ -105,15 +117,23 @@ class FilterSelectorView: UIView{
         let rightKnob  = round(rightValue * 100) / 100
         
         priceRange.text = "$\(leftknob) to $\(rightKnob)"
-        minCost = leftknob
-        maxCost = rightKnob
+        minCost = leftValue
+        maxCost = rightValue
     }
     
     func observeEvents() {
         
-        propertyTypeLabel.propertyCoverButton.isEnabled = true
-        propertyTypeLabel.propertyCoverButton.showsMenuAsPrimaryAction = true
-        propertyTypeLabel.propertyCoverButton.menu = addInfoMenu()
+        propertyTypeLabel.coverButton.isEnabled = true
+        propertyTypeLabel.coverButton.showsMenuAsPrimaryAction = true
+        propertyTypeLabel.coverButton.menu = addInfoMenu()
+        
+        paymentTypeLabel.coverButton.isEnabled = true
+        paymentTypeLabel.coverButton.showsMenuAsPrimaryAction = true
+        paymentTypeLabel.coverButton.menu = addInfoForPayment()
+        
+        jobTypeLabel.coverButton.isEnabled = true
+        jobTypeLabel.coverButton.showsMenuAsPrimaryAction = true
+        jobTypeLabel.coverButton.menu = addInfoForJobPost()
         
         searchButton.addTarget(self, action: #selector(handleSearch), for: .touchUpInside)
         resetButton.addTarget(self, action: #selector(resetButtonTapped), for: .touchUpInside)
@@ -144,10 +164,24 @@ class FilterSelectorView: UIView{
         } else {
             propertyType = propertyTypeLabel.sideTitle.text ?? nil
         }
+        
+        if paymentTypeLabel.sideTitle.text == "Any" || paymentTypeLabel.sideTitle.text == "Tap Here" {
+            paymentType = nil
+        } else {
+            paymentType = paymentTypeLabel.sideTitle.text ?? nil
+        }
+        
+        if jobTypeLabel.sideTitle.text == "Any" || jobTypeLabel.sideTitle.text == "Tap Here" {
+            jobType = nil
+        } else {
+            jobType = jobTypeLabel.sideTitle.text ?? nil
+        }
 
         onSearchClick?(FilterModel(countryName: countryName ?? "",
                                    stateName: stateName ?? "",
                                    propertyType: propertyType,
+                                   paymentType: paymentType,
+                                   jobType: jobType,
                                    noOfBedrooms: noOfBedrooms,
                                    noOfBathrooms: noOfBathrooms,
                                    noOfParkings: noOfParkings,
@@ -177,6 +211,44 @@ private extension FilterSelectorView {
         })
         
         let infoMenu = UIMenu(title: "", children: [both, apartment, house])
+        return infoMenu
+    }
+    
+    private func addInfoForJobPost() -> UIMenu {
+        let other = UIAction(title: "Other", handler: { _ in
+            self.jobTypeLabel.sideTitle.text = "Other"
+        })
+        
+        let cleaning = UIAction(title: "Cleaning", handler: { _ in
+            self.jobTypeLabel.sideTitle.text = "Cleaning"
+        })
+        
+        let design = UIAction(title: "Design", handler: { _ in
+            self.jobTypeLabel.sideTitle.text = "Design"
+        })
+        
+        let development = UIAction(title: "Development", handler: { _ in
+            self.jobTypeLabel.sideTitle.text = "Development"
+        })
+        
+        let infoMenu = UIMenu(title: "", children: [other, cleaning, design , development])
+        return infoMenu
+    }
+    
+    private func addInfoForPayment() -> UIMenu {
+        let annually = UIAction(title: "Annually", handler: { _ in
+            self.paymentTypeLabel.sideTitle.text = "Annually"
+        })
+        
+        let monthly = UIAction(title: "Monthly", handler: { _ in
+            self.paymentTypeLabel.sideTitle.text = "Monthly"
+        })
+        
+        let perHr = UIAction(title: "Per hr" , handler: { _ in
+            self.paymentTypeLabel.sideTitle.text = " Per hr"
+        })
+        
+        let infoMenu = UIMenu(title: "", children: [annually, monthly, perHr])
         return infoMenu
     }
 }

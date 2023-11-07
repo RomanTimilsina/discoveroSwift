@@ -34,7 +34,7 @@ class CreateJobsAdsView : UIView {
     let lineView = UIView()
     let locationLabel = DICustomProfileView(titleText: "Location", text: "Select your location", isInFilter: true)
     let selector  = CustomNumberSelector("No of Position ", 1)
-    let JobTypeLabel = DICustomProfileView(titleText: "Job Type", text: "", show: true, sideTitleString: "Tap to Choose")
+    let jobTypeLabel = DICustomProfileView(titleText: "Job Type", text: "", show: true, sideTitleString: "Tap to Choose")
     let productTypeLabel = DICustomProfileView(titleText: "Category of Product", text: "", show: true, sideTitleString: "Tap to Choose")
     let nextButton = DIButton(buttonTitle: "Next", height: 30)
     var countryName, stateName, suburbName, propertyType: String?
@@ -93,8 +93,8 @@ class CreateJobsAdsView : UIView {
         selector.anchor(top: locationLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 20, left: 12, bottom: 0, right: 12))
         selector.constraintHeight(constant: 50)
         
-        addSubview(JobTypeLabel)
-        JobTypeLabel.anchor(top: selector.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 12, bottom: 0, right: 12))
+        addSubview(jobTypeLabel)
+        jobTypeLabel.anchor(top: selector.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 12, bottom: 0, right: 12))
         
         addSubview(productTypeLabel)
         productTypeLabel.anchor(top: selector.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 12, bottom: 0, right: 12))
@@ -112,12 +112,14 @@ class CreateJobsAdsView : UIView {
     func observeEvents() {
         nextButton.addTarget(self, action: #selector(handleNextButtonTap), for: .touchUpInside)
         
-        JobTypeLabel.propertyCoverButton.showsMenuAsPrimaryAction = true
-        JobTypeLabel.propertyCoverButton.isEnabled = true
-        JobTypeLabel.propertyCoverButton.menu = addInfoForJobPost()
-        productTypeLabel.propertyCoverButton.showsMenuAsPrimaryAction = true
-        productTypeLabel.propertyCoverButton.isEnabled = true
-        productTypeLabel.propertyCoverButton.menu = addInfoForSellAndBuy()
+        jobTypeLabel.coverButton.showsMenuAsPrimaryAction = true
+        jobTypeLabel.coverButton.isEnabled = true
+        jobTypeLabel.coverButton.menu = addInfoForJobPost()
+        
+        productTypeLabel.coverButton.showsMenuAsPrimaryAction = true
+        productTypeLabel.coverButton.isEnabled = true
+        productTypeLabel.coverButton.menu = addInfoForSellAndBuy()
+        
         coverButton.showsMenuAsPrimaryAction = true
         coverButton.isEnabled = true
         coverButton.menu = addInfoForSalary()
@@ -132,7 +134,7 @@ class CreateJobsAdsView : UIView {
                                     state: stateName ?? "",
                                     suburb: suburbName ?? "",
                                     noOfPostion: selector.count,
-                                    jobType: JobTypeLabel.sideTitle.text ?? ""
+                                    jobType: jobTypeLabel.sideTitle.text ?? ""
         )
         let buyAndSell = BuySellModel(adsTitle: titleView.textField.text ?? "",
                                       description: descriptionsView.textField.text ?? "",
@@ -174,25 +176,25 @@ extension CreateJobsAdsView {
         stateName = model.stateName
         locationLabel.subTitle.text = "\(model.countryName ?? ""), \(model.stateName ?? "")"
         if model.propertyType == nil {
-            JobTypeLabel.sideTitle.text = "Tap Here"
+            jobTypeLabel.sideTitle.text = "Tap Here"
         }
     }
     
     private func addInfoForJobPost() -> UIMenu {
         let other = UIAction(title: "Other", handler: { _ in
-            self.JobTypeLabel.sideTitle.text = "Other"
+            self.jobTypeLabel.sideTitle.text = "Other"
         })
         
         let cleaning = UIAction(title: "Cleaning", handler: { _ in
-            self.JobTypeLabel.sideTitle.text = "Cleaning"
+            self.jobTypeLabel.sideTitle.text = "Cleaning"
         })
         
         let design = UIAction(title: "Design", handler: { _ in
-            self.JobTypeLabel.sideTitle.text = "Design"
+            self.jobTypeLabel.sideTitle.text = "Design"
         })
         
         let development = UIAction(title: "Development", handler: { _ in
-            self.JobTypeLabel.sideTitle.text = "Development"
+            self.jobTypeLabel.sideTitle.text = "Development"
         })
         
         let infoMenu = UIMenu(title: "", children: [other, cleaning, design , development])

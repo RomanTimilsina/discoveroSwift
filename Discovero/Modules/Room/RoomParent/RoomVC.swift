@@ -23,6 +23,7 @@ class RoomVC : UIViewController{
         
         setupChildController()
         observeViewEvents()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {

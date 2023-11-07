@@ -31,7 +31,7 @@ class LocationFilterVC: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    currentView.stateView.propertyCoverButton.isEnabled = false
+    currentView.stateView.coverButton.isEnabled = false
     setupTable()
     countriesAndState()
     currentView.suburbView.textField.delegate = self
@@ -106,7 +106,7 @@ class LocationFilterVC: UIViewController {
       countriesAndState()
       currentView.countryView.subTitle.text = model.name
       currentView.stateView.subTitle.text = ""
-      currentView.stateView.propertyCoverButton.isEnabled = false
+      currentView.stateView.coverButton.isEnabled = false
       stateMenuTable = []
       selectedCountryName = model.name
       setState(countryName: model.name)

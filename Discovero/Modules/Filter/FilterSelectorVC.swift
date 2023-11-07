@@ -19,7 +19,7 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
     var usersData: UserData?
     var selectedLanguageArray: [String] = []
     var selectedLanguage: String?
-    
+    var filterChoice: FilterChoice?
     var filterModel = FilterModel()
     
     override func viewDidLoad() {
@@ -30,6 +30,35 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
         configView()
         languagePicker.languageModel = languageManager.getData()
         navigationController?.navigationBar.isHidden = true
+        
+        guard let filterChoice else { return }
+        
+        switch filterChoice {
+        case .room : setAsRoomFilter()
+        case .job : setAsJobFilter()
+        case .buySell: break
+        }
+        
+        
+//        if filterChoice == .job {
+//            setAsJobFilter()
+//        }
+//        
+//        if filterChoice == .room {
+//            setAsRoomFilter()
+//        }
+    }
+    
+    func setAsJobFilter() {
+            currentView.bedroomSelector.removeFromSuperview()
+            currentView.bathroomSelector.removeFromSuperview()
+            currentView.parkingSelector.removeFromSuperview()
+            currentView.propertyTypeLabel.removeFromSuperview()
+    }
+    
+    func setAsRoomFilter() {
+            currentView.paymentTypeLabel.removeFromSuperview()
+            currentView.jobTypeLabel.removeFromSuperview()
     }
     
     override func loadView() {
@@ -177,4 +206,18 @@ private extension FilterSelectorVC {
             languageManager.setData(language: language, isSelected: selectedLanguageArray.contains(language))
         }
     }
+}
+
+enum FilterChoice {
+    case room
+    case job
+    case buySell
+    
+//    var filter: String {
+//        switch self{
+//        case .room: return "room"
+//        case .job: return "job"
+//        case .buySell: return "buySell"
+//        }
+//    }
 }

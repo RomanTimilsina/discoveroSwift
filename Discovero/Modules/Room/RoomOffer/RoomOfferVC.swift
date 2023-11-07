@@ -86,7 +86,6 @@ private extension RoomOfferVC {
             sheet.detents = [.custom { _ in return 220}]
             sheet.delegate = self
         }
-//        let navigationController = UINavigationController(rootViewController: addPicker)
         present(addPicker, animated: true, completion: nil)
     }
     
@@ -164,6 +163,7 @@ private extension RoomOfferVC {
     }
     
     func goToFilterPage() {
+        filterVC.filterChoice = .room
         filterVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(filterVC, animated: true)
         
