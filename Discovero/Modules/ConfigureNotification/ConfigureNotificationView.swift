@@ -36,14 +36,16 @@ class ConfigureNotificationView: UIView {
     let saveButton = DIButton(buttonTitle: "Save")
     let toggleSwitch = UISwitch()
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         toggleSwitch.isOn = false
         toggleSwitch.thumbTintColor = Color.primary
         toggleSwitch.onTintColor = Color.primary?.withAlphaComponent(0.5)
 
-        observeEvents()
         setupConstraint()
+        saveButton.setInvalidState()
+        observeEvents()
     }
     
     func setupConstraint() {
@@ -56,7 +58,6 @@ class ConfigureNotificationView: UIView {
         innerView.anchor(top: outerView.topAnchor, leading: outerView.leadingAnchor, bottom: nil, trailing: outerView.trailingAnchor, padding: .init(top: 150, left: 50, bottom: 0, right: 50))
         innerView.constraintHeight(constant: 400)
         innerView.constraintWidth(constant: 300)
-        centerInSuperview()
         innerView.backgroundColor = Color.appBlack
         innerView.layer.cornerRadius = 5
         innerView.clipsToBounds = true
@@ -120,7 +121,6 @@ class ConfigureNotificationView: UIView {
         StateButton.constraintHeight(constant: 24)
         
         saveButton.anchor(top: StateButton.bottomAnchor, leading: innerView.leadingAnchor, bottom: nil, trailing: innerView.trailingAnchor, padding: .init(top: 40, left: 12, bottom: 0, right: 12))
-
     }
     
     func observeEvents() {
@@ -135,12 +135,12 @@ class ConfigureNotificationView: UIView {
                 button.isUserInteractionEnabled = true
             }
         
-        let closeGesture = UITapGestureRecognizer(target: self, action: #selector(onClose(_:)))
+        let closeGesture = UITapGestureRecognizer(target: self, action: #selector(onClose))
         crossIcon.addGestureRecognizer(closeGesture)
         crossIcon.isUserInteractionEnabled = true
         }
 
-    @objc func onClose(_ gesture: UITapGestureRecognizer) {
+    @objc func onClose() {
             handleClose?()
         }
     

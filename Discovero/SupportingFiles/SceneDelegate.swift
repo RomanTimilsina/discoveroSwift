@@ -27,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let navController = UINavigationController(rootViewController: OnBoardingPageVC())
             window?.rootViewController = navController
         }
-//        let navController = UINavigationController(rootViewController: LocationFilterVC())
+//        let navController = UINavigationController(rootViewController: ConfigureNotificationVC())
 //        window?.rootViewController = navController
         window?.makeKeyAndVisible()
     }

@@ -11,7 +11,7 @@ class RoomView : UIView{
     
     let headerTab = DIHeaderTab()
     let bodyView = RoomBodyView()
-    
+    let notification = ConfigureNotificationView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,6 +31,9 @@ class RoomView : UIView{
         bodyView.anchor(top: headerTab.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         bodyView.layer.cornerRadius = 30
         bodyView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        
+        addSubview(notification)
+        notification.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor,padding: .init(top: 0, left: 0, bottom: 0, right: 0))
     }
 }
 
