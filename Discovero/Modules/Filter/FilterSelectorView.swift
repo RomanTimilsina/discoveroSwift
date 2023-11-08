@@ -108,11 +108,19 @@ class FilterSelectorView: UIView{
         var leftknob   = round(leftValue * 100) / 100
         var rightKnob  = round(rightValue * 100) / 100
 
-        if rightKnob < 4.9 {
-            rightKnob = 0
+        if rightKnob < 2.45 {
+            rightKnob = round(2.45 * 100) / 100
         }
-
-        priceRange.text = "$\(leftknob) to $\(rightKnob - 2.45)"
+        rightKnob = rightKnob - 2.45
+        rightKnob = round(rightKnob  * 100) / 100
+        
+//        if rightKnob < 250 {
+//            rightKnob = round(250 * 100) / 100
+//        }
+//        rightKnob = rightKnob - 250
+//        rightKnob = round(rightKnob  * 100) / 100
+        
+        priceRange.text = "$\(leftknob) to $\(rightKnob )"
         minCost = leftknob
         maxCost = rightKnob
     }
