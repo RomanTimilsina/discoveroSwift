@@ -117,9 +117,9 @@ class CreateAdsView : UIView {
     func observeEvents() {
         nextButton.addTarget(self, action: #selector(handleNextButtonTap), for: .touchUpInside)
         
-        propertyTypeLabel.propertyCoverButton.showsMenuAsPrimaryAction = true
-        propertyTypeLabel.propertyCoverButton.isEnabled = true
-        propertyTypeLabel.propertyCoverButton.menu = addInfoMenu()
+        propertyTypeLabel.coverButton.showsMenuAsPrimaryAction = true
+        propertyTypeLabel.coverButton.isEnabled = true
+        propertyTypeLabel.coverButton.menu = addInfoMenu()
     }
     
     @objc func handleNextButtonTap() {

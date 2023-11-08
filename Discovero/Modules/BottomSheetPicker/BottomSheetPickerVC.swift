@@ -115,7 +115,7 @@ extension BottomSheetPickerVC {
         let headerText = isLooking ? "Create Looking For Something Ads" : "Create Sell Something Ads"
         let label = isLooking ? " Budget Price per item" : "Price per item"
         
-        vc.currentView.JobTypeLabel.removeFromSuperview()
+        vc.currentView.jobTypeLabel.removeFromSuperview()
         vc.currentView.coverButton.removeFromSuperview()
         
         vc.postPreview.currentView.postView.tubImage.removeFromSuperview()
