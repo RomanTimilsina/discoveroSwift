@@ -25,12 +25,10 @@ class ConfigureNotificationView: UIView {
     let NotifyConditionLabel = UILabel(text: "Notify me if someone", font: OpenSans.regular, size: 14)
     let wantsButton = CustomPopupButtons(buttonsText: "wants")
     let offerButton = CustomPopupButtons(buttonsText: "offer")
-
     let postTypeLabel = UILabel(text: "a post of type", font: OpenSans.regular, size: 14)
     let RoomButton = CustomPopupButtons(buttonsText: "Room")
     let JobButton = CustomPopupButtons(buttonsText: "Job")
     let SalesButton = CustomPopupButtons(buttonsText: "Sales")
-
     let stateLabel = UILabel(text: "In State", font: OpenSans.regular, size: 14)
     let StateButton = CustomPopupButtons(buttonsText: "New South Wales")
     let saveButton = DIButton(buttonTitle: "Save")
@@ -42,8 +40,9 @@ class ConfigureNotificationView: UIView {
         toggleSwitch.thumbTintColor = Color.primary
         toggleSwitch.onTintColor = Color.primary?.withAlphaComponent(0.5)
 
-        observeEvents()
         setupConstraint()
+        saveButton.setInvalidState()
+        observeEvents()
     }
     
     func setupConstraint() {
@@ -51,12 +50,10 @@ class ConfigureNotificationView: UIView {
         outerView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         outerView.backgroundColor = Color.appBlack?.withAlphaComponent(0.5)
         
-        
         outerView.addSubview(innerView)
         innerView.anchor(top: outerView.topAnchor, leading: outerView.leadingAnchor, bottom: nil, trailing: outerView.trailingAnchor, padding: .init(top: 150, left: 50, bottom: 0, right: 50))
         innerView.constraintHeight(constant: 400)
         innerView.constraintWidth(constant: 300)
-        centerInSuperview()
         innerView.backgroundColor = Color.appBlack
         innerView.layer.cornerRadius = 5
         innerView.clipsToBounds = true
@@ -120,7 +117,6 @@ class ConfigureNotificationView: UIView {
         StateButton.constraintHeight(constant: 24)
         
         saveButton.anchor(top: StateButton.bottomAnchor, leading: innerView.leadingAnchor, bottom: nil, trailing: innerView.trailingAnchor, padding: .init(top: 40, left: 12, bottom: 0, right: 12))
-
     }
     
     func observeEvents() {
@@ -135,12 +131,12 @@ class ConfigureNotificationView: UIView {
                 button.isUserInteractionEnabled = true
             }
         
-        let closeGesture = UITapGestureRecognizer(target: self, action: #selector(onClose(_:)))
+        let closeGesture = UITapGestureRecognizer(target: self, action: #selector(onClose))
         crossIcon.addGestureRecognizer(closeGesture)
         crossIcon.isUserInteractionEnabled = true
         }
 
-    @objc func onClose(_ gesture: UITapGestureRecognizer) {
+    @objc func onClose() {
             handleClose?()
         }
     
