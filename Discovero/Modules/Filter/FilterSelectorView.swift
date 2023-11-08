@@ -26,18 +26,20 @@ class FilterSelectorView: UIView{
     let searchButton = DIButton(buttonTitle: "Search")
     lazy var buttonStack = HorizontalStackView(arrangedSubViews: [resetButton, searchButton], spacing: 12, distribution: .fillEqually)
     let headerView = DIHeaderView(title: "", hasBack: true, hasBGColor: true)
+    let thumbImage = UIImage(systemName: "sun.max.fill")
     
     let rangeSlider: MultiSlider = {
         let rangeSlider = MultiSlider()
         rangeSlider.minimumValue = 0
-        rangeSlider.maximumValue = 5000
-        rangeSlider.value = [ 0, 5000]
+        rangeSlider.maximumValue = 5000 + 2.45
+        rangeSlider.value = [ 0, 5000 + 2.45]
         rangeSlider.isVertical = false
         rangeSlider.outerTrackColor = .lightGray
         rangeSlider.valueLabelColor = .white
         rangeSlider.valueLabelFont = .boldSystemFont(ofSize: 16)
         rangeSlider.tintColor = .white
         rangeSlider.trackWidth = 5
+        rangeSlider.keepsDistanceBetweenThumbs = false
         return rangeSlider
     }()
     
@@ -53,6 +55,8 @@ class FilterSelectorView: UIView{
         resetButton.setTitleColor(Color.appWhite, for: .normal)
         backgroundColor = Color.appBlack
         observeEvents()
+        
+//        rangeSlider.thumbImage = thumbImage
     }
     
     required init?(coder: NSCoder) {
@@ -101,10 +105,14 @@ class FilterSelectorView: UIView{
     @objc func handleMultiSliderValueChanged() {
         let leftValue  = rangeSlider.value[0]
         let rightValue = rangeSlider.value[1]
-        let leftknob   = round(leftValue * 100) / 100
-        let rightKnob  = round(rightValue * 100) / 100
-        
-        priceRange.text = "$\(leftknob) to $\(rightKnob)"
+        var leftknob   = round(leftValue * 100) / 100
+        var rightKnob  = round(rightValue * 100) / 100
+
+        if rightKnob < 4.9 {
+            rightKnob = 0
+        }
+
+        priceRange.text = "$\(leftknob) to $\(rightKnob - 2.45)"
         minCost = leftknob
         maxCost = rightKnob
     }

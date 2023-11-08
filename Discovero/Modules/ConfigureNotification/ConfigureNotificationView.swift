@@ -25,17 +25,14 @@ class ConfigureNotificationView: UIView {
     let NotifyConditionLabel = UILabel(text: "Notify me if someone", font: OpenSans.regular, size: 14)
     let wantsButton = CustomPopupButtons(buttonsText: "wants")
     let offerButton = CustomPopupButtons(buttonsText: "offer")
-
     let postTypeLabel = UILabel(text: "a post of type", font: OpenSans.regular, size: 14)
     let RoomButton = CustomPopupButtons(buttonsText: "Room")
     let JobButton = CustomPopupButtons(buttonsText: "Job")
     let SalesButton = CustomPopupButtons(buttonsText: "Sales")
-
     let stateLabel = UILabel(text: "In State", font: OpenSans.regular, size: 14)
     let StateButton = CustomPopupButtons(buttonsText: "New South Wales")
     let saveButton = DIButton(buttonTitle: "Save")
     let toggleSwitch = UISwitch()
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -52,7 +49,6 @@ class ConfigureNotificationView: UIView {
         addSubview(outerView)
         outerView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         outerView.backgroundColor = Color.appBlack?.withAlphaComponent(0.5)
-        
         
         outerView.addSubview(innerView)
         innerView.anchor(top: outerView.topAnchor, leading: outerView.leadingAnchor, bottom: nil, trailing: outerView.trailingAnchor, padding: .init(top: 150, left: 50, bottom: 0, right: 50))
