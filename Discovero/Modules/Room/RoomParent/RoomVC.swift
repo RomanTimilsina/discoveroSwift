@@ -21,6 +21,10 @@ class RoomVC : UIViewController{
         
         FireStoreDatabaseHelper().getUserDataFromDefaults()
         
+        self.currentView.bodyView.emptyStackView.isHidden = true
+//        self.currentView.headerTab.isHidden = true
+        self.currentView.notification.isHidden = false
+        
         setupChildController()
         observeViewEvents()
         
@@ -35,8 +39,7 @@ class RoomVC : UIViewController{
         roomOfferVC = RoomOfferVC()
         guard let roomOfferVC = roomOfferVC else { return }
         add(roomOfferVC, innerView: currentView.bodyView.roomOfferView)
-//        roomOfferVC.view.fillSuperview(padding: UIEdgeInsets(top: 0, left: 0, bottom: 80, right: 0))
-                roomOfferVC.view.fillSuperview()
+        roomOfferVC.view.fillSuperview()
 
 
         roomWantedVC = RoomWantedVC()
@@ -52,6 +55,14 @@ class RoomVC : UIViewController{
             self.currentView.bodyView.roomWantedView.isHidden = true
             self.currentView.bodyView.emptyStackView.isHidden = true
         }
+        
+        currentView.notification.handleClose = {[weak self] in
+            guard let self else {return}
+            currentView.notification.isHidden = true
+            self.currentView.bodyView.emptyStackView.isHidden = true
+            self.currentView.headerTab.isHidden = false
+        }
+
         
         currentView.headerTab.onWantedClicked = { [weak self] in
             guard let self else { return }

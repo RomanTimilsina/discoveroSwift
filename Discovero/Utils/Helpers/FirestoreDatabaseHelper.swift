@@ -158,18 +158,20 @@ struct FireStoreDatabaseHelper {
         }
         
         if let languageArray = filterModel.languageArray {
-            fireStoreCollection = fireStoreCollection
-                .whereField("userInfo.languagesSpeaks", arrayContainsAny: languageArray )
+            if !languageArray.isEmpty {
+                fireStoreCollection = fireStoreCollection
+                    .whereField("userInfo.languagesSpeaks", arrayContainsAny: languageArray )
+            }
         }
-        
+        //MARK: isGreaterThan should be isGreaterThanOrEqualTo
         if let minCost = filterModel.minCost{
             fireStoreCollection = fireStoreCollection
-                .whereField("price", isGreaterThanOrEqualTo: minCost)
+                .whereField("price", isGreaterThanOrEqualTo: minCost-0.1)
         }
-        
+        //MARK: isLessThan should be isLessThanOrEqualTo
         if let maxCost = filterModel.maxCost {
             fireStoreCollection = fireStoreCollection
-                .whereField("price", isLessThanOrEqualTo: maxCost)
+                .whereField("price", isLessThanOrEqualTo: maxCost+0.1)
         }
         
         if let countryName = filterModel.countryName {
@@ -295,3 +297,8 @@ struct FireStoreDatabaseHelper {
         }
     }
 }
+
+/*
+ bedroom, bathroom and parkings filter should have isGreaterThanOrEqualTo
+ proper composite index shold be made for price filter to work
+ */
