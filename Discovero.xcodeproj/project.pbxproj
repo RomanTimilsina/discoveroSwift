@@ -89,6 +89,8 @@
 		8496C4E62AEE6ED60017CC0A /* BottomSheetPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496C4E52AEE6ED60017CC0A /* BottomSheetPickerView.swift */; };
 		849B565C2AEFB66B00C91F81 /* CreateAdsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B565B2AEFB66B00C91F81 /* CreateAdsView.swift */; };
 		849B565E2AEFB68500C91F81 /* CreateAdsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B565D2AEFB68500C91F81 /* CreateAdsVC.swift */; };
+		849E4D752AFB5DB10061D84D /* SelectGenderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E4D742AFB5DB10061D84D /* SelectGenderVC.swift */; };
+		849E4D772AFB5DBE0061D84D /* SelectGenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E4D762AFB5DBE0061D84D /* SelectGenderView.swift */; };
 		84AEDBD42AF0E33F00ED121C /* PostPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AEDBD32AF0E33F00ED121C /* PostPreviewView.swift */; };
 		84AEDBD62AF0E36C00ED121C /* PostPreviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AEDBD52AF0E36C00ED121C /* PostPreviewVC.swift */; };
 		84AEDBD82AF1069100ED121C /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AEDBD72AF1069100ED121C /* PostView.swift */; };
@@ -233,6 +235,8 @@
 		8496C4E52AEE6ED60017CC0A /* BottomSheetPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetPickerView.swift; sourceTree = "<group>"; };
 		849B565B2AEFB66B00C91F81 /* CreateAdsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAdsView.swift; sourceTree = "<group>"; };
 		849B565D2AEFB68500C91F81 /* CreateAdsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAdsVC.swift; sourceTree = "<group>"; };
+		849E4D742AFB5DB10061D84D /* SelectGenderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGenderVC.swift; sourceTree = "<group>"; };
+		849E4D762AFB5DBE0061D84D /* SelectGenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGenderView.swift; sourceTree = "<group>"; };
 		84AEDBD32AF0E33F00ED121C /* PostPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPreviewView.swift; sourceTree = "<group>"; };
 		84AEDBD52AF0E36C00ED121C /* PostPreviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPreviewVC.swift; sourceTree = "<group>"; };
 		84AEDBD72AF1069100ED121C /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
@@ -361,6 +365,7 @@
 		04996CB82AA46E5E00DB618F /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				849E4D732AFB5D6E0061D84D /* SelectGender */,
 				840A6A382AFA131800FD6E25 /* Job */,
 				0499C8682AFA0D63005D5628 /* ConfigureNotification */,
 				8496C4E22AEE6E530017CC0A /* BottomSheetPicker */,
@@ -637,6 +642,15 @@
 				849B565D2AEFB68500C91F81 /* CreateAdsVC.swift */,
 			);
 			path = CreateAds;
+			sourceTree = "<group>";
+		};
+		849E4D732AFB5D6E0061D84D /* SelectGender */ = {
+			isa = PBXGroup;
+			children = (
+				849E4D742AFB5DB10061D84D /* SelectGenderVC.swift */,
+				849E4D762AFB5DBE0061D84D /* SelectGenderView.swift */,
+			);
+			path = SelectGender;
 			sourceTree = "<group>";
 		};
 		84AEDBD22AF0E32100ED121C /* PostPreview */ = {
@@ -922,6 +936,7 @@
 				0499C86A2AFA0D82005D5628 /* ConfigureNotificationVC.swift in Sources */,
 				049D3A922AAD8C1C004864E9 /* MyProfileView.swift in Sources */,
 				E0FE061D2AA43D1B001DBDF5 /* Validator.swift in Sources */,
+				849E4D772AFB5DBE0061D84D /* SelectGenderView.swift in Sources */,
 				8587D3452AE15FA900AED0DA /* FilterModel.swift in Sources */,
 				049CF12C2AA9AA4B00FF2F1B /* CustomSearchBar.swift in Sources */,
 				E0FE06252AA43D1B001DBDF5 /* VerticalStackView.swift in Sources */,
@@ -934,6 +949,7 @@
 				E003B8902AB311C50090EC9D /* ViewController.swift in Sources */,
 				0479542B2AC18DB2002BB17B /* NewCountryModel.swift in Sources */,
 				04B514A72AA71CDB00E99A1B /* OtpConfirmVC.swift in Sources */,
+				849E4D752AFB5DB10061D84D /* SelectGenderVC.swift in Sources */,
 				E0FE05C72AA439C1001DBDF5 /* OnBoardingPageVC.swift in Sources */,
 				049CF12F2AA9D4D000FF2F1B /* RoomOfferView.swift in Sources */,
 				840A6A3A2AFA135300FD6E25 /* JobVC.swift in Sources */,
