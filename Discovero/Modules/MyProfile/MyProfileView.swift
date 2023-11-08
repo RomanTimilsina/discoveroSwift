@@ -9,6 +9,10 @@ import UIKit
 
 class MyProfileView: UIView {
     
+    var onClickedAddress:  (() -> Void)?
+    var onClickedLanguage: (() -> Void)?
+    var onClickedGender:   (() -> Void)?
+    
     let header = DIHeaderView(title: "Account Details")
     let view = UIView()
     let scrollView = UIScrollView()
@@ -18,7 +22,8 @@ class MyProfileView: UIView {
     let emailView = DICustomProfileView(titleText: "Email Address", text: "Tap here to add email", show: true, isGrey: true)
     let phoneView = DICustomProfileView(titleText: "Phone Number", text: "+677-9851442275")
     let addressView = DICustomProfileView(titleText: "Address", text: "Frederick St,Broome", show: true)
-    let nationalityView = DICustomProfileView(titleText: "Nationality", text: "Nepali", nation: UIImage(named: "nepal"), show: true)
+    let languagesView = DICustomProfileView(titleText: "Nationality", text: "Nepali", /*nation: UIImage(named: "nepal"),*/ show: true)
+    var languageArray: [String]?
     let genderView = DICustomProfileView(titleText: "Gender", text: "Male", show: true)
     let adsView = DICustomProfileView(titleText: "My Ads", text: "", show: true)
     let favouritesView = DICustomProfileView(titleText: "My Favourites", text: "", show: true)
@@ -28,7 +33,7 @@ class MyProfileView: UIView {
     let line = UIView(color: Color.gray700)
     let logoutLabel = UILabel(text: "Logout", color: Color.primary, font: OpenSans.regular, size: 14)
     
-    lazy var formStack = VerticalStackView(arrangedSubViews: [nameView,emailView,phoneView,addressView,nationalityView,genderView,line,adsView,favouritesView,termsView,policyView,DeleteView, logoutLabel], spacing: 24, distribution: .fill)
+    lazy var formStack = VerticalStackView(arrangedSubViews: [nameView,emailView,phoneView,addressView,languagesView,genderView,line,adsView,favouritesView,termsView,policyView,DeleteView, logoutLabel], spacing: 24, distribution: .fill)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -73,7 +78,7 @@ private extension MyProfileView{
         profileArray.append(emailView)
         profileArray.append(phoneView)
         profileArray.append(addressView)
-        profileArray.append(nationalityView)
+        profileArray.append(languagesView)
         profileArray.append(genderView)
         profileArray.append(adsView)
         profileArray.append(favouritesView)

@@ -38,15 +38,6 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
         case .job : setAsJobFilter()
         case .buySell: break
         }
-        
-        
-//        if filterChoice == .job {
-//            setAsJobFilter()
-//        }
-//        
-//        if filterChoice == .room {
-//            setAsRoomFilter()
-//        }
     }
     
     func setAsJobFilter() {
@@ -212,12 +203,4 @@ enum FilterChoice {
     case room
     case job
     case buySell
-    
-//    var filter: String {
-//        switch self{
-//        case .room: return "room"
-//        case .job: return "job"
-//        case .buySell: return "buySell"
-//        }
-//    }
 }
