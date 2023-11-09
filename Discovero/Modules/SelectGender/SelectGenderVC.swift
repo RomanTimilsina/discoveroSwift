@@ -10,10 +10,13 @@ import UIKit
 class SelectGenderVC: UIViewController {
     
     var currentView = SelectGenderView()
+    var selectedGender: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
+        
+        observeViewEvents()
     }
     
     func observeViewEvents() {
@@ -22,8 +25,11 @@ class SelectGenderVC: UIViewController {
             navigationController?.popViewController(animated: true)
         }
         
-        currentView.onClickedSave = { [weak self] in
+        currentView.onClickedSave = { [weak self] selectedGender in
             guard let self else { return }
+            self.selectedGender = selectedGender
+
+            navigationController?.popViewController(animated: true)
         }
     }
     

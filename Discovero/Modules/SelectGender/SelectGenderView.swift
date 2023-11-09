@@ -9,7 +9,7 @@ import UIKit
 
 class SelectGenderView: UIView {
     
-    var onClickedSave: (() -> Void)?
+    var onClickedSave: ((String) -> Void)?
     
     let headerView = DIHeaderView(title: "Choose Gender", hasBack: true, hasBGColor: true)
     let title = UILabel(text: "Whats your gender? ", font: OpenSans.semiBold, size: 16)
@@ -106,7 +106,17 @@ class SelectGenderView: UIView {
     }
     
     @objc func handleSaveTap() {
-        onClickedSave?()
+        if maleButton.isSelected == true {
+            onClickedSave?("Male")
+        }
+        
+        if femaleButton.isSelected == true {
+            onClickedSave?("Female")
+        }
+        
+        if otherButton.isSelected == true {
+            onClickedSave?("Other")
+        }
     }
     
     func updateButtonAppearance(_ button: UIButton) {

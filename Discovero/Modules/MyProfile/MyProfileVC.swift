@@ -13,12 +13,19 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
     
     let languagePicker = DIPickerVC()
     var languageManager = LanguageManager()
-    
+    let selectGender = SelectGenderVC()
+
     let value1 = ["name", "email"]
     let value2 = ["Your name", "Your email" ]
     
     var selectedLanguageArray: [String] = []
     var selectedLanguage: String?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        currentView.genderView.subTitle.text = selectGender.selectedGender
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +35,6 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
         observeViewEvents()
         setLanguage()
         languagePicker.languageModel = languageManager.getData()
-
     }
     
     func observeViewEvents() {
@@ -52,7 +58,20 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
         
         currentView.genderView.profileTap = { [weak self] text in
             guard let self else { return }
-            navigationController?.pushViewController(SelectGenderVC(), animated: true)
+            
+            navigationController?.pushViewController(selectGender, animated: true)
+        }
+        
+        currentView.notificationView.profileTap = { [weak self] text in
+            guard let self else { return }
+
+            currentView.notification.isHidden = false
+        }
+        
+        currentView.notification.handleClose = { [weak self] in
+            guard let self else { return }
+
+            currentView.notification.isHidden = true
         }
     }
     
