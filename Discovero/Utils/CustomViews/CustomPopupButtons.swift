@@ -47,7 +47,6 @@ class CustomPopupButtons: UIView {
     
     func toggle() {
             activated = !activated
-        
 //            ticked = !ticked
             updateButtonAppearance()
         }

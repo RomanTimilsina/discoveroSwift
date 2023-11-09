@@ -58,7 +58,8 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
         
         currentView.genderView.profileTap = { [weak self] text in
             guard let self else { return }
-            
+            selectGender.hidesBottomBarWhenPushed = true
+
             navigationController?.pushViewController(selectGender, animated: true)
         }
         
