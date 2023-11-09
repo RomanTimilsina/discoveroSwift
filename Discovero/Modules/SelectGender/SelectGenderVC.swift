@@ -14,6 +14,7 @@ class SelectGenderVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
+        observeViewEvents()
     }
     
     func observeViewEvents() {
@@ -24,7 +25,14 @@ class SelectGenderVC: UIViewController {
         
         currentView.onClickedSave = { [weak self] in
             guard let self else { return }
+            getdata()
         }
+    }
+    
+    func getdata() {
+        let profileVC = MyProfileVC()
+//        profileVC.currentView.genderView.text = 
+        navigationController?.popViewController(animated: true)
     }
     
     override func loadView() {

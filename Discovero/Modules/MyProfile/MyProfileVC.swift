@@ -20,6 +20,9 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
     var selectedLanguageArray: [String] = []
     var selectedLanguage: String?
     
+    let profileItem = ProfileItemVC()
+    var usersData: UserData?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,7 +45,7 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
         
         currentView.addressView.profileTap = { [weak self] text in
             guard let self else { return }
-            navigationController?.pushViewController(LocationFilterVC(), animated: true)
+            gotoLocationFilterVC()
         }
         
         currentView.languagesView.profileTap = { [weak self] text in
@@ -53,6 +56,15 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
         currentView.genderView.profileTap = { [weak self] text in
             guard let self else { return }
             navigationController?.pushViewController(SelectGenderVC(), animated: true)
+        }
+        
+        profileItem.sendDataBack = { [weak self] text in
+            guard let self else { return }
+            if profileItem.currentView.emailTextField.titleLabel.text == "What's your name"{
+                currentView.nameView.subTitle.text = text
+            } else if profileItem.currentView.emailTextField.titleLabel.text == "What's your email"{
+                currentView.emailView.subTitle.text = text
+            }
         }
     }
     
@@ -67,23 +79,20 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
     }
 
     
-//    func gotoLocationFilterVC() {
-//        let locationFilterVC = LocationFilterVC()
-//        locationFilterVC.userData = usersData
-//        
-//        locationFilterVC.currentView.streetNameView.removeFromSuperview()
-//        locationFilterVC.currentView.streetNumView.removeFromSuperview()
-//        locationFilterVC.currentView.buldingNumView.removeFromSuperview()
-//    
-//        navigationController?.pushViewController(locationFilterVC, animated: true)
-//        
-//        locationFilterVC.onSaveClick = { [weak self] country, state, suburb in
-//            guard let self else { return }
-//            currentView.locationLabel.subTitle.text = "\(country ?? ""), \(state ?? "")"
-//            currentView.countryName = country
-//            currentView.stateName = state
-//        }
-//    }
+    func gotoLocationFilterVC() {
+        let locationFilterVC = LocationFilterVC()
+        locationFilterVC.userData = usersData
+        
+        navigationController?.pushViewController(locationFilterVC, animated: true)
+        
+        locationFilterVC.onSaveClick = { [weak self] country, state, suburb in
+            guard let self else { return }
+            currentView.addressView.subTitle.text = "\(country ?? ""), \(state ?? ""), \(suburb ?? "")"
+            currentView.countryName = country
+            currentView.stateName = state
+            currentView.suburbName = suburb
+        }
+    }
     
     func openLanguagePicker() {
                 
@@ -125,8 +134,7 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
     }
     
     func setProfileTab(index: Int) {
-        let profileItem = ProfileItemVC()
-        
+        currentView.nameView.subTitle.text = profileItem.currentView.emailTextField.textField.text
         if index < 2{
             profileItem.onTitle = value1[index]
             profileItem.onPlaceholder = value2[index]

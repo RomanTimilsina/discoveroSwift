@@ -23,10 +23,18 @@ class DIPickerVC: UIViewController {
 //    var savedata = [String]()
     var savedLanguageData = [String]()
     
+    
     // MARK: used for registrationflow
     var isRegistration: Bool = false
     lazy var languageArray: [String] = []
     lazy var countLanguageSelected = languageArray.count
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        debugPrint(savedLanguageData)
+
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +42,7 @@ class DIPickerVC: UIViewController {
         observeViewEvents()
 //        fetchDataFromDefault()
         savedLanguageData = languageArray
+        debugPrint(savedLanguageData)
         searchLanguageModel = languageModel
         searchCountryModel = countryModel
     }
@@ -127,6 +136,16 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
                     }
                     cell.countryImage.image = UIImage(systemName: "square")
                 }
+                
+                var data = savedLanguageData
+                var select = ""
+                
+                for (index, language) in data.enumerated() {
+                    data.removeAll()
+                    select += index == 0 ? "\(language)" : ", \(language)"
+                }
+                
+                currentView.languageView.subTitle.text = select
                 
                 for (index, language) in languageModel.enumerated() {
                     if let matchingLanguage = searchLanguageModel.first(where: { $0.language == language.language }) {
