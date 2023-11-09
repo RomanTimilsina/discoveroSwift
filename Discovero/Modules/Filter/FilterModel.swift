@@ -7,7 +7,7 @@
 
 import Foundation
 struct FilterModel {
-    var countryName, stateName, suburbName, propertyType: String?
+    var countryName, stateName, suburbName, propertyType ,paymentType, jobType: String?
     var noOfBedrooms, noOfBathrooms, noOfParkings: Int?
     var minCost, maxCost: Double?
     var languageArray: [String]?
@@ -16,6 +16,8 @@ struct FilterModel {
                 stateName: String? = nil,
                 suburbName: String? = nil,
                 propertyType: String? = nil,
+                paymentType: String? = nil,
+                jobType: String? = nil,
                 noOfBedrooms: Int? = nil,
                 noOfBathrooms: Int? = nil,
                 noOfParkings: Int? = nil,
@@ -26,6 +28,8 @@ struct FilterModel {
         self.stateName = stateName
         self.suburbName = suburbName
         self.propertyType = propertyType
+        self.paymentType = paymentType
+        self.jobType = jobType
         self.noOfBedrooms = noOfBedrooms
         self.noOfBathrooms = noOfBathrooms
         self.noOfParkings = noOfParkings
@@ -58,6 +62,14 @@ struct FilterModel {
         }
         
         if propertyType != nil  {
+            count += 1
+        }
+        
+        if paymentType != nil  {
+            count += 1
+        }
+        
+        if jobType != nil  {
             count += 1
         }
         

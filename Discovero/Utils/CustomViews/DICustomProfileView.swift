@@ -13,7 +13,7 @@ class DICustomProfileView: UIView {
     var onClick: (() -> Void)?
     
     let title = UILabel(text: "",color: Color.appWhite, font: OpenSans.semiBold, size: 14)
-    let propertyCoverButton = UIButton(title: "", titleColor: .clear, font: OpenSans.regular, fontSize: 1)
+    let coverButton = UIButton(title: "", titleColor: .clear, font: OpenSans.regular, fontSize: 1)
     let subTitle = UILabel(text: "",color: Color.appWhite, font: OpenSans.regular, size: 14)
     let nationImageView = UIImageView(contentMode: .scaleAspectFit, clipsToBounds: true)
     lazy var subStack = HorizontalStackView(arrangedSubViews: [subTitle, nationImageView,UIView()], spacing: 10)
@@ -75,10 +75,10 @@ class DICustomProfileView: UIView {
         lineView.anchor(top: mainStack.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 5, left: 0, bottom: 0, right: 0))
         lineView.constraintHeight(constant: 2)
         
-        addSubview(propertyCoverButton)
-        propertyCoverButton.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-        propertyCoverButton.backgroundColor = .clear
-        propertyCoverButton.isEnabled = false
+        addSubview(coverButton)
+        coverButton.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        coverButton.backgroundColor = .clear
+        coverButton.isEnabled = false
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTap))
         mainStack.addGestureRecognizer(tapGesture)

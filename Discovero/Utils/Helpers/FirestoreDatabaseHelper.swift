@@ -240,7 +240,7 @@ struct FireStoreDatabaseHelper {
                         suburb: locationSuburb ?? ""
                     )
                     
-                    let roomOffer = RoomOffer(
+                    let roomOffer = RoomOffer( 
                         id: id ?? "",
                         title: title ?? "",
                         description: description ?? "",
