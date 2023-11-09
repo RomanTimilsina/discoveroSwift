@@ -13,10 +13,12 @@ class ProfileItemVC: UIViewController  {
     var onPlaceholder: String?
     var sendDataBack: ((String) -> Void)?
     let currentView = ProfileItemView(title: "", placeholder: "")
-    
+    var isItEmail: Bool?
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        checkAndUpdateSaveButtonState()
+
         currentView.emailTextField.titleLabel.text = "What's your \(onTitle ?? "")"
         currentView.emailTextField.textField.placeholder = onPlaceholder ?? ""
         currentView.emailTextField.textField.text = ""
@@ -26,7 +28,6 @@ class ProfileItemVC: UIViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
-        checkAndUpdateSaveButtonState()
         observeViewEvents()
     }
     
@@ -40,15 +41,11 @@ class ProfileItemVC: UIViewController  {
             navigationController?.popViewController(animated: true)
         }
         
-        currentView.onClickedSave = { [weak self] in
+        currentView.onClickedSave = { [weak self] text in
             guard let self else { return }
-            gotoPreviousVC()
+            sendDataBack?(text)
+            navigationController?.popViewController(animated: true)
         }
-    }
-    
-    func gotoPreviousVC() {
-        sendDataBack?(currentView.emailTextField.textField.text ?? "")
-        navigationController?.popViewController(animated: true)
     }
     
     private func checkAndUpdateSaveButtonState() {

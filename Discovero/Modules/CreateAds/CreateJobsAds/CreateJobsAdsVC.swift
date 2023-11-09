@@ -69,7 +69,7 @@ class CreateJobsAdsVC: UIViewController {
                   }
                   alertController.addAction(action)
                   present(alertController, animated: true, completion: nil)
-              case .allfieldfill:
+              case .allFieldFill:
                   navigationController?.pushViewController(postPreview, animated: true)
               }
 
@@ -141,7 +141,7 @@ enum checkValidationBuyAndSell{
     case country
     case state
     case productType
-    case allfieldfill
+    case allFieldFill
     
     var errorMessages: String {
         switch self {
@@ -151,7 +151,7 @@ enum checkValidationBuyAndSell{
         case .country: return "Country can't be empty"
         case .state: return "States can't be empty"
         case .productType: return "Choose Product type"
-        case .allfieldfill: return ""
+        case .allFieldFill: return ""
         }
     }
     
@@ -163,7 +163,7 @@ enum checkValidationBuyAndSell{
         case country.isEmpty: self = .country
         case state.isEmpty: self = .state
         case productType == AppConstants.tapToChoose : self = .productType
-        default: self = .allfieldfill
+        default: self = .allFieldFill
         }
     }
 }

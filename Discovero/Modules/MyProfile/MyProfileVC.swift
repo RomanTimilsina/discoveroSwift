@@ -20,6 +20,8 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
     var selectedLanguageArray: [String] = []
     var selectedLanguage: String?
     
+    let locationFilterVC = LocationFilterVC()
+
     let profileItem = ProfileItemVC()
     var usersData: UserData?
     
@@ -58,15 +60,7 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
             navigationController?.pushViewController(SelectGenderVC(), animated: true)
         }
         
-        profileItem.sendDataBack = { [weak self] data in
-            guard let self else { return }
-            
-            if profileItem.currentView.emailTextField.titleLabel.text == "What's your name"{
-                currentView.nameView.subTitle.text = data
-            } else if profileItem.currentView.emailTextField.titleLabel.text == "What's your email"{
-                currentView.emailView.subTitle.text = data
-            }
-        }
+
     }
     
     private func setLanguage() {
@@ -81,9 +75,8 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
     
     
     func gotoLocationFilterVC() {
-        let locationFilterVC = LocationFilterVC()
         locationFilterVC.userData = usersData
-        
+        locationFilterVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(locationFilterVC, animated: true)
         
         locationFilterVC.onSaveClick = { [weak self] country, state, suburb in
@@ -135,8 +128,21 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
     }
     
     func setProfileTab(index: Int) {
+        let profileItem = ProfileItemVC()
+
+        profileItem.sendDataBack = { [weak self] data in
+            guard let self else { return }
+            
+            if !(profileItem.isItEmail ?? true) {
+                currentView.nameView.subTitle.text = data
+            } else if profileItem.currentView.emailTextField.titleLabel.text == "What's your email"{
+                currentView.emailView.subTitle.text = data
+            }
+        }
         
         if index < 2{
+            profileItem.isItEmail = index == 1
+
             profileItem.onTitle = value1[index]
             profileItem.onPlaceholder = value2[index]
             navigationController?.pushViewController(profileItem, animated: true)
@@ -149,3 +155,4 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
         view = currentView
     }
 }
+

@@ -41,15 +41,15 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
     }
     
     func setAsJobFilter() {
-            currentView.bedroomSelector.removeFromSuperview()
-            currentView.bathroomSelector.removeFromSuperview()
-            currentView.parkingSelector.removeFromSuperview()
-            currentView.propertyTypeLabel.removeFromSuperview()
+        currentView.bedroomSelector.removeFromSuperview()
+        currentView.bathroomSelector.removeFromSuperview()
+        currentView.parkingSelector.removeFromSuperview()
+        currentView.propertyTypeLabel.removeFromSuperview()
     }
     
     func setAsRoomFilter() {
-            currentView.paymentTypeLabel.removeFromSuperview()
-            currentView.jobTypeLabel.removeFromSuperview()
+        currentView.paymentTypeLabel.removeFromSuperview()
+        currentView.jobTypeLabel.removeFromSuperview()
     }
     
     override func loadView() {
@@ -75,7 +75,7 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
         currentView.minCost = nil
         currentView.languageArray = usersData?.languages
     }
-
+    
     
     func observeViewEvents() {
         currentView.headerView.onClose = { [weak self] in
@@ -112,7 +112,7 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
         locationFilterVC.currentView.streetNameView.removeFromSuperview()
         locationFilterVC.currentView.streetNumView.removeFromSuperview()
         locationFilterVC.currentView.buldingNumView.removeFromSuperview()
-    
+        
         navigationController?.pushViewController(locationFilterVC, animated: true)
         
         locationFilterVC.onSaveClick = { [weak self] country, state, suburb in
@@ -138,6 +138,8 @@ private extension FilterSelectorVC{
         
         languagePicker.isRegistration = true
         languagePicker.currentView.searchBar.textFieldAttribute(placeholderText: "Search for Language", placeholderHeight: 14)
+        languagePicker.currentView.languageView.isHidden = true
+        languagePicker.currentView.languageView.constraintHeight(constant: 0)
         present(languagePicker, animated: true)
         
         languagePicker.sendSavedData = { [weak self] selectedLanguages in
@@ -178,13 +180,13 @@ extension FilterSelectorVC {
 //MARK: - Fetch Data
 private extension FilterSelectorVC {
     private func fetchUserData() {
-//        FireStoreDatabaseHelper().getUserDataFromDefaults { [weak self] userData in
-//            guard let self, let userData else { return }
-////            usersData = userData
-//        }
-
+        //        FireStoreDatabaseHelper().getUserDataFromDefaults { [weak self] userData in
+        //            guard let self, let userData else { return }
+        ////            usersData = userData
+        //        }
+        
         usersData = CurrentUser.user.data
-
+        
         setLanguage()
     }
     

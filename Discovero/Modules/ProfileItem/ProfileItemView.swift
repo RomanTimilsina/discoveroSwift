@@ -10,7 +10,7 @@ import UIKit
 class ProfileItemView: UIView {
     
     var onClickedText: ((String) -> Void)?
-    var onClickedSave: (() -> Void)?
+    var onClickedSave: ((String) -> Void)?
     
     let header = DIHeaderView(title: "Update Account Details", hasBack: false)
     let view = UIView()
@@ -49,7 +49,7 @@ class ProfileItemView: UIView {
     }
     
     @objc func handleSaveTap(){
-        onClickedSave?()
+        onClickedSave?(emailTextField.textField.text ?? "")
     }
     
     @objc func textEntered(_ textField: UITextField) {

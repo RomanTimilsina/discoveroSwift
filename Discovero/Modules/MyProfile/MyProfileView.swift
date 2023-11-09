@@ -19,7 +19,7 @@ class MyProfileView: UIView {
     var profileArray = [DICustomProfileView]()
     let noAvatarImage = UIImageView(image: UIImage(named: "noAvatarImage"),contentMode: .scaleAspectFit, clipsToBounds: true)
     var nameView = DICustomProfileView(titleText: "Full Name", text: "Ankit Chaudhary", show: true)
-    let emailView = DICustomProfileView(titleText: "Email Address", text: "Tap here to add email", show: true, isGrey: true)
+    let emailView = DICustomProfileView(titleText: "Email Address", text: "Tap here to add email", show: true, isGrey: false)
     let phoneView = DICustomProfileView(titleText: "Phone Number", text: "+677-9851442275")
     let addressView = DICustomProfileView(titleText: "Address", text: "Frederick St,Broome", show: true)
     let languagesView = DICustomProfileView(titleText: "Languages", text: "Nepali", /*nation: UIImage(named: "nepal"),*/ show: true)
