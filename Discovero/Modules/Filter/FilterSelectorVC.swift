@@ -178,12 +178,12 @@ extension FilterSelectorVC {
 //MARK: - Fetch Data
 private extension FilterSelectorVC {
     private func fetchUserData() {
-        //        FireStoreDatabaseHelper().getUserDataFromDefaults { [weak self] userData in
-        //            guard let self, let userData else { return }
-        ////            usersData = userData
-        //        }
+                FireStoreDatabaseHelper().getUserDataFromDefaults { [weak self] userData in
+                    guard let self, let userData else { return }
+                    usersData = userData
+                }
         
-        usersData = CurrentUser.user.data
+//        usersData = CurrentUser.user.data
         
         setLanguage()
     }

@@ -84,9 +84,13 @@ private extension JobOfferVC {
     }
     
     func getUsersDataFromDefaults() {
-        let users = CurrentUser.user.data
-        fetchJobOfferedData(filterModel: FilterModel(countryName: users?.country, stateName: users?.locationDetail.state))
+//        let users = CurrentUser.user.data
+            func getUsersDataFromDefaults() {
+                FireStoreDatabaseHelper().getUserDataFromDefaults { [weak self] userData in
+                    guard let self, let userData else { return }
 
+                    fetchJobOfferedData(filterModel: FilterModel(countryName: userData.country, stateName: userData.locationDetail.state))                }
+            }
     }
     
     func fetchJobOfferedData(filterModel: FilterModel) {

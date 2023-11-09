@@ -37,7 +37,6 @@ class DIPickerVC: UIViewController {
         searchLanguageModel = languageModel
         searchCountryModel = countryModel
     }
-    
 
     override func loadView() {
         view = currentView
