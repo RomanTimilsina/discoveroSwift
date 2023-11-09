@@ -30,6 +30,7 @@ class JobView : UIView{
         bodyView.anchor(top: headerTab.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         bodyView.layer.cornerRadius = 30
         bodyView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        
     }
 }
 
@@ -54,11 +55,12 @@ class JobBodyView: UIView {
         emptyStackView.centerInSuperview()
         emptyStackView.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 0, right: 12))
 
-        addSubview(jobOfferView)
-        jobOfferView.anchor(top: topAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
-        
         addSubview(jobWantedView)
-        jobWantedView.anchor(top: topAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
+        jobWantedView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 0, bottom: 20, right: 0))
+        
+        addSubview(jobOfferView)
+        jobOfferView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 0, bottom: 20, right: 0))
+//        roomOfferView.isHidden = true
     }
         
     required init?(coder: NSCoder) {
