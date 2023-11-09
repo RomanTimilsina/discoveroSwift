@@ -21,7 +21,7 @@ class DIPickerView: UIView {
     let nextButton = UIButton(title: "Next", titleColor: Color.appWhite, font: OpenSans.bold, fontSize: 14)
     let lineView = UIView()
     let languageView = DICustomProfileView(titleText: "Languages you speak", text: "")
-
+    
     lazy var searchBar = CustomSearchBar(placeholder: "" ,isFilterEnable: false)
     let alert = UIAlertController(title: "Alert Title", message: "Can't select more than 3 languages", preferredStyle: .alert)
     
@@ -79,7 +79,7 @@ class DIPickerView: UIView {
         searchBar.onSearchEdit = { [weak self] searchText in
             self?.onSearchEdit?(searchText)
         }
-
+        
         let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
             debugPrint("OK button tapped")
         }

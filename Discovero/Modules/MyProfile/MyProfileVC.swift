@@ -31,7 +31,7 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
         observeViewEvents()
         setLanguage()
         languagePicker.languageModel = languageManager.getData()
-
+        
     }
     
     func observeViewEvents() {
@@ -58,12 +58,13 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
             navigationController?.pushViewController(SelectGenderVC(), animated: true)
         }
         
-        profileItem.sendDataBack = { [weak self] text in
+        profileItem.sendDataBack = { [weak self] data in
             guard let self else { return }
+            
             if profileItem.currentView.emailTextField.titleLabel.text == "What's your name"{
-                currentView.nameView.subTitle.text = text
+                currentView.nameView.subTitle.text = data
             } else if profileItem.currentView.emailTextField.titleLabel.text == "What's your email"{
-                currentView.emailView.subTitle.text = text
+                currentView.emailView.subTitle.text = data
             }
         }
     }
@@ -77,7 +78,7 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
             languageManager.setData(language: language, isSelected: selectedLanguageArray.contains(language))
         }
     }
-
+    
     
     func gotoLocationFilterVC() {
         let locationFilterVC = LocationFilterVC()
@@ -95,7 +96,7 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
     }
     
     func openLanguagePicker() {
-                
+        
         languagePicker.modalPresentationStyle = .fullScreen
         if let sheet = languagePicker.sheetPresentationController {
             sheet.prefersGrabberVisible = true
@@ -134,7 +135,7 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
     }
     
     func setProfileTab(index: Int) {
-        currentView.nameView.subTitle.text = profileItem.currentView.emailTextField.textField.text
+        
         if index < 2{
             profileItem.onTitle = value1[index]
             profileItem.onPlaceholder = value2[index]

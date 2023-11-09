@@ -47,11 +47,8 @@ class ProfileItemVC: UIViewController  {
     }
     
     func gotoPreviousVC() {
-//        let profileView = MyProfileView()
-//        profileView.nameView.subTitle.text = currentView.emailTextField.textField.text
         sendDataBack?(currentView.emailTextField.textField.text ?? "")
         navigationController?.popViewController(animated: true)
-
     }
     
     private func checkAndUpdateSaveButtonState() {
