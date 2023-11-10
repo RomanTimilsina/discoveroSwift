@@ -122,7 +122,7 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
         var text = ""
         
         for (index, item) in stringArray.enumerated() {
-            text += "\(item == "" || index != 0 ? ", " : "")\(item)"
+            text += "\(item == "" || index == 0 ? "" : ", ") \(item)"
         }
         
         return text
