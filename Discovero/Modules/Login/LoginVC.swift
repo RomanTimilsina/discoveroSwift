@@ -63,7 +63,7 @@ class LoginVC: UIViewController {
             gotoOTPConfirmV(isFromLogin: isFromLogin ?? false, phoneNum: phoneNum)
         }
         
-        countryPicker.onClosePicker = { [weak self] in
+        countryPicker.onClosePicker = { [weak self] in 
             guard let self else { return }
             dismiss(animated: true, completion: nil)
         }
@@ -156,6 +156,8 @@ extension LoginVC: UISheetPresentationControllerDelegate {
             sheet.delegate = self
         }
         countryPicker.currentView.searchBar.textFieldAttribute(placeholderText: "Search for Nation", placeholderHeight: 14)
+        countryPicker.currentView.languageView.isHidden = true
+        countryPicker.currentView.languageView.constraintHeight(constant: 0)
         present(countryPicker, animated: true)
     }
 }

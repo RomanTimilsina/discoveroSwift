@@ -37,7 +37,7 @@ class LocationFilterVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        currentView.tableView.reloadData()
+//        currentView.tableView.reloadData()
         currentView.tableView.canCancelContentTouches = false
     }
     
@@ -54,14 +54,16 @@ class LocationFilterVC: UIViewController {
         currentView.countryView.subTitle.text = userData?.country
         currentView.stateView.subTitle.text = userData?.locationDetail.state
         currentView.saveButton.setInvalidState()
-        countryPicker.countryModel = countryManager.getData()
+//        countryPicker.countryModel = countryManager.getData()
         
         observeViewEvents()
+        setupNewCountryModel()
     }
     
     func countriesAndState() {
         firestore.getCountryWithState() { [weak self] countriesAndStates in
             guard let self else { return }
+            countryList.removeAll()
             for countryAndStates in countriesAndStates {
                 for (index,_) in countries.enumerated() {
                     if countries[index].name == countryAndStates.name {
@@ -75,6 +77,25 @@ class LocationFilterVC: UIViewController {
                                 selectedCountryName = userData?.country ?? ""
                             }
                             setState(countryName: selectedCountryName)
+//                                newCountryModel.setData(name: countries[index].name, dialCode: countries[index].dialCode, code: countries[index].code, imageName: countries[index].code)
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func setupNewCountryModel() {
+        
+        firestore.getCountryWithState () { [weak self] countryAndStates in
+            guard let self else { return }
+
+            for country in countryAndStates {
+                for (index,_) in countries.enumerated() {
+                    if countries[index].name == country.name {
+                        let name = countries[index].code.lowercased()
+                        if UIImage(named: name) != nil {
                             newCountryModel.setData(name: countries[index].name, dialCode: countries[index].dialCode, code: countries[index].code, imageName: countries[index].code)
                         }
                     }
@@ -229,13 +250,14 @@ extension LocationFilterVC: UITextFieldDelegate {
 extension LocationFilterVC: UISheetPresentationControllerDelegate {
     func openCountryPicker() {
         countryPicker.modalPresentationStyle = .fullScreen
-        countryPicker.countryModel = newCountryModel.getData()
         if let sheet = countryPicker.sheetPresentationController {
             sheet.prefersGrabberVisible = true
             sheet.preferredCornerRadius = 30
             sheet.detents = [.large()]
             sheet.delegate = self
         }
+        countryPicker.countryModel = newCountryModel.getData()
+
         countryPicker.currentView.searchBar.textFieldAttribute(placeholderText: "Search for Nation", placeholderHeight: 14)
         countryPicker.currentView.languageView.isHidden = true
         countryPicker.currentView.languageView.constraintHeight(constant: 0)
