@@ -25,7 +25,7 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-                
+        
         currentView.genderView.subTitle.text = selectGender?.selectedGender
         selectGender = nil
     }
@@ -64,6 +64,11 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
             gotoGenderVC()
         }
         
+        currentView.onClickedLogOut = { [weak self] in
+            guard let self else { return }
+            logOutUser()
+        }
+        
         currentView.notificationView.profileTap = { [weak self] text in
             guard let self else { return }
             
@@ -95,23 +100,23 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
     }
     
     
-//        func gotoLocationFilterVC() {
-//            let locationFilterVC = LocationFilterVC()
-//            locationFilterVC.userData = usersData
-//    
-//            locationFilterVC.currentView.streetNameView.removeFromSuperview()
-//            locationFilterVC.currentView.streetNumView.removeFromSuperview()
-//            locationFilterVC.currentView.buldingNumView.removeFromSuperview()
-//    
-//            navigationController?.pushViewController(locationFilterVC, animated: true)
-//    
-//            locationFilterVC.onSaveClick = { [weak self] country, state, suburb in
-//                guard let self else { return }
-//                currentView.locationLabel.subTitle.text = "\(country ?? ""), \(state ?? "")"
-//                currentView.countryName = country
-//                currentView.stateName = state
-//            }
-//        }
+    //        func gotoLocationFilterVC() {
+    //            let locationFilterVC = LocationFilterVC()
+    //            locationFilterVC.userData = usersData
+    //
+    //            locationFilterVC.currentView.streetNameView.removeFromSuperview()
+    //            locationFilterVC.currentView.streetNumView.removeFromSuperview()
+    //            locationFilterVC.currentView.buldingNumView.removeFromSuperview()
+    //
+    //            navigationController?.pushViewController(locationFilterVC, animated: true)
+    //
+    //            locationFilterVC.onSaveClick = { [weak self] country, state, suburb in
+    //                guard let self else { return }
+    //                currentView.locationLabel.subTitle.text = "\(country ?? ""), \(state ?? "")"
+    //                currentView.countryName = country
+    //                currentView.stateName = state
+    //            }
+    //        }
     
     func openLanguagePicker() {
         
