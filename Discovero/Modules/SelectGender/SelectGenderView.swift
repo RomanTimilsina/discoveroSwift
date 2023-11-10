@@ -9,7 +9,7 @@ import UIKit
 
 class SelectGenderView: UIView {
     
-    var onClickedSave: ((Gender) -> Void)?
+    var onClickedSave: ((String) -> Void)?
     
     let headerView = DIHeaderView(title: "Choose Gender", hasBack: true, hasBGColor: true)
     let title = UILabel(text: "Whats your gender? ", font: OpenSans.semiBold, size: 16)
@@ -61,6 +61,7 @@ class SelectGenderView: UIView {
         super.init(frame: frame)
         backgroundColor = Color.appBlack
         
+        saveButton.setInvalidState()
         setupConstraints()
         observeEvents()
     }
@@ -97,7 +98,11 @@ class SelectGenderView: UIView {
         maleButton.isSelected = false
         femaleButton.isSelected = false
         otherButton.isSelected = false
-    
+        saveButton.setValidState()
+
+        if sender.isSelected {
+            saveButton.setValidState()
+        }
         sender.isSelected = true
         debugPrint(sender)
         updateButtonAppearance(maleButton)
@@ -107,13 +112,13 @@ class SelectGenderView: UIView {
     
     @objc func handleSaveTap() {
         if maleButton.isSelected == true {
-            onClickedSave?(Gender.Male)
+            onClickedSave?(Gender.Male.title)
         } else if  femaleButton.isSelected == true {
-            onClickedSave?(Gender.Female)
+            onClickedSave?(Gender.Female.title)
         } else if otherButton.isSelected == true {
-            onClickedSave?(Gender.Other)
+            onClickedSave?(Gender.Other.title)
         } else {
-            onClickedSave?(Gender.Error)
+            onClickedSave?(Gender.Error.title)
         }
     }
     
@@ -122,6 +127,22 @@ class SelectGenderView: UIView {
             button.setImage(UIImage(named: "onButton"), for: .normal) // Use a selected state image
         } else {
             button.setImage(UIImage(named: "offButton"), for: .normal) // Use an unselected state image
+        }
+    }
+}
+
+enum Gender {
+    case Male
+    case Female
+    case Other
+    case Error
+    
+    var title: String {
+        switch self {
+        case .Male: return "Male"
+        case .Female: return "Female"
+        case .Other: return "Other"
+        case .Error: return "You haven't selected your gender"
         }
     }
 }

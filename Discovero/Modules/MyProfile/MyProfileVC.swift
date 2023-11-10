@@ -13,18 +13,21 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
     
     let languagePicker = DIPickerVC()
     var languageManager = LanguageManager()
-    let selectGender = SelectGenderVC()
-
+    
     let value1 = ["name", "email"]
     let value2 = ["Your name", "Your email" ]
     
     var selectedLanguageArray: [String] = []
     var selectedLanguage: String?
+    var texts: String?
+    var selectGender: SelectGenderVC?
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        currentView.genderView.subTitle.text = selectGender.selectedGender
+                
+        currentView.genderView.subTitle.text = selectGender?.selectedGender
+        selectGender = nil
     }
     
     override func viewDidLoad() {
@@ -58,22 +61,27 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
         
         currentView.genderView.profileTap = { [weak self] text in
             guard let self else { return }
-            selectGender.hidesBottomBarWhenPushed = true
-
-            navigationController?.pushViewController(selectGender, animated: true)
+            gotoGenderVC()
         }
         
         currentView.notificationView.profileTap = { [weak self] text in
             guard let self else { return }
-
+            
             currentView.notification.isHidden = false
         }
         
         currentView.notification.handleClose = { [weak self] in
             guard let self else { return }
-
+            
             currentView.notification.isHidden = true
         }
+    }
+    
+    private func gotoGenderVC() {
+        selectGender = SelectGenderVC()
+        
+        guard let selectGender else { return }
+        navigationController?.pushViewController(selectGender, animated: true)
     }
     
     private func setLanguage() {
@@ -85,28 +93,28 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
             languageManager.setData(language: language, isSelected: selectedLanguageArray.contains(language))
         }
     }
-
     
-//    func gotoLocationFilterVC() {
-//        let locationFilterVC = LocationFilterVC()
-//        locationFilterVC.userData = usersData
-//        
-//        locationFilterVC.currentView.streetNameView.removeFromSuperview()
-//        locationFilterVC.currentView.streetNumView.removeFromSuperview()
-//        locationFilterVC.currentView.buldingNumView.removeFromSuperview()
-//    
-//        navigationController?.pushViewController(locationFilterVC, animated: true)
-//        
-//        locationFilterVC.onSaveClick = { [weak self] country, state, suburb in
-//            guard let self else { return }
-//            currentView.locationLabel.subTitle.text = "\(country ?? ""), \(state ?? "")"
-//            currentView.countryName = country
-//            currentView.stateName = state
-//        }
-//    }
+    
+    //    func gotoLocationFilterVC() {
+    //        let locationFilterVC = LocationFilterVC()
+    //        locationFilterVC.userData = usersData
+    //
+    //        locationFilterVC.currentView.streetNameView.removeFromSuperview()
+    //        locationFilterVC.currentView.streetNumView.removeFromSuperview()
+    //        locationFilterVC.currentView.buldingNumView.removeFromSuperview()
+    //
+    //        navigationController?.pushViewController(locationFilterVC, animated: true)
+    //
+    //        locationFilterVC.onSaveClick = { [weak self] country, state, suburb in
+    //            guard let self else { return }
+    //            currentView.locationLabel.subTitle.text = "\(country ?? ""), \(state ?? "")"
+    //            currentView.countryName = country
+    //            currentView.stateName = state
+    //        }
+    //    }
     
     func openLanguagePicker() {
-                
+        
         languagePicker.modalPresentationStyle = .fullScreen
         if let sheet = languagePicker.sheetPresentationController {
             sheet.prefersGrabberVisible = true

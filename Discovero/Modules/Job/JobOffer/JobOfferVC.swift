@@ -84,13 +84,13 @@ private extension JobOfferVC {
     }
     
     func getUsersDataFromDefaults() {
-//        let users = CurrentUser.user.data
-            func getUsersDataFromDefaults() {
-                FireStoreDatabaseHelper().getUserDataFromDefaults { [weak self] userData in
-                    guard let self, let userData else { return }
-
-                    fetchJobOfferedData(filterModel: FilterModel(countryName: userData.country, stateName: userData.locationDetail.state))                }
-            }
+        //        let users = CurrentUser.user.data
+        func getUsersDataFromDefaults() {
+            FireStoreDatabaseHelper().getUserDataFromDefaults { [weak self] userData in
+                guard let self, let userData else { return }
+                
+                fetchJobOfferedData(filterModel: FilterModel(countryName: userData.country, stateName: userData.locationDetail.state))                }
+        }
     }
     
     func fetchJobOfferedData(filterModel: FilterModel) {
@@ -118,7 +118,7 @@ extension JobOfferVC: UITableViewDelegate, UITableViewDataSource  {
         
         let data = roomOffers[indexPath.row]
         cell.configureData(data: data)
- 
+        
         cell.onLikeClicked = { [weak self] in
             guard let self else { return}
             //on like clicked
@@ -140,7 +140,7 @@ extension JobOfferVC: UITableViewDelegate, UITableViewDataSource  {
         }
         return cell
     }
-        
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 254
     }
@@ -161,7 +161,7 @@ private extension JobOfferVC {
         filterVC.onSearchClick = { [weak self] filterModel in
             guard let self else { return }
             self.jobOffers.removeAll()
-//            self.currentView.adsTable.reloadData()
+            //            self.currentView.adsTable.reloadData()
             self.showHUD()
             
             fireStore.getRoomOffered(isRoomOffer: true, filterModel: filterModel)

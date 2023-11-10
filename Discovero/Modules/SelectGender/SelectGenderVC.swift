@@ -27,20 +27,11 @@ class SelectGenderVC: UIViewController {
         
         currentView.onClickedSave = { [weak self] selectedGender in
             guard let self else { return }
-            self.selectedGender = selectedGender.title
+            self.selectedGender = selectedGender
             
-            switch selectedGender {
-            case .Error:
-                let alertController = UIAlertController(title: "Error", message: "You haven't selected your gender", preferredStyle: .alert)
-
-                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                alertController.addAction(okAction)
-
-                present(alertController, animated: true, completion: nil)
-            case .Female, .Male, .Other:
                 navigationController?.popViewController(animated: true)
 
-            }
+            
 
         }
     }
@@ -51,21 +42,3 @@ class SelectGenderVC: UIViewController {
     }
 }
 
-
-
-
-enum Gender {
-    case Male
-    case Female
-    case Other
-    case Error
-    
-    var title: String {
-        switch self {
-        case .Male: return "Male"
-        case .Female: return "Female"
-        case .Other: return "Other"
-        case .Error: return ""
-        }
-    }
-}
