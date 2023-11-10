@@ -55,7 +55,7 @@ class RegistrationVC: UIViewController {
         countryPicker.onCountryPicked = { [weak self] model in
             guard let self = self else { return }
             currentView.languagePickerTextField.textField.placeholder = ""
-            currentView.languagePickerTextField.textField.text = model.name
+            currentView.languagePickerTextField.textFieldCoverLabel.text = model.name
             currentView.languagePickerTextField.flagImageView.image = model.flagImage
             isSelected = true
             if let isSelected, let hasName {
@@ -198,10 +198,10 @@ extension RegistrationVC: UISheetPresentationControllerDelegate {
             if selectedLanguages.isEmpty == true {
                 isSelected = false
                 self.currentView.languagePickerTextField.textField.placeholder = "Tap here to choose"
-                self.currentView.languagePickerTextField.textField.text =  ""
+                self.currentView.languagePickerTextField.textFieldCoverLabel.text =  ""
             } else {
                 self.currentView.languagePickerTextField.textField.placeholder = ""
-                self.currentView.languagePickerTextField.textField.text =  self.selectedLanguage
+                self.currentView.languagePickerTextField.textFieldCoverLabel.text =  self.selectedLanguage
             }
             
             if let isSelected, let hasName {

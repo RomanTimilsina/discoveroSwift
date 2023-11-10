@@ -13,7 +13,7 @@ class RegistrationView: UIView {
     var onSignUp: ((String?) -> Void)?
     
     let headerView = DIHeaderView(title: "Registration", hasBack: false)
-    let headerBackgroundView = UIView()
+    let headerBackgroundView = UIView() 
     let smallLabel = UILabel(text: "Few more things", font: OpenSans.regular, size: 14)
     lazy var personalInfoTextField = DITextField(title: "What's your name?", placholder: "Name goes here", isPrimaryColor: false, typePad: .default, contentHeight: 68, placeholderHeight: 24)
     let languagePickerTextField = DITextField(title: "Select language you know", placholder: "Tap here to chose", isPrimaryColor: false, typePad: .default, contentHeight: 76, placeholderHeight: 24, searchLabel: "Search for language")

@@ -124,9 +124,9 @@ struct FireStoreDatabaseHelper {
             UserDefaultsHelper.setmodel(value: userData, key: .userData)
         }
     }
-    
-    func getUserDataFromDefaults() {
-        CurrentUser.user.data = UserDefaultsHelper.getModelData(.userData)
+
+    func getUserDataFromDefaults(completion: @escaping (UserData?) -> Void) {
+        completion(UserDefaultsHelper.getModelData(.userData))
     }
     
     func getRoomOffered(isRoomOffer: Bool,

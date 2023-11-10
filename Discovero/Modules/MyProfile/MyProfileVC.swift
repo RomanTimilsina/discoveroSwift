@@ -19,11 +19,16 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
     
     var selectedLanguageArray: [String] = []
     var selectedLanguage: String?
+    var texts: String?
+    var selectGender: SelectGenderVC?
     
-    let locationFilterVC = LocationFilterVC()
-
-    let profileItem = ProfileItemVC()
-    var usersData: UserData?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+                
+        currentView.genderView.subTitle.text = selectGender?.selectedGender
+        selectGender = nil
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +38,6 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
         observeViewEvents()
         setLanguage()
         languagePicker.languageModel = languageManager.getData()
-        
     }
     
     func observeViewEvents() {
@@ -47,7 +51,7 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
         
         currentView.addressView.profileTap = { [weak self] text in
             guard let self else { return }
-            gotoLocationFilterVC()
+            navigationController?.pushViewController(LocationFilterVC(), animated: true)
         }
         
         currentView.languagesView.profileTap = { [weak self] text in
@@ -57,13 +61,27 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
         
         currentView.genderView.profileTap = { [weak self] text in
             guard let self else { return }
-            navigationController?.pushViewController(SelectGenderVC(), animated: true)
+            gotoGenderVC()
         }
         
-        currentView.onClickedLogOut = { [weak self] in
+        currentView.notificationView.profileTap = { [weak self] text in
             guard let self else { return }
-            logOutUser()
+            
+            currentView.notification.isHidden = false
         }
+        
+        currentView.notification.handleClose = { [weak self] in
+            guard let self else { return }
+            
+            currentView.notification.isHidden = true
+        }
+    }
+    
+    private func gotoGenderVC() {
+        selectGender = SelectGenderVC()
+        
+        guard let selectGender else { return }
+        navigationController?.pushViewController(selectGender, animated: true)
     }
     
     private func setLanguage() {
@@ -77,19 +95,23 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
     }
     
     
-    func gotoLocationFilterVC() {
-        locationFilterVC.userData = usersData
-        locationFilterVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(locationFilterVC, animated: true)
-        
-        locationFilterVC.onSaveClick = { [weak self] country, state, suburb in
-            guard let self else { return }
-            currentView.addressView.subTitle.text = "\(country ?? ""), \(state ?? ""), \(suburb ?? "")"
-            currentView.countryName = country
-            currentView.stateName = state
-            currentView.suburbName = suburb
-        }
-    }
+//        func gotoLocationFilterVC() {
+//            let locationFilterVC = LocationFilterVC()
+//            locationFilterVC.userData = usersData
+//    
+//            locationFilterVC.currentView.streetNameView.removeFromSuperview()
+//            locationFilterVC.currentView.streetNumView.removeFromSuperview()
+//            locationFilterVC.currentView.buldingNumView.removeFromSuperview()
+//    
+//            navigationController?.pushViewController(locationFilterVC, animated: true)
+//    
+//            locationFilterVC.onSaveClick = { [weak self] country, state, suburb in
+//                guard let self else { return }
+//                currentView.locationLabel.subTitle.text = "\(country ?? ""), \(state ?? "")"
+//                currentView.countryName = country
+//                currentView.stateName = state
+//            }
+//        }
     
     func openLanguagePicker() {
         
@@ -127,26 +149,14 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
         languagePicker.onClosePicker = { [weak self] in
             guard let self = self else { return }
             dismiss(animated: true, completion: nil)
+            
         }
     }
     
     func setProfileTab(index: Int) {
         let profileItem = ProfileItemVC()
-
-        profileItem.hidesBottomBarWhenPushed = true
-        profileItem.sendDataBack = { [weak self] data in
-            guard let self else { return }
-            
-            if !(profileItem.isItEmail ?? true) {
-                currentView.nameView.subTitle.text = data
-            } else if profileItem.currentView.emailTextField.titleLabel.text == "What's your email"{
-                currentView.emailView.subTitle.text = data
-            }
-        }
         
         if index < 2{
-            profileItem.isItEmail = index == 1
-
             profileItem.onTitle = value1[index]
             profileItem.onPlaceholder = value2[index]
             navigationController?.pushViewController(profileItem, animated: true)
@@ -174,4 +184,3 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
         view = currentView
     }
 }
-

@@ -68,9 +68,12 @@ class RoomWantedVC: UIViewController, UISheetPresentationControllerDelegate{
          present(addPicker, animated: true, completion: nil)
      }
      
-    func getUsersDataFromDefaults() {
-        fetchRoomOfferedData(country: CurrentUser.user.data?.country ?? "", state: CurrentUser.user.data?.locationDetail.state ?? "")
-    }
+     func getUsersDataFromDefaults() {
+         fireStore.getUserDataFromDefaults { [weak self] userData in
+             guard let self, let userData else { return }
+             fetchRoomOfferedData(country: userData.country, state: userData.locationDetail.state)
+         }
+     }
    
     func fetchRoomOfferedData(country: String, state: String) {
         showHUD()

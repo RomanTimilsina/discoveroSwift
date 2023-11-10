@@ -11,49 +11,42 @@ class ProfileItemVC: UIViewController  {
     
     var onTitle: String?
     var onPlaceholder: String?
-    var sendDataBack: ((String) -> Void)?
-    let currentView = ProfileItemView(title: "", placeholder: "")
-    var isItEmail: Bool?
-
+    
+    let email = ProfileItemView(title: "", placeholder: "")
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        checkAndUpdateSaveButtonState()
-
-        currentView.emailTextField.titleLabel.text = "What's your \(onTitle ?? "")"
-        currentView.emailTextField.textField.placeholder = onPlaceholder ?? ""
-        currentView.emailTextField.textField.text = ""
-        currentView.emailTextField.textField.delegate = self
+        
+        email.emailTextField.titleLabel.text = "What's your \(onTitle ?? "")"
+        email.emailTextField.textField.placeholder = onPlaceholder ?? ""
+        email.emailTextField.textField.text = ""
+        email.emailTextField.textField.delegate = self
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
-        observeViewEvents()
+        checkAndUpdateSaveButtonState()
+        loginEvents()
     }
     
     override func loadView() {
-        view = currentView
+        view = email
     }
     
-    func observeViewEvents() {
-        currentView.header.onClose = { [weak self] in
-            guard let self else { return }
-            navigationController?.popViewController(animated: true)
-        }
-        
-        currentView.onClickedSave = { [weak self] text in
-            guard let self else { return }
-            sendDataBack?(text)
+    func loginEvents() {
+        email.header.onClose = { [weak self] in
+            guard let self = self else { return }
             navigationController?.popViewController(animated: true)
         }
     }
     
     private func checkAndUpdateSaveButtonState() {
-        if let text = currentView.emailTextField.textField.text {
+        if let text = email.emailTextField.textField.text {
             if text.isEmpty {
-                currentView.saveButton.setInvalidState()
+                email.saveButton.setInvalidState()
             } else {
-                currentView.saveButton.setValidState()
+                email.saveButton.setValidState()
             }
         }
     }
@@ -66,9 +59,9 @@ extension ProfileItemVC: UITextFieldDelegate {
         
         if let updatedText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) {
             if updatedText.isEmpty {
-                currentView.saveButton.setInvalidState()
+                email.saveButton.setInvalidState()
             } else {
-                currentView.saveButton.setValidState()
+                email.saveButton.setValidState()
             }
         }
         return true

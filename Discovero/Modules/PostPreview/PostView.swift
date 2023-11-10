@@ -126,9 +126,13 @@ class PostView: UIView {
 extension PostView {
     
     private func fetchUserData() {
+        func getUsersDataFromDefaults() {
+            FireStoreDatabaseHelper().getUserDataFromDefaults { [weak self] userData in
+                guard let self, let userData else { return }
 
-            usersData = CurrentUser.user.data
-
+                usersData = userData
+            }
+        }
     }
     
     func configureData(roomData: PostModel? = nil, jobData: JobModel? = nil, buyAndSellData: BuySellModel? = nil) {
