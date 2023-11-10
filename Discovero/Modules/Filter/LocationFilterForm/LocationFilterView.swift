@@ -48,6 +48,7 @@ class LocationFilterView: UIView {
         setupFilter()
         observeViewEvents()
         tableView.isHidden = true
+
     }
     
     required init?(coder: NSCoder) {
@@ -95,6 +96,10 @@ class LocationFilterView: UIView {
         buldingNumView.textField.tintColor = Color.primary
         buldingNumView.titleLabel.font = UIFont.font(with: 15, family: OpenSans.semiBold)
         buldingNumView.textField.font = UIFont.font(with: 15, family: OpenSans.semiBold)
+
+//        stateView.propertyCoverButton.isEnabled = false
+//        stateView.propertyCoverButton.isHidden = true
+
         
         addSubview(saveButton)
         saveButton.anchor(top: nil, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 12, right: 12))
@@ -147,8 +152,7 @@ class LocationFilterView: UIView {
     @objc func handleTableDisplay() {
         hideTable = !hideTable
         onTableViewClick?(hideTable)
+
     }
 }
-
-
 
