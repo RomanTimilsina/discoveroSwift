@@ -12,6 +12,7 @@ class MyProfileView: UIView {
     var onClickedAddress:  (() -> Void)?
     var onClickedLanguage: (() -> Void)?
     var onClickedGender:   (() -> Void)?
+    var onClickedLogOut:   (() -> Void)?
     
     let header = DIHeaderView(title: "Account Details")
     let view = UIView()
@@ -41,6 +42,7 @@ class MyProfileView: UIView {
         super.init(frame: frame)
         backgroundColor = .black
         setupView()
+        observeEvents()
         profileArrayAppendFunction()
     }
     
@@ -69,6 +71,16 @@ class MyProfileView: UIView {
         formStack.anchor(top: noAvatarImage.bottomAnchor, leading: leadingAnchor, bottom: scrollView.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 24, left: 12, bottom: 10, right: 24))
         
         line.constraintHeight(constant: 1)
+    }
+    
+    func observeEvents() {
+        let logOutTapGestrue = UITapGestureRecognizer(target: self , action: #selector(handleLogOutTap))
+        logoutLabel.addGestureRecognizer(logOutTapGestrue)
+        logoutLabel.isUserInteractionEnabled = true
+    }
+    
+    @objc func handleLogOutTap() {
+        onClickedLogOut?()
     }
 }
 

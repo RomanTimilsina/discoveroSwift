@@ -60,7 +60,10 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
             navigationController?.pushViewController(SelectGenderVC(), animated: true)
         }
         
-
+        currentView.onClickedLogOut = { [weak self] in
+            guard let self else { return }
+            logOutUser()
+        }
     }
     
     private func setLanguage() {
@@ -148,6 +151,21 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
             profileItem.onPlaceholder = value2[index]
             navigationController?.pushViewController(profileItem, animated: true)
         }
+    }
+    
+    func logOutUser() {
+        let logOutAlert = UIAlertController(title: "Log Out", message: "Are you sure you want to log out? ", preferredStyle: .alert)
+        let logOutaction = UIAlertAction(title: "Log Out", style: .default) { (action) in
+            let registrationVC = RegistrationVC(phoneNumber: "", userId: "")
+            registrationVC.hidesBottomBarWhenPushed = true
+            UserDefaultsHelper.removeAllData()
+            self.navigationController?.pushViewController(registrationVC, animated: true)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (action) in
+        }
+        logOutAlert.addAction(logOutaction)
+        logOutAlert.addAction(cancelAction)
+        present(logOutAlert, animated: true, completion: nil)
     }
     
     override func loadView() {
