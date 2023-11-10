@@ -33,11 +33,8 @@ class LoginView: UIView {
     
     func setupView() {
         addSubview(headerView)
-        headerView.anchor(top:safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 13, left: 0, bottom: 0, right: 0))
-        
-        addSubview(view)
-        view.anchor(top: topAnchor, leading: leadingAnchor, bottom: headerView.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0 ))
-        view.backgroundColor = Color.gray900
+        headerView.anchor(top:safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        headerView.constraintHeight(constant: 50)
         
         addSubview(getStartedLabel)
         getStartedLabel.anchor(top: headerView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 78, left: 12, bottom: 0, right: 0))

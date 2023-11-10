@@ -12,6 +12,7 @@ class MyProfileView: UIView {
     var onClickedAddress:  (() -> Void)?
     var onClickedLanguage: (() -> Void)?
     var onClickedGender:   (() -> Void)?
+    var onClickedLogOut:   (() -> Void)?
     
     let header = DIHeaderView(title: "Account Details")
     let view = UIView()
@@ -42,6 +43,7 @@ class MyProfileView: UIView {
         super.init(frame: frame)
         backgroundColor = .black
         setupView()
+        observeEvents()
         profileArrayAppendFunction()
         removeLinesFromView()
     }
@@ -81,6 +83,16 @@ class MyProfileView: UIView {
         for (index, view) in profileArray.enumerated() {
                 view.lineView.removeFromSuperview()
         }
+    }
+    
+    func observeEvents() {
+        let logOutTapGestrue = UITapGestureRecognizer(target: self , action: #selector(handleLogOutTap))
+        logoutLabel.addGestureRecognizer(logOutTapGestrue)
+        logoutLabel.isUserInteractionEnabled = true
+    }
+    
+    @objc func handleLogOutTap() {
+        onClickedLogOut?()
     }
 }
 
