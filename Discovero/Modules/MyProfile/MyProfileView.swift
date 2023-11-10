@@ -36,7 +36,7 @@ class MyProfileView: UIView {
     let logoutLabel = UILabel(text: "Logout", color: Color.primary, font: OpenSans.regular, size: 14)
     
     lazy var formStack = VerticalStackView(arrangedSubViews: [nameView,emailView,phoneView,addressView,languagesView,genderView,line,adsView,favouritesView,notificationView,termsView,policyView,DeleteView, logoutLabel], spacing: 24, distribution: .fill)
-    var countryName, stateName, suburbName: String?
+    var countryName, stateName, suburbName, streetName, streetNo, buildingNo: String?
 
     
     let notification = ConfigureNotificationView()

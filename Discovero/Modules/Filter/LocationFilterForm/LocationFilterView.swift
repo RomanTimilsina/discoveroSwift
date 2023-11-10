@@ -21,7 +21,7 @@ class LocationFilterView: UIView {
     var countriesTap: (() -> Void)?
     var stateTap: (() -> Void)?
     var stateList: [String] = []
-    var handleSave: ((String, String, String) -> Void)?
+    var handleSave: ((String, String, String, String, String, String) -> Void)?
     
     let headerView = DIHeaderView(title: " Location Detail")
     
@@ -146,7 +146,7 @@ class LocationFilterView: UIView {
     }
     
     @objc func saveTapped() {
-        handleSave?(countryView.subTitle.text ?? "", stateView.subTitle.text ?? "", suburbView.textField.text ?? "")
+        handleSave?(countryView.subTitle.text ?? "", stateView.subTitle.text ?? "", suburbView.textField.text ?? "", streetNameView.textField.text ?? "", streetNumView.textField.text ?? "", buldingNumView.textField.text ?? "")
     }
     
     @objc func handleTableDisplay() {

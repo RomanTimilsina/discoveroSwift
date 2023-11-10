@@ -69,7 +69,7 @@ extension CreateAdsVC {
         
         navigationController?.pushViewController(locationFilterVC, animated: true)
         
-        locationFilterVC.onSaveClick = { [weak self] country, state, suburb in
+        locationFilterVC.onSaveClick = { [weak self] country, state, suburb, streetName, streetNo, buildingNo in
             guard let self else { return }
             currentView.locationLabel.subTitle.text = "\(country ), \(state ), \(suburb )"
             currentView.countryName = country

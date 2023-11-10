@@ -107,12 +107,15 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
                 locationFilterVC.hidesBottomBarWhenPushed = true
                 navigationController?.pushViewController(locationFilterVC, animated: true)
     
-                locationFilterVC.onSaveClick = { [weak self] country, state, suburb in
+                locationFilterVC.onSaveClick = { [weak self] country, state, suburb, streetName, streetNo, buildingNo  in
                     guard let self else { return }
-                    currentView.languagesView.subTitle.text = "\(country), \(state), \(suburb)"
+                    currentView.addressView.subTitle.text = "\(country), \(state), \(suburb), \(streetName), \(streetNo), \(buildingNo)"
                     currentView.countryName = country
                     currentView.stateName = state
                     currentView.suburbName = suburb
+                    currentView.streetName = streetName
+                    currentView.streetNo = streetNo
+                    currentView.buildingNo = buildingNo
                 }
             }
     
@@ -183,10 +186,10 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
     func logOutUser() {
         let logOutAlert = UIAlertController(title: "Log Out", message: "Are you sure you want to log out? ", preferredStyle: .alert)
         let logOutAction = UIAlertAction(title: "Log Out", style: .destructive) { (action) in
-            let registrationVC = RegistrationVC(phoneNumber: "", userId: "")
-            registrationVC.hidesBottomBarWhenPushed = true
+            let loginVC = LoginVC()
+            loginVC.hidesBottomBarWhenPushed = true
             UserDefaultsHelper.removeAllData()
-            self.navigationController?.pushViewController(registrationVC, animated: true)
+            self.navigationController?.pushViewController(loginVC, animated: true)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
         }

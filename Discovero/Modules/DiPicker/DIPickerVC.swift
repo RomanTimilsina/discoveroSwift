@@ -22,7 +22,7 @@ class DIPickerVC: UIViewController {
     var searchLanguageModel = [LanguageModel]()
 //    var savedata = [String]()
     var savedLanguageData = [String]()
-    var resetOnRepen: Bool?
+    var resetOnReopen: Bool = false
     
     // MARK: used for registrationflow
     var isRegistration: Bool = false
@@ -32,11 +32,10 @@ class DIPickerVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if var resetOnRepen {
+        if resetOnReopen {
             currentView.searchBar.searchField.text = ""
             currentView.onSearchEdit?("")
         }
-        resetOnRepen = true
     }
     
     override func viewDidLoad() {
