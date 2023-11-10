@@ -28,6 +28,14 @@ class DIPickerVC: UIViewController {
     lazy var languageArray: [String] = []
     lazy var countLanguageSelected = languageArray.count
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+//        if currentView.searchBar.textFie.isEmpty {
+//            searchLanguageModel = languageModel
+//        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTable()
@@ -132,6 +140,9 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
                         languageModel[index] = matchingLanguage
                     }
                 }
+                
+                CurrentUser.user.languageModel = languageModel
+
                 onLanguagePicked?(languageModel)
                 sendSavedData?(savedLanguageData)
             }
