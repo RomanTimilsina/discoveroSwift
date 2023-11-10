@@ -19,6 +19,7 @@ class DIPickerView: UIView {
     let chooseNationalityLabel = UILabel(text: "Choose your nationality", font: OpenSans.semiBold, size: 16)
     let nextButton = UIButton(title: "Next", titleColor: Color.appWhite, font: OpenSans.bold, fontSize: 14)
     let lineView = UIView()
+    let languageView = DICustomProfileView(titleText: "Languages you speak?", text: "")
     
     lazy var searchBar = CustomSearchBar(placeholder: "" ,isFilterEnable: false)
     let alert = UIAlertController(title: "Alert Title", message: "Can't select more than 3 languages", preferredStyle: .alert)
@@ -57,8 +58,11 @@ class DIPickerView: UIView {
         lineView.constraintHeight(constant: 1)
         lineView.backgroundColor = Color.gray600
         
+        addSubview(languageView)
+        languageView.anchor(top: lineView.bottomAnchor, leading: leadingAnchor, bottom: nil , trailing: trailingAnchor, padding:  .init(top: 30, left: 12, bottom: 0, right: 12))
+        
         addSubview(searchBar)
-        searchBar.anchor(top: lineView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 12, left: 0, bottom: 0, right: 0))
+        searchBar.anchor(top: languageView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 12, left: 0, bottom: 0, right: 0))
         searchBar.constraintHeight(constant: 40)
         
         addSubview(table)

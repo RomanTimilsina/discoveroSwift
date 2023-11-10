@@ -137,6 +137,8 @@ private extension FilterSelectorVC{
         
         languagePicker.isRegistration = true
         languagePicker.currentView.searchBar.textFieldAttribute(placeholderText: "Search for Language", placeholderHeight: 14)
+        languagePicker.currentView.languageView.isHidden = true
+        languagePicker.currentView.languageView.constraintHeight(constant: 0)
         present(languagePicker, animated: true)
         
         languagePicker.sendSavedData = { [weak self] selectedLanguages in

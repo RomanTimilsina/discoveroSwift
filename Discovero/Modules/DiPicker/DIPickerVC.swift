@@ -53,8 +53,6 @@ class DIPickerVC: UIViewController {
         view = currentView
     }
     
-    
-    
     func observeViewEvents() {
         currentView.onCloseClick = { [weak self] in
             guard let self = self else { return }
@@ -139,6 +137,16 @@ extension DIPickerVC: UITableViewDelegate, UITableViewDataSource {
                     }
                     cell.countryImage.image = UIImage(systemName: "square")
                 }
+                
+                var data = savedLanguageData
+                var select = ""
+                
+                for ( index , language) in data.enumerated(){
+                    data.removeAll()
+                    select += index == 0 ? "\(language)" : ", \(language)"
+                }
+                
+                currentView.languageView.subTitle.text = select
                 
                 for (index, language) in languageModel.enumerated() {
                     if let matchingLanguage = searchLanguageModel.first(where: { $0.language == language.language }) {

@@ -46,10 +46,7 @@ class RegistrationView: UIView {
         headerView.anchor(top:  safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 0))
         //MARK: Registration has no cancel button
         headerView.cancelLabel.isHidden = true
-        
-        addSubview(headerBackgroundView)
-        headerBackgroundView.anchor(top: topAnchor, leading: leadingAnchor, bottom: headerView.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0 ))
-        headerBackgroundView.backgroundColor = Color.gray900
+        headerView.constraintHeight(constant: 50)
         
         addSubview(smallLabel)
         smallLabel.anchor(top: headerView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 78, left: 12, bottom: 0, right: 0))
