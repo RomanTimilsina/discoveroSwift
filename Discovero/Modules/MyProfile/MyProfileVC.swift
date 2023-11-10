@@ -155,15 +155,15 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
     
     func logOutUser() {
         let logOutAlert = UIAlertController(title: "Log Out", message: "Are you sure you want to log out? ", preferredStyle: .alert)
-        let logOutaction = UIAlertAction(title: "Log Out", style: .default) { (action) in
+        let logOutAction = UIAlertAction(title: "Log Out", style: .destructive) { (action) in
             let registrationVC = RegistrationVC(phoneNumber: "", userId: "")
             registrationVC.hidesBottomBarWhenPushed = true
             UserDefaultsHelper.removeAllData()
             self.navigationController?.pushViewController(registrationVC, animated: true)
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (action) in
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
         }
-        logOutAlert.addAction(logOutaction)
+        logOutAlert.addAction(logOutAction)
         logOutAlert.addAction(cancelAction)
         present(logOutAlert, animated: true, completion: nil)
     }
