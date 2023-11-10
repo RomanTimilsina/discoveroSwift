@@ -29,13 +29,6 @@ class DIPickerVC: UIViewController {
     lazy var languageArray: [String] = []
     lazy var countLanguageSelected = languageArray.count
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        debugPrint(savedLanguageData)
-        
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTable()
@@ -46,7 +39,6 @@ class DIPickerVC: UIViewController {
         searchLanguageModel = languageModel
         searchCountryModel = countryModel
     }
-    
     
     override func loadView() {
         view = currentView

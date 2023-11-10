@@ -46,17 +46,15 @@ class LocationFilterVC: UIViewController {
         currentView.stateView.coverButton.isEnabled = false
         setupTable()
         countriesAndState()
-        currentView.suburbView.textField.delegate = self
-        currentView.streetNameView.textField.delegate = self
-        currentView.streetNumView.textField.delegate = self
-        currentView.buldingNumView.textField.delegate = self
+        textFieldDelegates()
         currentView.countryView.subTitle.text = userData?.country
         currentView.stateView.subTitle.text = userData?.locationDetail.state
+        currentView.saveButton.setInvalidState()
         countryPicker.countryModel = countryManager.getData()
         
-        currentView.saveButton.setInvalidState()
         observeViewEvents()
     }
+    
     func countriesAndState() {
         firestore.getCountryWithState() { [weak self] countriesAndStates in
             guard let self else { return }
@@ -91,6 +89,13 @@ class LocationFilterVC: UIViewController {
             }
         }
         countryList.removeAll()
+    }
+    
+    func textFieldDelegates() {
+        currentView.suburbView.textField.delegate = self
+        currentView.streetNameView.textField.delegate = self
+        currentView.streetNumView.textField.delegate = self
+        currentView.buldingNumView.textField.delegate = self
     }
     
     override func loadView() {
@@ -187,6 +192,8 @@ extension LocationFilterVC: UITextFieldDelegate {
         if textField == currentView.buldingNumView.textField {
             setLineForTextField(view: currentView.buldingNumView)
         }
+        
+        //MARK:
         func setLineForTextField(view: UIView) {
             if let updatedText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) {
                 guard let line = view.subviews.last else { return }
@@ -199,6 +206,7 @@ extension LocationFilterVC: UITextFieldDelegate {
         }
         return true
     }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField {
         case currentView.suburbView.textField:

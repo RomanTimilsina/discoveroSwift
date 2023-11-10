@@ -130,6 +130,7 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
     func setProfileTab(index: Int) {
         let profileItem = ProfileItemVC()
 
+        profileItem.hidesBottomBarWhenPushed = true
         profileItem.sendDataBack = { [weak self] data in
             guard let self else { return }
             

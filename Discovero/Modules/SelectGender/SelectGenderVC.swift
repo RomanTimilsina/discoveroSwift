@@ -25,14 +25,8 @@ class SelectGenderVC: UIViewController {
         
         currentView.onClickedSave = { [weak self] in
             guard let self else { return }
-            getdata()
+            navigationController?.popViewController(animated: true)
         }
-    }
-    
-    func getdata() {
-        let profileVC = MyProfileVC()
-//        profileVC.currentView.genderView.text = 
-        navigationController?.popViewController(animated: true)
     }
     
     override func loadView() {
