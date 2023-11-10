@@ -19,7 +19,7 @@ class RoomVC : UIViewController{
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
         
-        FireStoreDatabaseHelper().getUserDataFromDefaults()
+//        FireStoreDatabaseHelper().getUserDataFromDefaults()
         
         self.currentView.bodyView.emptyStackView.isHidden = true
 //        self.currentView.headerTab.isHidden = true

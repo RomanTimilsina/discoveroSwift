@@ -69,7 +69,10 @@ extension JobWantedVC {
     }
     
     func getUsersDataFromDefaults() {
-        fetchJobOfferedData(country: CurrentUser.user.data?.country ?? "", state: CurrentUser.user.data?.locationDetail.state ?? "")
+        fireStore.getUserDataFromDefaults { [weak self] userData in
+            guard let self, let userData else { return }
+            fetchJobOfferedData(country: userData.country, state: userData.locationDetail.state)
+        }
     }
     
     func fetchJobOfferedData(country: String, state: String) {

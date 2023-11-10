@@ -76,7 +76,6 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
         currentView.languageArray = usersData?.languages
     }
     
-    
     func observeViewEvents() {
         currentView.headerView.onClose = { [weak self] in
             guard let self = self else { return }
@@ -138,8 +137,6 @@ private extension FilterSelectorVC{
         
         languagePicker.isRegistration = true
         languagePicker.currentView.searchBar.textFieldAttribute(placeholderText: "Search for Language", placeholderHeight: 14)
-        languagePicker.currentView.languageView.isHidden = true
-        languagePicker.currentView.languageView.constraintHeight(constant: 0)
         present(languagePicker, animated: true)
         
         languagePicker.sendSavedData = { [weak self] selectedLanguages in
@@ -180,13 +177,10 @@ extension FilterSelectorVC {
 //MARK: - Fetch Data
 private extension FilterSelectorVC {
     private func fetchUserData() {
-        //        FireStoreDatabaseHelper().getUserDataFromDefaults { [weak self] userData in
-        //            guard let self, let userData else { return }
-        ////            usersData = userData
-        //        }
-        
-        usersData = CurrentUser.user.data
-        
+        FireStoreDatabaseHelper().getUserDataFromDefaults { [weak self] userData in
+            guard let self, let userData else { return }
+            usersData = userData
+        }
         setLanguage()
     }
     

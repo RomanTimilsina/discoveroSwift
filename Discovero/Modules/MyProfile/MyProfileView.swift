@@ -18,30 +18,32 @@ class MyProfileView: UIView {
     let scrollView = UIScrollView()
     var profileArray = [DICustomProfileView]()
     let noAvatarImage = UIImageView(image: UIImage(named: "noAvatarImage"),contentMode: .scaleAspectFit, clipsToBounds: true)
-    var nameView = DICustomProfileView(titleText: "Full Name", text: "Ankit Chaudhary", show: true)
-    let emailView = DICustomProfileView(titleText: "Email Address", text: "Tap here to add email", show: true, isGrey: false)
+    let nameView = DICustomProfileView(titleText: "Full Name", text: "Ankit Chaudhary", show: true)
+    let emailView = DICustomProfileView(titleText: "Email Address", text: "Tap here to add email", show: true, isGrey: true)
     let phoneView = DICustomProfileView(titleText: "Phone Number", text: "+677-9851442275")
     let addressView = DICustomProfileView(titleText: "Address", text: "Frederick St,Broome", show: true)
-    let languagesView = DICustomProfileView(titleText: "Languages", text: "Nepali", /*nation: UIImage(named: "nepal"),*/ show: true)
+    let languagesView = DICustomProfileView(titleText: "Nationality", text: "Nepali", /*nation: UIImage(named: "nepal"),*/ show: true)
     var languageArray: [String]?
     let genderView = DICustomProfileView(titleText: "Gender", text: "Male", show: true)
     let adsView = DICustomProfileView(titleText: "My Ads", text: "", show: true)
     let favouritesView = DICustomProfileView(titleText: "My Favourites", text: "", show: true)
+    let notificationView = DICustomProfileView(titleText: "Notification Configuration", text: "", show: true)
     let termsView = DICustomProfileView(titleText: "Terms and condition", text: "", show: true)
     let policyView = DICustomProfileView(titleText: "Privacy Policy", text: "", show: true)
     let DeleteView = DICustomProfileView(titleText: "Delete Account", text: "")
     let line = UIView(color: Color.gray700)
     let logoutLabel = UILabel(text: "Logout", color: Color.primary, font: OpenSans.regular, size: 14)
     
-    var countryName, stateName, suburbName, propertyType: String?
+    lazy var formStack = VerticalStackView(arrangedSubViews: [nameView,emailView,phoneView,addressView,languagesView,genderView,line,adsView,favouritesView,notificationView,termsView,policyView,DeleteView, logoutLabel], spacing: 24, distribution: .fill)
     
-    lazy var formStack = VerticalStackView(arrangedSubViews: [nameView,emailView,phoneView,addressView,languagesView,genderView,line,adsView,favouritesView,termsView,policyView,DeleteView, logoutLabel], spacing: 24, distribution: .fill)
-    
+    let notification = ConfigureNotificationView()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .black
         setupView()
         profileArrayAppendFunction()
+        removeLinesFromView()
     }
     
     required init?(coder: NSCoder) {
@@ -69,6 +71,16 @@ class MyProfileView: UIView {
         formStack.anchor(top: noAvatarImage.bottomAnchor, leading: leadingAnchor, bottom: scrollView.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 24, left: 12, bottom: 10, right: 24))
         
         line.constraintHeight(constant: 1)
+        
+        addSubview(notification)
+        notification.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor)
+        notification.isHidden = true
+    }
+    
+    func removeLinesFromView() {
+        for (index, view) in profileArray.enumerated() {
+                view.lineView.removeFromSuperview()
+        }
     }
 }
 
@@ -83,6 +95,7 @@ private extension MyProfileView{
         profileArray.append(languagesView)
         profileArray.append(genderView)
         profileArray.append(adsView)
+        profileArray.append(notificationView)
         profileArray.append(favouritesView)
         profileArray.append(termsView)
         profileArray.append(policyView)

@@ -11,6 +11,7 @@ class CurrentUser {
     static let user = CurrentUser()
     
     var data: UserData?
+    var languageModel = [LanguageModel]()
     
     private init() {}
 }
