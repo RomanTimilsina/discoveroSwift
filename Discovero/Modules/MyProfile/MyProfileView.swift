@@ -18,11 +18,11 @@ class MyProfileView: UIView {
     let scrollView = UIScrollView()
     var profileArray = [DICustomProfileView]()
     let noAvatarImage = UIImageView(image: UIImage(named: "noAvatarImage"),contentMode: .scaleAspectFit, clipsToBounds: true)
-    let nameView = DICustomProfileView(titleText: "Full Name", text: "Ankit Chaudhary", show: true)
-    let emailView = DICustomProfileView(titleText: "Email Address", text: "Tap here to add email", show: true, isGrey: true)
+    var nameView = DICustomProfileView(titleText: "Full Name", text: "Ankit Chaudhary", show: true)
+    let emailView = DICustomProfileView(titleText: "Email Address", text: "Tap here to add email", show: true, isGrey: false)
     let phoneView = DICustomProfileView(titleText: "Phone Number", text: "+677-9851442275")
     let addressView = DICustomProfileView(titleText: "Address", text: "Frederick St,Broome", show: true)
-    let languagesView = DICustomProfileView(titleText: "Nationality", text: "Nepali", /*nation: UIImage(named: "nepal"),*/ show: true)
+    let languagesView = DICustomProfileView(titleText: "Languages", text: "Nepali", /*nation: UIImage(named: "nepal"),*/ show: true)
     var languageArray: [String]?
     let genderView = DICustomProfileView(titleText: "Gender", text: "Male", show: true)
     let adsView = DICustomProfileView(titleText: "My Ads", text: "", show: true)
@@ -32,6 +32,8 @@ class MyProfileView: UIView {
     let DeleteView = DICustomProfileView(titleText: "Delete Account", text: "")
     let line = UIView(color: Color.gray700)
     let logoutLabel = UILabel(text: "Logout", color: Color.primary, font: OpenSans.regular, size: 14)
+    
+    var countryName, stateName, suburbName, propertyType: String?
     
     lazy var formStack = VerticalStackView(arrangedSubViews: [nameView,emailView,phoneView,addressView,languagesView,genderView,line,adsView,favouritesView,termsView,policyView,DeleteView, logoutLabel], spacing: 24, distribution: .fill)
     

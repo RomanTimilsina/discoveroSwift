@@ -10,6 +10,7 @@ import UIKit
 class ProfileItemView: UIView {
     
     var onClickedText: ((String) -> Void)?
+    var onClickedSave: ((String) -> Void)?
     
     let header = DIHeaderView(title: "Update Account Details", hasBack: false)
     let view = UIView()
@@ -23,6 +24,7 @@ class ProfileItemView: UIView {
         emailTextField.textField.placeholder = placeholder
         backgroundColor = Color.appBlack
         setupView()
+        observeEvents()
     }
     
     required init?(coder: NSCoder) {
@@ -32,10 +34,7 @@ class ProfileItemView: UIView {
     func setupView() {
         addSubview(header)
         header.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-        
-        addSubview(view)
-        view.anchor(top: topAnchor, leading: leadingAnchor, bottom: header.topAnchor, trailing: trailingAnchor)
-        view.backgroundColor = Color.gray900
+        header.constraintHeight(constant: 50)
         
         addSubview(emailTextField)
         emailTextField.anchor(top: header.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 32, left: 14, bottom: 0, right: 14))
@@ -43,6 +42,14 @@ class ProfileItemView: UIView {
         
         addSubview(saveButton)
         saveButton.anchor(top: nil, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 12, right: 12))
+    }
+    
+    func observeEvents() {
+        saveButton.addTarget(self, action: #selector(handleSaveTap), for: .touchUpInside)
+    }
+    
+    @objc func handleSaveTap(){
+        onClickedSave?(emailTextField.textField.text ?? "")
     }
     
     @objc func textEntered(_ textField: UITextField) {
