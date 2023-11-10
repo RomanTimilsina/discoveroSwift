@@ -10,7 +10,7 @@ import UIKit
 class SelectGenderVC: UIViewController {
     
     var currentView = SelectGenderView()
-    var selectedGender: String?
+    var onGenderClick: ((String) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,11 +27,9 @@ class SelectGenderVC: UIViewController {
         
         currentView.onClickedSave = { [weak self] selectedGender in
             guard let self else { return }
-            self.selectedGender = selectedGender
+            onGenderClick?(selectedGender)
             
-                navigationController?.popViewController(animated: true)
-
-            
+            navigationController?.popViewController(animated: true)
 
         }
     }

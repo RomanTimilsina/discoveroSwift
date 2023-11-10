@@ -10,7 +10,7 @@ class LocationFilterVC: UIViewController {
     
     var currentView = LocationFilterView()
     
-    var onSaveClick: ((String, String, String, String, String, String) -> Void)?
+    var onSaveClick: (([String]) -> Void)?
     
     lazy var countryPicker = DIPickerVC()
     var userData: UserData?
@@ -137,9 +137,9 @@ class LocationFilterVC: UIViewController {
             navigationController?.popViewController(animated: true)
         }
         
-        currentView.handleSave = { [weak self] country, state, suburb, streetName, streetNo, buildingNo in
+        currentView.handleSave = { [weak self] locationData in
             guard let self else { return }
-            onSaveClick?(country, state, suburb, streetName, streetNo, buildingNo)
+            onSaveClick?(locationData)
             navigationController?.popViewController(animated: true)
         }
     }

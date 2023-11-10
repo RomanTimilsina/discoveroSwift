@@ -21,7 +21,7 @@ class LocationFilterView: UIView {
     var countriesTap: (() -> Void)?
     var stateTap: (() -> Void)?
     var stateList: [String] = []
-    var handleSave: ((String, String, String, String, String, String) -> Void)?
+    var handleSave: (([String]) -> Void)?
     
     let headerView = DIHeaderView(title: " Location Detail")
     
@@ -41,6 +41,8 @@ class LocationFilterView: UIView {
     var hideTable = true
     let overlayView = UIView()
 
+    let locationTuple = (country: String, state: String, suburb: String, street: String, streetNum: String, buldingNum: String ).self
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = Color.appBlack
@@ -146,7 +148,8 @@ class LocationFilterView: UIView {
     }
     
     @objc func saveTapped() {
-        handleSave?(countryView.subTitle.text ?? "", stateView.subTitle.text ?? "", suburbView.textField.text ?? "", streetNameView.textField.text ?? "", streetNumView.textField.text ?? "", buldingNumView.textField.text ?? "")
+        
+        handleSave?([countryView.subTitle.text ?? "", stateView.subTitle.text ?? "", suburbView.textField.text ?? "", streetNameView.textField.text ?? "", streetNumView.textField.text ?? "", buldingNumView.textField.text ?? ""])
     }
     
     @objc func handleTableDisplay() {

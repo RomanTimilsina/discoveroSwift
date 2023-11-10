@@ -21,14 +21,10 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
     var selectedLanguage: String?
     var texts: String?
     var usersData: UserData?
-    var selectGender: SelectGenderVC?
-    
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        currentView.genderView.subTitle.text = selectGender?.selectedGender
-        selectGender = nil
     }
     
     override func viewDidLoad() {
@@ -84,9 +80,13 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
     }
     
     private func gotoGenderVC() {
-        selectGender = SelectGenderVC()
+        let selectGender = SelectGenderVC()
         
-        guard let selectGender else { return }
+        selectGender.onGenderClick = { [weak self] gender in
+            guard let self else { return }
+            
+            currentView.genderView.subTitle.text = gender
+        }
         navigationController?.pushViewController(selectGender, animated: true)
     }
     
@@ -100,24 +100,33 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
         }
     }
     
-    
             func gotoLocationFilterVC() {
                 let locationFilterVC = LocationFilterVC()
                 locationFilterVC.userData = usersData
                 locationFilterVC.hidesBottomBarWhenPushed = true
                 navigationController?.pushViewController(locationFilterVC, animated: true)
-    
-                locationFilterVC.onSaveClick = { [weak self] country, state, suburb, streetName, streetNo, buildingNo  in
+                
+                locationFilterVC.onSaveClick = { [weak self] locationData in
                     guard let self else { return }
-                    currentView.addressView.subTitle.text = "\(country), \(state), \(suburb), \(streetName), \(streetNo), \(buildingNo)"
-                    currentView.countryName = country
-                    currentView.stateName = state
-                    currentView.suburbName = suburb
-                    currentView.streetName = streetName
-                    currentView.streetNo = streetNo
-                    currentView.buildingNo = buildingNo
+                    currentView.addressView.subTitle.text = stringList(locationData)
+                    currentView.countryName = locationData[0]
+                    currentView.stateName = locationData[1]
+                    currentView.suburbName = locationData[2]
+                    currentView.streetName = locationData[3]
+                    currentView.streetNo = locationData[4]
+                    currentView.buildingNo = locationData[5]
                 }
             }
+    
+    func stringList(_ stringArray: [String]) -> String {
+        var text = ""
+        
+        for (index, item) in stringArray.enumerated() {
+            text += "\(item == "" || index != 0 ? ", " : "")\(item)"
+        }
+        
+        return text
+    }
     
     func openLanguagePicker() {
         

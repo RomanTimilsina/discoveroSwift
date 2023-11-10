@@ -114,14 +114,16 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
         
         navigationController?.pushViewController(locationFilterVC, animated: true)
         
-        locationFilterVC.onSaveClick = { [weak self] country, state, suburb, streetName, streetNo, buildingNo in
+        locationFilterVC.onSaveClick = { [weak self] locationData in
             guard let self else { return }
-            currentView.locationLabel.subTitle.text = "\(country ?? ""), \(state ?? "")"
-            currentView.countryName = country
-            currentView.stateName = state
+            currentView.locationLabel.subTitle.text = locationData.joined(separator: ",")
+            currentView.countryName = locationData[0]
+            currentView.stateName = locationData[1]
+            currentView.suburbName = locationData[2]
         }
     }
 }
+
 
 // MARK: -Calling DIPicker as LanguagePicker to display the selectedLanguages on Nationality
 private extension FilterSelectorVC{
