@@ -13,9 +13,9 @@ class CreateAdsVC: UIViewController {
     let postPreviewVC = PostPreviewVC()
     let currentView = CreateAdsView()
     var timer: Timer?
-
+    
     var usersData: UserData?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
@@ -71,14 +71,32 @@ extension CreateAdsVC {
         
         locationFilterVC.onSaveClick = { [weak self] locationData in
             guard let self else { return }
-            currentView.locationLabel.subTitle.text = "\(locationData[0]), \(locationData[1] ), \(locationData[2] )"
+            currentView.locationLabel.subTitle.text = stringList(locationData)
             currentView.countryName = locationData[0]
             currentView.stateName = locationData[1]
             currentView.suburbName = locationData[2]
+            currentView.streetName = locationData[3]
+            currentView.suburbName = locationData[4]
+            currentView.streetName = locationData[5]
         }
     }
+    
+    func stringList(_ stringArray: [String]) -> String {
+        var text = ""
+        let newArr = stringArray.reversed()
+        
+        var indexCount: Int {
+            return newArr.filter { $0.isEmpty }.count
+        }
+        
+        for (index, item) in newArr.enumerated() {
+            debugPrint(index, item)
+            text += "\(item.isEmpty || index == indexCount ? "" : ", ")\(item)"
+        }
+        
+        return text
+    }
 }
-
 
 enum OfferPageValidation {
     case captionError
@@ -100,7 +118,7 @@ enum OfferPageValidation {
         case .noError: return ""
         }
     }
-
+    
     init(caption: String = "", description: String = "", price: Double = 0.0, country: String = "", state: String = "", property: String = AppConstants.tapToChoose) {
         
         switch true {

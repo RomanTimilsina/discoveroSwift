@@ -84,11 +84,30 @@ class CreateJobsAdsVC: UIViewController {
             
             locationFilterVC.onSaveClick = { [weak self] locationData in
                 guard let self else { return }
-                currentView.locationLabel.subTitle.text = locationData.joined(separator: ",")
+                currentView.locationLabel.subTitle.text = stringList(locationData)
                 currentView.countryName = locationData[0]
                 currentView.stateName = locationData[1]
                 currentView.suburbName = locationData[2]
+                currentView.streetName = locationData[3]
+                currentView.suburbName = locationData[4]
+                currentView.streetName = locationData[5]
             }
+        }
+        
+        func stringList(_ stringArray: [String]) -> String {
+            var text = ""
+            let newArr = stringArray.reversed()
+            
+            var indexCount: Int {
+                return newArr.filter { $0.isEmpty }.count
+            }
+            
+            for (index, item) in newArr.enumerated() {
+                debugPrint(index, item)
+                text += "\(item.isEmpty || index == indexCount ? "" : ", ")\(item)"
+            }
+            
+            return text
         }
     }
     

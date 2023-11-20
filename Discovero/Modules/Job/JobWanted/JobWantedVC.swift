@@ -117,7 +117,7 @@ extension JobWantedVC: UITableViewDelegate, UITableViewDataSource  {
         
         cell.onCommentsClicked = { [weak self] in
             guard let self else { return}
-            self.goToCommentSection()
+            goToCommentSection()
         }
         return cell
     }

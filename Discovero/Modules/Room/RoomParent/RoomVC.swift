@@ -63,7 +63,6 @@ class RoomVC : UIViewController{
             self.currentView.headerTab.isHidden = false
         }
 
-        
         currentView.headerTab.onWantedClicked = { [weak self] in
             guard let self else { return }
             self.currentView.bodyView.emptyStackView.isHidden = true

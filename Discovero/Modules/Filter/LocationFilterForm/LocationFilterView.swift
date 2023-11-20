@@ -148,7 +148,6 @@ class LocationFilterView: UIView {
     }
     
     @objc func saveTapped() {
-        
         handleSave?([countryView.subTitle.text ?? "", stateView.subTitle.text ?? "", suburbView.textField.text ?? "", streetNameView.textField.text ?? "", streetNumView.textField.text ?? "", buldingNumView.textField.text ?? ""])
     }
     

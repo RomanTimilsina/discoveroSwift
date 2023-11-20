@@ -14,8 +14,7 @@ class CreateAdsView : UIView {
     let headerView = DIHeaderView(title: "", hasBack: true)
     let coverButton = UIButton(title: "", titleColor: .clear, font: OpenSans.regular, fontSize: 1)
     let titleView = DITextField(title: "Add title for your ads",  placholder: "Type here", typePad: .default, contentHeight: 50, placeholderHeight: 15, textHeight: 15, hasLine: false)
-    let descriptionsView = DITextField(title: "Add some descriptions",  placholder: "Type here", typePad: .default,
-                                       contentHeight: 50, placeholderHeight: 15, textHeight: 15, hasLine: false)
+    let descriptionsView = DITextField(title: "Add some descriptions",  placholder: "Type here", typePad: .default, contentHeight: 50, placeholderHeight: 15, textHeight: 15, hasLine: false)
     let priceLabel = UILabel(text: "Price Per Week", font: OpenSans.semiBold, size: 16)
     let dollarLabel = UILabel(text: "$", font: OpenSans.semiBold, size: 16)
     var priceTextField : UITextField = {
@@ -39,13 +38,13 @@ class CreateAdsView : UIView {
         return textfield
     }()
     let lineView = UIView()
-    let locationLabel = DICustomProfileView(titleText: "Location", text: "location", isInFilter: true)
+    let locationLabel = DICustomProfileView(titleText: "Location", text: "", isInFilter: true)
     let noOfBedrooms  = CustomNumberSelector("No of Bedrooms",  1)
     let noOfBathrooms = CustomNumberSelector("No of Bathrooms", 1)
     let noOfParkings  = CustomNumberSelector("Parking Available For",  0)
     let propertyTypeLabel = DICustomProfileView(titleText: "Property Type", text: "", show: true, sideTitleString: "Tap to Choose")
     let nextButton = DIButton(buttonTitle: "Next")
-    var countryName, stateName, suburbName, propertyType: String?
+    var countryName, stateName, suburbName, streetName, streetNo, buildingNo, propertyType: String?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -123,10 +122,14 @@ class CreateAdsView : UIView {
     }
     
     @objc func handleNextButtonTap() {
-        let postModel = PostModel(name: "",
+        let myProfileView = MyProfileView()
+        let postModel = PostModel(name: myProfileView.nameView.subTitle.text ?? "",
                                   country: countryName ?? "",
                                   state: stateName ?? "",
                                   suburb: suburbName ?? "",
+                                  streetName: streetName ?? "",
+                                  streetNo: streetNo ?? "",
+                                  buildingNo: buildingNo ?? "",
                                   caption: titleView.textField.text ?? "",
                                   description: descriptionsView.textField.text ?? "",
                                   propertyType: propertyTypeLabel.sideTitle.text ?? "",
@@ -156,15 +159,15 @@ extension CreateAdsView {
         }
     }
     
-    func configView(model: FilterModel) {
-        countryName = model.countryName
-        stateName = model.stateName
-        locationLabel.subTitle.text = "\(model.countryName ?? ""), \(model.stateName ?? "")"
-        locationLabel.subTitle.textColor = Color.appWhite
-        if model.propertyType == nil {
-            propertyTypeLabel.sideTitle.text = "Tap Here"
-        }
-    }
+//    func configView(model: FilterModel) {
+//        countryName = model.countryName
+//        stateName = model.stateName
+//        locationLabel.subTitle.text = "\(model.countryName ?? ""), \(model.stateName ?? "")"
+//        locationLabel.subTitle.textColor = Color.appWhite
+//        if model.propertyType == nil {
+//            propertyTypeLabel.sideTitle.text = "Tap Here"
+//        }
+//    }
     
     private func addInfoMenu() -> UIMenu {
         let apartment = UIAction(title: "Apartment", handler: { _ in

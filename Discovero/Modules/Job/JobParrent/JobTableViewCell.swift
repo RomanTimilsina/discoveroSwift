@@ -173,11 +173,9 @@ extension JobTableViewCell {
         //        noOfLikes.text = "\(data.likesCount)"
         adLabel.text = data.description
         priceAmountLabel.text = "$\(String(format: "%.2f", data.price))"
-//        durationLabel.text = data.paymentType
-        location.text = data.location.state + ", " + data.location.country
-//        jobTypeLabel.text = data.jobType
+        //        location.text = data.location.state + ", " + data.location.country
         jobNumberLabel.text = "\(data.noOfBedroom)"
-        viewCount.text = "\(data.viewCount < 10 ? " " : "")\(data.viewCount)"
+        //        viewCount.text = "\(data.viewCount < 10 ? " " : "")\(data.viewCount)"
         commentCount.text = "\(data.comments.count)"
     }
 

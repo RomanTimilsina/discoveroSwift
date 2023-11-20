@@ -87,8 +87,8 @@
 		8496C4E12AEE5E0A0017CC0A /* CustomNumberSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496C4E02AEE5E0A0017CC0A /* CustomNumberSelector.swift */; };
 		8496C4E42AEE6EB70017CC0A /* BottomSheetPickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496C4E32AEE6EB70017CC0A /* BottomSheetPickerVC.swift */; };
 		8496C4E62AEE6ED60017CC0A /* BottomSheetPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496C4E52AEE6ED60017CC0A /* BottomSheetPickerView.swift */; };
-		849B565C2AEFB66B00C91F81 /* CreateAdsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B565B2AEFB66B00C91F81 /* CreateAdsView.swift */; };
-		849B565E2AEFB68500C91F81 /* CreateAdsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B565D2AEFB68500C91F81 /* CreateAdsVC.swift */; };
+		849B565C2AEFB66B00C91F81 /* CreateRoomAdsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B565B2AEFB66B00C91F81 /* CreateRoomAdsView.swift */; };
+		849B565E2AEFB68500C91F81 /* CreateRoomAdsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B565D2AEFB68500C91F81 /* CreateRoomAdsVC.swift */; };
 		849E4D752AFB5DB10061D84D /* SelectGenderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E4D742AFB5DB10061D84D /* SelectGenderVC.swift */; };
 		849E4D772AFB5DBE0061D84D /* SelectGenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E4D762AFB5DBE0061D84D /* SelectGenderView.swift */; };
 		84AEDBD42AF0E33F00ED121C /* PostPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AEDBD32AF0E33F00ED121C /* PostPreviewView.swift */; };
@@ -233,8 +233,8 @@
 		8496C4E02AEE5E0A0017CC0A /* CustomNumberSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNumberSelector.swift; sourceTree = "<group>"; };
 		8496C4E32AEE6EB70017CC0A /* BottomSheetPickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetPickerVC.swift; sourceTree = "<group>"; };
 		8496C4E52AEE6ED60017CC0A /* BottomSheetPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetPickerView.swift; sourceTree = "<group>"; };
-		849B565B2AEFB66B00C91F81 /* CreateAdsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAdsView.swift; sourceTree = "<group>"; };
-		849B565D2AEFB68500C91F81 /* CreateAdsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAdsVC.swift; sourceTree = "<group>"; };
+		849B565B2AEFB66B00C91F81 /* CreateRoomAdsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomAdsView.swift; sourceTree = "<group>"; };
+		849B565D2AEFB68500C91F81 /* CreateRoomAdsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomAdsVC.swift; sourceTree = "<group>"; };
 		849E4D742AFB5DB10061D84D /* SelectGenderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGenderVC.swift; sourceTree = "<group>"; };
 		849E4D762AFB5DBE0061D84D /* SelectGenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGenderView.swift; sourceTree = "<group>"; };
 		84AEDBD32AF0E33F00ED121C /* PostPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPreviewView.swift; sourceTree = "<group>"; };
@@ -365,15 +365,14 @@
 		04996CB82AA46E5E00DB618F /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				849E4D732AFB5D6E0061D84D /* SelectGender */,
-				840A6A382AFA131800FD6E25 /* Job */,
-				0499C8682AFA0D63005D5628 /* ConfigureNotification */,
 				8496C4E22AEE6E530017CC0A /* BottomSheetPicker */,
 				04775C3F2AB96085005F9B4C /* CommentsPage */,
+				0499C8682AFA0D63005D5628 /* ConfigureNotification */,
 				849B565A2AEFB64C00C91F81 /* CreateAds */,
 				04A168B32AA854260065F607 /* DiPicker */,
 				8496C4DB2AEE226A0017CC0A /* DiPickerAdd */,
 				04967AAF2ABAC9CF0035B359 /* Filter */,
+				840A6A382AFA131800FD6E25 /* Job */,
 				049BEF652AA5B08D00ED2B58 /* Login */,
 				049CF1322AA9DC3D00FF2F1B /* MainTabBar */,
 				049D3A902AAD8BFD004864E9 /* MyProfile */,
@@ -384,6 +383,7 @@
 				04956D2C2AB06F2000540F44 /* ProfileItem */,
 				04A168AE2AA840990065F607 /* Registration */,
 				8527159C2ADD842400394D85 /* Room */,
+				849E4D732AFB5D6E0061D84D /* SelectGender */,
 				04A168A32AA8394B0065F607 /* Welcome */,
 			);
 			path = Modules;
@@ -615,6 +615,15 @@
 			path = JobOffer;
 			sourceTree = "<group>";
 		};
+		8490BDD82B0B2F7000072F0B /* CreateRoomAds */ = {
+			isa = PBXGroup;
+			children = (
+				849B565D2AEFB68500C91F81 /* CreateRoomAdsVC.swift */,
+				849B565B2AEFB66B00C91F81 /* CreateRoomAdsView.swift */,
+			);
+			path = CreateRoomAds;
+			sourceTree = "<group>";
+		};
 		8496C4DB2AEE226A0017CC0A /* DiPickerAdd */ = {
 			isa = PBXGroup;
 			children = (
@@ -636,10 +645,9 @@
 		849B565A2AEFB64C00C91F81 /* CreateAds */ = {
 			isa = PBXGroup;
 			children = (
+				8490BDD82B0B2F7000072F0B /* CreateRoomAds */,
 				84DE17F52AF2050C00B87358 /* CreateAnnouncementView */,
 				84DE17F62AF228E500B87358 /* CreateJobsAds */,
-				849B565B2AEFB66B00C91F81 /* CreateAdsView.swift */,
-				849B565D2AEFB68500C91F81 /* CreateAdsVC.swift */,
 			);
 			path = CreateAds;
 			sourceTree = "<group>";
@@ -1052,11 +1060,11 @@
 				04978F872AB81E3C00BCACC5 /* RoomTableViewCell.swift in Sources */,
 				04775C452AB96E65005F9B4C /* CustomComments.swift in Sources */,
 				049D3A942AAD9379004864E9 /* MyProfileVC.swift in Sources */,
-				849B565C2AEFB66B00C91F81 /* CreateAdsView.swift in Sources */,
+				849B565C2AEFB66B00C91F81 /* CreateRoomAdsView.swift in Sources */,
 				E0FE06282AA43D1B001DBDF5 /* UIControl+Ext.swift in Sources */,
 				E0FE06342AA43D1B001DBDF5 /* UIViewController+Ext.swift in Sources */,
 				047954252AC16C6F002BB17B /* LocationModel.swift in Sources */,
-				849B565E2AEFB68500C91F81 /* CreateAdsVC.swift in Sources */,
+				849B565E2AEFB68500C91F81 /* CreateRoomAdsVC.swift in Sources */,
 				0493593F2AC441DB009B6673 /* LanguageModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

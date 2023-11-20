@@ -21,7 +21,7 @@ class RoomOfferVC: UIViewController, UISheetPresentationControllerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = true
+        
     }
     
     override func viewDidLoad() {
@@ -29,12 +29,7 @@ class RoomOfferVC: UIViewController, UISheetPresentationControllerDelegate {
         setupTable()
         observeEvents()
         getUsersDataFromDefaults()
-//        
-//        currentView.popupView.handleClose = {[weak self] in
-//            guard let self else {return}
-//            currentView.popupView.isHidden = true
-//        }
-
+        navigationController?.navigationBar.isHidden = true
     }
     
     override func loadView() {
@@ -49,19 +44,19 @@ class RoomOfferVC: UIViewController, UISheetPresentationControllerDelegate {
     
     func observeEvents() {
         //MARK: Pull to refresh need to be done
-        //        roomView.handleRoomRefresh = { [weak self] in
-        //
-        //            self?.fireStore.getRoomOffered { [weak self] rooms in
-        //                self?.roomOffers.removeAll()
-        //                guard let self = self else { return }
-        //                self.roomOffers.append(contentsOf: rooms)
-        //
-        //                DispatchQueue.main.async {
-        //                    self.roomView.adsTable.reloadData()
-        //                }
-        //                roomView.refreshControl.endRefreshing()
-        //            }
-        //        }
+//                currentView.handleRoomRefresh = { [weak self] in
+//        
+//                    self?.fireStore.getRoomOffered { [weak self] rooms in
+//                        self?.roomOffers.removeAll()
+//                        guard let self = self else { return }
+//                        self.roomOffers.append(contentsOf: rooms)
+//        
+//                        DispatchQueue.main.async {
+//                            self.roomView.adsTable.reloadData()
+//                        }
+//                        roomView.refreshControl.endRefreshing()
+//                    }
+//                }
         
         currentView.filterSection.ontFilterClick = { [weak self] in
             guard let self else { return }

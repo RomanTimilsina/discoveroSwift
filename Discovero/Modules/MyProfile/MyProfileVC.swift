@@ -34,6 +34,7 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
         
         observeViewEvents()
         setLanguage()
+        configView()
         languagePicker.languageModel = languageManager.getData()
     }
     
@@ -64,6 +65,11 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
         currentView.onClickedLogOut = { [weak self] in
             guard let self else { return }
             logOutUser()
+        }
+        
+        currentView.onClickedDelete = { [weak self] in
+            guard let self else { return }
+            deleteUserAccount()
         }
         
         currentView.notificationView.profileTap = { [weak self] text in
@@ -120,9 +126,15 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
     
     func stringList(_ stringArray: [String]) -> String {
         var text = ""
+        let newArr = stringArray.reversed()
         
-        for (index, item) in stringArray.enumerated() {
-            text += "\(item == "" || index != 0 ? ", " : "")\(item)"
+        var indexCount: Int {
+            return newArr.filter { $0.isEmpty }.count
+        }
+        
+        for (index, item) in newArr.enumerated() {
+            debugPrint(index, item)
+            text += "\(item.isEmpty || index == indexCount ? "" : ", ")\(item)"
         }
         
         return text
@@ -182,7 +194,6 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
             }
         }
         
-
         if index < 2{
             profileItem.isItEmail = index == 1
             
@@ -190,6 +201,11 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
             profileItem.onPlaceholder = value2[index]
             navigationController?.pushViewController(profileItem, animated: true)
         }
+    }
+    
+    func configView() {
+        let profileItem = ProfileItemVC()
+        currentView.nameView.subTitle.text = profileItem.currentView.editTextField.textField.text
     }
     
     func logOutUser() {
@@ -205,6 +221,17 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
         logOutAlert.addAction(logOutAction)
         logOutAlert.addAction(cancelAction)
         present(logOutAlert, animated: true, completion: nil)
+    }
+    
+    func deleteUserAccount() {
+        let deleteAlert = UIAlertController(title: "Delete Account", message: "Are you sure you want to delete your account? ", preferredStyle: .alert)
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+        }
+        deleteAlert.addAction(deleteAction)
+        deleteAlert.addAction(cancelAction)
+        present(deleteAlert, animated: true, completion: nil)
     }
     
     override func loadView() {

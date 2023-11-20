@@ -126,16 +126,15 @@ class PostView: UIView {
 extension PostView {
     
     private func fetchUserData() {
-        func getUsersDataFromDefaults() {
             FireStoreDatabaseHelper().getUserDataFromDefaults { [weak self] userData in
                 guard let self, let userData else { return }
 
                 usersData = userData
-            }
         }
     }
     
     func configureData(roomData: PostModel? = nil, jobData: JobModel? = nil, buyAndSellData: BuySellModel? = nil) {
+        let myProfileView = MyProfileView()
         if let roomData {
             namePrefixLabel.text = "\(namePrefix(name: usersData?.name ?? ""))"
             profileImageView.isHidden = true
@@ -144,7 +143,7 @@ extension PostView {
             stateLabel.text = roomData.state
             adLabel.text = roomData.description
             priceAmountLabel.text = "$\(String(format: "%.2f", roomData.price))"
-            location.text = roomData.state + ", " + roomData.country
+            location.text = roomData.buildingNo + ", " + roomData.streetName + ", " + roomData.suburb + ", " + roomData.state + ", " + roomData.country
             propertyTypeLabel.text = roomData.propertyType
             bedroomNumberLabel.text = "\(roomData.noOfBedroom)"
             tubNumberLabel.text = "\(roomData.noOfBathroom)"
@@ -159,7 +158,7 @@ extension PostView {
             stateLabel.text = jobData.state
             adLabel.text = jobData.description
             priceAmountLabel.text = "$\(String(format: "%.2f", jobData.salary))"
-            location.text = jobData.state + ", " + jobData.country
+            location.text = jobData.buildingNo + ", " + jobData.streetName + ", " + jobData.suburb + ", " + jobData.state + ", " + jobData.country
             propertyTypeLabel.text = jobData.jobType
             bedroomNumberLabel.text = "\(jobData.noOfPostion)"
             durationLabel.text = "\(jobData.salarySideTitle)"
@@ -174,7 +173,7 @@ extension PostView {
             stateLabel.text = buyAndSellData.state
             adLabel.text = buyAndSellData.description
             priceAmountLabel.text = "$\(String(format: "%.2f", buyAndSellData.price))"
-            location.text = buyAndSellData.state + ", " + buyAndSellData.country
+            location.text = buyAndSellData.buildingNo + ", " + buyAndSellData.streetName + ", "   + buyAndSellData.suburb + ", " + buyAndSellData.state + ", " + buyAndSellData.country
             propertyTypeLabel.text = buyAndSellData.productTypeLabel
             bedroomNumberLabel.text = "\(buyAndSellData.noOfItems)"
             bedroomImage.image = UIImage(named: "salesImage")

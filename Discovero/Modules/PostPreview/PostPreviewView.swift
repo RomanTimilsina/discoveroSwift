@@ -9,7 +9,6 @@ import UIKit
 
 class PostPreviewView : UIView{
     
-    
     var onChangeGradient: (() -> Void)?
     let postView = PostView()
     let headerView = DIHeaderView(title: "Post Preview", hasBack: true, hasBGColor: true )

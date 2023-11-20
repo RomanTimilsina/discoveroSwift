@@ -9,10 +9,9 @@ import UIKit
 
 class MyProfileView: UIView {
     
-    var onClickedAddress:  (() -> Void)?
-    var onClickedLanguage: (() -> Void)?
-    var onClickedGender:   (() -> Void)?
+    
     var onClickedLogOut:   (() -> Void)?
+    var onClickedDelete:   (() -> Void)?
     
     let header = DIHeaderView(title: "Account Details")
     let view = UIView()
@@ -23,7 +22,7 @@ class MyProfileView: UIView {
     let emailView = DICustomProfileView(titleText: "Email Address", text: "Tap here to add email", show: true)
     let phoneView = DICustomProfileView(titleText: "Phone Number", text: "+677-9851442275")
     let addressView = DICustomProfileView(titleText: "Address", text: "Frederick St,Broome", show: true)
-    let languagesView = DICustomProfileView(titleText: "Nationality", text: "Nepali",  show: true)
+    let languagesView = DICustomProfileView(titleText: "Languages", text: "Nepali",  show: true)
     var languageArray: [String]?
     let genderView = DICustomProfileView(titleText: "Gender", text: "Male", show: true)
     let adsView = DICustomProfileView(titleText: "My Ads", text: "", show: true)
@@ -31,16 +30,15 @@ class MyProfileView: UIView {
     let notificationView = DICustomProfileView(titleText: "Notification Configuration", text: "", show: true)
     let termsView = DICustomProfileView(titleText: "Terms and condition", text: "", show: true)
     let policyView = DICustomProfileView(titleText: "Privacy Policy", text: "", show: true)
-    let DeleteView = DICustomProfileView(titleText: "Delete Account", text: "")
+    let deleteLabel =   UILabel(text: "Delete Account", color: .red , font: OpenSans.regular, size: 14)
     let line = UIView(color: Color.gray700)
     let logoutLabel = UILabel(text: "Logout", color: Color.primary, font: OpenSans.regular, size: 14)
     
-    lazy var formStack = VerticalStackView(arrangedSubViews: [nameView,emailView,phoneView,addressView,languagesView,genderView,line,adsView,favouritesView,notificationView,termsView,policyView,DeleteView, logoutLabel], spacing: 24, distribution: .fill)
+    lazy var formStack = VerticalStackView(arrangedSubViews: [nameView,emailView,phoneView,addressView,languagesView,genderView,line,adsView,favouritesView,notificationView,termsView,policyView,deleteLabel, logoutLabel], spacing: 24, distribution: .fill)
     var countryName, stateName, suburbName, streetName, streetNo, buildingNo: String?
-
     
     let notification = ConfigureNotificationView()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .black
@@ -83,7 +81,7 @@ class MyProfileView: UIView {
     
     func removeLinesFromView() {
         for (index, view) in profileArray.enumerated() {
-                view.lineView.removeFromSuperview()
+            view.lineView.removeFromSuperview()
         }
     }
     
@@ -91,10 +89,18 @@ class MyProfileView: UIView {
         let logOutTapGestrue = UITapGestureRecognizer(target: self , action: #selector(handleLogOutTap))
         logoutLabel.addGestureRecognizer(logOutTapGestrue)
         logoutLabel.isUserInteractionEnabled = true
+        
+        let deleteTapGestrue = UITapGestureRecognizer(target: self , action: #selector(handleDeleteTap))
+        deleteLabel.addGestureRecognizer(deleteTapGestrue)
+        deleteLabel.isUserInteractionEnabled = true
     }
     
     @objc func handleLogOutTap() {
         onClickedLogOut?()
+    }
+    
+    @objc func handleDeleteTap() {
+        onClickedDelete?()
     }
 }
 
@@ -113,6 +119,7 @@ private extension MyProfileView{
         profileArray.append(favouritesView)
         profileArray.append(termsView)
         profileArray.append(policyView)
-        profileArray.append(DeleteView)
     }
 }
+
+

@@ -20,10 +20,10 @@ class ProfileItemVC: UIViewController  {
         super.viewWillAppear(animated)
         checkAndUpdateSaveButtonState()
         
-        currentView.emailTextField.titleLabel.text = "What's your \(onTitle ?? "")"
-        currentView.emailTextField.textField.placeholder = onPlaceholder ?? ""
-        currentView.emailTextField.textField.text = ""
-        currentView.emailTextField.textField.delegate = self
+        currentView.editTextField.titleLabel.text = "What's your \(onTitle ?? "")"
+        currentView.editTextField.textField.placeholder = onPlaceholder ?? ""
+        currentView.editTextField.textField.text = ""
+        currentView.editTextField.textField.delegate = self
     }
     
     override func viewDidLoad() {
@@ -50,7 +50,7 @@ class ProfileItemVC: UIViewController  {
     }
     
     private func checkAndUpdateSaveButtonState() {
-        if let text = currentView.emailTextField.textField.text {
+        if let text = currentView.editTextField.textField.text {
             if text.isEmpty {
                 currentView.saveButton.setInvalidState()
             } else {

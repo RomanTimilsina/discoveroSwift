@@ -37,7 +37,7 @@ class CreateJobsAdsView : UIView {
     let jobTypeLabel = DICustomProfileView(titleText: "Job Type", text: "", show: true, sideTitleString: "Tap to Choose")
     let productTypeLabel = DICustomProfileView(titleText: "Category of Product", text: "", show: true, sideTitleString: "Tap to Choose")
     let nextButton = DIButton(buttonTitle: "Next", height: 30)
-    var countryName, stateName, suburbName, propertyType: String?
+    var countryName, stateName, suburbName, streetName, streetNo, buildingNo, propertyType: String?
     
     
     override init(frame: CGRect) {
@@ -102,6 +102,7 @@ class CreateJobsAdsView : UIView {
         addSubview(nextButton)
         nextButton.anchor(top: nil, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 30, right: 12))
         nextButton.layer.cornerRadius = 5
+        nextButton.constraintHeight(constant: 50)
         
         coverButton.constraintWidth(constant: 100)
         coverButton.backgroundColor = .clear
@@ -127,14 +128,17 @@ class CreateJobsAdsView : UIView {
     
     @objc func handleNextButtonTap() {
         let jobModel = JobModel(adsTitle: titleView.textField.text ?? "",
-                                    description: descriptionsView.textField.text ?? "",
-                                    salary: Double(salaryTextField.text ?? "0.0") ?? 0.0,
-                                    salarySideTitle: salarySideTitle.text ?? "",
-                                    country: countryName ?? "",
-                                    state: stateName ?? "",
-                                    suburb: suburbName ?? "",
-                                    noOfPostion: selector.count,
-                                    jobType: jobTypeLabel.sideTitle.text ?? ""
+                                description: descriptionsView.textField.text ?? "",
+                                salary: Double(salaryTextField.text ?? "0.0") ?? 0.0,
+                                salarySideTitle: salarySideTitle.text ?? "",
+                                country: countryName ?? "",
+                                state: stateName ?? "",
+                                suburb: suburbName ?? "",
+                                streetName: streetName ?? "",
+                                streetNo: streetNo ?? "",
+                                buildingNo: buildingNo ?? "",
+                                noOfPostion: selector.count,
+                                jobType: jobTypeLabel.sideTitle.text ?? ""
         )
         let buyAndSell = BuySellModel(adsTitle: titleView.textField.text ?? "",
                                       description: descriptionsView.textField.text ?? "",
@@ -142,6 +146,9 @@ class CreateJobsAdsView : UIView {
                                       country: countryName ?? "",
                                       state: stateName ?? "",
                                       suburb: suburbName ?? "",
+                                      streetName: streetName ?? "",
+                                      streetNo: streetNo ?? "",
+                                      buildingNo: buildingNo ?? "",
                                       noOfItems: selector.count,
                                       productTypeLabel: productTypeLabel.sideTitle.text ?? ""
         )

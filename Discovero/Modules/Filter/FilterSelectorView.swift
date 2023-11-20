@@ -34,7 +34,7 @@ class FilterSelectorView: UIView{
         let rangeSlider = MultiSlider()
         rangeSlider.minimumValue = 0
         rangeSlider.maximumValue = 5000 + 2.45
-        rangeSlider.value = [ 0, 5000 + 2.45]
+        rangeSlider.value = [ 0, 5000 ]
         rangeSlider.isVertical = false
         rangeSlider.outerTrackColor = .lightGray
         rangeSlider.valueLabelColor = .white
@@ -123,12 +123,6 @@ class FilterSelectorView: UIView{
         rightKnob = rightKnob - 2.45
         rightKnob = round(rightKnob  * 100) / 100
         
-//        if rightKnob < 250 {
-//            rightKnob = round(250 * 100) / 100
-//        }
-//        rightKnob = rightKnob - 250
-//        rightKnob = round(rightKnob  * 100) / 100
-        
         priceRange.text = "$\(leftknob) to $\(rightKnob )"
         minCost = leftknob
         maxCost = rightKnob
@@ -198,7 +192,8 @@ class FilterSelectorView: UIView{
                                    noOfBedrooms: noOfBedrooms,
                                    noOfBathrooms: noOfBathrooms,
                                    noOfParkings: noOfParkings,
-                                   minCost: minCost, maxCost: maxCost,
+                                   minCost: minCost, 
+                                   maxCost: maxCost,
                                    languageArray: languageArray))
     }
     
@@ -207,7 +202,7 @@ class FilterSelectorView: UIView{
     }
 }
 
-// Mark: Popup cell when propertyTypeLabel is tapped
+// Mark: Popup cells
 private extension FilterSelectorView {
     
     private func addInfoMenu() -> UIMenu {
