@@ -18,16 +18,16 @@ struct RoomOffer {
     let comments, favorites: [String]
 }
 
-struct UserInfo {
+struct UserInfo:Decodable {
     let name, phoneNo: String
     let languagesSpeaks, uid: [String]
 }
 
-struct Location {
+struct Location:Decodable {
     let buildingNo, country, state, streetName, streetNo, suburb: String
 }
 
-struct Comment {
+struct Comment:Decodable {
     let comment, commentID, commentedBy, parentCommentID, postID: String
     let commentTime: TimeInterval
     let replies: [Comment]

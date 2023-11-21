@@ -41,12 +41,12 @@ class RoomBodyView: UIView {
     
     let roomOfferView = UIView()
     let roomWantedView = UIView()
-    let homeImg = UIImageView(image: UIImage(named: "homeImg"),contentMode: .scaleAspectFit, clipsToBounds: true)
+    let emptyImage = UIImageView(image: UIImage(named: "homeImg"),contentMode: .scaleAspectFit, clipsToBounds: true)
     let createAdLabel = UILabel(text: "Create your first ad", font: OpenSans.semiBold, size: 16, alignment: .center)
     let adDescriptionLabel = UILabel(text: "There seems to be no room available at the moment in your location. ", font: OpenSans.regular, size: 14,numberOfLines: 0, alignment: .center)
     let createAdButton = DIButton(buttonTitle: "Create your first ad",textSize: 14)
     
-    lazy var emptyStackView = VerticalStackView(arrangedSubViews: [homeImg, createAdLabel,adDescriptionLabel, createAdButton], spacing: 30)
+    lazy var emptyStackView = VerticalStackView(arrangedSubViews: [emptyImage, createAdLabel,adDescriptionLabel, createAdButton], spacing: 30)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

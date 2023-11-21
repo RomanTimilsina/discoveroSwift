@@ -46,7 +46,7 @@ class FilterSelectorView: UIView{
     }()
     
     var countryName, stateName, suburbName, propertyType, paymentType, jobType: String?
-    var noOfBedrooms, noOfBathrooms, noOfParkings: Int?
+    var noOfBedrooms, noOfBathrooms, noOfParkings, noOfPositions: Int?
     var minCost, maxCost: Double?
     var languageArray: [String]?
     
@@ -192,7 +192,8 @@ class FilterSelectorView: UIView{
                                    noOfBedrooms: noOfBedrooms,
                                    noOfBathrooms: noOfBathrooms,
                                    noOfParkings: noOfParkings,
-                                   minCost: minCost, 
+                                   noOfPositions: noOfPositions,
+                                   minCost: minCost,
                                    maxCost: maxCost,
                                    languageArray: languageArray))
     }

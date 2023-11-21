@@ -18,16 +18,8 @@ class RoomVC : UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
-        
-//        FireStoreDatabaseHelper().getUserDataFromDefaults()
-        
-        self.currentView.bodyView.emptyStackView.isHidden = true
-//        self.currentView.headerTab.isHidden = true
-        self.currentView.notification.isHidden = false
-        
         setupChildController()
         observeViewEvents()
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -40,8 +32,8 @@ class RoomVC : UIViewController{
         guard let roomOfferVC = roomOfferVC else { return }
         add(roomOfferVC, innerView: currentView.bodyView.roomOfferView)
         roomOfferVC.view.fillSuperview()
-
-
+        
+        
         roomWantedVC = RoomWantedVC()
         guard let roomWantedVC = roomWantedVC else { return }
         add(roomWantedVC, innerView: currentView.bodyView.roomWantedView)
@@ -62,7 +54,7 @@ class RoomVC : UIViewController{
             self.currentView.bodyView.emptyStackView.isHidden = true
             self.currentView.headerTab.isHidden = false
         }
-
+        
         currentView.headerTab.onWantedClicked = { [weak self] in
             guard let self else { return }
             self.currentView.bodyView.emptyStackView.isHidden = true

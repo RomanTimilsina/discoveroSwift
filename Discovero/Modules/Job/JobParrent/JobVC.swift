@@ -14,22 +14,12 @@ class JobVC : UIViewController{
     
     var jobOfferVC:  JobOfferVC?
     var jobWantedVC : JobWantedVC?
-
-    var roomOfferCount: Int?
-    var roomWantedCount: Int?
-    
-    override func viewWillAppear(_ animated: Bool) {
-//        self.currentView.bodyView.jobOfferView.isHidden = false
-//        self.currentView.bodyView.jobWantedView.isHidden = true
-//        self.currentView.bodyView.emptyStackView.isHidden = true
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
         setupChildController()
         observeViewEvents()
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -67,7 +67,6 @@ class FilterView: UIView {
         let filterTap = UITapGestureRecognizer(target: self, action: #selector(handleFilter))
         filterStack.addGestureRecognizer(filterTap)
         filterStack.isUserInteractionEnabled = true
-        //        filtersLabel.addTarget(self, action: #selector(tapFilter), for: .touchUpInside)
     }
     
     @objc func handleFilter() {

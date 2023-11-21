@@ -11,7 +11,7 @@ class JobWantedVC: UIViewController, UISheetPresentationControllerDelegate{
     
     let currentView = JobWantedView()
     
-    var jobWanted: [RoomOffer] = []
+    var jobWanted: [JobOffer] = []
     var fireStore = FireStoreDatabaseHelper()
     
     let filterVC = FilterSelectorVC()
@@ -71,15 +71,15 @@ extension JobWantedVC {
     func getUsersDataFromDefaults() {
         fireStore.getUserDataFromDefaults { [weak self] userData in
             guard let self, let userData else { return }
-            fetchJobOfferedData(country: userData.country, state: userData.locationDetail.state)
+            fetchJobOfferedData(filterModel: FilterModel(countryName: userData.country, stateName: userData.locationDetail.state))
         }
     }
     
-    func fetchJobOfferedData(country: String, state: String) {
+    func fetchJobOfferedData(filterModel: FilterModel) {
         showHUD()
-        fireStore.getRoomOffered(isRoomOffer: false, filterModel: FilterModel(countryName: country, stateName: state)) { [weak self] roomOffersModel in
+        fireStore.getJobsOffered(isJobOffer: false, filterModel: filterModel){ [weak self] jobOffersModel in
             guard let self else { return }
-            self.jobWanted.append(contentsOf: roomOffersModel)
+            self.jobWanted.append(contentsOf:jobOffersModel)
             self.hideHUD()
             self.currentView.adsTable.reloadData()
             self.currentView.filterSection.numberOfOffers.text = "\(self.jobWanted.count) wanted"
@@ -90,14 +90,14 @@ extension JobWantedVC {
 //MARK: Table Delegates
 extension JobWantedVC: UITableViewDelegate, UITableViewDataSource  {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return roomWanted.count
+        return jobWanted.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: JobTableViewCell().identifier, for: indexPath) as! JobTableViewCell
         cell.selectionStyle = .none
         
-        let data = roomWanted[indexPath.row]
+        let data = jobWanted[indexPath.row]
         cell.configureData(data: data)
         
         cell.onLikeClicked = { [weak self] in
@@ -147,14 +147,14 @@ private extension JobWantedVC {
             //            self.currentView.adsTable.reloadData()
             self.showHUD()
             
-            fireStore.getRoomOffered(isRoomOffer: false, filterModel: filterModel)
-            { [weak self] roomOffersModel in
+            fireStore.getJobsOffered(isJobOffer: false, filterModel: filterModel)
+            { [weak self] jobOffersModel in
                 guard let self else { return }
                 DispatchQueue.main.async {
-                    self.jobWanted.append(contentsOf: roomOffersModel)
+                    self.jobWanted.append(contentsOf: jobOffersModel)
                     self.hideHUD()
                     self.currentView.adsTable.reloadData()
-                    self.currentView.filterSection.numberOfOffers.text = "\(self.jobWanted.count) offers"
+                    self.currentView.filterSection.numberOfOffers.text = "\(self.jobWanted.count) wanted"
                 }
                 self.hideHUD()
                 self.currentView.filterSection.filterNumber.text = "\(filterModel.filterCount ?? 0)"

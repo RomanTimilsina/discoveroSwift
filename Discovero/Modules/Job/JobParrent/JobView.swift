@@ -38,12 +38,12 @@ class JobBodyView: UIView {
     
     let jobOfferView = UIView()
     let jobWantedView = UIView()
-    let image = UIImageView(image: UIImage(named: ""),contentMode: .scaleAspectFit, clipsToBounds: true)
+    let emptyImage = UIImageView(image: UIImage(named: ""),contentMode: .scaleAspectFit, clipsToBounds: true)
     let createAdLabel = UILabel(text: "Create your first ad", font: OpenSans.semiBold, size: 16, alignment: .center)
     let adDescriptionLabel = UILabel(text: "There seems to be no job available at the moment in your location. ", font: OpenSans.regular, size: 14,numberOfLines: 0, alignment: .center)
     let createAdButton = DIButton(buttonTitle: "Create your first ad",textSize: 14)
     
-    lazy var emptyStackView = VerticalStackView(arrangedSubViews: [image, createAdLabel,adDescriptionLabel, createAdButton], spacing: 30)
+    lazy var emptyStackView = VerticalStackView(arrangedSubViews: [emptyImage, createAdLabel,adDescriptionLabel, createAdButton], spacing: 30)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

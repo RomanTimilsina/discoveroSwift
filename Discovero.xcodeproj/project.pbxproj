@@ -82,6 +82,7 @@
 		840A6A462AFA153600FD6E25 /* JobTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840A6A452AFA153600FD6E25 /* JobTableViewCell.swift */; };
 		840A6A482AFA15CB00FD6E25 /* JobOfferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840A6A472AFA15CB00FD6E25 /* JobOfferView.swift */; };
 		840A6A4A2AFA15DB00FD6E25 /* JobOfferVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840A6A492AFA15DB00FD6E25 /* JobOfferVC.swift */; };
+		8490BDDA2B0B6A9B00072F0B /* JobOfferModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8490BDD92B0B6A9B00072F0B /* JobOfferModel.swift */; };
 		8496C4DD2AEE22A80017CC0A /* DiPickerAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496C4DC2AEE22A80017CC0A /* DiPickerAddView.swift */; };
 		8496C4DF2AEE22DB0017CC0A /* DiPickerAddVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496C4DE2AEE22DB0017CC0A /* DiPickerAddVC.swift */; };
 		8496C4E12AEE5E0A0017CC0A /* CustomNumberSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496C4E02AEE5E0A0017CC0A /* CustomNumberSelector.swift */; };
@@ -228,6 +229,7 @@
 		840A6A452AFA153600FD6E25 /* JobTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobTableViewCell.swift; sourceTree = "<group>"; };
 		840A6A472AFA15CB00FD6E25 /* JobOfferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobOfferView.swift; sourceTree = "<group>"; };
 		840A6A492AFA15DB00FD6E25 /* JobOfferVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobOfferVC.swift; sourceTree = "<group>"; };
+		8490BDD92B0B6A9B00072F0B /* JobOfferModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobOfferModel.swift; sourceTree = "<group>"; };
 		8496C4DC2AEE22A80017CC0A /* DiPickerAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiPickerAddView.swift; sourceTree = "<group>"; };
 		8496C4DE2AEE22DB0017CC0A /* DiPickerAddVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiPickerAddVC.swift; sourceTree = "<group>"; };
 		8496C4E02AEE5E0A0017CC0A /* CustomNumberSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNumberSelector.swift; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 				0491EFF12ACC148600E0803A /* RoomOfferModel.swift */,
 				04BA4C672AD3C45800029E5A /* AllUserData.swift */,
 				04A91E7A2AD7EF4E0037920D /* CountryStateModel.swift */,
+				8490BDD92B0B6A9B00072F0B /* JobOfferModel.swift */,
 			);
 			path = FireStoreModels;
 			sourceTree = "<group>";
@@ -1047,6 +1050,7 @@
 				E0FE05C32AA439C1001DBDF5 /* AppDelegate.swift in Sources */,
 				04967AB12ABAC9E40035B359 /* FilterSelectorView.swift in Sources */,
 				049BEF602AA593EA00ED2B58 /* DIPageViewController.swift in Sources */,
+				8490BDDA2B0B6A9B00072F0B /* JobOfferModel.swift in Sources */,
 				04A168B52AA854400065F607 /* DIPickerVC.swift in Sources */,
 				E0FE063F2AA43D1B001DBDF5 /* TimeFormatter.swift in Sources */,
 				E0FE05C52AA439C1001DBDF5 /* SceneDelegate.swift in Sources */,

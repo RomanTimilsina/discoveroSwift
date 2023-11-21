@@ -53,9 +53,9 @@ class JobTableViewCell: UITableViewCell {
     // Ads middle part
     let adLabel = UILabel(text: "", font: OpenSans.semiBold, size: 16, numberOfLines: 0, alignment: .left)
     let dollarImageView = UIImageView(image: UIImage(named: "dollar"), contentMode: .scaleAspectFit, clipsToBounds: true)
-    let priceAmountLabel = UILabel(text: "", color: Color.primary, font: OpenSans.semiBold, size: 14)
-    let durationLabel = UILabel(text: "Annually", font: OpenSans.regular, size: 14)
-    lazy var priceStack = HorizontalStackView(arrangedSubViews: [dollarImageView, priceAmountLabel, durationLabel, UIView()], spacing: 6)
+    let salaryLabel = UILabel(text: "dfghj", color: Color.primary, font: OpenSans.semiBold, size: 14)
+    let paymentTypeLabel = UILabel(text: "Annually", font: OpenSans.regular, size: 14)
+    lazy var priceStack = HorizontalStackView(arrangedSubViews: [dollarImageView, salaryLabel, paymentTypeLabel, UIView()], spacing: 6)
     
     let placeImage = UIImageView(image:UIImage(named: "place") ,contentMode: .scaleAspectFit, clipsToBounds: true)
     let location = UILabel(text: "", font: OpenSans.regular, size: 14)
@@ -162,7 +162,7 @@ class JobTableViewCell: UITableViewCell {
 
 // MARK: Cell configuration
 extension JobTableViewCell {
-    func configureData(data: RoomOffer) {
+    func configureData(data: JobOffer) {
         
         namePrefixLabel.text = "\(namePrefix(name: data.userInfo.name))"
         profileImageView.isHidden = true
@@ -170,15 +170,17 @@ extension JobTableViewCell {
         countryFlageImage.image = UIImage(named: data.location.country)
         stateLabel.text = data.location.state
         uploadedTime.text = "Posted \(formatDate(from: (data.timestamp)))"
-        //        noOfLikes.text = "\(data.likesCount)"
+//        noOfLikes.text = "\(data.likesCount)"
         adLabel.text = data.description
-        priceAmountLabel.text = "$\(String(format: "%.2f", data.price))"
-        //        location.text = data.location.state + ", " + data.location.country
-        jobNumberLabel.text = "\(data.noOfBedroom)"
-        //        viewCount.text = "\(data.viewCount < 10 ? " " : "")\(data.viewCount)"
+        debugPrint(data.salary)
+        salaryLabel.text = "$\(data.salary)"
+        location.text = data.location.state + ", " + data.location.country
+        jobNumberLabel.text = "\(data.noOfPositions)"
+        viewCount.text = "\(data.viewCount < 10 ? " " : "")\(data.viewCount)"
         commentCount.text = "\(data.comments.count)"
+        jobTypeLabel.text = "\(data.jobType)"
+        paymentTypeLabel.text = "\(data.paymentType)"
     }
-
 }
 
 // MARK: Formatting data

@@ -41,10 +41,13 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
     }
     
     func setAsJobFilter() {
-        currentView.bedroomSelector.removeFromSuperview()
-        currentView.bathroomSelector.removeFromSuperview()
-        currentView.parkingSelector.removeFromSuperview()
-        currentView.propertyTypeLabel.removeFromSuperview()
+        currentView.bedroomSelector.isHidden = true
+        currentView.bedroomSelector.constraintHeight(constant: 0)
+        currentView.bathroomSelector.isHidden = true
+        currentView.bathroomSelector.constraintHeight(constant: 0)
+        currentView.parkingSelector.isHidden = true
+        currentView.parkingSelector.constraintHeight(constant: 0)
+        currentView.propertyTypeLabel.isHidden = true
     }
     
     func setAsRoomFilter() {

@@ -44,19 +44,19 @@ class RoomOfferVC: UIViewController, UISheetPresentationControllerDelegate {
     
     func observeEvents() {
         //MARK: Pull to refresh need to be done
-//                currentView.handleRoomRefresh = { [weak self] in
-//        
-//                    self?.fireStore.getRoomOffered { [weak self] rooms in
-//                        self?.roomOffers.removeAll()
-//                        guard let self = self else { return }
-//                        self.roomOffers.append(contentsOf: rooms)
-//        
-//                        DispatchQueue.main.async {
-//                            self.roomView.adsTable.reloadData()
-//                        }
-//                        roomView.refreshControl.endRefreshing()
-//                    }
-//                }
+        //                currentView.handleRoomRefresh = { [weak self] in
+        //
+        //                    self?.fireStore.getRoomOffered { [weak self] rooms in
+        //                        self?.roomOffers.removeAll()
+        //                        guard let self = self else { return }
+        //                        self.roomOffers.append(contentsOf: rooms)
+        //
+        //                        DispatchQueue.main.async {
+        //                            self.roomView.adsTable.reloadData()
+        //                        }
+        //                        roomView.refreshControl.endRefreshing()
+        //                    }
+        //                }
         
         currentView.filterSection.ontFilterClick = { [weak self] in
             guard let self else { return }
@@ -116,7 +116,7 @@ extension RoomOfferVC: UITableViewDelegate, UITableViewDataSource  {
         
         let data = roomOffers[indexPath.row]
         cell.configureData(data: data)
- 
+        
         cell.onLikeClicked = { [weak self] in
             guard let self else { return}
             //on like clicked
@@ -140,7 +140,6 @@ extension RoomOfferVC: UITableViewDelegate, UITableViewDataSource  {
         return cell
     }
     
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 254
     }
@@ -161,7 +160,6 @@ private extension RoomOfferVC {
         filterVC.onSearchClick = { [weak self] filterModel in
             guard let self else { return }
             self.roomOffers.removeAll()
-//            self.currentView.adsTable.reloadData()
             self.showHUD()
             
             fireStore.getRoomOffered(isRoomOffer: true, filterModel: filterModel)

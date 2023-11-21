@@ -11,7 +11,7 @@ class JobOfferVC: UIViewController, UISheetPresentationControllerDelegate {
     
     let currentView = JobOfferView()
     
-    var jobOffers: [RoomOffer] = []
+    var jobOffers: [JobOffer] = []
     var fireStore = FireStoreDatabaseHelper()
     
     let addPicker = DiPickerAddVC()
@@ -29,6 +29,9 @@ class JobOfferVC: UIViewController, UISheetPresentationControllerDelegate {
         setupTable()
         observeEvents()
         getUsersDataFromDefaults()
+//        fireStore.getJobsOffered(isJobOffer: true, filterModel: FilterModel()) { model in
+//            debugPrint(model)
+//        }
     }
     
     override func loadView() {
@@ -42,21 +45,6 @@ class JobOfferVC: UIViewController, UISheetPresentationControllerDelegate {
     }
     
     func observeEvents() {
-        //MARK: Pull to refresh need to be done
-        //        roomView.handleRoomRefresh = { [weak self] in
-        //
-        //            self?.fireStore.getRoomOffered { [weak self] rooms in
-        //                self?.roomOffers.removeAll()
-        //                guard let self = self else { return }
-        //                self.roomOffers.append(contentsOf: rooms)
-        //
-        //                DispatchQueue.main.async {
-        //                    self.roomView.adsTable.reloadData()
-        //                }
-        //                roomView.refreshControl.endRefreshing()
-        //            }
-        //        }
-        
         currentView.filterSection.ontFilterClick = { [weak self] in
             guard let self else { return }
             goToFilterPage()
@@ -77,28 +65,26 @@ private extension JobOfferVC {
         if let sheet = addPicker.sheetPresentationController {
             sheet.prefersGrabberVisible = true
             sheet.preferredCornerRadius = 30
-            sheet.detents = [.medium(), .custom { _ in return 200}]
+            sheet.detents = [.medium(), .custom { _ in return 220}]
             sheet.delegate = self
         }
         present(addPicker, animated: true, completion: nil)
     }
     
     func getUsersDataFromDefaults() {
-        //        let users = CurrentUser.user.data
-        func getUsersDataFromDefaults() {
-            FireStoreDatabaseHelper().getUserDataFromDefaults { [weak self] userData in
-                guard let self, let userData else { return }
-                
-                fetchJobOfferedData(filterModel: FilterModel(countryName: userData.country, stateName: userData.locationDetail.state))                }
+        fireStore.getUserDataFromDefaults { [weak self] userData in
+            guard let self, let userData else { return }
+            
+            fetchJobOfferedData(filterModel: FilterModel(countryName: userData.country, stateName: userData.locationDetail.state))
         }
     }
     
     func fetchJobOfferedData(filterModel: FilterModel) {
         showHUD()
         self.jobOffers.removeAll()
-        fireStore.getRoomOffered(isRoomOffer: true, filterModel: filterModel) { [weak self] roomOffersModel in
+        fireStore.getJobsOffered(isJobOffer: true, filterModel: filterModel) { [weak self] jobOffersModel in
             guard let self else { return }
-            self.jobOffers.append(contentsOf: roomOffersModel)
+            self.jobOffers.append(contentsOf: jobOffersModel)
             self.hideHUD()
             self.currentView.adsTable.reloadData()
             self.currentView.filterSection.numberOfOffers.text = "\(self.jobOffers.count) offers"
@@ -109,14 +95,14 @@ private extension JobOfferVC {
 //MARK: Table Delegates
 extension JobOfferVC: UITableViewDelegate, UITableViewDataSource  {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return roomOffers.count
+        return jobOffers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: JobTableViewCell().identifier, for: indexPath) as! JobTableViewCell
         cell.selectionStyle = .none
         
-        let data = roomOffers[indexPath.row]
+        let data = jobOffers[indexPath.row]
         cell.configureData(data: data)
         
         cell.onLikeClicked = { [weak self] in
@@ -161,14 +147,13 @@ private extension JobOfferVC {
         filterVC.onSearchClick = { [weak self] filterModel in
             guard let self else { return }
             self.jobOffers.removeAll()
-            //            self.currentView.adsTable.reloadData()
             self.showHUD()
             
-            fireStore.getRoomOffered(isRoomOffer: true, filterModel: filterModel)
-            { [weak self] roomOffersModel in
+            fireStore.getJobsOffered(isJobOffer: true, filterModel: FilterModel() )
+            { [weak self] jobOffersModel in
                 guard let self else { return }
                 DispatchQueue.main.async {
-                    self.jobOffers.append(contentsOf: roomOffersModel)
+                    self.jobOffers.append(contentsOf: jobOffersModel)
                     self.hideHUD()
                     self.currentView.adsTable.reloadData()
                     self.currentView.filterSection.numberOfOffers.text = "\(self.jobOffers.count) offers"

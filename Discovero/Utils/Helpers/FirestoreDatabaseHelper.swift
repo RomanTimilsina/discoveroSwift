@@ -37,6 +37,8 @@ struct UsersInfoList {
 
 var roomOffers: [RoomOffer] = []
 var roomWanted: [RoomOffer] = []
+var jobOffers: [JobOffer] = []
+var jobWanted: [JobOffer] = []
 var lastDocument: DocumentSnapshot?
 var next: Query?
 var batchSize = 33
@@ -47,10 +49,10 @@ var loopOnce = true
 
 struct FireStoreDatabaseHelper {
     
-//    var handleNextPage: ((UIViewController) -> Void)?
-//    var country, state: String?
-//    var countryName: String = "", stateName: String = "", suburb: String = "",
-//        property: String = "",languages: [String] = [], noOfBedrooms: Int = 0, noOfBathrooms: Int = 0, noOfParkings: Int = 0, min: Double = 0, max: Double = 5000
+    //    var handleNextPage: ((UIViewController) -> Void)?
+    //    var country, state: String?
+    //    var countryName: String = "", stateName: String = "", suburb: String = "",
+    //        property: String = "",languages: [String] = [], noOfBedrooms: Int = 0, noOfBathrooms: Int = 0, noOfParkings: Int = 0, min: Double = 0, max: Double = 5000
     
     func checkAuthentication(uid: String, phone: String, completion: @escaping (String, String) -> Void) {
         Firestore.firestore().collection("Users").getDocuments { query, error in
@@ -124,7 +126,7 @@ struct FireStoreDatabaseHelper {
             UserDefaultsHelper.setmodel(value: userData, key: .userData)
         }
     }
-
+    
     func getUserDataFromDefaults(completion: @escaping (UserData?) -> Void) {
         completion(UserDefaultsHelper.getModelData(.userData))
     }
@@ -153,8 +155,8 @@ struct FireStoreDatabaseHelper {
         }
         
         if let propertyType = filterModel.propertyType {
-                fireStoreCollection = fireStoreCollection
-                    .whereField("propertyType", isEqualTo: propertyType)
+            fireStoreCollection = fireStoreCollection
+                .whereField("propertyType", isEqualTo: propertyType)
         }
         
         if let languageArray = filterModel.languageArray {
@@ -184,10 +186,9 @@ struct FireStoreDatabaseHelper {
                 .whereField("location.state", isEqualTo: stateName)
         }
         
-        
         roomOffers.removeAll()
         roomWanted.removeAll()
-
+        
         fireStoreCollection
             .getDocuments { query, error in
                 guard let query = query else {
@@ -240,7 +241,7 @@ struct FireStoreDatabaseHelper {
                         suburb: locationSuburb ?? ""
                     )
                     
-                    let roomOffer = RoomOffer( 
+                    let roomOffer = RoomOffer(
                         id: id ?? "",
                         title: title ?? "",
                         description: description ?? "",
@@ -266,6 +267,164 @@ struct FireStoreDatabaseHelper {
                 }
                 completion(isRoomOffer ? roomOffers : roomWanted)
             }
+    }
+    
+    func getJobsOffered(isJobOffer: Bool,
+                        filterModel: FilterModel,
+                        completion: @escaping ([JobOffer]) -> Void) {
+        
+        var fireStoreCollection =  Firestore.firestore().collection(isJobOffer ? "JobOffer" : "JobWanted")
+            .whereField("location.state", isEqualTo: filterModel.stateName ?? "")
+            .whereField("location.country", isEqualTo: filterModel.countryName ?? "")
+        
+        if filterModel.noOfPositions ?? 0 > 0 {
+            fireStoreCollection = fireStoreCollection
+                .whereField("noOfPositions", isEqualTo: filterModel.noOfPositions ?? 0)
+        }
+        
+        if let paymentType = filterModel.paymentType {
+            fireStoreCollection = fireStoreCollection
+                .whereField("paymentType", isEqualTo: paymentType)
+        }
+        
+        if let jobType = filterModel.jobType {
+            fireStoreCollection = fireStoreCollection
+                .whereField("jobType", isEqualTo: jobType)
+        }
+        
+        if let languageArray = filterModel.languageArray {
+            if !languageArray.isEmpty {
+                fireStoreCollection = fireStoreCollection
+                    .whereField("userInfo.languagesSpeaks", arrayContainsAny: languageArray )
+            }
+        }
+        //MARK: isGreaterThan should be isGreaterThanOrEqualTo
+        if let minCost = filterModel.minCost{
+            fireStoreCollection = fireStoreCollection
+                .whereField("price", isGreaterThanOrEqualTo: minCost-0.1)
+        }
+        //MARK: isLessThan should be isLessThanOrEqualTo
+        if let maxCost = filterModel.maxCost {
+            fireStoreCollection = fireStoreCollection
+                .whereField("price", isLessThanOrEqualTo: maxCost+0.1)
+        }
+        
+        if let countryName = filterModel.countryName {
+            fireStoreCollection = fireStoreCollection
+                .whereField("location.country", isEqualTo: countryName)
+        }
+        
+        if let stateName = filterModel.stateName {
+            fireStoreCollection = fireStoreCollection
+                .whereField("location.state", isEqualTo: stateName)
+        }
+        
+        jobOffers.removeAll()
+        jobWanted.removeAll()
+        
+        Firestore.firestore().collection(isJobOffer ?  "JobOffer" : "JobWanted").getDocuments { query, error in
+            guard let query = query else {
+                debugPrint("Error retrieving job offers: \(error.debugDescription)")
+                return
+            }
+            
+            for (_, document) in query.documents.enumerated() {
+                
+                let data = document.data()
+                let id = data["id"] as? String
+                let title = data["title"] as? String
+                let description = data["description"] as? String
+                let salary = data["salary"] as? Double
+                let positions = data["noOfPositons"] as? Int
+                let jobType = data["jobType"] as? String
+                let timestamp = data["timestamp"] as? TimeInterval
+                let viewCount = data["viewCount"] as? Int
+                let commentCount = data["commentCount"] as? Int
+                let isAnonymous = data["isAnonymous"] as? Bool
+                let userInfoData = data["userInfo"] as? [String: Any]
+                let locationData = data["location"] as? [String: String]
+                let comments = data["comments"] as? [String]
+                let favorites = data["favorites"] as? [String]
+                let viewCountArray = data["viewCountArray"] as? [String]
+                let adType = data["adType"] as? String
+                let expirationDate = data["expirationDate"] as? TimeInterval
+                let isSoldOut = data["isSoldOut"] as? Bool
+                let paymentType = data["paymentType"] as? String
+                let lastUpdated = data["lastUpdated"] as? TimeInterval
+                
+                let userInfoName = userInfoData?["name"] as? String
+                let userInfoPhoneNo = userInfoData?["phoneNo"] as? String
+                let userInfoUid = userInfoData?["uid"] as? String
+                let userInfoLanguagesSpeaks = userInfoData?["languagesSpeaks"] as? [String]
+                
+                let locationBuildingNo = locationData?["buildingNo"]
+                let locationCountry = locationData?["country"]
+                let locationState = locationData?["state"]
+                let locationStreetName = locationData?["streetName"]
+                let locationStreetNo = locationData?["streetNo"]
+                let locationSuburb = locationData?["suburb"]
+                
+                let userInfo = UserInfos(
+                    name: userInfoName ?? "",
+                    phoneNo: userInfoPhoneNo ?? "",
+                    uid: userInfoUid ?? "",
+                    languagesSpeaks: userInfoLanguagesSpeaks ?? []
+                )
+                
+                let location = Location(
+                    buildingNo: locationBuildingNo ?? "",
+                    country: locationCountry ?? "",
+                    state: locationState ?? "",
+                    streetName: locationStreetName ?? "",
+                    streetNo: locationStreetNo ?? "",
+                    suburb: locationSuburb ?? ""
+                )
+                
+                let jobOffer = JobOffer(
+                    id: id ?? "",
+                    title: title ?? "",
+                    description: description ?? "",
+                    salary: Int(salary ?? 0) ,
+                    noOfPositions: positions ?? 0,
+                    jobType: jobType ?? "",
+                    timestamp: timestamp ?? 0,
+                    viewCount: viewCount ?? 0,
+                    commentCount: commentCount ?? 0,
+                    isAnonymous: isAnonymous ?? false,
+                    userInfo: userInfo,
+                    location: location,
+                    comments: comments ?? [],
+                    favorites: favorites ?? [],
+                    viewCountArray: viewCountArray ?? [],
+                    adType: adType ?? "",
+                    expirationDate: expirationDate ?? 0,
+                    isSoldOut: isSoldOut ?? false,
+                    paymentType: paymentType ?? "",
+                    lastUpdated: lastUpdated ?? 0
+                )
+                if isJobOffer {
+                    jobOffers.append(jobOffer)
+                } else {
+                    jobWanted.append(jobOffer)
+                }
+                
+                //                do {
+                //                    let jsonData = try JSONSerialization.data(withJSONObject: data)
+                //                    let decoder = JSONDecoder()
+                //                    let jobOffer = try decoder.decode(JobOffer.self, from: jsonData)
+                //
+                //                    if isJobOffer {
+                //                        roomOffers.append(jobOffer)
+                //                    } else {
+                //                        roomWanted.append(jobOffer)
+                //                    }
+                //                } catch {
+                //                    print("Error decoding JSON: \(error)")
+                //                }
+            }
+            
+            completion(isJobOffer ? jobOffers : jobWanted)
+        }
     }
     
     func getCountryWithState(completion: @escaping ([CountryStateModel]) -> Void) {
