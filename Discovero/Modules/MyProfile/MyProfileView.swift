@@ -14,7 +14,6 @@ class MyProfileView: UIView {
     var onClickedDelete:   (() -> Void)?
     
     let header = DIHeaderView(title: "Account Details")
-    let view = UIView()
     let scrollView = UIScrollView()
     var profileArray = [DICustomProfileView]()
     let noAvatarImage = UIImageView(image: UIImage(named: "noAvatarImage"),contentMode: .scaleAspectFit, clipsToBounds: true)
@@ -52,14 +51,10 @@ class MyProfileView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupView () {
-        addSubview(view)
-        view.anchor(top: topAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0 ))
-        view.backgroundColor = Color.gray900
-        
+    func setupView() {
         addSubview(header)
-        header.anchor(top: view.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-        header.constraintHeight(constant: 40)
+        header.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        header.constraintHeight(constant: 50)
         
         addSubview(scrollView)
         scrollView.anchor(top: header.bottomAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 30, right: 0))

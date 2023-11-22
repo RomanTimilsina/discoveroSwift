@@ -31,12 +31,9 @@ class CommentsPageView: UIView {
     let messageImageView = UIImageView(image: UIImage(named: "chat"), contentMode: .scaleAspectFit, clipsToBounds: true)
     let messageLabel = UILabel(text: "Message", font: OpenSans.semiBold, size: 14)
     lazy var messageStack = HorizontalStackView(arrangedSubViews: [messageImageView, messageLabel], spacing: 10, distribution: .fillProportionally)
-    let commentsImageView = UIImageView(image: UIImage(named: "comments"), contentMode: .scaleAspectFit, clipsToBounds: true)
-    let commentsLabel = UILabel(text: "Comments", font: OpenSans.semiBold, size: 14)
     let commentCount = UILabel(text: "6", color: Color.appBlack, font: OpenSans.semiBold, size: 12)
     let circleView = UIView(color: Color.primary, cornerRadius: 7)
-    lazy var commentsStack = HorizontalStackView(arrangedSubViews: [commentsImageView, commentsLabel, UIView()], spacing: 10)
-    lazy var adFooterStack = HorizontalStackView(arrangedSubViews: [callStack, messageStack, commentsStack], distribution: .fillEqually)
+    lazy var adFooterStack = HorizontalStackView(arrangedSubViews: [callStack, messageStack, UIView()], distribution: .fillEqually)
     // Ads middle part
     let adLabel = UILabel(text: "2 Big Room with attached bath room and parking in Sydney", font: OpenSans.semiBold, size: 16, numberOfLines: 0, alignment: .left)
     lazy var adDescritionText = "Room available at Hurstbille approximately 3-4 mins walk to the hurstville station, in built wardrobe separate bathroom, other bills. Please contact 0411778293, 0423728188(call or text) for details, we heartly welcome only to non smokers and drinkerswardrobe separate bathroom, other bills. Please contact 0411778293, 0423728188(call or text) for details, we heartly welcome only to non smokers and drinkerswardrobe separate bathroom, other bills. Please contact 0411778293, 0423728188(call or text) for details, we heartly welcome onwardrobe separate bathroom, other bills."
@@ -71,8 +68,11 @@ class CommentsPageView: UIView {
     let comment = CustomComments()
     let comment2 = CustomComments(isReply: true)
     lazy var commentArray = [comment, comment2]
+    let emptyCommentImage = UIImageView(image: UIImage(named: "largecomment"),contentMode: .scaleAspectFit, clipsToBounds: true)
+    let emptyCommentlabel = UILabel(text: "No comments yet", font: OpenSans.semiBold, size: 16,alignment: .center)
+    lazy var emptyCommentStack = VerticalStackView(arrangedSubViews: [emptyCommentImage,emptyCommentlabel], spacing: 10)
     lazy var comentsList = VerticalStackView(arrangedSubViews: commentArray, spacing: 12)
-    lazy var cellStack = VerticalStackView(arrangedSubViews: [adHeaderStack, middleAdStack, commentsTitle, comentsList, gapView, adFooterStack], spacing: 12, distribution: .fillProportionally)
+    lazy var cellStack = VerticalStackView(arrangedSubViews: [adHeaderStack, middleAdStack, adFooterStack, commentsTitle, emptyCommentStack , gapView], spacing: 12, distribution: .fillProportionally)
     let scrollView = UIScrollView()
     lazy var adsHeight = adDesciptionLabel.bounds.size.height
     let headerView = DIHeaderView(title: "Comments", hasBack: true, hasBGColor: true)

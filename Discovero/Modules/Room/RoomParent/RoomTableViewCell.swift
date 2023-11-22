@@ -15,6 +15,7 @@ class RoomOfferTableViewCell: UITableViewCell {
     var onCommentsClicked: (() -> Void)?
     
     let gapView = UIView()
+    var isHeartFilled = false
     let identifier = "RoomTableCell"
     
     //Ads header part
@@ -123,8 +124,8 @@ class RoomOfferTableViewCell: UITableViewCell {
     
     private func observeEvents() {
         let likeButtonTap = UITapGestureRecognizer(target: self, action: #selector(handleLikeTap))
-        likesStack.addGestureRecognizer(likeButtonTap)
-        likesStack.isUserInteractionEnabled = true
+        likeButton.addGestureRecognizer(likeButtonTap)
+        likeButton.isUserInteractionEnabled = true
         
         let callButtonTap = UITapGestureRecognizer(target: self, action: #selector(handleCallTap))
         callStack.addGestureRecognizer(callButtonTap)
@@ -140,28 +141,30 @@ class RoomOfferTableViewCell: UITableViewCell {
     }
     
     @objc func handleLikeTap() {
-        print("like")
-        onLikeClicked?()
+        isHeartFilled.toggle()
+        setHeartImage()
     }
     
     @objc func handleCallTap() {
-        print("call")
         onCallClicked?()
     }
     
     @objc func handleMessageTap() {
-        print("message")
         onMessageClicked?()
     }
     
     @objc func handleCommentsTap() {
-        print("comments")
         onCommentsClicked?()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func setHeartImage() {
+            let imageName = isHeartFilled ? "heartfilled" : "heart"
+        likeButton.image = UIImage(named: imageName)
+        }
 }
 
 // MARK: Cell configuration

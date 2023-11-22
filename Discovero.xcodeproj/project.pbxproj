@@ -92,6 +92,10 @@
 		849B565E2AEFB68500C91F81 /* CreateRoomAdsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B565D2AEFB68500C91F81 /* CreateRoomAdsVC.swift */; };
 		849E4D752AFB5DB10061D84D /* SelectGenderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E4D742AFB5DB10061D84D /* SelectGenderVC.swift */; };
 		849E4D772AFB5DBE0061D84D /* SelectGenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E4D762AFB5DBE0061D84D /* SelectGenderView.swift */; };
+		84A295E02B0DCBFD00433815 /* MyFavouritesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A295DF2B0DCBFD00433815 /* MyFavouritesVC.swift */; };
+		84A295E22B0DCC3C00433815 /* MyFavouritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A295E12B0DCC3C00433815 /* MyFavouritesView.swift */; };
+		84A295E52B0DEC1A00433815 /* MyAdsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A295E42B0DEC1A00433815 /* MyAdsVC.swift */; };
+		84A295E72B0DEC3300433815 /* MyAdsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A295E62B0DEC3300433815 /* MyAdsView.swift */; };
 		84AEDBD42AF0E33F00ED121C /* PostPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AEDBD32AF0E33F00ED121C /* PostPreviewView.swift */; };
 		84AEDBD62AF0E36C00ED121C /* PostPreviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AEDBD52AF0E36C00ED121C /* PostPreviewVC.swift */; };
 		84AEDBD82AF1069100ED121C /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AEDBD72AF1069100ED121C /* PostView.swift */; };
@@ -239,6 +243,10 @@
 		849B565D2AEFB68500C91F81 /* CreateRoomAdsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomAdsVC.swift; sourceTree = "<group>"; };
 		849E4D742AFB5DB10061D84D /* SelectGenderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGenderVC.swift; sourceTree = "<group>"; };
 		849E4D762AFB5DBE0061D84D /* SelectGenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGenderView.swift; sourceTree = "<group>"; };
+		84A295DF2B0DCBFD00433815 /* MyFavouritesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFavouritesVC.swift; sourceTree = "<group>"; };
+		84A295E12B0DCC3C00433815 /* MyFavouritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFavouritesView.swift; sourceTree = "<group>"; };
+		84A295E42B0DEC1A00433815 /* MyAdsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAdsVC.swift; sourceTree = "<group>"; };
+		84A295E62B0DEC3300433815 /* MyAdsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAdsView.swift; sourceTree = "<group>"; };
 		84AEDBD32AF0E33F00ED121C /* PostPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPreviewView.swift; sourceTree = "<group>"; };
 		84AEDBD52AF0E36C00ED121C /* PostPreviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPreviewVC.swift; sourceTree = "<group>"; };
 		84AEDBD72AF1069100ED121C /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
@@ -368,6 +376,8 @@
 		04996CB82AA46E5E00DB618F /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				84A295DE2B0DCBEA00433815 /* MyFav */,
+				84A295E32B0DE91000433815 /* MyAds */,
 				8496C4E22AEE6E530017CC0A /* BottomSheetPicker */,
 				04775C3F2AB96085005F9B4C /* CommentsPage */,
 				0499C8682AFA0D63005D5628 /* ConfigureNotification */,
@@ -662,6 +672,24 @@
 				849E4D762AFB5DBE0061D84D /* SelectGenderView.swift */,
 			);
 			path = SelectGender;
+			sourceTree = "<group>";
+		};
+		84A295DE2B0DCBEA00433815 /* MyFav */ = {
+			isa = PBXGroup;
+			children = (
+				84A295DF2B0DCBFD00433815 /* MyFavouritesVC.swift */,
+				84A295E12B0DCC3C00433815 /* MyFavouritesView.swift */,
+			);
+			path = MyFav;
+			sourceTree = "<group>";
+		};
+		84A295E32B0DE91000433815 /* MyAds */ = {
+			isa = PBXGroup;
+			children = (
+				84A295E42B0DEC1A00433815 /* MyAdsVC.swift */,
+				84A295E62B0DEC3300433815 /* MyAdsView.swift */,
+			);
+			path = MyAds;
 			sourceTree = "<group>";
 		};
 		84AEDBD22AF0E32100ED121C /* PostPreview */ = {
@@ -961,6 +989,7 @@
 				0479542B2AC18DB2002BB17B /* NewCountryModel.swift in Sources */,
 				04B514A72AA71CDB00E99A1B /* OtpConfirmVC.swift in Sources */,
 				849E4D752AFB5DB10061D84D /* SelectGenderVC.swift in Sources */,
+				84A295E72B0DEC3300433815 /* MyAdsView.swift in Sources */,
 				E0FE05C72AA439C1001DBDF5 /* OnBoardingPageVC.swift in Sources */,
 				049CF12F2AA9D4D000FF2F1B /* RoomOfferView.swift in Sources */,
 				840A6A3A2AFA135300FD6E25 /* JobVC.swift in Sources */,
@@ -979,6 +1008,7 @@
 				E0FE06212AA43D1B001DBDF5 /* FontConstants.swift in Sources */,
 				8496C4DD2AEE22A80017CC0A /* DiPickerAddView.swift in Sources */,
 				049AB9CA2AC9440D007200A5 /* CustomTimer.swift in Sources */,
+				84A295E02B0DCBFD00433815 /* MyFavouritesVC.swift in Sources */,
 				04B514A52AA71CAA00E99A1B /* OtpConfirmView.swift in Sources */,
 				04996CBF2AA4725300DB618F /* DIButton.swift in Sources */,
 				049D94F82AF8A7C70007795B /* SharedUserData.swift in Sources */,
@@ -1053,6 +1083,7 @@
 				8490BDDA2B0B6A9B00072F0B /* JobOfferModel.swift in Sources */,
 				04A168B52AA854400065F607 /* DIPickerVC.swift in Sources */,
 				E0FE063F2AA43D1B001DBDF5 /* TimeFormatter.swift in Sources */,
+				84A295E22B0DCC3C00433815 /* MyFavouritesView.swift in Sources */,
 				E0FE05C52AA439C1001DBDF5 /* SceneDelegate.swift in Sources */,
 				E0FE06242AA43D1B001DBDF5 /* HorizontalStackView.swift in Sources */,
 				04BA4C682AD3C45800029E5A /* AllUserData.swift in Sources */,
@@ -1062,6 +1093,7 @@
 				E0FE062D2AA43D1B001DBDF5 /* Bundle+Ext.swift in Sources */,
 				E0FE061F2AA43D1B001DBDF5 /* Constants.swift in Sources */,
 				04978F872AB81E3C00BCACC5 /* RoomTableViewCell.swift in Sources */,
+				84A295E52B0DEC1A00433815 /* MyAdsVC.swift in Sources */,
 				04775C452AB96E65005F9B4C /* CustomComments.swift in Sources */,
 				049D3A942AAD9379004864E9 /* MyProfileVC.swift in Sources */,
 				849B565C2AEFB66B00C91F81 /* CreateRoomAdsView.swift in Sources */,

@@ -107,12 +107,12 @@ extension RoomWantedVC: UITableViewDelegate, UITableViewDataSource  {
         
         cell.onCallClicked = { [weak self] in
             guard let self else { return}
-            //on process
+            goToPhoneApp()
         }
         
         cell.onMessageClicked = { [weak self] in
             guard let self else { return}
-            //on process
+            goToMessageApp()
         }
         
         cell.onCommentsClicked = { [weak self] in
@@ -129,8 +129,25 @@ extension RoomWantedVC: UITableViewDelegate, UITableViewDataSource  {
 
 //MARK: Navigation function
 private extension RoomWantedVC {
+    func goToPhoneApp() {
+        let phoneNumber = "123456789"
+
+        if let phoneURL = URL(string: "tel://\(phoneNumber)"), UIApplication.shared.canOpenURL(phoneURL) {
+            UIApplication.shared.open(phoneURL, options: [:], completionHandler: nil)
+        }
+    }
+    
+    func goToMessageApp() {
+        let phoneNumber = "123456789"
+
+        if let smsURL = URL(string: "sms:\(phoneNumber)"), UIApplication.shared.canOpenURL(smsURL) {
+            UIApplication.shared.open(smsURL, options: [:], completionHandler: nil)
+        }
+    }
+    
     func goToCommentSection() {
         let commentVC = CommentsPageVC()
+        commentVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(commentVC, animated: true)
     }
     

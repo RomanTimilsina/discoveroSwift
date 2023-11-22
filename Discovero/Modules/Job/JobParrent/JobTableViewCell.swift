@@ -173,7 +173,7 @@ extension JobTableViewCell {
 //        noOfLikes.text = "\(data.likesCount)"
         adLabel.text = data.description
         debugPrint(data.salary)
-        salaryLabel.text = "$\(data.salary)"
+        salaryLabel.text = "$" + String(round(Double(data.salary * 100)) / 100)
         location.text = data.location.state + ", " + data.location.country
         jobNumberLabel.text = "\(data.noOfPositions)"
         viewCount.text = "\(data.viewCount < 10 ? " " : "")\(data.viewCount)"

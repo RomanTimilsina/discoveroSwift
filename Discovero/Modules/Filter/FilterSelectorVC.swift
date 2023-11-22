@@ -128,17 +128,12 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
     
     func stringList(_ stringArray: [String]) -> String {
         var text = ""
-        let newArr = stringArray.reversed()
+        var arr = stringArray.reversed()
+        var nonEmptyArray = stringArray.filter{ !$0.isEmpty}
         
-        var indexCount: Int {
-            return newArr.filter { $0.isEmpty }.count
+        for (index, item) in nonEmptyArray.enumerated() {
+            text += "\(item == "" || index == 0  ? "" : ", ") \(item)"
         }
-        
-        for (index, item) in newArr.enumerated() {
-            debugPrint(index, item)
-            text += "\(item.isEmpty || index == indexCount ? "" : ", ")\(item)"
-        }
-        
         return text
     }
 }

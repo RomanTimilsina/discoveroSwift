@@ -16,12 +16,12 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
     
     let value1 = ["name", "email"]
     let value2 = ["Your name", "Your email" ]
-
+    
     var selectedLanguageArray: [String] = []
     var selectedLanguage: String?
     var texts: String?
     var usersData: UserData?
-
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -62,6 +62,26 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
             gotoGenderVC()
         }
         
+        currentView.favouritesView.profileTap = { [weak self] text in
+            guard let self else { return }
+            goToMyFavorites()
+        }
+        
+        currentView.adsView.profileTap = { [weak self] text in
+            guard let self else { return }
+            goToMyAds()
+        }
+        
+        currentView.termsView.profileTap = { [weak self] text in
+            guard let self else { return }
+            gotoWebSite()
+        }
+        
+        currentView.policyView.profileTap = { [weak self] text in
+            guard let self else { return }
+            gotoWebSite()
+        }
+        
         currentView.onClickedLogOut = { [weak self] in
             guard let self else { return }
             logOutUser()
@@ -85,6 +105,26 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
         }
     }
     
+    private func gotoWebSite() {
+        if let url = URL(string: "https://www.google.com") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    
+    private func goToMyFavorites() {
+        let myFavoritesVC = MyFavoritesVC()
+        myFavoritesVC.hidesBottomBarWhenPushed = true
+        
+        navigationController?.pushViewController(myFavoritesVC, animated: true)
+    }
+    
+    private func goToMyAds() {
+        let myAdsVC = MyAdsVC()
+        myAdsVC.hidesBottomBarWhenPushed = true
+        
+        navigationController?.pushViewController(myAdsVC, animated: true)
+    }
+    
     private func gotoGenderVC() {
         let selectGender = SelectGenderVC()
         
@@ -106,37 +146,32 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
         }
     }
     
-            func gotoLocationFilterVC() {
-                let locationFilterVC = LocationFilterVC()
-                locationFilterVC.userData = usersData
-                locationFilterVC.hidesBottomBarWhenPushed = true
-                navigationController?.pushViewController(locationFilterVC, animated: true)
-                
-                locationFilterVC.onSaveClick = { [weak self] locationData in
-                    guard let self else { return }
-                    currentView.addressView.subTitle.text = stringList(locationData)
-                    currentView.countryName = locationData[0]
-                    currentView.stateName = locationData[1]
-                    currentView.suburbName = locationData[2]
-                    currentView.streetName = locationData[3]
-                    currentView.streetNo = locationData[4]
-                    currentView.buildingNo = locationData[5]
-                }
-            }
+    func gotoLocationFilterVC() {
+        let locationFilterVC = LocationFilterVC()
+        locationFilterVC.userData = usersData
+        locationFilterVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(locationFilterVC, animated: true)
+        
+        locationFilterVC.onSaveClick = { [weak self] locationData in
+            guard let self else { return }
+            currentView.addressView.subTitle.text = stringList(locationData)
+            currentView.countryName = locationData[0]
+            currentView.stateName = locationData[1]
+            currentView.suburbName = locationData[2]
+            currentView.streetName = locationData[3]
+            currentView.streetNo = locationData[4]
+            currentView.buildingNo = locationData[5]
+        }
+    }
     
     func stringList(_ stringArray: [String]) -> String {
         var text = ""
-        let newArr = stringArray.reversed()
+        var arr = stringArray.reversed()
+        var nonEmptyArray = stringArray.filter{ !$0.isEmpty}
         
-        var indexCount: Int {
-            return newArr.filter { $0.isEmpty }.count
+        for (index, item) in nonEmptyArray.enumerated() {
+            text += "\(item == "" || index == 0  ? "" : ", ") \(item)"
         }
-        
-        for (index, item) in newArr.enumerated() {
-            debugPrint(index, item)
-            text += "\(item.isEmpty || index == indexCount ? "" : ", ")\(item)"
-        }
-        
         return text
     }
     

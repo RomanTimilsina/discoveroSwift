@@ -16,7 +16,9 @@ class RoomOfferVC: UIViewController, UISheetPresentationControllerDelegate {
     
     let addPicker = DiPickerAddVC()
     let filterVC = FilterSelectorVC()
-    
+//    let adView = CustomAdView("Jasper's market", "Check out our best quality", UIImage(named: "rightAdImage"), UIImage(named: "leftAdImage"))
+//    let indexPath = IndexPath(row: 2, section: 0)
+
     var onSearchSuccess: ((Int) -> Void)?
     
     override func viewWillAppear(_ animated: Bool) {
@@ -124,17 +126,17 @@ extension RoomOfferVC: UITableViewDelegate, UITableViewDataSource  {
         
         cell.onCallClicked = { [weak self] in
             guard let self else { return}
-            //on process
+            goToPhoneApp()
         }
         
         cell.onMessageClicked = { [weak self] in
             guard let self else { return}
-            //on process
+            goToMessageApp()
         }
         
         cell.onCommentsClicked = { [weak self] in
             guard let self else { return}
-            self.goToCommentSection()
+            goToCommentSection()
         }
         
         return cell
@@ -147,8 +149,25 @@ extension RoomOfferVC: UITableViewDelegate, UITableViewDataSource  {
 
 //MARK: Navigation function
 private extension RoomOfferVC {
+    func goToPhoneApp() {
+        let phoneNumber = "123456789"
+
+        if let phoneURL = URL(string: "tel://\(phoneNumber)"), UIApplication.shared.canOpenURL(phoneURL) {
+            UIApplication.shared.open(phoneURL, options: [:], completionHandler: nil)
+        }
+    }
+    
+    func goToMessageApp() {
+        let phoneNumber = "123456789" 
+
+        if let smsURL = URL(string: "sms:\(phoneNumber)"), UIApplication.shared.canOpenURL(smsURL) {
+            UIApplication.shared.open(smsURL, options: [:], completionHandler: nil)
+        }
+    }
+    
     func goToCommentSection() {
         let commentVC = CommentsPageVC()
+        commentVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(commentVC, animated: true)
     }
     
