@@ -16,15 +16,8 @@ class RoomOfferVC: UIViewController, UISheetPresentationControllerDelegate {
     
     let addPicker = DiPickerAddVC()
     let filterVC = FilterSelectorVC()
-//    let adView = CustomAdView("Jasper's market", "Check out our best quality", UIImage(named: "rightAdImage"), UIImage(named: "leftAdImage"))
-//    let indexPath = IndexPath(row: 2, section: 0)
 
     var onSearchSuccess: ((Int) -> Void)?
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +25,12 @@ class RoomOfferVC: UIViewController, UISheetPresentationControllerDelegate {
         observeEvents()
         getUsersDataFromDefaults()
         navigationController?.navigationBar.isHidden = true
+        
+//        for number in 0..<(roomOffers.count + roomOffers.count/4) {
+//            guard number % 4 != 0 || number == 0 else {
+//                
+//            }
+//        }
     }
     
     override func loadView() {
@@ -40,6 +39,8 @@ class RoomOfferVC: UIViewController, UISheetPresentationControllerDelegate {
     
     func setupTable() {
         currentView.adsTable.register(RoomOfferTableViewCell.self, forCellReuseIdentifier: RoomOfferTableViewCell().identifier)
+        currentView.adsTable.register(CustomAdCell.self, forCellReuseIdentifier: CustomAdCell.identifier)
+
         currentView.adsTable.delegate = self
         currentView.adsTable.dataSource = self
     }
@@ -108,15 +109,35 @@ private extension RoomOfferVC {
 
 //MARK: Table Delegates
 extension RoomOfferVC: UITableViewDelegate, UITableViewDataSource  {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard indexPath.row % 5 != 0 || indexPath.row == 0  else {
+            debugPrint("Go to Ad")
+            return
+        }
+        
+        debugPrint("Room info")
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return roomOffers.count
+        
+
+        return roomOffers.count + (roomOffers.count / 4)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard indexPath.row % 5 != 0 || indexPath.row == 0  else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: CustomAdCell.identifier, for: indexPath) as! CustomAdCell
+            cell.selectionStyle = .none
+            cell.configureData("Jasper's market", "Check out our best quality", UIImage(named: "rightAdImage"), UIImage(named: "leftAdImage"))
+            return cell
+        }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: RoomOfferTableViewCell().identifier, for: indexPath) as! RoomOfferTableViewCell
         cell.selectionStyle = .none
         
-        let data = roomOffers[indexPath.row]
+        let adjustedIndexpath = indexPath.row - (indexPath.row/5)
+        let data = roomOffers[adjustedIndexpath]
         cell.configureData(data: data)
         
         cell.onLikeClicked = { [weak self] in
@@ -143,6 +164,9 @@ extension RoomOfferVC: UITableViewDelegate, UITableViewDataSource  {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard indexPath.row % 5 != 0 || indexPath.row == 0 else {
+            return 70
+        }
         return 254
     }
 }
