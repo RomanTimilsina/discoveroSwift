@@ -25,12 +25,6 @@ class RoomOfferVC: UIViewController, UISheetPresentationControllerDelegate {
         observeEvents()
         getUsersDataFromDefaults()
         navigationController?.navigationBar.isHidden = true
-        
-//        for number in 0..<(roomOffers.count + roomOffers.count/4) {
-//            guard number % 4 != 0 || number == 0 else {
-//                
-//            }
-//        }
     }
     
     override func loadView() {
@@ -111,7 +105,7 @@ private extension RoomOfferVC {
 extension RoomOfferVC: UITableViewDelegate, UITableViewDataSource  {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard indexPath.row % 5 != 0 || indexPath.row == 0  else {
+        guard indexPath.row % 4 != 0 || indexPath.row == 0  else {
             debugPrint("Go to Ad")
             return
         }
@@ -120,13 +114,11 @@ extension RoomOfferVC: UITableViewDelegate, UITableViewDataSource  {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-
         return roomOffers.count + (roomOffers.count / 4)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard indexPath.row % 5 != 0 || indexPath.row == 0  else {
+        guard indexPath.row % 4 != 0 || indexPath.row == 0  else {
             let cell = tableView.dequeueReusableCell(withIdentifier: CustomAdCell.identifier, for: indexPath) as! CustomAdCell
             cell.selectionStyle = .none
             cell.configureData("Jasper's market", "Check out our best quality", UIImage(named: "rightAdImage"), UIImage(named: "leftAdImage"))
@@ -136,7 +128,7 @@ extension RoomOfferVC: UITableViewDelegate, UITableViewDataSource  {
         let cell = tableView.dequeueReusableCell(withIdentifier: RoomOfferTableViewCell().identifier, for: indexPath) as! RoomOfferTableViewCell
         cell.selectionStyle = .none
         
-        let adjustedIndexpath = indexPath.row - (indexPath.row/5)
+        let adjustedIndexpath = indexPath.row - (indexPath.row/4)
         let data = roomOffers[adjustedIndexpath]
         cell.configureData(data: data)
         
@@ -159,12 +151,11 @@ extension RoomOfferVC: UITableViewDelegate, UITableViewDataSource  {
             guard let self else { return}
             goToCommentSection()
         }
-        
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard indexPath.row % 5 != 0 || indexPath.row == 0 else {
+        guard indexPath.row % 4 != 0 || indexPath.row == 0 else {
             return 70
         }
         return 254

@@ -169,7 +169,8 @@ class RoomOfferTableViewCell: UITableViewCell {
 
 // MARK: Cell configuration
 extension RoomOfferTableViewCell {
-    func configureData(data: RoomOffer) {
+    func configureData(data: RoomOffer?) {
+        guard let data else { return }
         
         namePrefixLabel.text = "\(namePrefix(name: data.userInfo.name))"
         profileImageView.isHidden = true

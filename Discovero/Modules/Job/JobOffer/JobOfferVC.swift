@@ -40,6 +40,7 @@ class JobOfferVC: UIViewController, UISheetPresentationControllerDelegate {
     
     func setupTable() {
         currentView.adsTable.register(JobTableViewCell.self, forCellReuseIdentifier: JobTableViewCell().identifier)
+        currentView.adsTable.register(CustomAdCell.self, forCellReuseIdentifier: CustomAdCell.identifier)
         currentView.adsTable.delegate = self
         currentView.adsTable.dataSource = self
     }
@@ -95,14 +96,22 @@ private extension JobOfferVC {
 //MARK: Table Delegates
 extension JobOfferVC: UITableViewDelegate, UITableViewDataSource  {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return jobOffers.count
+        return jobOffers.count + (jobOffers.count / 3)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard indexPath.row % 3 != 0 || indexPath.row == 0  else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: CustomAdCell.identifier, for: indexPath) as! CustomAdCell
+            cell.selectionStyle = .none
+            cell.configureData("Jasper's market", "Check out our best quality", UIImage(named: "rightAdImage"), UIImage(named: "leftAdImage"))
+            return cell
+        }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: JobTableViewCell().identifier, for: indexPath) as! JobTableViewCell
         cell.selectionStyle = .none
         
-        let data = jobOffers[indexPath.row]
+        let adjustedIndexpath = indexPath.row - (indexPath.row/3)
+        let data = jobOffers[adjustedIndexpath]
         cell.configureData(data: data)
         
         cell.onLikeClicked = { [weak self] in
@@ -128,6 +137,9 @@ extension JobOfferVC: UITableViewDelegate, UITableViewDataSource  {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard indexPath.row % 3 != 0 || indexPath.row == 0 else {
+            return 70
+        }
         return 254
     }
 }

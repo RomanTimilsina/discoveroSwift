@@ -90,14 +90,23 @@ extension JobWantedVC {
 //MARK: Table Delegates
 extension JobWantedVC: UITableViewDelegate, UITableViewDataSource  {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return jobWanted.count
+        return jobWanted.count + (jobWanted.count / 3)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard indexPath.row % 3 != 0 || indexPath.row == 0  else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: CustomAdCell.identifier, for: indexPath) as! CustomAdCell
+            cell.selectionStyle = .none
+            cell.configureData("Jasper's market", "Check out our best quality", UIImage(named: "rightAdImage"), UIImage(named: "leftAdImage"))
+            return cell
+        }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: JobTableViewCell().identifier, for: indexPath) as! JobTableViewCell
         cell.selectionStyle = .none
         
-        let data = jobWanted[indexPath.row]
+        let adjustedIndexpath = indexPath.row - (indexPath.row/3)
+
+        let data = jobWanted[adjustedIndexpath]
         cell.configureData(data: data)
         
         cell.onLikeClicked = { [weak self] in
@@ -123,6 +132,9 @@ extension JobWantedVC: UITableViewDelegate, UITableViewDataSource  {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard indexPath.row % 3 != 0 || indexPath.row == 0 else {
+            return 70
+        }
         return 254
     }
 }
