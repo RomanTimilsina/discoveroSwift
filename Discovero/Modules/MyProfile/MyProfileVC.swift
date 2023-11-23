@@ -166,8 +166,8 @@ class MyProfileVC: UIViewController, UISheetPresentationControllerDelegate {
     
     func stringList(_ stringArray: [String]) -> String {
         var text = ""
-        var arr = stringArray.reversed()
-        var nonEmptyArray = stringArray.filter{ !$0.isEmpty}
+        let arr = stringArray.reversed()
+        let nonEmptyArray = arr.filter{ !$0.isEmpty}
         
         for (index, item) in nonEmptyArray.enumerated() {
             text += "\(item == "" || index == 0  ? "" : ", ") \(item)"

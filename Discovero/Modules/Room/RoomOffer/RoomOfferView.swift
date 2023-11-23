@@ -39,7 +39,7 @@ class RoomOfferView: UIView {
         filterSection.constraintWidth(constant: 95)
         
         addSubview(adsTable)
-        adsTable.anchor(top: filterSection.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 70, right: 0))
+        adsTable.anchor(top: filterSection.bottomAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 5, right: 0))
         adsTable.backgroundColor = Color.appBlack
         
         addSubview(line)

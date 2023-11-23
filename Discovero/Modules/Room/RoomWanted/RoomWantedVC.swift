@@ -38,6 +38,8 @@ class RoomWantedVC: UIViewController, UISheetPresentationControllerDelegate{
     
     func setupTable() {
         currentView.adsTable.register(RoomOfferTableViewCell.self, forCellReuseIdentifier: RoomOfferTableViewCell().identifier)
+        currentView.adsTable.register(CustomAdCell.self, forCellReuseIdentifier: CustomAdCell.identifier)
+
         currentView.adsTable.delegate = self
         currentView.adsTable.dataSource = self
     }

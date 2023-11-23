@@ -15,7 +15,7 @@ class JobTableViewCell: UITableViewCell {
     var onCommentsClicked: (() -> Void)?
     
     let gapView = UIView()
-    let identifier = "JobTableCell"
+    static let identifier = "JobTableCell"
     
     //Ads header part
     let profileView = UIView(color: Color.appWhite)

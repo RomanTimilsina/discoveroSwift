@@ -37,7 +37,7 @@ class JobWantedVC: UIViewController, UISheetPresentationControllerDelegate{
     }
     
     func setupTable() {
-        currentView.adsTable.register(JobTableViewCell.self, forCellReuseIdentifier: JobTableViewCell().identifier)
+        currentView.adsTable.register(JobTableViewCell.self, forCellReuseIdentifier: JobTableViewCell.identifier)
         currentView.adsTable.delegate = self
         currentView.adsTable.dataSource = self
     }
@@ -110,7 +110,7 @@ extension JobWantedVC: UITableViewDelegate, UITableViewDataSource  {
             return cell
         }
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: JobTableViewCell().identifier, for: indexPath) as! JobTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: JobTableViewCell.identifier, for: indexPath) as! JobTableViewCell
         cell.selectionStyle = .none
         
         let adjustedIndexpath = indexPath.row - (indexPath.row/5)

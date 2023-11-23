@@ -267,7 +267,7 @@ extension FilterSelectorView {
     func configView(model: FilterModel) {
         countryName = model.countryName
         stateName = model.stateName
-        locationLabel.subTitle.text = "\(model.countryName ?? ""), \(model.stateName ?? "")"
+        locationLabel.subTitle.text = "\(model.stateName ?? ""), \(model.countryName ?? "")"
         if model.propertyType == nil {
             propertyTypeLabel.sideTitle.text = "Tap Here"
         }

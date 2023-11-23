@@ -39,7 +39,7 @@ class JobOfferVC: UIViewController, UISheetPresentationControllerDelegate {
     }
     
     func setupTable() {
-        currentView.adsTable.register(JobTableViewCell.self, forCellReuseIdentifier: JobTableViewCell().identifier)
+        currentView.adsTable.register(JobTableViewCell.self, forCellReuseIdentifier: JobTableViewCell.identifier)
         currentView.adsTable.register(CustomAdCell.self, forCellReuseIdentifier: CustomAdCell.identifier)
         currentView.adsTable.delegate = self
         currentView.adsTable.dataSource = self
@@ -105,7 +105,7 @@ extension JobOfferVC: UITableViewDelegate, UITableViewDataSource  {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return jobOffers.count + (jobOffers.count / 4)
+        return jobOffers.count + (jobOffers.count / 5)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -116,7 +116,7 @@ extension JobOfferVC: UITableViewDelegate, UITableViewDataSource  {
             return cell
         }
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: JobTableViewCell().identifier, for: indexPath) as! JobTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: JobTableViewCell.identifier, for: indexPath) as! JobTableViewCell
         cell.selectionStyle = .none
         
         let adjustedIndexpath = indexPath.row - (indexPath.row/5)
@@ -186,8 +186,9 @@ private extension JobOfferVC {
             guard let self else { return }
             self.jobOffers.removeAll()
             self.showHUD()
+            debugPrint(filterModel)
             
-            fireStore.getJobsOffered(isJobOffer: true, filterModel: FilterModel() )
+            fireStore.getJobsOffered(isJobOffer: true, filterModel: filterModel )
             { [weak self] jobOffersModel in
                 guard let self else { return }
                 DispatchQueue.main.async {

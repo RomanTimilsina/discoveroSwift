@@ -273,9 +273,10 @@ struct FireStoreDatabaseHelper {
                         filterModel: FilterModel,
                         completion: @escaping ([JobOffer]) -> Void) {
         
+        debugPrint("FilterModel:",filterModel)
         var fireStoreCollection =  Firestore.firestore().collection(isJobOffer ? "JobOffer" : "JobWanted")
-            .whereField("location.state", isEqualTo: filterModel.stateName ?? "")
             .whereField("location.country", isEqualTo: filterModel.countryName ?? "")
+            .whereField("location.state", isEqualTo: filterModel.stateName ?? "")
         
         if filterModel.noOfPositions ?? 0 > 0 {
             fireStoreCollection = fireStoreCollection
@@ -283,13 +284,17 @@ struct FireStoreDatabaseHelper {
         }
         
         if let paymentType = filterModel.paymentType {
-            fireStoreCollection = fireStoreCollection
-                .whereField("paymentType", isEqualTo: paymentType)
+            if paymentType != "Tap here" {
+                fireStoreCollection = fireStoreCollection
+                    .whereField("paymentType", isEqualTo: paymentType)
+            }
         }
         
         if let jobType = filterModel.jobType {
-            fireStoreCollection = fireStoreCollection
-                .whereField("jobType", isEqualTo: jobType)
+            if jobType != "Tap here" {
+                fireStoreCollection = fireStoreCollection
+                    .whereField("jobType", isEqualTo: jobType)
+            }
         }
         
         if let languageArray = filterModel.languageArray {
@@ -322,7 +327,7 @@ struct FireStoreDatabaseHelper {
         jobOffers.removeAll()
         jobWanted.removeAll()
         
-        Firestore.firestore().collection(isJobOffer ?  "JobOffer" : "JobWanted").getDocuments { query, error in
+        fireStoreCollection.getDocuments { query, error in
             guard let query = query else {
                 debugPrint("Error retrieving job offers: \(error.debugDescription)")
                 return

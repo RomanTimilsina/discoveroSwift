@@ -25,7 +25,6 @@ class LocationFilterVC: UIViewController {
     var runForTheFirstTime = true
     var runOnce = true
     let countries: [CountryModel] = Bundle.main.decode(from: "Countries.json")
-    weak var filterSelectorVC: FilterSelectorVC?
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -53,6 +52,7 @@ class LocationFilterVC: UIViewController {
         currentView.buldingNumView.textField.delegate = self
         currentView.countryView.subTitle.text = userData?.country
         currentView.stateView.subTitle.text = userData?.locationDetail.state
+        currentView.suburbView.textField.text = userData?.locationDetail.suburb
         currentView.saveButton.setInvalidState()
         countryPicker.countryModel = countryManager.getData()
         

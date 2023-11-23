@@ -17,7 +17,6 @@ class RoomWantedView: UIView {
     let createAdLabel = UILabel(text: "Create your first ad", font: OpenSans.semiBold, size: 16, alignment: .center)
     let adDescriptionLabel = UILabel(text: "There seems to be no room available at the moment in your location. ", font: OpenSans.regular, size: 14,numberOfLines: 0, alignment: .center)
     let createAdButton = DIButton(buttonTitle: "Create your first ad",textSize: 14)
-    let adView = CustomAdView("Jasper's market", "Check out our best quality", UIImage(named: "rightAdImage"), UIImage(named: "leftAdImage"))
     let line = UIView()
     let addButtonView = UIImageView(image: UIImage(named: "plus") ,contentMode: .scaleAspectFit)
     lazy var emptyStackView = VerticalStackView(arrangedSubViews: [homeImage, createAdLabel,adDescriptionLabel, createAdButton], spacing: 30)
@@ -39,7 +38,7 @@ class RoomWantedView: UIView {
         filterSection.constraintWidth(constant: 95)
         
         addSubview(adsTable)
-        adsTable.anchor(top: filterSection.bottomAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 70, right: 0))
+        adsTable.anchor(top: filterSection.bottomAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 5, right: 0))
         adsTable.backgroundColor = Color.appBlack
 
         addSubview(line)

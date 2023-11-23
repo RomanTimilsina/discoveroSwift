@@ -39,7 +39,7 @@ class JobWantedView: UIView {
         filterSection.constraintWidth(constant: 95)
         
         addSubview(adsTable)
-        adsTable.anchor(top: filterSection.bottomAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 70, right: 0))
+        adsTable.anchor(top: filterSection.bottomAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 5, right: 0))
         adsTable.backgroundColor = Color.appBlack
 
         addSubview(line)
@@ -48,11 +48,11 @@ class JobWantedView: UIView {
         line.backgroundColor = Color.gray700
         
         addSubview(addButtonView)
-        addButtonView.anchor(top: nil, leading: nil, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 80, right: 18))
+        addButtonView.anchor(top: nil, leading: nil, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 50, right: 18))
         addButtonView.constraintHeight(constant: 50)
         addButtonView.constraintWidth(constant: 50)
     }
-    
+
     private func observeEvents() {
         createAdButton.addTarget(self, action: #selector(createAd), for: .touchUpInside)
         

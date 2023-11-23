@@ -66,6 +66,7 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
     
     func resetData() {
         //MARK: Reset View
+        fetchUserData()
         currentView.resetView(usersData: usersData)
         
         currentView.countryName = usersData?.country ?? ""
@@ -115,7 +116,6 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
         locationFilterVC.currentView.streetNumView.removeFromSuperview()
         locationFilterVC.currentView.buldingNumView.removeFromSuperview()
         
-        navigationController?.pushViewController(locationFilterVC, animated: true)
         
         locationFilterVC.onSaveClick = { [weak self] locationData in
             guard let self else { return }
@@ -123,16 +123,21 @@ class FilterSelectorVC: UIViewController, UISheetPresentationControllerDelegate 
             currentView.countryName = locationData[0]
             currentView.stateName = locationData[1]
             currentView.suburbName = locationData[2]
+            usersData?.country = locationData[0]
+            usersData?.locationDetail.state = locationData[1]
+            usersData?.locationDetail.suburb = locationData[2]
         }
+        
+        navigationController?.pushViewController(locationFilterVC, animated: true)
     }
     
     func stringList(_ stringArray: [String]) -> String {
         var text = ""
-        var arr = stringArray.reversed()
-        var nonEmptyArray = stringArray.filter{ !$0.isEmpty}
+        let arr = stringArray.reversed()
+        let nonEmptyArray = arr.filter{ !$0.isEmpty}
         
         for (index, item) in nonEmptyArray.enumerated() {
-            text += "\(item == "" || index == 0  ? "" : ", ") \(item)"
+            text += "\(item == "" || index == 0  ? "" : ", ")\(item)"
         }
         return text
     }
@@ -197,6 +202,7 @@ private extension FilterSelectorVC {
         FireStoreDatabaseHelper().getUserDataFromDefaults { [weak self] userData in
             guard let self, let userData else { return }
             usersData = userData
+//            usersDataforLocation = userData
         }
         setLanguage()
     }
