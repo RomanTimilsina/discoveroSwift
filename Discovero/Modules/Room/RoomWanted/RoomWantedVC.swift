@@ -89,15 +89,32 @@ class RoomWantedVC: UIViewController, UISheetPresentationControllerDelegate{
 
 //MARK: Table Delegates
 extension RoomWantedVC: UITableViewDelegate, UITableViewDataSource  {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard indexPath.row % 5 != 0 || indexPath.row == 0  else {
+            debugPrint("Go to Ad")
+            return
+        }
+        
+        debugPrint("Room info")
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return roomWanted.count
+        return roomWanted.count + (roomWanted.count / 4)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard indexPath.row % 5 != 0 || indexPath.row == 0  else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: CustomAdCell.identifier, for: indexPath) as! CustomAdCell
+            cell.selectionStyle = .none
+            cell.configureData("Jasper's market", "Check out our best quality", UIImage(named: "rightAdImage"), UIImage(named: "leftAdImage"))
+            return cell
+        }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: RoomOfferTableViewCell().identifier, for: indexPath) as! RoomOfferTableViewCell
         cell.selectionStyle = .none
         
-        let data = roomWanted[indexPath.row]
+        let adjustedIndexpath = indexPath.row - (indexPath.row/5)
+        let data = roomWanted[adjustedIndexpath]
         cell.configureData(data: data)
         
         cell.onLikeClicked = { [weak self] in
@@ -123,6 +140,9 @@ extension RoomWantedVC: UITableViewDelegate, UITableViewDataSource  {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard indexPath.row % 5 != 0 || indexPath.row == 0 else {
+            return 70
+        }
         return 254
     }
 }

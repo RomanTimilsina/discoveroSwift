@@ -42,17 +42,13 @@ class RoomOfferView: UIView {
         adsTable.anchor(top: filterSection.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 70, right: 0))
         adsTable.backgroundColor = Color.appBlack
         
-        addSubview(adView)
-        adView.anchor(top: nil, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 1, right: 0))
-        adView.constraintHeight(constant: 70)
-        
         addSubview(line)
-        line.anchor(top: adView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        line.anchor(top: adsTable.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         line.constraintHeight(constant: 1)
         line.backgroundColor = Color.gray700
         
         addSubview(addButtonView)
-        addButtonView.anchor(top: nil, leading: nil, bottom: adView.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 80, right: 18))
+        addButtonView.anchor(top: nil, leading: nil, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 50, right: 18))
         addButtonView.constraintHeight(constant: 50)
         addButtonView.constraintWidth(constant: 50)
     }
