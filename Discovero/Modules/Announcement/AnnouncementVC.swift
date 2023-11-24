@@ -21,16 +21,38 @@ class AnnouncementVC: UIViewController{
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
         setupCell()
+        getUsersDataFromDefaults()
+
     }
     
     func setupCell() {
-        currentView.pageView.register(AnnouncementCell.self, forCellWithReuseIdentifier: AnnouncementCell.cellId)
+        currentView.pageView.register(AnnouncementCell.self, forCellWithReuseIdentifier: AnnouncementCell.identifier)
         currentView.pageView.delegate = self
         currentView.pageView.dataSource = self
     }
     
     override func loadView() {
         view = currentView
+    }
+    
+    func getUsersDataFromDefaults() {
+        fireStore.getUserDataFromDefaults { [weak self] userData in
+            guard let self, let userData else { return }
+            
+            fetchAnnouncementData()
+        }
+    }
+    
+    func fetchAnnouncementData() {
+        showHUD()
+        self.announcementModel.removeAll()
+        fireStore.getAnnouncementData(isAnnouncement: true) { [weak self] announcementModel in
+            guard let self = self else { return }
+            self.announcementModel.append(contentsOf: announcementModel)
+            self.hideHUD()
+            self.currentView.pageView.reloadData()
+//            self.currentView.filterSection.numberOfOffers.text = "\(self.announcementModel.count) offers"
+        }
     }
 }
 
@@ -41,7 +63,7 @@ extension AnnouncementVC: UICollectionViewDelegate , UICollectionViewDataSource 
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AnnouncementCell.cellId, for: indexPath) as! AnnouncementCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AnnouncementCell.identifier, for: indexPath) as! AnnouncementCell
         
         var data = announcementModel[indexPath.item]
         cell.configureData(data: data)
@@ -52,8 +74,8 @@ extension AnnouncementVC: UICollectionViewDelegate , UICollectionViewDataSource 
             let announcementPageVC = AnnouncementPageVC()
             announcementPageVC.hidesBottomBarWhenPushed = true
             //            announcementPageVC.userName = data.userInfo.name
-            ////            announcementPageVC.postImg = data.posts
-//            announcementPageVC.profilepic = "\(namePrefix(name: data.userInfo.name))"
+//                        announcementPageVC.postImg = data.posts
+//            announcementPageVC.profileView = "\(namePrefix(name: data.userInfo.name))"
             //            announcementPageVC.viewscount = Int(data.views)
             //            announcementPageVC.likes = Int(data.likes)
             //            announcementPageVC.comment = Int(data.comments)
@@ -101,35 +123,15 @@ extension AnnouncementVC: UICollectionViewDelegate , UICollectionViewDataSource 
     }
     
     func collectionView(_ collectionView : UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
-        return CGSize(width: 350 , height: 254)
+        return CGSize(width: 400 , height: 300)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 5
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+//        return 5
+//    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 15
-    }
-    
-    func getUsersDataFromDefaults() {
-        fireStore.getUserDataFromDefaults { [weak self] userData in
-            guard let self, let userData else { return }
-            
-            fetchAnnouncementData()
-        }
-    }
-    
-    func fetchAnnouncementData() {
-        showHUD()
-        self.announcementModel.removeAll()
-        fireStore.getAnnouncementData() { [weak self] announcementModel in
-            guard let self = self else { return }
-//            self.announcementModel.append(contentsOf: announcementModel)
-            self.hideHUD()
-            self.currentView.pageView.reloadData()
-//            self.currentView.filterSection.numberOfOffers.text = "\(self.announcementModel.count) offers"
-        }
     }
 }
 

@@ -25,11 +25,12 @@ class AnnouncementView : UIView{
     }
     
     func setup() {
-        addSubview(headerView)
-        headerView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding:  .init(top: 0, left: 0, bottom: 0, right: 0))
+//        addSubview(headerView)
+//        headerView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding:  .init(top: 0, left: 0, bottom: 0, right: 0))
+//        headerView.constraintHeight(constant: 50)
         
         addSubview(pageView)
-        pageView.anchor(top: headerView.bottomAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        pageView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
     }
     
     required init?(coder: NSCoder) {

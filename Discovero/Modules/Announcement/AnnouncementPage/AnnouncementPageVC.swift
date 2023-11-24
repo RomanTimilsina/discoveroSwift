@@ -29,17 +29,17 @@ class AnnouncementPageVC: UIViewController{
         view.backgroundColor = .black
         observeTapAction()
         announcementPageView.viewCount.text = "100"
-       
+        navigationController?.navigationBar.isHidden = true
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        announcementPageView.userId.text = userName
-        announcementPageView.profilePic.image = profilepic
-        //        announcementPageView.textView = postImg
-        announcementPageView.viewCount.text = "\(viewscount)"
-        announcementPageView.likes.text = "\(likes)"
-        announcementPageView.comments.text = "\(comment)"
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        announcementPageView.nameLabel.text = userName
+//        announcementPageView.profileView.image = profilepic
+//                announcementPageView.textView = postImg
+//        announcementPageView.viewCount.text = "\(viewscount)"
+//        announcementPageView.likes.text = "\(likes)"
+//        announcementPageView.comments.text = "\(comment)"
+//    }
     
     override func loadView() {
         super.loadView()

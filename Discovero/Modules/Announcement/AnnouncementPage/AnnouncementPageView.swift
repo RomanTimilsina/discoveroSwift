@@ -10,38 +10,22 @@ import UIKit
 class AnnouncementPageView: UIView {
     
     var viewButtonTap: (()->Void)?
-    
+
+    let headerView = DIHeaderView(title: "Announcemnet details")
     var textView = GradientRectangleView()
     let announcementlabel = UILabel(text: "", color: Color.appBlack, font: OpenSans.regular, size: 18)
+    let profileView = UIView(color: Color.appWhite)
+    let profileImageView = UIImageView(image: UIImage(named: "AC"), contentMode: .scaleAspectFit, clipsToBounds: true)
+    let nameLabel = UILabel(text: "Anks B", font: OpenSans.semiBold, size: 14)
+    let namePrefixLabel = UILabel(text: "AC",color: Color.appBlack, font: OpenSans.regular, size: 14)
 
+    let viewCount = UILabel(text: "100", font: OpenSans.semiBold, size: 12)
     
-    let profilePic : UIImageView = {
-        let image = UIImageView()
-        image.contentMode = .scaleAspectFill
-        image.layer.cornerRadius = 15
-        image.clipsToBounds = true
-        return image
-    }()
+    lazy var nameStack = VerticalStackView(arrangedSubViews: [nameLabel, viewCount], spacing: 5)
     
-    let userId = UILabel(text: "", font: OpenSans.semiBold, size: 12)
-    let viewCount = UILabel(text: "", font: OpenSans.semiBold, size: 12)
+    lazy var userStack = HorizontalStackView(arrangedSubViews: [profileImageView, nameStack] , spacing: 10)
     
-//    var views: UILabel = {
-//        let label = UILabel()
-//        label.text = "100"
-//        label.textColor = .black
-//        return label
-//    }()
-    
-    let viewButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Mark as View", for: .normal)
-        button.backgroundColor = .systemYellow
-        button.layer.cornerRadius = 10
-        button.setTitleColor(.black, for: .normal)
-        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        return button
-    }()
+    let viewButton = DIButton(buttonTitle: "Mark as view", height: 50)
     
     let likes : UILabel = {
         let label = UILabel()
@@ -60,29 +44,32 @@ class AnnouncementPageView: UIView {
     }
     
     func setup(){
+        addSubview(headerView)
+        headerView.anchor(top: safeAreaLayoutGuide.topAnchor, leading:  leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom:  0, right: 0))
+        headerView.constraintHeight(constant: 50)
         
         addSubview(textView)
-        addSubview(profilePic)
-        addSubview(userId)
+        textView.anchor(top: headerView.bottomAnchor, leading:  leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 30, left: 0, bottom:  0, right: 0))
+        textView.constraintHeight(constant: 200)
+        
+        addSubview(userStack)
+        userStack.anchor(top: textView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 20, left: 10, bottom: 0, right: 0))
+        profileView.constraintHeight(constant: 50)
+        profileView.constraintWidth(constant: 50)
+        profileView.layer.cornerRadius = 24
+        profileView.clipsToBounds = true
+        profileView.addSubview(namePrefixLabel)
+        namePrefixLabel.centerInSuperview()
+
+//        addSubview(nameLabel)
+//        nameLabel.anchor(top: topAnchor, leading: profileView.leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: , left: 60, bottom: 70, right: 0))
+//        nameLabel.textColor = Color.appWhite
+        
         addSubview(viewCount)
+        viewCount.anchor(top: nameLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 10, left: 73, bottom: 0, right: 0))
+        
         addSubview(viewButton)
-        addSubview(comments)
-
-        textView.anchor(top: safeAreaLayoutGuide.bottomAnchor, leading:  leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom:  600, right: 0))
-        textView.heightAnchor.constraint(equalToConstant: 200 ).isActive = true
-        
-        profilePic.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 500, left: 10, bottom: 200, right: 380))
-        profilePic.constraintHeight(constant: 50)
-        profilePic.constraintWidth(constant: 50)
-        profilePic.layer.cornerRadius = 24
-        profilePic.clipsToBounds = true
-
-        userId.anchor(top: topAnchor, leading: profilePic.leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 170, left: 60, bottom: 70, right: 0))
-        
-        viewCount.anchor(top: nil, leading: leadingAnchor, bottom: viewButton.topAnchor, trailing: nil, padding: .init(top: 10, left: 73, bottom: 260, right: 0))
-    
-        viewButton.anchor(top: safeAreaLayoutGuide.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 10, bottom: 50, right: 10))
-        viewButton.constraintHeight(constant: 50)
+        viewButton.anchor(top: safeAreaLayoutGuide.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 12, bottom: 30, right: 12))
                 
     }
 

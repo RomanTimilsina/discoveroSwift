@@ -29,7 +29,7 @@ class JobTableViewCell: UITableViewCell {
     let likeButton = UIImageView(image: UIImage(named: "heart"), contentMode: .scaleAspectFit, clipsToBounds: true)
     let noOfLikes = UILabel(text: "", font: OpenSans.semiBold, size: 12)
     lazy var titleStack = HorizontalStackView(arrangedSubViews: [nameLabel, countryFlageImage], spacing: 5)
-    lazy var subTitleStack = HorizontalStackView(arrangedSubViews: [uploadedTime,dot, stateLabel], spacing: 5)
+    lazy var subTitleStack = HorizontalStackView(arrangedSubViews: [uploadedTime, dot, stateLabel], spacing: 5)
     lazy var userStack = VerticalStackView(arrangedSubViews: [titleStack, subTitleStack], distribution: .fillProportionally)
     lazy var likesStack = VerticalStackView(arrangedSubViews: [likeButton, noOfLikes])
     lazy var adHeaderStack = HorizontalStackView(arrangedSubViews: [profileView,profileImageView, userStack, UIView(),likesStack], spacing: 10)
@@ -91,8 +91,8 @@ class JobTableViewCell: UITableViewCell {
         gapView.backgroundColor = Color.appBlack
         
         lineView.constraintHeight(constant: 0.7)
-        lineView.setContentHuggingPriority(.required, for: .vertical)
-        lineView.setContentCompressionResistancePriority(.required, for: .vertical)
+//        lineView.setContentHuggingPriority(.required, for: .vertical)
+//        lineView.setContentCompressionResistancePriority(.required, for: .vertical)
         
         addSubview(cellStack)
         cellStack.constraintWidth(constant: 100)

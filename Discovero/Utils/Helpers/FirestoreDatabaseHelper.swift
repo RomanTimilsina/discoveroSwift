@@ -39,6 +39,7 @@ var roomOffers: [RoomOffer] = []
 var roomWanted: [RoomOffer] = []
 var jobOffers: [JobOffer] = []
 var jobWanted: [JobOffer] = []
+var announcementModel: [AnnouncementModel] = []
 var lastDocument: DocumentSnapshot?
 var next: Query?
 var batchSize = 33
@@ -417,7 +418,8 @@ struct FireStoreDatabaseHelper {
         }
     }
     
-    func getAnnouncementData(completion: @escaping (AnnouncementModel) -> Void) {
+    func getAnnouncementData(isAnnouncement: Bool,
+                             completion: @escaping ([AnnouncementModel]) -> Void) {
         
         var fireStoreCollection =  Firestore.firestore().collection("Announcement")
         
@@ -490,7 +492,9 @@ struct FireStoreDatabaseHelper {
                         expirationDate: expirationDate ?? 0, adType: adType ?? "",
                         lastUpdated: lastUpdated ?? 0
                     )
+                    announcementModel.append(announcement)
                 }
+                completion(announcementModel)
             }
     }
     

@@ -9,24 +9,23 @@ import UIKit
 
 class AnnouncementCell : UICollectionViewCell{
     
-    static let cellId = "AnnouncementCell"
+    static let identifier = "AnnouncementCell"
     
     var handleTapPost: (()-> Void)?
     var handleLikeTap: (()-> Void)?
     var handleCommentTap: (()-> Void)?
     
-    
+    let profileView = UIView(color: Color.appWhite)
     let profileImageView = UIImageView(image: UIImage(named: "AC"), contentMode: .scaleAspectFit, clipsToBounds: true)
     let nameLabel = UILabel(text: "", font: OpenSans.semiBold, size: 14)
     let namePrefixLabel = UILabel(text: "AC",color: Color.appBlack, font: OpenSans.regular, size: 14)
     let uploadedTime = UILabel(text: "", font: OpenSans.regular, size: 12)
-    let dotIMageView = UIImageView(image: UIImage(named: "dotimg"), contentMode: .scaleAspectFit, clipsToBounds: true)
+    let dotIMageView = UIImageView(image: UIImage(named: "dot"), contentMode: .scaleAspectFit, clipsToBounds: true)
     lazy var dotStack = VerticalStackView(arrangedSubViews: [UIView(), dotIMageView, UIView()], spacing: 0, distribution: .equalCentering)
     let stateLabel = UILabel(text: "New South Wales", font: OpenSans.semiBold, size: 14)
     let eyeImage = UIImageView(image:UIImage(named: "eye"),contentMode: .scaleAspectFit, clipsToBounds: true)
     let viewCount = UILabel(text: "", font: OpenSans.regular, size: 14)
-
-    
+    let gapView = UIView()
     var textView = GradientRectangleView()
     let announcementlabel = UILabel(text: "", color: Color.appBlack, font: OpenSans.regular, size: 18)
     let likeButton = UIImageView(image: UIImage(named: "heart"), contentMode: .scaleAspectFit, clipsToBounds: true)
@@ -35,51 +34,56 @@ class AnnouncementCell : UICollectionViewCell{
     let messageLabel = UILabel(text: "Message", font: OpenSans.semiBold, size: 14)
     let commentsImageView = UIImageView(image: UIImage(named: "comments"), contentMode: .scaleAspectFit, clipsToBounds: true)
     let commentsLabel = UILabel(text: "Comments", font: OpenSans.semiBold, size: 14)
-
-    
-    let circleView = UIView(color: Color.primary, cornerRadius: 7)
+    let circleImageView = UIImageView(image: UIImage(named: "yellowCircleImg"), contentMode: .scaleAspectFit, clipsToBounds: true )
     let commentCount = UILabel(text: "",color: Color.appBlack, font: OpenSans.semiBold, size: 12)
-    
-    let text: UIImageView = {
-        let image = UIImageView()
-        image.image = UIImage(named: "text")
-        return image
-    }()
-    
-    let hearts: UIImageView = {
-        let image = UIImageView()
-        image.image = UIImage(named: "heart")
-        return image
-    }()
-    
-    lazy var userStack = HorizontalStackView(arrangedSubViews: [nameLabel, UIView(), eyeImage], spacing: 2)
-    lazy var timeStack = HorizontalStackView(arrangedSubViews: [uploadedTime, dotStack, stateLabel, UIView(), viewCount], spacing: 4)
-    lazy var userInfoStack = VerticalStackView(arrangedSubViews: [userStack, timeStack], spacing: 3)
-    lazy var picStack = HorizontalStackView(arrangedSubViews: [profileImageView, userInfoStack], spacing: 5)
-    lazy var likeStack = HorizontalStackView(arrangedSubViews: [likeButton, likeLabel], spacing: 10, distribution: .fillProportionally)
+
+    lazy var timeStack = HorizontalStackView(arrangedSubViews: [uploadedTime, dotStack, stateLabel], spacing: 5)
+    lazy var userStack = VerticalStackView(arrangedSubViews: [nameLabel, timeStack], distribution: .fillProportionally)
+    lazy var totalViewStack = VerticalStackView(arrangedSubViews: [eyeImage, viewCount])
+    lazy var userInfoStack = HorizontalStackView(arrangedSubViews: [profileView,profileImageView, userStack, UIView(),totalViewStack], spacing: 3)
+    lazy var likeStack = HorizontalStackView(arrangedSubViews: [likeButton, likeLabel], spacing: 10, distribution: .equalCentering)
     lazy var messageStack = HorizontalStackView(arrangedSubViews: [ messageImageView , messageLabel], spacing: 10, distribution: .fillProportionally)
-    lazy var commentStack = HorizontalStackView(arrangedSubViews: [ commentsImageView , commentsLabel, circleView], spacing: 10, distribution: .fillProportionally)
+    lazy var commentStack = HorizontalStackView(arrangedSubViews: [ commentsImageView , commentsLabel, circleImageView], spacing: 10, distribution: .fillProportionally)
     lazy var reactStack = HorizontalStackView(arrangedSubViews: [likeStack, messageStack, commentStack], spacing: 10, distribution: .equalCentering )
-    lazy var allStack = VerticalStackView(arrangedSubViews: [picStack, textView, reactStack], spacing: 10)
-//    let currentView = UIView()
+    lazy var allStack = VerticalStackView(arrangedSubViews: [userInfoStack, textView, reactStack], spacing: 10)
+
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
         clickOnButtons()
+        backgroundColor = Color.gray900
     }
     
     func setupView(){
-        addSubview(allStack)
-        allStack.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor , padding:  .init(top: 10, left: -10, bottom: 0, right: -10))
         
-//        currentView.addSubview(circleView)
-//        circleView.anchor(top: nil, leading: commentsLabel.trailingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 5, bottom: 0, right: 5))
-//        circleView.centerYAnchor.constraint(equalTo: commentsLabel.centerYAnchor).isActive = true
-        circleView.constraintWidth(constant: 14)
-        circleView.constraintHeight(constant: 14)
-        circleView.addSubview(commentCount)
+        addSubview(gapView)
+        gapView.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        gapView.constraintHeight(constant: 10)
+        gapView.backgroundColor = Color.appBlack
+        
+        addSubview(allStack)
+        allStack.constraintWidth(constant: 100)
+        allStack.anchor(top: gapView.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor , padding:  .init(top: 10, left: 12, bottom: 10, right: 12))
+        
+        reactStack.constraintHeight(constant: 20)
+        userInfoStack.constraintHeight(constant: 30)
+        
+        profileView.constraintWidth(constant: 30)
+        profileView.constraintHeight(constant: 30)
+        profileView.layer.cornerRadius = 15
+        profileView.addSubview(namePrefixLabel)
+        namePrefixLabel.centerInSuperview()
+        
+        circleImageView.addSubview(commentCount)
+        circleImageView.constraintWidth(constant: 14)
+        circleImageView.constraintHeight(constant: 14)
+        
         commentCount.centerInSuperview()
+        
+//        textView.constraintHeight(constant: 200)
+        textView.addSubview(announcementlabel)
+        announcementlabel.centerInSuperview()
     }
      
     func clickOnButtons() {
@@ -109,14 +113,16 @@ class AnnouncementCell : UICollectionViewCell{
     }
     
     func configureData(data : AnnouncementModel){
+        debugPrint(data)
         namePrefixLabel.text = "\(namePrefix(name: data.userInfo.name))"
         profileImageView.isHidden = true
+        announcementlabel.text = data.description
         nameLabel.text = data.userInfo.name
         stateLabel.text = data.location.state
         uploadedTime.text = "Posted \(formatDate(from: (data.timestamp)))"
         viewCount.text = "\(data.viewCount < 10 ? " " : "")\(data.viewCount)"
 //        likeLabel.text = data.likes
-        commentCount.text = "\(data.comments.count)"
+        commentCount.text = "\(data.commentCount)"
     }
     
     required init?(coder: NSCoder) {
@@ -140,7 +146,7 @@ extension AnnouncementCell {
             return days == 1 ? "1 day ago" : "\(days) days ago"
         } else {
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "HH:mm:ss" // Customize the time format as needed
+            dateFormatter.dateFormat = "HH:mm:ss" 
             return dateFormatter.string(from: date)
         }
     }
