@@ -21,7 +21,6 @@ class RoomWantedVC: UIViewController, UISheetPresentationControllerDelegate{
 
     override func viewDidAppear(_ animated: Bool ) {
         super.viewDidAppear(animated)
-        navigationController?.navigationBar.isHidden = true
     }
     
     override func viewDidLoad() {
@@ -29,6 +28,8 @@ class RoomWantedVC: UIViewController, UISheetPresentationControllerDelegate{
         setupTable()
         observeEvents()
         getUsersDataFromDefaults()
+        navigationController?.navigationBar.isHidden = true
+
     }
     
     override func loadView() {

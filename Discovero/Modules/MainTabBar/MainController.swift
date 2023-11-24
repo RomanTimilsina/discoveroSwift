@@ -41,7 +41,7 @@ extension HomeController{
         let room = UINavigationController(rootViewController: RoomVC() )
         let jobs = UINavigationController(rootViewController: JobVC())
         let sales = UINavigationController(rootViewController: MyProfileVC())
-        let announcements = UINavigationController(rootViewController: MyProfileVC())
+        let announcements = UINavigationController(rootViewController: AnnouncementVC())
         //        let matches = UINavigationController(rootViewController: RoomVC())
         let profile = UINavigationController(rootViewController: MyProfileVC())
         

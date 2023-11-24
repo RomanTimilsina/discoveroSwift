@@ -13,7 +13,7 @@ class RoomOfferView: UIView {
     var onCLickedAdd: (() -> Void)?
     
     let refreshControl = UIRefreshControl()
-    let homeImg = UIImageView(image: UIImage(named: "homeImg"),contentMode: .scaleAspectFit, clipsToBounds: true)
+    let homeImg = UIImageView(image: UIImage(named: "homeImg"), contentMode: .scaleAspectFit, clipsToBounds: true)
     let createAdLabel = UILabel(text: "Create your first ad", font: OpenSans.semiBold, size: 16, alignment: .center)
     let adDescriptionLabel = UILabel(text: "There seems to be no room available at the moment in your location. ", font: OpenSans.regular, size: 14,numberOfLines: 0, alignment: .center)
     let createAdButton = DIButton(buttonTitle: "Create your first ad",textSize: 14)

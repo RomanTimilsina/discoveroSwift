@@ -91,6 +91,12 @@
 		8496C4E62AEE6ED60017CC0A /* BottomSheetPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496C4E52AEE6ED60017CC0A /* BottomSheetPickerView.swift */; };
 		849B565C2AEFB66B00C91F81 /* CreateRoomAdsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B565B2AEFB66B00C91F81 /* CreateRoomAdsView.swift */; };
 		849B565E2AEFB68500C91F81 /* CreateRoomAdsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B565D2AEFB68500C91F81 /* CreateRoomAdsVC.swift */; };
+		849C79A42B0F17AD0049C5BE /* AnnouncementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C79A32B0F17AD0049C5BE /* AnnouncementVC.swift */; };
+		849C79A62B0F17CB0049C5BE /* AnnouncementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C79A52B0F17CB0049C5BE /* AnnouncementView.swift */; };
+		849C79A82B0F17F70049C5BE /* AnnouncementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C79A72B0F17F70049C5BE /* AnnouncementCell.swift */; };
+		849C79AB2B0F19DE0049C5BE /* AnnouncementPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C79AA2B0F19DE0049C5BE /* AnnouncementPageVC.swift */; };
+		849C79AD2B0F1A300049C5BE /* AnnouncementPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C79AC2B0F1A300049C5BE /* AnnouncementPageView.swift */; };
+		849C79AF2B0F1A560049C5BE /* AnnoucementModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C79AE2B0F1A560049C5BE /* AnnoucementModel.swift */; };
 		849E4D752AFB5DB10061D84D /* SelectGenderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E4D742AFB5DB10061D84D /* SelectGenderVC.swift */; };
 		849E4D772AFB5DBE0061D84D /* SelectGenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E4D762AFB5DBE0061D84D /* SelectGenderView.swift */; };
 		84A295E02B0DCBFD00433815 /* MyFavouritesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A295DF2B0DCBFD00433815 /* MyFavouritesVC.swift */; };
@@ -243,6 +249,12 @@
 		8496C4E52AEE6ED60017CC0A /* BottomSheetPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetPickerView.swift; sourceTree = "<group>"; };
 		849B565B2AEFB66B00C91F81 /* CreateRoomAdsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomAdsView.swift; sourceTree = "<group>"; };
 		849B565D2AEFB68500C91F81 /* CreateRoomAdsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomAdsVC.swift; sourceTree = "<group>"; };
+		849C79A32B0F17AD0049C5BE /* AnnouncementVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementVC.swift; sourceTree = "<group>"; };
+		849C79A52B0F17CB0049C5BE /* AnnouncementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementView.swift; sourceTree = "<group>"; };
+		849C79A72B0F17F70049C5BE /* AnnouncementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementCell.swift; sourceTree = "<group>"; };
+		849C79AA2B0F19DE0049C5BE /* AnnouncementPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementPageVC.swift; sourceTree = "<group>"; };
+		849C79AC2B0F1A300049C5BE /* AnnouncementPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementPageView.swift; sourceTree = "<group>"; };
+		849C79AE2B0F1A560049C5BE /* AnnoucementModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnoucementModel.swift; sourceTree = "<group>"; };
 		849E4D742AFB5DB10061D84D /* SelectGenderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGenderVC.swift; sourceTree = "<group>"; };
 		849E4D762AFB5DBE0061D84D /* SelectGenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGenderView.swift; sourceTree = "<group>"; };
 		84A295DF2B0DCBFD00433815 /* MyFavouritesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFavouritesVC.swift; sourceTree = "<group>"; };
@@ -351,6 +363,7 @@
 				04BA4C672AD3C45800029E5A /* AllUserData.swift */,
 				04A91E7A2AD7EF4E0037920D /* CountryStateModel.swift */,
 				8490BDD92B0B6A9B00072F0B /* JobOfferModel.swift */,
+				849C79AE2B0F1A560049C5BE /* AnnoucementModel.swift */,
 			);
 			path = FireStoreModels;
 			sourceTree = "<group>";
@@ -378,8 +391,7 @@
 		04996CB82AA46E5E00DB618F /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				84A295DE2B0DCBEA00433815 /* MyFav */,
-				84A295E32B0DE91000433815 /* MyAds */,
+				849C79A22B0F16FD0049C5BE /* Announcement */,
 				8496C4E22AEE6E530017CC0A /* BottomSheetPicker */,
 				04775C3F2AB96085005F9B4C /* CommentsPage */,
 				0499C8682AFA0D63005D5628 /* ConfigureNotification */,
@@ -390,6 +402,8 @@
 				840A6A382AFA131800FD6E25 /* Job */,
 				049BEF652AA5B08D00ED2B58 /* Login */,
 				049CF1322AA9DC3D00FF2F1B /* MainTabBar */,
+				84A295E32B0DE91000433815 /* MyAds */,
+				84A295DE2B0DCBEA00433815 /* MyFav */,
 				049D3A902AAD8BFD004864E9 /* MyProfile */,
 				04A168A92AA83FF80065F607 /* NoConnection */,
 				04CA49112AA45E1600C69767 /* OnBoardingPage */,
@@ -666,6 +680,26 @@
 				84DE17F62AF228E500B87358 /* CreateJobsAds */,
 			);
 			path = CreateAds;
+			sourceTree = "<group>";
+		};
+		849C79A22B0F16FD0049C5BE /* Announcement */ = {
+			isa = PBXGroup;
+			children = (
+				849C79A32B0F17AD0049C5BE /* AnnouncementVC.swift */,
+				849C79A52B0F17CB0049C5BE /* AnnouncementView.swift */,
+				849C79A72B0F17F70049C5BE /* AnnouncementCell.swift */,
+				849C79A92B0F198F0049C5BE /* AnnouncementPage */,
+			);
+			path = Announcement;
+			sourceTree = "<group>";
+		};
+		849C79A92B0F198F0049C5BE /* AnnouncementPage */ = {
+			isa = PBXGroup;
+			children = (
+				849C79AA2B0F19DE0049C5BE /* AnnouncementPageVC.swift */,
+				849C79AC2B0F1A300049C5BE /* AnnouncementPageView.swift */,
+			);
+			path = AnnouncementPage;
 			sourceTree = "<group>";
 		};
 		849E4D732AFB5D6E0061D84D /* SelectGender */ = {
@@ -990,13 +1024,16 @@
 				04A168A22AA835380065F607 /* DIOTPField.swift in Sources */,
 				E003B8902AB311C50090EC9D /* ViewController.swift in Sources */,
 				0479542B2AC18DB2002BB17B /* NewCountryModel.swift in Sources */,
+				849C79A42B0F17AD0049C5BE /* AnnouncementVC.swift in Sources */,
 				04B514A72AA71CDB00E99A1B /* OtpConfirmVC.swift in Sources */,
 				849E4D752AFB5DB10061D84D /* SelectGenderVC.swift in Sources */,
+				849C79A82B0F17F70049C5BE /* AnnouncementCell.swift in Sources */,
 				84A295E72B0DEC3300433815 /* MyAdsView.swift in Sources */,
 				E0FE05C72AA439C1001DBDF5 /* OnBoardingPageVC.swift in Sources */,
 				049CF12F2AA9D4D000FF2F1B /* RoomOfferView.swift in Sources */,
 				840A6A3A2AFA135300FD6E25 /* JobVC.swift in Sources */,
 				E0FE06402AA43D1B001DBDF5 /* EmailValidator.swift in Sources */,
+				849C79A62B0F17CB0049C5BE /* AnnouncementView.swift in Sources */,
 				04A91E7B2AD7EF4E0037920D /* CountryStateModel.swift in Sources */,
 				04A91E772AD7BD610037920D /* LocationFilterView.swift in Sources */,
 				E0FE06422AA43D1B001DBDF5 /* AlertHelper.swift in Sources */,
@@ -1004,6 +1041,7 @@
 				04C875332ADD582900248A0F /* RoomWantedView.swift in Sources */,
 				E0FE062A2AA43D1B001DBDF5 /* UICollectionView+Ext.swift in Sources */,
 				E0FE06352AA43D1B001DBDF5 /* UIView+Ext.swift in Sources */,
+				849C79AD2B0F1A300049C5BE /* AnnouncementPageView.swift in Sources */,
 				049CF1312AA9D4ED00FF2F1B /* RoomOfferVC.swift in Sources */,
 				840A6A4A2AFA15DB00FD6E25 /* JobOfferVC.swift in Sources */,
 				0499C86E2AFA0DE9005D5628 /* CustomPopupButtons.swift in Sources */,
@@ -1031,6 +1069,7 @@
 				84AEDBDA2AF111F600ED121C /* PostModel.swift in Sources */,
 				0499EA4D2AC55CF200E25B15 /* FirestoreDatabaseHelper.swift in Sources */,
 				E0FE06302AA43D1B001DBDF5 /* String+Ext.swift in Sources */,
+				849C79AB2B0F19DE0049C5BE /* AnnouncementPageVC.swift in Sources */,
 				049D3A982AADA382004864E9 /* MyProfileModel.swift in Sources */,
 				04956D302AB06F6A00540F44 /* ProfileItemView.swift in Sources */,
 				04A168BB2AA8549C0065F607 /* DIPickerModel.swift in Sources */,
@@ -1042,6 +1081,7 @@
 				04A168AB2AA840260065F607 /* NoConnectionVC.swift in Sources */,
 				04A168B02AA840B60065F607 /* RegistrationView.swift in Sources */,
 				E0FE06442AA43D1B001DBDF5 /* ImagePickerHelper.swift in Sources */,
+				849C79AF2B0F1A560049C5BE /* AnnoucementModel.swift in Sources */,
 				E0FE06462AA43D1B001DBDF5 /* PhoneCodeHelper.swift in Sources */,
 				049BEF672AA5B0B000ED2B58 /* LoginVC.swift in Sources */,
 				04A168A52AA839600065F607 /* WelcomeView.swift in Sources */,
