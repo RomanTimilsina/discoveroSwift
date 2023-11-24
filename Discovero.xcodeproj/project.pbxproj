@@ -76,6 +76,12 @@
 		04CA490D2AA44D3400C69767 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04CA490C2AA44D2D00C69767 /* OpenSans-Regular.ttf */; };
 		04CA490E2AA44D3600C69767 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04CA490B2AA44D2D00C69767 /* OpenSans-SemiBold.ttf */; };
 		04CA49102AA4530F00C69767 /* OnBoardingPageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA490F2AA4530F00C69767 /* OnBoardingPageViewCell.swift */; };
+		04E7C9742B10A62F00EEA0DF /* BuyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E7C9732B10A62F00EEA0DF /* BuyVC.swift */; };
+		04E7C9762B10A67200EEA0DF /* BuyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E7C9752B10A67200EEA0DF /* BuyView.swift */; };
+		04E7C97A2B10A6D000EEA0DF /* SellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E7C9792B10A6D000EEA0DF /* SellVC.swift */; };
+		04E7C97C2B10A73800EEA0DF /* SellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E7C97B2B10A73800EEA0DF /* SellView.swift */; };
+		04E7C97E2B10A77800EEA0DF /* MarketVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E7C97D2B10A77800EEA0DF /* MarketVC.swift */; };
+		04E7C9802B10A7BE00EEA0DF /* MarketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E7C97F2B10A7BE00EEA0DF /* MarketView.swift */; };
 		840A6A3A2AFA135300FD6E25 /* JobVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840A6A392AFA135300FD6E25 /* JobVC.swift */; };
 		840A6A3C2AFA138E00FD6E25 /* JobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840A6A3B2AFA138E00FD6E25 /* JobView.swift */; };
 		840A6A422AFA149100FD6E25 /* JobWantedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840A6A412AFA149100FD6E25 /* JobWantedView.swift */; };
@@ -234,6 +240,12 @@
 		04CA490B2AA44D2D00C69767 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		04CA490C2AA44D2D00C69767 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		04CA490F2AA4530F00C69767 /* OnBoardingPageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingPageViewCell.swift; sourceTree = "<group>"; };
+		04E7C9732B10A62F00EEA0DF /* BuyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyVC.swift; sourceTree = "<group>"; };
+		04E7C9752B10A67200EEA0DF /* BuyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyView.swift; sourceTree = "<group>"; };
+		04E7C9792B10A6D000EEA0DF /* SellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellVC.swift; sourceTree = "<group>"; };
+		04E7C97B2B10A73800EEA0DF /* SellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellView.swift; sourceTree = "<group>"; };
+		04E7C97D2B10A77800EEA0DF /* MarketVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketVC.swift; sourceTree = "<group>"; };
+		04E7C97F2B10A7BE00EEA0DF /* MarketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketView.swift; sourceTree = "<group>"; };
 		840A6A392AFA135300FD6E25 /* JobVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobVC.swift; sourceTree = "<group>"; };
 		840A6A3B2AFA138E00FD6E25 /* JobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobView.swift; sourceTree = "<group>"; };
 		840A6A412AFA149100FD6E25 /* JobWantedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobWantedView.swift; sourceTree = "<group>"; };
@@ -391,6 +403,7 @@
 		04996CB82AA46E5E00DB618F /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				04E7C9722B10A61700EEA0DF /* Market */,
 				849C79A22B0F16FD0049C5BE /* Announcement */,
 				8496C4E22AEE6E530017CC0A /* BottomSheetPicker */,
 				04775C3F2AB96085005F9B4C /* CommentsPage */,
@@ -595,6 +608,35 @@
 				04CA490F2AA4530F00C69767 /* OnBoardingPageViewCell.swift */,
 			);
 			path = OnBoardingPage;
+			sourceTree = "<group>";
+		};
+		04E7C9722B10A61700EEA0DF /* Market */ = {
+			isa = PBXGroup;
+			children = (
+				04E7C9782B10A6BB00EEA0DF /* Sell */,
+				04E7C9772B10A6AA00EEA0DF /* Buy */,
+				04E7C97D2B10A77800EEA0DF /* MarketVC.swift */,
+				04E7C97F2B10A7BE00EEA0DF /* MarketView.swift */,
+			);
+			path = Market;
+			sourceTree = "<group>";
+		};
+		04E7C9772B10A6AA00EEA0DF /* Buy */ = {
+			isa = PBXGroup;
+			children = (
+				04E7C9732B10A62F00EEA0DF /* BuyVC.swift */,
+				04E7C9752B10A67200EEA0DF /* BuyView.swift */,
+			);
+			path = Buy;
+			sourceTree = "<group>";
+		};
+		04E7C9782B10A6BB00EEA0DF /* Sell */ = {
+			isa = PBXGroup;
+			children = (
+				04E7C9792B10A6D000EEA0DF /* SellVC.swift */,
+				04E7C97B2B10A73800EEA0DF /* SellView.swift */,
+			);
+			path = Sell;
 			sourceTree = "<group>";
 		};
 		840A6A382AFA131800FD6E25 /* Job */ = {
@@ -1013,6 +1055,7 @@
 				049D3A922AAD8C1C004864E9 /* MyProfileView.swift in Sources */,
 				E0FE061D2AA43D1B001DBDF5 /* Validator.swift in Sources */,
 				849E4D772AFB5DBE0061D84D /* SelectGenderView.swift in Sources */,
+				04E7C97E2B10A77800EEA0DF /* MarketVC.swift in Sources */,
 				8587D3452AE15FA900AED0DA /* FilterModel.swift in Sources */,
 				049CF12C2AA9AA4B00FF2F1B /* CustomSearchBar.swift in Sources */,
 				E0FE06252AA43D1B001DBDF5 /* VerticalStackView.swift in Sources */,
@@ -1075,6 +1118,7 @@
 				04A168BB2AA8549C0065F607 /* DIPickerModel.swift in Sources */,
 				E0FE06272AA43D1B001DBDF5 /* UIImageView+Ext.swift in Sources */,
 				840A6A3C2AFA138E00FD6E25 /* JobView.swift in Sources */,
+				04E7C97A2B10A6D000EEA0DF /* SellVC.swift in Sources */,
 				E0FE062E2AA43D1B001DBDF5 /* UINavigationController+Ext.swift in Sources */,
 				84DE17F82AF2296900B87358 /* CreateJobsAdsView.swift in Sources */,
 				0499C86C2AFA0DAF005D5628 /* ConfigureNotificationView.swift in Sources */,
@@ -1082,6 +1126,7 @@
 				04A168B02AA840B60065F607 /* RegistrationView.swift in Sources */,
 				E0FE06442AA43D1B001DBDF5 /* ImagePickerHelper.swift in Sources */,
 				849C79AF2B0F1A560049C5BE /* AnnoucementModel.swift in Sources */,
+				04E7C9742B10A62F00EEA0DF /* BuyVC.swift in Sources */,
 				E0FE06462AA43D1B001DBDF5 /* PhoneCodeHelper.swift in Sources */,
 				049BEF672AA5B0B000ED2B58 /* LoginVC.swift in Sources */,
 				04A168A52AA839600065F607 /* WelcomeView.swift in Sources */,
@@ -1090,6 +1135,7 @@
 				04996CC12AA489F600DB618F /* OnBoardingPageView.swift in Sources */,
 				E0FE06332AA43D1B001DBDF5 /* UIAnchor+Ext.swift in Sources */,
 				049CD02D2B0E0BC6005C056B /* CustomAdCell.swift in Sources */,
+				04E7C9802B10A7BE00EEA0DF /* MarketView.swift in Sources */,
 				E0FE06322AA43D1B001DBDF5 /* Collection+Ext.swift in Sources */,
 				E0FE06312AA43D1B001DBDF5 /* UITapGestureRecognizer+Ext.swift in Sources */,
 				84DE17FC2AF2451A00B87358 /* JobModel.swift in Sources */,
@@ -1118,6 +1164,7 @@
 				8496C4E62AEE6ED60017CC0A /* BottomSheetPickerView.swift in Sources */,
 				04775C432AB96106005F9B4C /* CommentsPageView.swift in Sources */,
 				049D3A962AAD9EE0004864E9 /* MyProfileCell.swift in Sources */,
+				04E7C9762B10A67200EEA0DF /* BuyView.swift in Sources */,
 				E0FE06262AA43D1B001DBDF5 /* UILabel+Ext.swift in Sources */,
 				8496C4E12AEE5E0A0017CC0A /* CustomNumberSelector.swift in Sources */,
 				04A91E792AD7BDB80037920D /* LocationFilterVC.swift in Sources */,
@@ -1137,6 +1184,7 @@
 				E0FE062D2AA43D1B001DBDF5 /* Bundle+Ext.swift in Sources */,
 				E0FE061F2AA43D1B001DBDF5 /* Constants.swift in Sources */,
 				04978F872AB81E3C00BCACC5 /* RoomTableViewCell.swift in Sources */,
+				04E7C97C2B10A73800EEA0DF /* SellView.swift in Sources */,
 				84A295E52B0DEC1A00433815 /* MyAdsVC.swift in Sources */,
 				04775C452AB96E65005F9B4C /* CustomComments.swift in Sources */,
 				049D3A942AAD9379004864E9 /* MyProfileVC.swift in Sources */,
